@@ -1,0 +1,133 @@
+﻿##|TYPE Template
+##|UNIQUEID de5d2082-2369-474e-9ee8-47457cd0ab18
+##|TITLE Simetri Type Library PONO
+##|NAMESPACE 
+##|SOURCE_TYPE Source
+##|OUTPUT_LANGUAGE None
+##|GUI_ENGINE .Net Script
+##|GUI_LANGUAGE C#
+##|GUI_BEGIN
+
+public class GeneratedGui : DotNetScriptGui
+{
+	public GeneratedGui(ZeusContext context) : base(context) {}
+
+	//-----------------------------------------
+	// The User Interface Entry Point
+	//-----------------------------------------
+	public override void Setup()
+	{
+		// ** UNCOMMENT CODE BELOW TO SEE UI **
+
+		//ui.Width  = 100;
+		//ui.Height = 100;
+		//GuiLabel lblDemo = ui.AddLabel("lblDemo", "Demo", "Demo Tooltip");
+		//ui.ShowGui = true;
+	}
+
+}
+##|GUI_END
+##|BODY_MODE Markup
+##|BODY_ENGINE .Net Script
+##|BODY_LANGUAGE C#
+##|BODY_TAG_START <%
+##|BODY_TAG_END %>
+##|BODY_BEGIN
+<%#NAMESPACE System.IO, System.Text, System.Text.RegularExpressions, System.Globalization %><%
+public class GeneratedTemplate : DotNetScriptTemplate
+{
+	public GeneratedTemplate(ZeusContext context) : base(context) {}
+
+
+	string databaseName = "ITO_YENI";
+	string outputPath = @"D:\projects\DotnetProjects\eITO2Tasarim\eITO\src\Simetri.Ortak\Simetri.eITO.MaliIsler.TypeLibrary";
+	string baseNameSpace = "Simetri.eITO.MaliIsler.TypeLibrary";
+
+	public override void Render()
+	{
+		IDatabase database = MyMeta.Databases[databaseName];
+		string className = "";
+		string schemaName = "";
+		string classNameSpace = "";
+		string memberVariableName = "";
+		string propertyVariableName = "";
+		
+		string[] schemaList = {"TT_MUH","TT_MALI","MALI","MUH"};
+		
+		foreach (ITable table in database.Tables)
+		{
+			bool tableInSchemaList = false;
+			foreach (string schemaNameInList in schemaList)
+			{
+				if (schemaNameInList == table.Schema)
+				{
+					tableInSchemaList = true;
+				}
+			}
+			bool schemaListesindeYoksaKodeUretme = !tableInSchemaList;
+			if (schemaListesindeYoksaKodeUretme)
+			{
+				continue;
+			}
+
+			className = SimetriUtils.SetPascalCase(table.Name);
+			schemaName = SimetriUtils.SetPascalCase(table.Schema);
+			classNameSpace = baseNameSpace + "." + schemaName;
+			
+%>
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace <%=classNameSpace%>
+{
+    public partial class <%= className %>
+    {
+		<%
+		foreach (IColumn column in table.Columns)
+		{
+		memberVariableName = SimetriUtils.SetCamelCase(column.Name);
+		propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
+		%>
+		private <%=column.LanguageType%> <%=memberVariableName%>;<%
+		}
+		%>
+		<%
+		foreach (IColumn column in table.Columns)
+		{
+		memberVariableName = SimetriUtils.SetCamelCase(column.Name);
+		propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
+		%>
+		public <%=column.LanguageType%> <%=propertyVariableName%>
+		{
+			get
+			{
+				return <%=memberVariableName%>;
+			}
+			set
+			{
+				<%=memberVariableName%> = value;
+			}
+		}
+		<%
+		}
+		%>
+
+
+    }
+}
+<%
+//			output.writeln(table.Name);
+//			output.writeln(className);
+			output.save( Path.Combine( outputPath + "\\" + schemaName , className + ".generated.cs" ), false );
+			output.clear();
+			}
+
+	}
+	
+	
+
+
+}
+%>
+##|BODY_END
