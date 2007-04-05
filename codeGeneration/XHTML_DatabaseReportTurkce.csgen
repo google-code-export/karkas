@@ -320,7 +320,7 @@ h4
 		foreach (string tableName in tables)
 		{
 %>
-			<li><a href="#<%= tableName.Replace(" ", String.Empty) %>"><%= tableName %></a></li>
+			<li><a href="#<%= tableName.Replace(" ", String.Empty) %>"><%=table.Schema%>.<%= tableName %></a></li>
 <%
 		}
 %>
