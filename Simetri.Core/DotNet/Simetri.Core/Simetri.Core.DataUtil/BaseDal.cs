@@ -91,7 +91,7 @@ namespace Simetri.Core.DataUtil
             }
             catch (SqlException ex)
             {
-                Console.WriteLine(ex.ErrorCode);
+                ExceptionDegistirici.Degistir(ex,sql);
             }
             finally
             {
@@ -109,6 +109,10 @@ namespace Simetri.Core.DataUtil
 
         }
 
+        public abstract string SelectString
+        {
+            get;
+        }
 
         public abstract void processRow(IDataReader dr, T row);
     }
