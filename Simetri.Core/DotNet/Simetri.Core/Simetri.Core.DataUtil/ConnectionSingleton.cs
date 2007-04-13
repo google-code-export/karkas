@@ -7,7 +7,7 @@ namespace Simetri.Core.DataUtil
 {
     public class ConnectionSingleton
     {
-        private string connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ITO_YENI;Data Source=LOCALHOST\SQLEXPRESS";
+        private string connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ADISYON;Data Source=LOCALHOST\SQLEXPRESS";
 
         public string ConnectionString
         {

@@ -8,55 +8,14 @@ namespace Simetri.Core.DataUtil
 {
     public abstract class BaseDal<T> where T : new()
     {
+        protected AdoTemplate template = new AdoTemplate();
+
         public BaseDal()
         {
 
         }
 
-        public void parameterEkle(SqlCommand cmd, string parameterName, object value)
-        {
-            SqlParameter prm = new SqlParameter();
-            prm.ParameterName = parameterName;
-            paramDbTipiniSetle(prm, value);
-            prm.Value = value;
-            cmd.Parameters.Add(prm);
-        }
-        public void parameterEkle(SqlCommand cmd, string parameterName, object value, int size)
-        {
-            SqlParameter prm = new SqlParameter();
-            prm.ParameterName = parameterName;
-            paramDbTipiniSetle(prm,value);
-            prm.Value = value;
-            prm.Size = size;
-            cmd.Parameters.Add(prm);
-        }
 
-        private void paramDbTipiniSetle(SqlParameter prm,object value)
-        {
-            if (value is string)
-            {
-                prm.SqlDbType = SqlDbType.VarChar;
-
-            }else if (value is int)
-            {
-                prm.SqlDbType = SqlDbType.Int;
-            }else if (value is Guid)
-            {
-                prm.SqlDbType = SqlDbType.UniqueIdentifier;
-            }
-            else if (value is long)
-            {
-                prm.SqlDbType = SqlDbType.BigInt;
-            }
-            else if (value is byte)
-            {
-                prm.SqlDbType = SqlDbType.TinyInt;
-            }
-            else if (value is short)
-            {
-                prm.SqlDbType = SqlDbType.TinyInt;
-            }
-        }
 
 
 
@@ -110,6 +69,18 @@ namespace Simetri.Core.DataUtil
         }
 
         public abstract string SelectString
+        {
+            get;
+        }
+        public abstract string InsertString
+        {
+            get;
+        }
+        public abstract string UpdateString
+        {
+            get;
+        }
+        public abstract string DeleteString
         {
             get;
         }

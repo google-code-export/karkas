@@ -25,9 +25,9 @@ namespace Simetri.Core.Example.Dal
                            )";
             cmd.Connection = Connection;
 
-            parameterEkle(cmd, "@KisiKey", p.KisiKey);
-            parameterEkle(cmd, "@Adi", p.Adi, 50);
-            parameterEkle(cmd, "@Soyadi", p.Soyadi, 50);
+            template.parameterEkle(cmd, "@KisiKey", p.KisiKey);
+            template.parameterEkle(cmd, "@Adi", p.Adi, 50);
+            template.parameterEkle(cmd, "@Soyadi", p.Soyadi, 50);
 
             Connection.Open();
             cmd.ExecuteNonQuery();
@@ -57,8 +57,24 @@ namespace Simetri.Core.Example.Dal
 
         }
 
-        
+        public override string DeleteString
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+        public override string InsertString
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
 
+        public override string SelectString
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        public override string UpdateString
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
         public override void processRow(IDataReader dr, Kisi row)
         {
             row.Adi = dr.GetString(1);
