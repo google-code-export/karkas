@@ -19,6 +19,8 @@ namespace Simetri.Core.DataUtil
             {
                 throw new YanlisSqlCumlesiHatasi(String.Format("{0} sql cumlesi hatalý yazýlmýþtýr. Sunucudan gelen mesaj {1}", sql, ex.Message), ex);
             }
+
+            throw new SimetriVeriHatasi(String.Format("Tanimlanamayan Veri Hatasi, Mesaji = {0}", ex.Message), ex);
         }
 
     }
