@@ -13,7 +13,11 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
             KisiDal dal = new KisiDal();
             try
             {
-                dal.Ekle();
+                Kisi k = new Kisi();
+                k.KisiKey = Guid.NewGuid();
+                k.Adi = "Pýnar";
+                k.Soyadi = "Ün";
+                dal.Ekle(k);
 
             }
             catch (Exception ex)

@@ -6,6 +6,14 @@ namespace Simetri.Core.Example.TypeLibrary
 {
     public partial class Kisi
     {
+        private Guid kisiKey;
+
+        public Guid KisiKey
+        {
+            get { return kisiKey; }
+            set { kisiKey = value; }
+        }
+
 
         private string adi;
 
