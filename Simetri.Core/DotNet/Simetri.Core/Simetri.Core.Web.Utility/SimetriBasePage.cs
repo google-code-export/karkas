@@ -5,7 +5,7 @@ using System.Web.UI;
 
 namespace Simetri.Core.Web.Utility
 {
-    public class SimetriBasePage : Page
+    public abstract class SimetriBasePage : Page
     {
     }
 }
