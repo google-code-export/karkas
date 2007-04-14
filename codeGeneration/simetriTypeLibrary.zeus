@@ -78,7 +78,7 @@ public class GeneratedGui : DotNetScriptGui
 			// Setup Views selection multi-select listbox.
 			GuiLabel label8 = ui.AddLabel( "label8", "Schema Listesi", "Schema Listesini Asagidan Secin" );
 			GuiComboBox chooseViews = ui.AddComboBox( "chooseViews", "Select views." );
-			chooseDatabase.AttachEvent( "onchange", "chooseSchema_onchange" );
+			chooseViews.AttachEvent( "onchange", "chooseSchema_onchange" );
 
 
 			// Attach the onchange event to the cmbDatabases control.
@@ -103,7 +103,7 @@ public class GeneratedGui : DotNetScriptGui
 				if( MyMeta.DefaultDatabase != null ) 
 				{
 					Databases.SelectedValue = MyMeta.DefaultDatabase.Alias;
-					bindTables( Databases.SelectedValue );
+					bindTables( Databases.SelectedValue,"dbo" );
 					bindViews( Databases.SelectedValue );
 				}
 			}
@@ -130,15 +130,15 @@ public class GeneratedGui : DotNetScriptGui
 
 	public void bindTables( string sDatabase ,string pSchemaName)
 	{
-		GuiListBox lstTables = ui["chooseTables"] as GuiListBox;
+			GuiListBox lstTables = ui["chooseTables"] as GuiListBox;
 			IDatabase db = MyMeta.Databases[sDatabase];
 			ArrayList liste = new ArrayList();
-			
+//			liste.Add(pSchemaName);
 			foreach (ITable table in db.Tables)
 			{
 				if (table.Schema == pSchemaName)
 				{
-					liste.Add(table.Schema);
+					liste.Add(table.Name);
 				}
 			}
 
@@ -150,24 +150,18 @@ public class GeneratedGui : DotNetScriptGui
 	
 		GuiComboBox lstViews = ui["chooseViews"] as GuiComboBox;
 		
-		try 
-		{	
-			IDatabase db = MyMeta.Databases[sDatabase];
-			ArrayList liste = new ArrayList();
-			
-			foreach (ITable table in db.Tables)
-			{
-				if (!liste.Contains(table.Schema))
-				{
-					liste.Add(table.Schema);
-				}
-			}
-
-			lstViews.BindData( liste );
-		}
-		catch
+		IDatabase db = MyMeta.Databases[sDatabase];
+		ArrayList liste = new ArrayList();
+		
+		foreach (ITable table in db.Tables)
 		{
+			if (!liste.Contains(table.Schema))
+			{
+				liste.Add(table.Schema);
+			}
 		}
+
+		lstViews.BindData( liste );
 	}
 	
 	public void chooseDatabase_onchange( GuiComboBox control )
@@ -175,20 +169,14 @@ public class GeneratedGui : DotNetScriptGui
 
 		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
 	
-		bindTables( cmbDatabases.SelectedText );
+		bindTables( cmbDatabases.SelectedText,"dbo" );
 		bindViews( cmbDatabases.SelectedText );
 	}
 	public void chooseSchema_onchange( GuiComboBox control )
 	{
-		try
-		{
-			GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
-			GuiComboBox lstViews = ui["chooseViews"] as GuiComboBox;
-			bindTables( cmbDatabases.SelectedText,lstViews.SelectedText );
-		}
-		catch
-		{
-		}
+		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
+		GuiComboBox cmbSchema = ui["chooseViews"] as GuiComboBox;
+		bindTables( cmbDatabases.SelectedText,cmbSchema.SelectedText );
 	}
 
 }
