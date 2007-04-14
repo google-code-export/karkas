@@ -16,9 +16,33 @@ namespace Simetri.Core.DataUtil
 
         public static void Degistir(SqlException ex, string sql)
         {
-            if (ex.Number == 102)
+            switch (ex.Number)
             {
-                throw new YanlisSqlCumlesiHatasi(String.Format("{0} sql cumlesi hatalý yazýlmýþtýr. Sunucudan gelen mesaj {1}", sql, ex.Message), ex);
+                default:
+                    throw ex;
+                case -1:
+                    throw new SimetriVeriHatasi(String.Format("{0} sql baglantisi ile sunucuya baglanilamiyor.", ConnectionSingleton.Instance.ConnectionString), ex);
+                case 102:
+                    throw new YanlisSqlCumlesiHatasi(String.Format("{0} sql cumlesi hatalý yazýlmýþtýr. Sunucudan gelen mesaj {1}", sql, ex.Message), ex);
+                case 2627:
+                    throw new SimetriVeriHatasi(String.Format("Primary Key olarak secilen kolonunda bu degeri alan satir zaten var."), ex);
+                case 109:
+                    throw new SimetriVeriHatasi(String.Format("Veri eklerken belirtilen her kolon için bilgi girilmedi."), ex);
+                case 515:
+                    throw new SimetriVeriHatasi(String.Format("Veri içermesi zorunlu olan bir kolona veri girilmedi."), ex);
+                case 110:
+                    throw new SimetriVeriHatasi(String.Format("Veri girerken gerekenden fazla parametre yollandý."), ex);
+                case 245:
+                    throw new SimetriVeriHatasi(String.Format("Kolonda belirtilen türden farklý bir tür eklenmeye çalýþýldý."), ex);
+                case 2812:
+                    throw new SimetriVeriHatasi(String.Format("Primary Key olarak secilen kolonunda bu degeri alan satir zaten var."), ex);
+                case 8144:
+                    throw new SimetriVeriHatasi(String.Format("{0} prosedürü için belirlenenden fazla parametre girildi.",ex.Procedure), ex);
+                case 201:
+                    throw new SimetriVeriHatasi(String.Format("{0} prosedürü için eksik parametre girildi. {1}", ex.Procedure), ex);
+                case 547:
+                    throw new SimetriVeriHatasi(String.Format("Tablo iliþkileri ile ilgili hatalý bir iþlem yapýldý."), ex);
+
             }
             if (ex.Number == 208)
             {
