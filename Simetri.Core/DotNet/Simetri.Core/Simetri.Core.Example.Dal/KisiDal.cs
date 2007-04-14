@@ -38,12 +38,7 @@ namespace Simetri.Core.Example.Dal
         public void Ekle()
         {
             AdoTemplate template = new AdoTemplate();
-            template.CalistirSelectHaric(@"INSERT INTO [ORTAK].[KISI]
-                                           ([KisiKey]
-                                           ,[Adi]
-                                           ,[Soyadi])
-                                     VALUES
-                                           ('dsdsd','ddd','ddd')");
+            template.CalistirSelectHaric(@"insert into Kisi (KisiKey,Adi,Soyadi)");
         }
 
 
@@ -56,6 +51,8 @@ namespace Simetri.Core.Example.Dal
             return liste;
 
         }
+       
+
 
         public override string DeleteString
         {
