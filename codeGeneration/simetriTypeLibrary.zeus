@@ -12,6 +12,8 @@ public class GeneratedGui : DotNetScriptGui
 {
 	public GeneratedGui(ZeusContext context) : base(context) {}
 
+	string defaultOutputPath = @"D:\projects\DotnetProjects\Denemeler\Adisyon\Adisyon.TypeLibrary";
+
 	public override void Setup()
 	{
 		if ( !input.Contains( "chooseTables" ) || !input.Contains( "txtPath" ) ||
@@ -22,12 +24,8 @@ public class GeneratedGui : DotNetScriptGui
 			ui.Height =600;
 	
 			// Grab default output path
-			string sOutputPath = "";
+			string sOutputPath = defaultOutputPath;
 			
-			if( input.Contains( "defaultOutputPath" ) ) 
-			{
-				sOutputPath = input["defaultOutputPath"].ToString();
-			}
 
 			// Setup Folder selection input control.
 			GuiLabel label1 = ui.AddLabel( "label1", "Output path:", "Select the output path in the field below." );
@@ -37,7 +35,7 @@ public class GeneratedGui : DotNetScriptGui
 			
 			outputPath.Left = label1.Left + label1.Width;
 			outputPath.Top = label1.Top;
-			GuiFilePicker selectPath = ui.AddFilePicker( "selectPath", "Select Path", "Select the Output Path.", "outputPath", true );
+			GuiFilePicker selectPath = ui.AddFilePicker( "selectPath", "Dizin Secin", "Cıktı Dizininini Şeçin.", "outputPath", true );
 			selectPath.Top = outputPath.Top;
 			selectPath.Width = 100;
 			selectPath.Left = outputPath.Left + outputPath.Width + 5;
@@ -56,12 +54,11 @@ public class GeneratedGui : DotNetScriptGui
 			// Setup Database selection combobox.
 			GuiLabel label4 = ui.AddLabel( "label4", "Select a DB:", "Select a database in the dropdown below." );
 			label4.Width = 75;
-			label4.Top = lblUsing.Top;
-			label4.Left = classUsing.Left + classUsing.Width+5;
+//			label4.Top = lblUsing.Top;
 			GuiComboBox chooseDatabase = ui.AddComboBox( "chooseDatabase", "Select a database." );
 			chooseDatabase.Width = 200;
 			chooseDatabase.Top = label4.Top;
-			chooseDatabase.Left = memberPrefix.Left;//abel4.Left + label4.Width+5;
+			chooseDatabase.Left = outputPath.Left;
 			
 			
 			// Setup Database selection combobox.
@@ -75,15 +72,15 @@ public class GeneratedGui : DotNetScriptGui
 	
 			// Setup Tables selection multi-select listbox.
 			GuiLabel label7 = ui.AddLabel( "label7", "Select tables:", "Select tables from the listbox below." );
-			label7.Top = chkEqualsHashCode.Top + 20;
 			GuiListBox chooseTables = ui.AddListBox( "chooseTables", "Select tables." );
 			chooseTables.Height = 150;
 	
 			// Setup Views selection multi-select listbox.
 			GuiLabel label8 = ui.AddLabel( "label8", "Schema Listesi", "Schema Listesini Asagidan Secin" );
-			GuiListBox chooseViews = ui.AddListBox( "chooseViews", "Select views." );
-			chooseViews.Height = 80;
-			
+			GuiComboBox chooseViews = ui.AddComboBox( "chooseViews", "Select views." );
+			chooseDatabase.AttachEvent( "onchange", "chooseSchema_onchange" );
+
+
 			// Attach the onchange event to the cmbDatabases control.
 			setupDatabaseDropdown( chooseDatabase );
 			chooseDatabase.AttachEvent( "onchange", "chooseDatabase_onchange" );
@@ -118,7 +115,6 @@ public class GeneratedGui : DotNetScriptGui
 	
 	public void bindTables( string sDatabase )
 	{
-		int count = 0;
 	
 		GuiListBox lstTables = ui["chooseTables"] as GuiListBox;
 		
@@ -131,17 +127,43 @@ public class GeneratedGui : DotNetScriptGui
 		{
 		}
 	}
-	
+
+	public void bindTables( string sDatabase ,string pSchemaName)
+	{
+		GuiListBox lstTables = ui["chooseTables"] as GuiListBox;
+			IDatabase db = MyMeta.Databases[sDatabase];
+			ArrayList liste = new ArrayList();
+			
+			foreach (ITable table in db.Tables)
+			{
+				if (table.Schema == pSchemaName)
+				{
+					liste.Add(table.Schema);
+				}
+			}
+
+			lstTables.BindData( liste );
+	}
+
 	public void bindViews( string sDatabase )
 	{
-		int count = 0;
 	
-		GuiListBox lstViews = ui["chooseViews"] as GuiListBox;
+		GuiComboBox lstViews = ui["chooseViews"] as GuiComboBox;
 		
 		try 
 		{	
 			IDatabase db = MyMeta.Databases[sDatabase];
-			lstViews.BindData( db.Views );
+			ArrayList liste = new ArrayList();
+			
+			foreach (ITable table in db.Tables)
+			{
+				if (!liste.Contains(table.Schema))
+				{
+					liste.Add(table.Schema);
+				}
+			}
+
+			lstViews.BindData( liste );
 		}
 		catch
 		{
@@ -150,12 +172,23 @@ public class GeneratedGui : DotNetScriptGui
 	
 	public void chooseDatabase_onchange( GuiComboBox control )
 	{
-		int count = 0;
 
 		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
 	
 		bindTables( cmbDatabases.SelectedText );
 		bindViews( cmbDatabases.SelectedText );
+	}
+	public void chooseSchema_onchange( GuiComboBox control )
+	{
+		try
+		{
+			GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
+			GuiComboBox lstViews = ui["chooseViews"] as GuiComboBox;
+			bindTables( cmbDatabases.SelectedText,lstViews.SelectedText );
+		}
+		catch
+		{
+		}
 	}
 
 }
@@ -173,7 +206,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 
 
 	string databaseName = "ITO_YENI";
-	string outputPath = @"D:\projects\DotnetProjects\eITO2Tasarim\eITO\src\Simetri.Ortak\Simetri.eITO.MaliIsler.TypeLibrary";
+	string outputPath = @"D:\projects\DotnetProjects\Denemeler\Adisyon\Adisyon.TypeLibrary";
 	string baseNameSpace = "Simetri.eITO.MaliIsler.TypeLibrary";
 
 	public override void Render()
