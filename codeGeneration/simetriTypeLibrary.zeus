@@ -12,17 +12,150 @@ public class GeneratedGui : DotNetScriptGui
 {
 	public GeneratedGui(ZeusContext context) : base(context) {}
 
-	//-----------------------------------------
-	// The User Interface Entry Point
-	//-----------------------------------------
 	public override void Setup()
 	{
-		// ** UNCOMMENT CODE BELOW TO SEE UI **
+		if ( !input.Contains( "chooseTables" ) || !input.Contains( "txtPath" ) ||
+				( !input.Contains( "chkClass" ) && !input.Contains( "chkNaming" ) ) )
+		{
+			ui.Title = "Simetri Type Library Code Gen";
+			ui.Width = 600;
+			ui.Height =600;
+	
+			// Grab default output path
+			string sOutputPath = "";
+			
+			if( input.Contains( "defaultOutputPath" ) ) 
+			{
+				sOutputPath = input["defaultOutputPath"].ToString();
+			}
 
-		//ui.Width  = 100;
-		//ui.Height = 100;
-		//GuiLabel lblDemo = ui.AddLabel("lblDemo", "Demo", "Demo Tooltip");
-		//ui.ShowGui = true;
+			// Setup Folder selection input control.
+			GuiLabel label1 = ui.AddLabel( "label1", "Output path:", "Select the output path in the field below." );
+			label1.Width =75;
+			GuiTextBox outputPath = ui.AddTextBox( "outputPath", sOutputPath, "Select the Output Path." );
+			outputPath.Width = 250;
+			
+			outputPath.Left = label1.Left + label1.Width;
+			outputPath.Top = label1.Top;
+			GuiFilePicker selectPath = ui.AddFilePicker( "selectPath", "Select Path", "Select the Output Path.", "outputPath", true );
+			selectPath.Top = outputPath.Top;
+			selectPath.Width = 100;
+			selectPath.Left = outputPath.Left + outputPath.Width + 5;
+			
+			GuiLabel label2 = ui.AddLabel( "label2", "Namespace: ",  "Nesnelerinizin namespace'ini verin." );
+			label2.Width = 75;
+			GuiTextBox classNamespace = ui.AddTextBox( "classNamespace", "Adisyon.TypeLibrary", "Nesnelerinizin namespace'ini verin." );				
+			classNamespace.Width = 150;
+			classNamespace.Top = label2.Top;
+			classNamespace.Left = outputPath.Left;//label2.Left + label2.Width + 5;
+			
+			
+			
+             
+			
+			// Setup Database selection combobox.
+			GuiLabel label4 = ui.AddLabel( "label4", "Select a DB:", "Select a database in the dropdown below." );
+			label4.Width = 75;
+			label4.Top = lblUsing.Top;
+			label4.Left = classUsing.Left + classUsing.Width+5;
+			GuiComboBox chooseDatabase = ui.AddComboBox( "chooseDatabase", "Select a database." );
+			chooseDatabase.Width = 200;
+			chooseDatabase.Top = label4.Top;
+			chooseDatabase.Left = memberPrefix.Left;//abel4.Left + label4.Width+5;
+			
+			
+			// Setup Database selection combobox.
+			GuiLabel labelDBPrefixSub = ui.AddLabel( "labelDBPrefixSub", " To :", "Select a database in the dropdown below." );
+			labelDBPrefixSub.Width = 75;
+
+			
+			
+			
+	
+	
+			// Setup Tables selection multi-select listbox.
+			GuiLabel label7 = ui.AddLabel( "label7", "Select tables:", "Select tables from the listbox below." );
+			label7.Top = chkEqualsHashCode.Top + 20;
+			GuiListBox chooseTables = ui.AddListBox( "chooseTables", "Select tables." );
+			chooseTables.Height = 150;
+	
+			// Setup Views selection multi-select listbox.
+			GuiLabel label8 = ui.AddLabel( "label8", "Schema Listesi", "Schema Listesini Asagidan Secin" );
+			GuiListBox chooseViews = ui.AddListBox( "chooseViews", "Select views." );
+			chooseViews.Height = 80;
+			
+			// Attach the onchange event to the cmbDatabases control.
+			setupDatabaseDropdown( chooseDatabase );
+			chooseDatabase.AttachEvent( "onchange", "chooseDatabase_onchange" );
+	
+			ui.ShowGui = true;
+		}
+		else 
+		{
+			ui.ShowGui = false;
+		}
+	}
+	
+	public void setupDatabaseDropdown( GuiComboBox Databases )
+	{
+		try 
+		{	
+			if( MyMeta.IsConnected )
+			{
+				Databases.BindData( MyMeta.Databases );
+				if( MyMeta.DefaultDatabase != null ) 
+				{
+					Databases.SelectedValue = MyMeta.DefaultDatabase.Alias;
+					bindTables( Databases.SelectedValue );
+					bindViews( Databases.SelectedValue );
+				}
+			}
+		}
+		catch
+		{
+		}
+	}
+	
+	public void bindTables( string sDatabase )
+	{
+		int count = 0;
+	
+		GuiListBox lstTables = ui["chooseTables"] as GuiListBox;
+		
+		try 
+		{	
+			IDatabase db = MyMeta.Databases[sDatabase];
+			lstTables.BindData( db.Tables );
+		}
+		catch
+		{
+		}
+	}
+	
+	public void bindViews( string sDatabase )
+	{
+		int count = 0;
+	
+		GuiListBox lstViews = ui["chooseViews"] as GuiListBox;
+		
+		try 
+		{	
+			IDatabase db = MyMeta.Databases[sDatabase];
+			lstViews.BindData( db.Views );
+		}
+		catch
+		{
+		}
+	}
+	
+	public void chooseDatabase_onchange( GuiComboBox control )
+	{
+		int count = 0;
+
+		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
+	
+		bindTables( cmbDatabases.SelectedText );
+		bindViews( cmbDatabases.SelectedText );
 	}
 
 }
@@ -45,6 +178,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 
 	public override void Render()
 	{
+		return;
 		IDatabase database = MyMeta.Databases[databaseName];
 		string className = "";
 		string schemaName = "";
