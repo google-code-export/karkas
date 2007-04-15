@@ -21,7 +21,7 @@ namespace Simetri.Core.DataUtil
                 default:
                     throw ex;
                 case -1:
-                    throw new SimetriVeriHatasi(String.Format("{0} sql baglantisi ile sunucuya baglanilamiyor.", ConnectionSingleton.Instance.ConnectionString), ex);
+                    throw new VeritabaniBaglantiHatasi(String.Format("{0} connection string'i baglantisi ile sunucuya baglanilamiyor. Verilen Hata Mesaji = {1}", ConnectionSingleton.Instance.ConnectionString,ex.Message), ex);
                 case 102:
                     throw new YanlisSqlCumlesiHatasi(String.Format("{0} sql cumlesi hatalý yazýlmýþtýr. Sunucudan gelen mesaj {1}", sql, ex.Message), ex);
                 case 2627:
