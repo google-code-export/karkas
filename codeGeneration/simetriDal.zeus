@@ -340,7 +340,7 @@ namespace <%=baseNameSpace%>.Dal
 			}
         }
  
-        public override void processRow(System.Data.IDataReader dr, Adisyonlar row)
+        public override void ProcessRow(System.Data.IDataReader dr, Adisyonlar row)
         {
 		<%
 				propertyVariableName = "";

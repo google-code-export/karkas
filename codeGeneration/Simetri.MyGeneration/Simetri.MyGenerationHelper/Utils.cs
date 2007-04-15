@@ -31,6 +31,10 @@ namespace Simetri.MyGenerationHelper
             {
                 return "DateTime";
             }
+            else if (column.LanguageType == "string")
+            {
+                return "String";
+            }
                 
 
                 
