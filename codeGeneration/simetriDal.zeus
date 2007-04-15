@@ -362,7 +362,7 @@ namespace <%=baseNameSpace%>.Dal
 }
 <%
 //			output.writeln(className);
-			output.save( Path.Combine( outputPath + "\\" + schemaName , className + ".generated.cs" ), false );
+			output.save( Path.Combine( outputPath + "\\" + schemaName , className + "Dal.generated.cs" ), false );
 			output.clear();
 			}
 
