@@ -8,6 +8,36 @@ namespace Simetri.MyGenerationHelper
 {
     public class Utils
     {
+        public string GetDataReaderSyntax(IColumn column)
+        {
+//            return column.LanguageType;
+            if (column.LanguageType == "Guid")
+            {
+                return "Guid";
+            }
+            else if (column.LanguageType == "int")
+            {
+                return "Int32";
+            }
+            else if (column.LanguageType == "byte")
+            {
+                return "Byte";
+            }
+            else if (column.LanguageType == "bool")
+            {
+                return "Boolean";
+            }
+            else if (column.LanguageType == "DateTime")
+            {
+                return "DateTime";
+            }
+                
+
+                
+            return column.LanguageType;
+        }
+
+
         public ITables filterListAccordingToSchemaName(ITables tableList, string schemaName)
         {
             ITables newList = new MyMeta.Sql.SqlTables();

@@ -350,8 +350,7 @@ namespace <%=baseNameSpace%>.Dal
 					IColumn column = table.Columns[i];
 					propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
 				%>
-				row.<%= propertyVariableName %> = dr.Get<%=column.DataType.ToString()  %>(<%=i.ToString()%>);
-				<%
+				row.<%= propertyVariableName %> = dr.Get<%=SimetriUtils.GetDataReaderSyntax(column) %>(<%=i.ToString()%>);<%
 				}
 		%>		
         }
