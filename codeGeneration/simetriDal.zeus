@@ -1,6 +1,6 @@
 ﻿##|TYPE Template
-##|UNIQUEID de5d2082-2369-474e-9ee8-47457cd0ab18
-##|TITLE Simetri Type Library PONO
+##|UNIQUEID a8c327da-e2f8-453e-aa30-d17898eb69f0
+##|TITLE Simetri Type Library Dal
 ##|NAMESPACE 
 ##|SOURCE_TYPE Source
 ##|OUTPUT_LANGUAGE None
@@ -12,7 +12,7 @@ public class GeneratedGui : DotNetScriptGui
 {
 	public GeneratedGui(ZeusContext context) : base(context) {}
 
-	string defaultOutputPath = @"D:\projects\DotnetProjects\Denemeler\Adisyon\Adisyon.TypeLibrary";
+	string defaultOutputPath = @"D:\projects\DotnetProjects\Denemeler\Adisyon\Adisyon.Dal";
 
 	GuiListBox chooseTables = null;
 	public override void Setup()
@@ -208,7 +208,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		string classNameSpace = "";
 		string memberVariableName = "";
 		string propertyVariableName = "";
-		string baseNameSpace =input["classNamespace"].ToString() + ".TypeLibrary";
+		string baseNameSpace =input["classNamespace"].ToString();
 		
 		string outputPath = input["outputPath"].ToString();
 		
@@ -231,40 +231,131 @@ public class GeneratedTemplate : DotNetScriptTemplate
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Simetri.Core.DataUtil;
+using <%=baseNameSpace%>.TypeLibrary;
+using <%=baseNameSpace%>.TypeLibrary.<%= schemaName %>;
 
-namespace <%=classNameSpace%>
+
+namespace <%=baseNameSpace%>.Dal
 {
-    public partial class <%= className %>
+    public partial class <%= className %>Dal : BaseDal<<%= className %>>
     {
-		<%
-		foreach (IColumn column in table.Columns)
-		{
-		memberVariableName = SimetriUtils.SetCamelCase(column.Name);
-		propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
-		%>
-		private <%=column.LanguageType%> <%=memberVariableName%>;<%
-		}
-		%>
-		<%
-		foreach (IColumn column in table.Columns)
-		{
-		memberVariableName = SimetriUtils.SetCamelCase(column.Name);
-		propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
-		%>
-		public <%=column.LanguageType%> <%=propertyVariableName%>
-		{
-			get
-			{
-				return <%=memberVariableName%>;
+
+
+        public override string SelectString
+        {
+            get 
+			{ 
+				return @"SELECT <%
+				string cumle = "";
+				foreach (IColumn column in table.Columns)
+				{
+					cumle += column.Name + ",";
+				}
+				cumle = cumle.Remove(cumle.Length - 1);
+				
+				%> <%=cumle%> FROM <%=table.Schema %>.<%=table.Name%>";
 			}
-			set
-			{
-				<%=memberVariableName%> = value;
+        }
+
+        public override string DeleteString
+        {
+            get 
+			{ 
+				return @"DELETE <%
+				cumle = "";
+				foreach (IColumn column in table.Columns)
+				{
+					if (column.IsInPrimaryKey)
+					{
+						cumle += column.Name + " = @" + column.Name + " AND";
+					}
+				}
+				cumle = cumle.Remove(cumle.Length - 4);
+				
+				%>  FROM <%=table.Schema %>.<%=table.Name%> WHERE <%=cumle%>";
 			}
-		}
+        }
+        public override string UpdateString
+        {
+            get 
+			{ 
+				return @"UPDATE <%=table.Schema %>.<%=table.Name%><%
+				string pkcumlesi = "";
+				cumle = "";
+				foreach (IColumn column in table.Columns)
+				{
+					if (column.IsInPrimaryKey)
+					{
+						pkcumlesi += column.Name + " = @" + column.Name + " AND";
+					}
+					else
+					{
+						cumle += column.Name + " = @" + column.Name + ",";
+					}
+				}
+				if (cumle.Length > 0)
+				{
+					cumle = cumle.Remove(cumle.Length - 1);
+				}
+				if (pkcumlesi.Length > 0)
+				{
+					pkcumlesi = pkcumlesi.Remove(pkcumlesi.Length - 3);
+				}
+				
+				%> 
+				<%= cumle %>
+				WHERE <%=pkcumlesi%>";
+			}
+        }
+
+       public override string InsertString
+        {
+            get 
+			{ 
+				return @"INSERT INTO <%=table.Schema %>.<%=table.Name%> <%
+				cumle = " (";
+				foreach (IColumn column in table.Columns)
+				{
+					if (!column.IsAutoKey)
+					{
+						cumle += column.Name + ",";
+					}
+				}
+				cumle = cumle.Remove(cumle.Length - 1);
+				cumle += ") VALUES (";
+				%>
+				<%
+				foreach (IColumn column in table.Columns)
+				{
+					if (!column.IsAutoKey)
+					{
+						cumle += "@" + column.Name + ",";
+					}
+				}
+				cumle = cumle.Remove(cumle.Length - 1);
+				cumle += ")";
+				
+				%>  <%=cumle%>";
+			}
+        }
+ 
+        public override void processRow(System.Data.IDataReader dr, Adisyonlar row)
+        {
 		<%
-		}
-		%>
+				propertyVariableName = "";
+
+				for (int i=0; i < table.Columns.Count; i++)
+				{
+					IColumn column = table.Columns[i];
+					propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
+				%>
+				row.<%= propertyVariableName %> = dr.Get<%=column.DataType.ToString()  %>(<%=i.ToString()%>);
+				<%
+				}
+		%>		
+        }
+
 
 
     }
