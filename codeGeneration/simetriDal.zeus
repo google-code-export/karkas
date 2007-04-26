@@ -362,11 +362,10 @@ namespace <%=baseNameSpace%>.Dal
 				foreach (IColumn column in table.Columns)
 				{
 					paramName = "prm" + SimetriUtils.SetPascalCase(column.Name);
-					%>
-					SqlParameter <%=paramName %>  = new SqlParameter();<%
 					if (!column.IsAutoKey)
 					{
 					%>
+					SqlParameter <%=paramName %>  = new SqlParameter();
 					<%=paramName %>.Direction = ParameterDirection.Output;<%
 					%>
 					<%=paramName %>.SqlDbType = <%= column.DbTargetType %>;
