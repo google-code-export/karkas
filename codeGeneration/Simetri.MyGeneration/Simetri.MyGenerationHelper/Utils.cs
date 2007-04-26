@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections;
 using MyMeta;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace Simetri.MyGenerationHelper
 {
     public class Utils
     {
+        public void deneme()
+        {
+            SqlDataReader reader;
+            //reader.GetInt16();
+            //reader.GetInt64
+        }
+
         public string GetDataReaderSyntax(IColumn column)
         {
 //            return column.LanguageType;
@@ -34,6 +43,18 @@ namespace Simetri.MyGenerationHelper
             else if (column.LanguageType == "string")
             {
                 return "String";
+            }
+            else if (column.LanguageType == "short")
+            {
+                return "Int16";
+            }
+            else if (column.LanguageType == "long")
+            {
+                return "Int64";
+            }
+            else if (column.LanguageType == "decimal")
+            {
+                return "Decimal";
             }
                 
 
