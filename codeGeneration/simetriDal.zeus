@@ -230,6 +230,8 @@ public class GeneratedTemplate : DotNetScriptTemplate
 %>
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 using Simetri.Core.DataUtil;
 using <%=baseNameSpace%>.TypeLibrary;
@@ -354,6 +356,12 @@ namespace <%=baseNameSpace%>.Dal
 				}
 		%>		
         }
+        public override void InsertCommandParametersAdd(SqlCommand Cmd, <%= className %> row)
+        {
+		<%
+		%>		
+        }
+
 
 
 
