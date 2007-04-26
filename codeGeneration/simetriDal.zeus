@@ -357,9 +357,21 @@ namespace <%=baseNameSpace%>.Dal
 		%>		
         }
         public override void InsertCommandParametersAdd(SqlCommand Cmd, <%= className %> row)
-        {
-		<%
-		%>		
+        {<%
+				string paramName = "";
+				foreach (IColumn column in table.Columns)
+				{
+					paramName = "prm" + SimetriUtils.SetPascalCase(column.Name);
+					if (column.IsAutoKey)
+					{
+					%><%=paramName %>.Direction = ParameterDirection.Output;<%
+					}
+					%>
+					<%=paramName %>.SqlDbType = SqlDbType.<%= column.DbTargetType %>;
+					<%=paramName %>.Value = row.<%= SimetriUtils.SetPascalCase(column.Name) %>;
+				<%
+				}
+				%>
         }
 
 
