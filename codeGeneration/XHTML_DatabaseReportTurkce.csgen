@@ -319,6 +319,7 @@ h4
 		<ol><%
 		foreach (string tableName in tables)
 		{
+			ITable table = database.Tables[tableName];
 %>
 			<li><a href="#<%= tableName.Replace(" ", String.Empty) %>"><%=table.Schema%>.<%= tableName %></a></li>
 <%
