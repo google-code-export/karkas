@@ -17,9 +17,23 @@ namespace Simetri.MyGenerationHelper
             //reader.GetInt64
         }
 
+        public string PrimaryKeyTipiniBul(ITable table)
+        {
+            string tip = "";
+            foreach (IColumn column in table.Columns)
+            {
+                if (column.IsInPrimaryKey)
+                {
+                    tip = column.LanguageType;
+                }
+            }
+            return tip;
+        }
+
+
         public string GetDataReaderSyntax(IColumn column)
         {
-//            return column.LanguageType;
+            //            return column.LanguageType;
             if (column.LanguageType == "Guid")
             {
                 return "Guid";
@@ -56,9 +70,9 @@ namespace Simetri.MyGenerationHelper
             {
                 return "Decimal";
             }
-                
 
-                
+
+
             return column.LanguageType;
         }
 
@@ -69,7 +83,7 @@ namespace Simetri.MyGenerationHelper
 
             foreach (ITable t in tableList)
             {
-                if (t.Schema.Equals(schemaName,StringComparison.InvariantCultureIgnoreCase))
+                if (t.Schema.Equals(schemaName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     newList.Add(t);
                 }
