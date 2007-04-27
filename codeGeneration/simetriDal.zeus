@@ -226,6 +226,8 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			className = SimetriUtils.SetPascalCase(table.Name);
 			schemaName = SimetriUtils.SetPascalCase(table.Schema);
 			classNameSpace = baseNameSpace + "." + schemaName;
+			bool identityVarmi;
+			string pkcumlesi = "";
 			
 %>
 using System;
@@ -260,7 +262,7 @@ namespace <%=baseNameSpace%>.Dal
 			}
         }
 
-        public override string DeleteString
+        protected override string DeleteString
         {
             get 
 			{ 
@@ -278,12 +280,11 @@ namespace <%=baseNameSpace%>.Dal
 				%>  FROM <%=table.Schema %>.<%=table.Name%> WHERE <%=cumle%>";
 			}
         }
-        public override string UpdateString
+        protected override string UpdateString
         {
             get 
 			{ 
 				return @"UPDATE <%=table.Schema %>.<%=table.Name%><%
-				string pkcumlesi = "";
 				cumle = "";
 				foreach (IColumn column in table.Columns)
 				{
@@ -305,23 +306,25 @@ namespace <%=baseNameSpace%>.Dal
 					pkcumlesi = pkcumlesi.Remove(pkcumlesi.Length - 3);
 				}
 				
-				%> 
+				%> SET 
 				<%= cumle %>
 				WHERE <%=pkcumlesi%>";
 			}
         }
 
-       public override string InsertString
+       protected override string InsertString
         {
             get 
 			{ 
 				return @"INSERT INTO <%=table.Schema %>.<%=table.Name%> <%
 				cumle = " (";
+				identityVarmi = false;
 				foreach (IColumn column in table.Columns)
 				{
 					if (!column.IsAutoKey)
 					{
 						cumle += column.Name + ",";
+						identityVarmi = true;
 					}
 				}
 				cumle = cumle.Remove(cumle.Length - 1);
@@ -337,12 +340,38 @@ namespace <%=baseNameSpace%>.Dal
 				}
 				cumle = cumle.Remove(cumle.Length - 1);
 				cumle += ")";
-				
+				if (identityVarmi)
+				{
+					cumle += ";SELECT scope_identity();";
+				}
 				%>  <%=cumle%>";
 			}
         }
- 
-        public override void ProcessRow(System.Data.IDataReader dr, <%= className %> row)
+		public <%= className %> SorgulaBirincilAnahtar()
+		{
+			
+		}
+<%
+		string identitySonuc = "";
+		if (identityVarmi)
+		{
+			identitySonuc = "true";
+		}
+		else
+		{
+			identitySonuc = "false";
+		}
+%> 
+        protected override bool IdentityVarMi
+        {
+            get
+            {
+                return <%=identitySonuc%>;
+            }
+        }
+
+		
+        protected override void ProcessRow(System.Data.IDataReader dr, <%= className %> row)
         {
 		<%
 				propertyVariableName = "";
@@ -356,7 +385,7 @@ namespace <%=baseNameSpace%>.Dal
 				}
 		%>		
         }
-        public override void InsertCommandParametersAdd(SqlCommand cmd, <%= className %> row)
+        protected override void InsertCommandParametersAdd(SqlCommand cmd, <%= className %> row)
         {<%
 				string paramName = "";
 				foreach (IColumn column in table.Columns)
@@ -366,8 +395,42 @@ namespace <%=baseNameSpace%>.Dal
 					{
 					%>
 					SqlParameter <%=paramName %>  = new SqlParameter();
-					<%=paramName %>.Direction = ParameterDirection.Output;<%
+					<%=paramName %>.ParameterName = "@<%= column.Name %>";					
+					<%=paramName %>.SqlDbType = <%= column.DbTargetType %>;
+					<%=paramName %>.Value = row.<%= SimetriUtils.SetPascalCase(column.Name) %>;
+					cmd.Parameters.Add(<%=paramName %>);
+				<%
+					}
+				}
+				%>
+        }
+        protected override void UpdateCommandParametersAdd(SqlCommand cmd, <%= className %> row)
+        {<%
+				paramName = "";
+				foreach (IColumn column in table.Columns)
+				{
+					paramName = "prm" + SimetriUtils.SetPascalCase(column.Name);
 					%>
+					SqlParameter <%=paramName %>  = new SqlParameter();
+					<%=paramName %>.ParameterName = "@<%= column.Name %>";					
+					<%=paramName %>.SqlDbType = <%= column.DbTargetType %>;
+					<%=paramName %>.Value = row.<%= SimetriUtils.SetPascalCase(column.Name) %>;
+					cmd.Parameters.Add(<%=paramName %>);
+				<%
+				}
+				%>
+        }
+        protected override void DeleteCommandParametersAdd(SqlCommand cmd, <%= className %> row)
+        {<%
+				paramName = "";
+				foreach (IColumn column in table.Columns)
+				{
+					paramName = "prm" + SimetriUtils.SetPascalCase(column.Name);
+					if (column.IsInPrimaryKey )
+					{
+					%>
+					SqlParameter <%=paramName %>  = new SqlParameter();
+					<%=paramName %>.ParameterName = "@<%= column.Name %>";					
 					<%=paramName %>.SqlDbType = <%= column.DbTargetType %>;
 					<%=paramName %>.Value = row.<%= SimetriUtils.SetPascalCase(column.Name) %>;
 					cmd.Parameters.Add(<%=paramName %>);
