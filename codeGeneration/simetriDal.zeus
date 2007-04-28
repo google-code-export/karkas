@@ -231,6 +231,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			string pkcumlesi = "";
 			
 			string pkType = SimetriUtils.PrimaryKeyTipiniBul(table);
+			string pkAdi = SimetriUtils.PrimaryKeyAdiniBul(table);
 			
 %>
 using System;
@@ -350,10 +351,19 @@ namespace <%=baseNameSpace%>.Dal
 				%>  <%=cumle%>";
 			}
         }
-		public <%= className %> SorgulaBirincilAnahtar()
+		public <%= className %> Sorgula<%= pkAdi %>Ile(<%= pkType %> p1)
 		{
-			<%= className %> d = new <%= className %>();
-			return d;
+			List<<%= className %>> liste = new List<<%= className %>>();
+			SorguCalistir(liste,SelectString + " WHERE  <%=pkcumlesi%>");
+
+            if (liste.Count > 0)
+            {
+                return liste[0];
+            }
+            else
+            {
+                return null;
+            }
 		}
 <%
 		string identitySonuc = "";
