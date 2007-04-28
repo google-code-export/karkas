@@ -16,6 +16,18 @@ namespace Simetri.MyGenerationHelper
             //reader.GetInt16();
             //reader.GetInt64
         }
+        public string PrimaryKeyAdiniBul(ITable table)
+        {
+            string adi = "";
+            foreach (IColumn column in table.Columns)
+            {
+                if (column.IsInPrimaryKey)
+                {
+                    adi = column.Name;
+                }
+            }
+            return adi;
+        }
 
         public string PrimaryKeyTipiniBul(ITable table)
         {
