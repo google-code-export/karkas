@@ -351,6 +351,12 @@ namespace <%=baseNameSpace%>.Dal
 				%>  <%=cumle%>";
 			}
         }
+		public List<<%= className %>> SorgulaHepsiniGetir()
+		{
+			List<<%= className %>> liste = new List<<%= className %>>();
+			SorguCalistir(liste,SelectString);
+            return liste;
+		}
 		public <%= className %> Sorgula<%= pkAdi %>Ile(<%= pkType %> p1)
 		{
 			List<<%= className %>> liste = new List<<%= className %>>();
