@@ -354,7 +354,7 @@ namespace <%=baseNameSpace%>.Dal
 		public <%= className %> Sorgula<%= pkAdi %>Ile(<%= pkType %> p1)
 		{
 			List<<%= className %>> liste = new List<<%= className %>>();
-			SorguCalistir(liste,SelectString + " WHERE  <%=pkcumlesi%>");
+			SorguCalistir(liste,SelectString + " WHERE  <%=pkAdi%> = " + p1);
 
             if (liste.Count > 0)
             {
