@@ -328,8 +328,12 @@ namespace <%=baseNameSpace%>.Dal
 					if (!column.IsAutoKey)
 					{
 						cumle += column.Name + ",";
+					}
+					else
+					{
 						identityVarmi = true;
 					}
+				
 				}
 				cumle = cumle.Remove(cumle.Length - 1);
 				cumle += ") VALUES (";
