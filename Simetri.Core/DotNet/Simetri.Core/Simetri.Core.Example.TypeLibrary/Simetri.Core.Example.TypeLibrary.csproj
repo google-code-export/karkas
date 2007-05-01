@@ -33,7 +33,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Kisi.Validation.cs">
+    <Compile Include="Ortak\Kisi.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ortak\Kisi.Validation.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Ortak\Kisi.generated.cs" />
