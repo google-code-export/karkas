@@ -8,75 +8,53 @@ using System.Data.SqlClient;
 
 namespace Simetri.Core.Example.Dal
 {
-    public class KisiDal : BaseDal<Kisi>
+    public class KisiDal : BaseDal<Kisi,Guid>
     {
-        public void Ekle(Kisi p)
-        {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = @"INSERT INTO ORTAK.KISI
-                           (KisiKey
-                           ,Adi
-                           ,Soyadi
-                           )
-                     VALUES
-                           (@KisiKey
-                           ,@Adi
-                           ,@Soyadi
-                           )";
-            cmd.Connection = Connection;
 
-            template.parameterEkle(cmd, "@KisiKey", p.KisiKey);
-            template.parameterEkle(cmd, "@Adi", p.Adi, 50);
-            template.parameterEkle(cmd, "@Soyadi", p.Soyadi, 50);
-
-            Connection.Open();
-            cmd.ExecuteNonQuery();
-            Connection.Close();
-        }
-
-
-        public void Ekle()
-        {
-            AdoTemplate template = new AdoTemplate();
-            template.CalistirSelectHaric(@"insert into Kisi (KisiKey,Adi,Soyadi)");
-        }
-
-
-        public List<Kisi> hepsiniGetir()
-        {
-            List<Kisi> liste = new List<Kisi>();
-            string sql = "SELECT KisiKey,Adi,Soyadi  FROM ORTAK.KISI";
-
-            selectKomutuCalistir(liste, sql);
-            return liste;
-
-        }
-       
-
-
-        public override string DeleteString
-        {
-            get { throw new Exception("The method or operation is not implemented."); }
-        }
-        public override string InsertString
-        {
-            get { throw new Exception("The method or operation is not implemented."); }
-        }
 
         public override string SelectString
         {
             get { throw new Exception("The method or operation is not implemented."); }
         }
 
-        public override string UpdateString
+        protected override string InsertString
         {
             get { throw new Exception("The method or operation is not implemented."); }
         }
-        public override void processRow(IDataReader dr, Kisi row)
-        {
-            row.Adi = dr.GetString(1);
-            row.Soyadi = dr.GetString(2);
 
+        protected override string UpdateString
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        protected override string DeleteString
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        protected override bool IdentityVarMi
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        protected override void ProcessRow(IDataReader dr, Kisi row)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        protected override void InsertCommandParametersAdd(SqlCommand Cmd, Kisi row)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        protected override void UpdateCommandParametersAdd(SqlCommand Cmd, Kisi row)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        protected override void DeleteCommandParametersAdd(SqlCommand Cmd, Kisi row)
+        {
+            throw new Exception("The method or operation is not implemented.");
         }
     }
 }
