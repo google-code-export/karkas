@@ -6,7 +6,7 @@ using Simetri.Core.DataUtil;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Simetri.Core.Example.Dal
+namespace Simetri.Core.Example.Dal.Ortak
 {
     public class KisiDal : BaseDal<Kisi,Guid>
     {
