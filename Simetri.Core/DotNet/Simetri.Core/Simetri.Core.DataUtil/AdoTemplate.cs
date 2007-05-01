@@ -96,20 +96,20 @@ namespace Simetri.Core.DataUtil
             {
                 conn.Close();
             }
-
-
         }
 
 
 
-        public void CalistirSelectHaric(string sql,SqlParameter[] prmListesi)
+
+
+        public void CalistirSelectHaric(string sql, SqlParameter[] prmListesi)
         {
             SqlConnection conn = ConnectionSingleton.Instance.Connection;
             SqlCommand cmd = new SqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
 
 
-            
+
             try
             {
                 conn.Open();
@@ -126,6 +126,135 @@ namespace Simetri.Core.DataUtil
 
 
         }
-    
+        private void SorguCalistir(DataTable dt, string sql, CommandType cmdType)
+        {
+            SqlConnection conn = ConnectionSingleton.Instance.Connection;
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.CommandType = cmdType;
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            try
+            {
+                adapter.Fill(dt);
+            }
+            catch (SqlException ex)
+            {
+                ExceptionDegistirici.Degistir(ex, sql);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+        }
+        private void SorguCalistir(DataTable dt, string sql, CommandType cmdType,SqlParameter[] parameters)
+        {
+            SqlConnection conn = ConnectionSingleton.Instance.Connection;
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.CommandType = cmdType;
+            foreach (SqlParameter p in parameters)
+            {
+                cmd.Parameters.Add(p);
+            }
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            try
+            {
+                adapter.Fill(dt);
+            }
+            catch (SqlException ex)
+            {
+                ExceptionDegistirici.Degistir(ex, sql);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+        }
+
+
+
+        #region "DataTable Methods"
+        public void DataTableFill(DataTable dataTable, string sql, CommandType commandType)
+        {
+            ValidateFillArguments(dataTable, sql);
+            SorguCalistir(dataTable, sql, commandType);
+        }
+        public void DataTableFill(DataTable dataTable, string sql)
+        {
+            ValidateFillArguments(dataTable, sql);
+            SorguCalistir(dataTable, sql, CommandType.Text);
+        }
+        public void DataTableFillWithParams(DataTable dataTable, string sql, CommandType commandType
+                , SqlParameter[] parameters)
+        {
+            ValidateFillArguments(dataTable, sql);
+            SorguCalistir(dataTable, sql, commandType, parameters);
+        }
+        public void DataTableFillWithParams(DataTable dataTable, string sql
+                , SqlParameter[] parameters)
+        {
+            ValidateFillArguments(dataTable, sql);
+            SorguCalistir(dataTable, sql, CommandType.Text, parameters);
+        }
+
+        #endregion
+
+        #region "Helpers"
+        protected virtual void ValidateFillArguments(DataTable dataTable, string sql)
+        {
+            if (dataTable == null)
+            {
+                throw new ArgumentNullException("dataTable", "DataTable argument can not be null");
+            }
+            if (sql == null)
+            {
+                throw new ArgumentNullException("sql", "SQL for DataSet Fill operation can not be null");
+            }
+        }
+        protected virtual void ValidateFillArguments(DataSet dataSet, string sql)
+        {
+            if (dataSet == null)
+            {
+                throw new ArgumentNullException("dataSet", "DataSet argument can not be null");
+            }
+            if (sql == null)
+            {
+                throw new ArgumentNullException("sql", "SQL for DataSet Fill operation can not be null");
+            }
+        }
+        protected virtual void ValidateFillArguments(DataSet dataSet, string sql, SqlParameter[] parameters)
+        {
+            if (dataSet == null)
+            {
+                throw new ArgumentNullException("dataSet", "DataSet argument can not be null");
+            }
+            if (sql == null)
+            {
+                throw new ArgumentNullException("sql", "SQL for DataSet Fill operation can not be null");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters", "Parameters for DataSet Fill operations can not be null");
+            }
+        }
+        protected virtual void ValidateFillArguments(DataTable dataTable, string sql, SqlParameter[] parameters)
+        {
+            if (dataTable == null)
+            {
+                throw new ArgumentNullException("dataTable", "DataTable argument can not be null");
+            }
+            if (sql == null)
+            {
+                throw new ArgumentNullException("sql", "SQL for DataTable Fill operation can not be null");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters", "Parameters for DataTable Fill operations can not be null");
+            }
+        }
+        #endregion
+
     }
 }
