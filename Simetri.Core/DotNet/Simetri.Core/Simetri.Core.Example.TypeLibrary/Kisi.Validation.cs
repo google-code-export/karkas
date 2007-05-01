@@ -4,7 +4,7 @@ using System.Text;
 using Simetri.Core.Validation.ForPonos;
 using Simetri.Core.Validation;
 
-namespace Simetri.Core.Example.TypeLibrary
+namespace Simetri.Core.Example.TypeLibrary.Ortak
 {
     public partial class Kisi
     {

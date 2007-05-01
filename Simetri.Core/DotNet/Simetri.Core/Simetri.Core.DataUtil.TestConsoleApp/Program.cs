@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Simetri.Core.Example.Dal;
 using Simetri.Core.Example.TypeLibrary;
+using Simetri.Core.Example.Dal.Ortak;
+using Simetri.Core.Example.TypeLibrary.Ortak;
 
 namespace Simetri.Core.DataUtil.TestConsoleApp
 {
@@ -24,12 +26,12 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
             {
                 Console.WriteLine(ex.Message);
             }
-            List<Kisi> liste = dal.hepsiniGetir();
-            foreach (Kisi p in liste)
-            {
-                Console.Write("Adi " + p.Adi);
-                Console.WriteLine(" Soyadi " + p.Soyadi);
-            }
+            //List<Kisi> liste = dal.SorguCalistir();
+            //foreach (Kisi p in liste)
+            //{
+            //    Console.Write("Adi " + p.Adi);
+            //    Console.WriteLine(" Soyadi " + p.Soyadi);
+            //}
 
         }
     }
