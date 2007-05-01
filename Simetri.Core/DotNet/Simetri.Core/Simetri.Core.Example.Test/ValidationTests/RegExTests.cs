@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Simetri.Core.Example.TypeLibrary;
 using Simetri.Core.Validation.ForPonos;
 using System.Text.RegularExpressions;
+using Simetri.Core.Example.TypeLibrary.Ortak;
 
 namespace Simetri.Core.Example.Test.ValidationTests
 {

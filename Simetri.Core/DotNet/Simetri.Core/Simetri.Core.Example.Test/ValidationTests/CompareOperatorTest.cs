@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Simetri.Core.Example.TypeLibrary;
 using Simetri.Core.Validation.ForPonos;
 using Simetri.Core.Validation;
+using Simetri.Core.Example.TypeLibrary.Ortak;
 
 namespace Simetri.Core.Example.Test.ValidationTests
 {
@@ -19,10 +20,6 @@ namespace Simetri.Core.Example.Test.ValidationTests
             k.Validator.ValidatorList.Add(new CompareValidator(k, "Yasi", 18, CompareOperator.GreaterThan));
             Assert.IsFalse(k.Validate());
 
-            k.Yasi = 18;
-            Assert.IsFalse(k.Validate());
-
-            k.Yasi = 20;
 
             Assert.IsTrue(k.Validate());
 
@@ -36,12 +33,6 @@ namespace Simetri.Core.Example.Test.ValidationTests
             k.Validator.ValidatorList.Add(new CompareValidator(k, "Yasi", 18, CompareOperator.GreatThanEqual));
             Assert.IsFalse(k.Validate());
 
-            k.Yasi = 18;
-            Assert.IsTrue(k.Validate());
-
-            k.Yasi = 20;
-
-            Assert.IsTrue(k.Validate());
 
 
         }

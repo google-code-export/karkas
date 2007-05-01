@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
 using Simetri.Core.Example.TypeLibrary;
+using Simetri.Core.Example.TypeLibrary.Ortak;
 
 namespace Simetri.Core.Example.Test.ValidationTests
 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Simetri.Core.Example.TypeLibrary;
 using NUnit.Framework;
+using Simetri.Core.Example.TypeLibrary.Ortak;
 
 namespace Simetri.Core.Example.Test.ValidationTests
 {
@@ -23,7 +24,6 @@ namespace Simetri.Core.Example.Test.ValidationTests
         {
             Kisi deneme = new Kisi();
             deneme.Adi = "Atilla";
-            deneme.Yasi = 30;
             deneme.Validate();
             Assert.IsTrue(deneme.Validator.IsValid);
         }
@@ -33,7 +33,6 @@ namespace Simetri.Core.Example.Test.ValidationTests
         {
             Kisi a = new Kisi();
             a.Adi = null;
-            a.Yasi = null;
             a.Validate();
             Assert.AreEqual(a.Validator.ErrorList.Count, 3);
         }
@@ -44,7 +43,6 @@ namespace Simetri.Core.Example.Test.ValidationTests
         {
             Kisi a = new Kisi();
             a.Adi = "Atilla";
-            a.Yasi = null;
             a.Validate();
             Assert.IsFalse(a.Validator.IsValid);
         }
