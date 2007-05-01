@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
+using System.Globalization;
 
 namespace Simetri.Core.DataUtil
 {
@@ -45,7 +46,7 @@ namespace Simetri.Core.DataUtil
         }
         private void paramDbTipiniSetle(SqlParameter prm, byte value)
         {
-                prm.SqlDbType = SqlDbType.TinyInt;
+            prm.SqlDbType = SqlDbType.TinyInt;
         }
         private void paramDbTipiniSetle(SqlParameter prm, byte[] value)
         {
@@ -147,7 +148,7 @@ namespace Simetri.Core.DataUtil
             }
 
         }
-        private void SorguCalistir(DataTable dt, string sql, CommandType cmdType,SqlParameter[] parameters)
+        private void SorguCalistir(DataTable dt, string sql, CommandType cmdType, SqlParameter[] parameters)
         {
             SqlConnection conn = ConnectionSingleton.Instance.Connection;
             SqlCommand cmd = new SqlCommand(sql, conn);
@@ -173,26 +174,57 @@ namespace Simetri.Core.DataUtil
 
         }
 
+        #region "DataTable Create Methods"
+        public DataTable DataTableOlustur(string sql, CommandType commandType)
+        {
+            DataTable dataTable = CreateDataTable();
+            DataTableDoldur(dataTable, sql, commandType);
+            return dataTable;
+        }
+        public DataTable DataTableOlustur(string sql)
+        {
+            DataTable dataTable = CreateDataTable();
+            DataTableDoldur(dataTable, sql, CommandType.Text);
+            return dataTable;
+        }
 
+        public DataTable DataTableOlustur(string sql, CommandType commandType, SqlParameter[] parameters)
+        {
+            DataTable dataTable = CreateDataTable();
+            DataTableDoldur(dataTable, sql, commandType, parameters);
+            return dataTable;
+        }
+        public DataTable DataTableOlustur(string sql, SqlParameter[] parameters)
+        {
+            DataTable dataTable = CreateDataTable();
+            DataTableDoldur(dataTable, sql, CommandType.Text, parameters);
+            return dataTable;
+        }
+
+
+
+
+
+        #endregion
 
         #region "DataTable Methods"
-        public void DataTableFill(DataTable dataTable, string sql, CommandType commandType)
+        public void DataTableDoldur(DataTable dataTable, string sql, CommandType commandType)
         {
             ValidateFillArguments(dataTable, sql);
             SorguCalistir(dataTable, sql, commandType);
         }
-        public void DataTableFill(DataTable dataTable, string sql)
+        public void DataTableDoldur(DataTable dataTable, string sql)
         {
             ValidateFillArguments(dataTable, sql);
             SorguCalistir(dataTable, sql, CommandType.Text);
         }
-        public void DataTableFillWithParams(DataTable dataTable, string sql, CommandType commandType
+        public void DataTableDoldur(DataTable dataTable, string sql, CommandType commandType
                 , SqlParameter[] parameters)
         {
             ValidateFillArguments(dataTable, sql);
             SorguCalistir(dataTable, sql, commandType, parameters);
         }
-        public void DataTableFillWithParams(DataTable dataTable, string sql
+        public void DataTableDoldur(DataTable dataTable, string sql
                 , SqlParameter[] parameters)
         {
             ValidateFillArguments(dataTable, sql);
@@ -202,6 +234,21 @@ namespace Simetri.Core.DataUtil
         #endregion
 
         #region "Helpers"
+
+        protected virtual DataTable CreateDataTable()
+        {
+            DataTable dataTable = new DataTable();
+            dataTable.Locale = CultureInfo.InvariantCulture;
+            return dataTable;
+        }
+
+        protected virtual DataSet CreateDataSet()
+        {
+            DataSet dataSet = new DataSet();
+            dataSet.Locale = CultureInfo.InvariantCulture;
+            return dataSet;
+        }
+
         protected virtual void ValidateFillArguments(DataTable dataTable, string sql)
         {
             if (dataTable == null)
