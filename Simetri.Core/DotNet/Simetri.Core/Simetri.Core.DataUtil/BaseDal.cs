@@ -14,16 +14,11 @@ namespace Simetri.Core.DataUtil
     /// <typeparam name="M"></typeparam>
     public abstract class BaseDal<T,M> where T : new()
     {
-        protected AdoTemplate template = new AdoTemplate();
 
         public BaseDal()
         {
 
         }
-
-
-
-
 
         private SqlConnection connection = new SqlConnection(ConnectionSingleton.Instance.ConnectionString);
 

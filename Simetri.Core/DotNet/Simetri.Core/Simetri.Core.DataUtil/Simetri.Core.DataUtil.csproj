@@ -37,6 +37,7 @@
     <Compile Include="BaseDal.cs" />
     <Compile Include="ConnectionSingleton.cs" />
     <Compile Include="ExceptionDegistirici.cs" />
+    <Compile Include="Exceptions\IkincilAnahtarHatasi.cs" />
     <Compile Include="Exceptions\SimetriVeriHatasi.cs" />
     <Compile Include="Exceptions\VeritabaniBaglantiHatasi.cs" />
     <Compile Include="Exceptions\YanlisSqlCumlesiHatasi.cs" />

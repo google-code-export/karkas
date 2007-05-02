@@ -43,7 +43,7 @@ namespace Simetri.Core.DataUtil
                 case 201:
                     throw new SimetriVeriHatasi(String.Format("{0} prosedürü için eksik parametre girildi. {1}", ex.Procedure), ex);
                 case 547:
-                    throw new SimetriVeriHatasi(String.Format("Tablo iliþkileri ile ilgili hatalý bir iþlem yapýldý."), ex);
+                    throw new IkincilAnahtarHatasi(String.Format("Tablo iliþkileri ile ilgili hatalý bir iþlem yapýldý."), ex);
                 case 208:
                     throw new VeritabaniBaglantiHatasi(String.Format("Veritabanina baglanilamadi lutfen connection string'in dogrulugunu ve veritabanininin calisip calismadigini kontrol ediniz, Kullanilan ConnectionString = {0}, verilen hata Mesaji = {1}", ConnectionSingleton.Instance.ConnectionString, ex.Message));
             }
