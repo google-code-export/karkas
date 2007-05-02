@@ -211,7 +211,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 
 	public override void Render()
 	{
-		string className = "";
+		string classNameTypeLibrary = "";
 		string schemaName = "";
 		string classNameSpace = "";
 		string memberVariableName = "";
@@ -233,7 +233,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		{
 			ITable table = database.Tables[tableName];
 
-			className = SimetriUtils.SetPascalCase(table.Name);
+			classNameTypeLibrary = SimetriUtils.SetPascalCase(table.Name);
 			schemaName = SimetriUtils.SetPascalCase(table.Schema);
 			classNameSpace = baseNameSpace + "." + schemaName;
 			bool identityVarmi;
@@ -255,7 +255,7 @@ using <%=baseNameSpaceTypeLibrary%>.<%= schemaName %>;
 
 namespace <%=baseNameSpaceDal%>
 {
-    public partial class <%= className %>Dal : BaseDal<<%= className %>,<%= pkType %>>
+    public partial class <%= classNameTypeLibrary %>Dal : BaseDal<<%= classNameTypeLibrary %>,<%= pkType %>>
     {
 
 
@@ -364,15 +364,15 @@ namespace <%=baseNameSpaceDal%>
 				%>  <%=cumle%>";
 			}
         }
-		public List<<%= className %>> SorgulaHepsiniGetir()
+		public List<<%= classNameTypeLibrary %>> SorgulaHepsiniGetir()
 		{
-			List<<%= className %>> liste = new List<<%= className %>>();
+			List<<%= classNameTypeLibrary %>> liste = new List<<%= classNameTypeLibrary %>>();
 			SorguCalistir(liste,SelectString);
             return liste;
 		}
-		public <%= className %> Sorgula<%= pkAdi %>Ile(<%= pkType %> p1)
+		public <%= classNameTypeLibrary %> Sorgula<%= pkAdi %>Ile(<%= pkType %> p1)
 		{
-			List<<%= className %>> liste = new List<<%= className %>>();
+			List<<%= classNameTypeLibrary %>> liste = new List<<%= classNameTypeLibrary %>>();
 			SorguCalistir(liste,SelectString + " WHERE  <%=pkAdi%> = " + p1);
 
             if (liste.Count > 0)
@@ -404,7 +404,7 @@ namespace <%=baseNameSpaceDal%>
         }
 
 		
-        protected override void ProcessRow(System.Data.IDataReader dr, <%= className %> row)
+        protected override void ProcessRow(System.Data.IDataReader dr, <%= classNameTypeLibrary %> row)
         {
 		<%
 				propertyVariableName = "";
@@ -428,7 +428,7 @@ namespace <%=baseNameSpaceDal%>
 				}
 		%>		
         }
-        protected override void InsertCommandParametersAdd(SqlCommand cmd, <%= className %> row)
+        protected override void InsertCommandParametersAdd(SqlCommand cmd, <%= classNameTypeLibrary %> row)
         {<%
 				string paramName = "";
 				foreach (IColumn column in table.Columns)
@@ -447,7 +447,7 @@ namespace <%=baseNameSpaceDal%>
 				}
 				%>
         }
-        protected override void UpdateCommandParametersAdd(SqlCommand cmd, <%= className %> row)
+        protected override void UpdateCommandParametersAdd(SqlCommand cmd, <%= classNameTypeLibrary %> row)
         {<%
 				paramName = "";
 				foreach (IColumn column in table.Columns)
@@ -463,7 +463,7 @@ namespace <%=baseNameSpaceDal%>
 				}
 				%>
         }
-        protected override void DeleteCommandParametersAdd(SqlCommand cmd, <%= className %> row)
+        protected override void DeleteCommandParametersAdd(SqlCommand cmd, <%= classNameTypeLibrary %> row)
         {<%
 				paramName = "";
 				foreach (IColumn column in table.Columns)
@@ -490,7 +490,7 @@ namespace <%=baseNameSpaceDal%>
 }
 <%
 //			output.writeln(className);
-			output.save( Path.Combine( outputPath + "\\" + baseNameSpaceDal + "\\" + schemaName , className + "Dal.generated.cs" ), false );
+			output.save( Path.Combine( outputPath + "\\" + baseNameSpaceDal + "\\" + schemaName , classNameTypeLibrary + "Dal.generated.cs" ), false );
 			output.clear();
 			}
 
