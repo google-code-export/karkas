@@ -417,13 +417,13 @@ namespace <%=baseNameSpaceDal%>
 					{%>
 					if (!dr.IsDBNull(<%= "" + i%>))
 					{
-						row.<%= propertyVariableName %> = dr.Get<%=SimetriUtils.GetDataReaderSyntax(column) %>(<%=i.ToString()%>);
+						row.<%= propertyVariableName %> = <%=SimetriUtils.GetDataReaderSyntax(column) %>(<%=i.ToString()%>);
 					}
 					<%}
 					else
 					{
 				%>
-					row.<%= propertyVariableName %> = dr.Get<%=SimetriUtils.GetDataReaderSyntax(column) %>(<%=i.ToString()%>);<%
+					row.<%= propertyVariableName %> = <%=SimetriUtils.GetDataReaderSyntax(column) %>(<%=i.ToString()%>);<%
 					}
 				}
 		%>		

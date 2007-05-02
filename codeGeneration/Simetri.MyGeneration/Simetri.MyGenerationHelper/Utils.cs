@@ -86,43 +86,43 @@ namespace Simetri.MyGenerationHelper
             //            return column.LanguageType;
             if (column.LanguageType == "Guid")
             {
-                return "Guid";
+                return "dr.GetGuid";
             }
             else if (column.LanguageType == "int")
             {
-                return "Int32";
+                return "dr.GetInt32";
             }
             else if (column.LanguageType == "byte")
             {
-                return "Byte";
+                return "dr.GetByte";
             }
             else if (column.LanguageType == "bool")
             {
-                return "Boolean";
+                return "dr.GetBoolean";
             }
             else if (column.LanguageType == "DateTime")
             {
-                return "DateTime";
+                return "dr.GetDateTime";
             }
             else if (column.LanguageType == "string")
             {
-                return "String";
+                return "dr.GetString";
             }
             else if (column.LanguageType == "short")
             {
-                return "Int16";
+                return "dr.GetInt16";
             }
             else if (column.LanguageType == "long")
             {
-                return "Int64";
+                return "dr.GetInt64";
             }
             else if (column.LanguageType == "decimal")
             {
-                return "Decimal";
+                return "dr.GetDecimal";
             }
             else if (column.LanguageType == "byte[]")
             {
-                return "Byte[]";
+                return "(Byte[])dr.GetValue";
             }
 
 
