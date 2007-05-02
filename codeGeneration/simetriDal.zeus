@@ -218,7 +218,6 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		string propertyVariableName = "";
 		string baseNameSpace =input["classNamespace"].ToString();
 		string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
-		string baseNameSpaceDal = baseNameSpace + ".Dal";
 		
 		string outputPath = input["outputPath"].ToString();
 		
@@ -238,6 +237,8 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			classNameSpace = baseNameSpace + "." + schemaName;
 			bool identityVarmi;
 			string pkcumlesi = "";
+
+			string baseNameSpaceDal = baseNameSpace + ".Dal." +schemaName;
 			
 			string pkType = SimetriUtils.PrimaryKeyTipiniBul(table);
 			string pkAdi = SimetriUtils.PrimaryKeyAdiniBul(table);
@@ -490,7 +491,7 @@ namespace <%=baseNameSpaceDal%>
 }
 <%
 //			output.writeln(className);
-			output.save( Path.Combine( outputPath + "\\" + baseNameSpaceDal + "\\" + schemaName , classNameTypeLibrary + "Dal.generated.cs" ), false );
+			output.save( Path.Combine( outputPath + "\\" + baseNameSpace + ".Dal\\" + schemaName   , classNameTypeLibrary + "Dal.generated.cs" ), false );
 			output.clear();
 			}
 
