@@ -214,7 +214,8 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		string classNameSpace = "";
 		string memberVariableName = "";
 		string propertyVariableName = "";
-		string baseNameSpace =input["classNamespace"].ToString() + ".TypeLibrary";
+		string baseNameSpace =input["classNamespace"].ToString();
+		string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 		
 		string outputPath = input["outputPath"].ToString();
 		
@@ -231,7 +232,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 
 			className = SimetriUtils.SetPascalCase(table.Name);
 			schemaName = SimetriUtils.SetPascalCase(table.Schema);
-			classNameSpace = baseNameSpace + "." + schemaName;
+			classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
 			
 %>
 using System;
@@ -277,7 +278,7 @@ namespace <%=classNameSpace%>
 }
 <%
 //			output.writeln(className);
-			output.save( Path.Combine( outputPath + "\\" + schemaName , className + ".generated.cs" ), false );
+			output.save( Path.Combine( outputPath + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName , className + ".generated.cs" ), false );
 			output.clear();
 			}
 

@@ -217,6 +217,8 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		string memberVariableName = "";
 		string propertyVariableName = "";
 		string baseNameSpace =input["classNamespace"].ToString();
+		string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
+		string baseNameSpaceDal = baseNameSpace + ".Dal";
 		
 		string outputPath = input["outputPath"].ToString();
 		
@@ -247,11 +249,11 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using Simetri.Core.DataUtil;
-using <%=baseNameSpace%>.TypeLibrary;
-using <%=baseNameSpace%>.TypeLibrary.<%= schemaName %>;
+using <%=baseNameSpaceTypeLibrary%>;
+using <%=baseNameSpaceTypeLibrary%>.<%= schemaName %>;
 
 
-namespace <%=baseNameSpace%>.Dal
+namespace <%=baseNameSpaceDal%>
 {
     public partial class <%= className %>Dal : BaseDal<<%= className %>,<%= pkType %>>
     {
@@ -488,7 +490,7 @@ namespace <%=baseNameSpace%>.Dal
 }
 <%
 //			output.writeln(className);
-			output.save( Path.Combine( outputPath + "\\" + schemaName , className + "Dal.generated.cs" ), false );
+			output.save( Path.Combine( outputPath + "\\" + baseNameSpaceDal + "\\" + schemaName , className + ".generated.cs" ), false );
 			output.clear();
 			}
 
