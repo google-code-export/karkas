@@ -6,6 +6,12 @@ using System.Data;
 
 namespace Simetri.Core.DataUtil
 {
+    /// <summary>
+    /// T TypeLibrary Class
+    /// M Type of Primary Key of T
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="M"></typeparam>
     public abstract class BaseDal<T,M> where T : new()
     {
         protected AdoTemplate template = new AdoTemplate();
