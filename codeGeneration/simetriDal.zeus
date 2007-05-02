@@ -506,10 +506,10 @@ namespace <%=baseNameSpaceDal%>
 			%>
 		public List<<%=fKeyTypeLibraryLongClassName%>> sorgula<%=fKeyShortClassName%>Getir(<%=fKeyPrimaryKeyTipi%> <%=fKeyPrimaryKeyAdi %> )
 		{
-			//<%= fKeyDalLongClassName %> dal = new <%= fKeyDalLongClassName %>();
-			//List<<%=fKeyTypeLibraryLongClassName%>> liste = new List<<%=fKeyTypeLibraryLongClassName%>>();
-			//dal.SorguCalistir(liste,SelectString + " WHERE  <%=column.Name%> = " + String.Format("'{0}'",<%=fKeyPrimaryKeyAdi %>));
-			
+			<%= fKeyDalLongClassName %> dal = new <%= fKeyDalLongClassName %>();
+			List<<%=fKeyTypeLibraryLongClassName%>> liste = new List<<%=fKeyTypeLibraryLongClassName%>>();
+			dal.SorguCalistir(liste,SelectString + " WHERE  <%=column.Name%> = " + String.Format("'{0}'",<%=fKeyPrimaryKeyAdi %>));
+			return liste;
 		}
 		<%	}
 		}
