@@ -7,7 +7,7 @@ namespace Simetri.Core.DataUtil.Exceptions
 {
     public class IkincilAnahtarHatasi : SimetriVeriHatasi
     {
-                public IkincilAnahtarHatasi()
+        public IkincilAnahtarHatasi()
             : base()
         {
 
