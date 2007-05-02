@@ -32,7 +32,7 @@ namespace Simetri.MyGenerationHelper
         }
         public string ProjeNamespaceIsminiAl(IDatabase database)
         {
-            string dbName = "YENI_SISTEM";
+            string dbName = database.Name;
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlFilePath);

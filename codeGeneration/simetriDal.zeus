@@ -12,7 +12,7 @@ public class GeneratedGui : DotNetScriptGui
 {
 	public GeneratedGui(ZeusContext context) : base(context) {}
 
-	string defaultOutputPath = @"D:\projects\DotnetProjects\Denemeler\Adisyon\Adisyon.Dal";
+	string defaultOutputPath = "";
 
 	GuiListBox chooseTables = null;
 	GuiTextBox outputPath = null;
@@ -45,7 +45,7 @@ public class GeneratedGui : DotNetScriptGui
 			
 			GuiLabel label2 = ui.AddLabel( "label2", "Namespace: ",  "Nesnelerinizin namespace'ini verin." );
 			label2.Width = 75;
-			classNamespace = ui.AddTextBox( "classNamespace", "Adisyon", "Nesnelerinizin namespace'ini verin." );				
+			classNamespace = ui.AddTextBox( "classNamespace", " ", "Nesnelerinizin namespace'ini verin." );				
 			classNamespace.Width = 150;
 			classNamespace.Top = label2.Top;
 			classNamespace.Left = outputPath.Left;//label2.Left + label2.Width + 5;
