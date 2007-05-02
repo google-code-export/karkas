@@ -3,7 +3,7 @@
 ##|TITLE Simetri Type Library Dal
 ##|NAMESPACE 
 ##|SOURCE_TYPE Source
-##|OUTPUT_LANGUAGE None
+##|OUTPUT_LANGUAGE C#
 ##|GUI_ENGINE .Net Script
 ##|GUI_LANGUAGE C#
 ##|GUI_BEGIN
@@ -15,6 +15,8 @@ public class GeneratedGui : DotNetScriptGui
 	string defaultOutputPath = @"D:\projects\DotnetProjects\Denemeler\Adisyon\Adisyon.Dal";
 
 	GuiListBox chooseTables = null;
+	GuiTextBox outputPath = null;
+	GuiTextBox classNamespace = null;
 	public override void Setup()
 	{
 		if ( !input.Contains( "chooseTables" ) || !input.Contains( "txtPath" ) ||
@@ -31,7 +33,7 @@ public class GeneratedGui : DotNetScriptGui
 			// Setup Folder selection input control.
 			GuiLabel label1 = ui.AddLabel( "label1", "Output path:", "Select the output path in the field below." );
 			label1.Width =75;
-			GuiTextBox outputPath = ui.AddTextBox( "outputPath", sOutputPath, "Select the Output Path." );
+			outputPath = ui.AddTextBox( "outputPath", sOutputPath, "Select the Output Path." );
 			outputPath.Width = 250;
 			
 			outputPath.Left = label1.Left + label1.Width;
@@ -43,7 +45,7 @@ public class GeneratedGui : DotNetScriptGui
 			
 			GuiLabel label2 = ui.AddLabel( "label2", "Namespace: ",  "Nesnelerinizin namespace'ini verin." );
 			label2.Width = 75;
-			GuiTextBox classNamespace = ui.AddTextBox( "classNamespace", "Adisyon", "Nesnelerinizin namespace'ini verin." );				
+			classNamespace = ui.AddTextBox( "classNamespace", "Adisyon", "Nesnelerinizin namespace'ini verin." );				
 			classNamespace.Width = 150;
 			classNamespace.Top = label2.Top;
 			classNamespace.Left = outputPath.Left;//label2.Left + label2.Width + 5;
@@ -175,10 +177,15 @@ public class GeneratedGui : DotNetScriptGui
 	{
 
 		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
+		string dbName = cmbDatabases.SelectedText;
 	
-		bindTables( cmbDatabases.SelectedText,"dbo" );
-		bindViews( cmbDatabases.SelectedText );
+		bindTables( dbName,"dbo" );
+		bindViews( dbName );
+		
+		outputPath.Text = SimetriUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
+		classNamespace.Text =SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
 	}
+
 	public void chooseSchema_onchange( GuiComboBox control )
 	{
 		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
