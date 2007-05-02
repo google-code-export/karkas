@@ -33,47 +33,7 @@ namespace Simetri.Core.DataUtil
             set { connection = value; }
         }
 
-        public void SorguHariciKomutCalistir(String cmdText)
-        {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = cmdText;
-            cmd.Connection = Connection;
-            try
-            {
-                Connection.Open();
-                cmd.ExecuteNonQuery();
-            }
-            catch (SqlException ex)
-            {
-                ExceptionDegistirici.Degistir(ex, cmdText);
-            }
-            finally
-            {
-                Connection.Close();
-            }
-        }
 
-        public Object TekDegerGetir(string cmdText)
-        {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = cmdText;
-            cmd.Connection = Connection;
-            object sonuc = 0;
-            try
-            {
-                Connection.Open();
-                sonuc = cmd.ExecuteScalar();
-            }
-            catch (SqlException ex)
-            {
-                ExceptionDegistirici.Degistir(ex, cmdText);
-            }
-            finally
-            {
-                Connection.Close();
-            }
-            return sonuc;
-        }
 
 
         public void Guncelle(T row)

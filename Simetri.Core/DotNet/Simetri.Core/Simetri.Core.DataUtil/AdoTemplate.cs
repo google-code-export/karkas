@@ -9,6 +9,58 @@ namespace Simetri.Core.DataUtil
 {
     public class AdoTemplate
     {
+        private SqlConnection connection = new SqlConnection(ConnectionSingleton.Instance.ConnectionString);
+        public SqlConnection Connection
+        {
+            get { return connection; }
+            set { connection = value; }
+        }
+
+
+
+        public Object TekDegerGetir(string cmdText)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = cmdText;
+            cmd.Connection = Connection;
+            object sonuc = 0;
+            try
+            {
+                Connection.Open();
+                sonuc = cmd.ExecuteScalar();
+            }
+            catch (SqlException ex)
+            {
+                ExceptionDegistirici.Degistir(ex, cmdText);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+            return sonuc;
+        }
+        
+        public void SorguHariciKomutCalistir(String cmdText)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = cmdText;
+            cmd.Connection = Connection;
+            try
+            {
+                Connection.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                ExceptionDegistirici.Degistir(ex, cmdText);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+
         public void parameterEkle(SqlCommand cmd, string parameterName, object value)
         {
             SqlParameter prm = new SqlParameter();
