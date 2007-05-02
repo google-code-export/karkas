@@ -484,6 +484,38 @@ namespace <%=baseNameSpaceDal%>
 				%>
         }
 
+		<%
+		foreach (IColumn column in table.Columns)
+		{
+			foreach (IForeignKey fkey in column.ForeignKeys)
+			{
+				if (fkey.PrimaryTable.Name == column.Table.Name)
+				{
+				string fKeyShortClassName = SimetriUtils.SetPascalCase(fkey.ForeignTable.Name);
+				string fKeyTypeLibraryLongClassName = SimetriUtils.SetPascalCase(baseNameSpace)
+					+ ".TypeLibrary"
+					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Schema) 
+					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Name);
+				string fKeyDalLongClassName = SimetriUtils.SetPascalCase(baseNameSpace)
+					+ ".Dal"
+					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Schema) 
+					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Name)
+					+ "Dal";
+				string fKeyPrimaryKeyTipi =SimetriUtils.PrimaryKeyTipiniBul(fkey.ForeignTable);
+				string fKeyPrimaryKeyAdi = SimetriUtils.PrimaryKeyAdiniBul(fkey.ForeignTable);
+			%>
+		public List<<%=fKeyTypeLibraryLongClassName%>> sorgula<%=fKeyShortClassName%>Getir(<%=fKeyPrimaryKeyTipi%> <%=fKeyPrimaryKeyAdi %> )
+		{
+			//<%= fKeyDalLongClassName %> dal = new <%= fKeyDalLongClassName %>();
+			//List<<%=fKeyTypeLibraryLongClassName%>> liste = new List<<%=fKeyTypeLibraryLongClassName%>>();
+			//dal.SorguCalistir(liste,SelectString + " WHERE  <%=column.Name%> = " + String.Format("'{0}'",<%=fKeyPrimaryKeyAdi %>));
+			
+		}
+		<%	}
+		}
+		
+	}
+		%>
 
 
 
