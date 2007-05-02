@@ -5,11 +5,49 @@ using System.Collections;
 using MyMeta;
 using System.Data;
 using System.Data.SqlClient;
+using System.Xml;
 
 namespace Simetri.MyGenerationHelper
 {
     public class Utils
     {
+        string xmlFilePath = @"C:\Program Files\MyGeneration\Settings\simetri.xml";
+
+        public string ProjeDizininiAl(IDatabase database)
+        {
+            string dbName = database.Name;
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlFilePath);
+
+            foreach (XmlNode node in xmlDoc.GetElementsByTagName("database"))
+            {
+                if (node.Attributes["name"].Value == dbName)
+                {
+                    XmlNode dizinNode = node.SelectSingleNode("ProjectFolder");
+                    return dizinNode.InnerText;
+                }
+            }
+            return "";
+        }
+        public string ProjeNamespaceIsminiAl(IDatabase database)
+        {
+            string dbName = "YENI_SISTEM";
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlFilePath);
+
+            foreach (XmlNode node in xmlDoc.GetElementsByTagName("database"))
+            {
+                if (node.Attributes["name"].Value == dbName)
+                {
+                    XmlNode dizinNode = node.SelectSingleNode("ProjectNamespace");
+                    return dizinNode.InnerText;
+                }
+            }
+            return "";
+        }
+
         public void deneme()
         {
             SqlDataReader reader;
@@ -82,13 +120,17 @@ namespace Simetri.MyGenerationHelper
             {
                 return "Decimal";
             }
+            else if (column.LanguageType == "byte[]")
+            {
+                return "Byte[]";
+            }
 
 
 
             return column.LanguageType;
         }
 
-
+        
         public ITables filterListAccordingToSchemaName(ITables tableList, string schemaName)
         {
             ITables newList = new MyMeta.Sql.SqlTables();
@@ -168,9 +210,6 @@ namespace Simetri.MyGenerationHelper
             }
             return text;
         }
-
-
-
 
 
         public string SetPascalCase(string name)
