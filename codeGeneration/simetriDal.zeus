@@ -490,7 +490,7 @@ namespace <%=baseNameSpaceDal%>
 }
 <%
 //			output.writeln(className);
-			output.save( Path.Combine( outputPath + "\\" + baseNameSpaceDal + "\\" + schemaName , className + ".generated.cs" ), false );
+			output.save( Path.Combine( outputPath + "\\" + baseNameSpaceDal + "\\" + schemaName , className + "Dal.generated.cs" ), false );
 			output.clear();
 			}
 
