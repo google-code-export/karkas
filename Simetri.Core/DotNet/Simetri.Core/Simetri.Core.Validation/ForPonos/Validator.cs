@@ -64,5 +64,16 @@ namespace Simetri.Core.Validation.ForPonos
             get { return validatorList; }
             set { validatorList = value; }
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (string s in errorList)
+            {
+                sb.Append(s);
+                sb.Append(Environment.NewLine);
+            }
+            return sb.ToString();
+        }
     }
 }

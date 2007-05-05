@@ -7,8 +7,9 @@ namespace Simetri.Core.Web.Utility
     public abstract class SimetriBaseCrudPage : SimetriBasePage
     {
 
-        public abstract void UiToBusiness(Object o);
-        public abstract void Business(Object o);
+        public abstract object UiToBusiness();
+        public abstract void BusinessToUi(object o);
+
         
     }
 }

@@ -44,6 +44,7 @@
     <Compile Include="ForPonos\RegExValidator.cs" />
     <Compile Include="ForPonos\RequiredFieldValidator.cs" />
     <Compile Include="ForPonos\Validator.cs" />
+    <Compile Include="OnaylamaHatasi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
