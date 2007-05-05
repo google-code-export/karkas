@@ -1,9 +1,9 @@
 ﻿##|TYPE Template
-##|UNIQUEID 2ef0e96f-a8f9-418b-9449-bcd580c667dc
-##|TITLE Simetri Type Library Type Library
+##|UNIQUEID aa374840-1a19-4952-b8a4-692cbd0a3abe
+##|TITLE Simetri Type Library Bs Wrapper
 ##|NAMESPACE 
 ##|SOURCE_TYPE Source
-##|OUTPUT_LANGUAGE None
+##|OUTPUT_LANGUAGE C#
 ##|GUI_ENGINE .Net Script
 ##|GUI_LANGUAGE C#
 ##|GUI_BEGIN
@@ -12,7 +12,7 @@ public class GeneratedGui : DotNetScriptGui
 {
 	public GeneratedGui(ZeusContext context) : base(context) {}
 
-	string defaultOutputPath = @"D:\projects\DotnetProjects\Denemeler\Adisyon\Adisyon.TypeLibrary";
+	string defaultOutputPath = "";
 
 	GuiListBox chooseTables = null;
 	GuiTextBox outputPath = null;
@@ -45,7 +45,7 @@ public class GeneratedGui : DotNetScriptGui
 			
 			GuiLabel label2 = ui.AddLabel( "label2", "Namespace: ",  "Nesnelerinizin namespace'ini verin." );
 			label2.Width = 75;
-			classNamespace = ui.AddTextBox( "classNamespace", "Adisyon", "Nesnelerinizin namespace'ini verin." );				
+			classNamespace = ui.AddTextBox( "classNamespace", " ", "Nesnelerinizin namespace'ini verin." );				
 			classNamespace.Width = 150;
 			classNamespace.Top = label2.Top;
 			classNamespace.Left = outputPath.Left;//label2.Left + label2.Width + 5;
@@ -185,6 +185,7 @@ public class GeneratedGui : DotNetScriptGui
 		outputPath.Text = SimetriUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
 		classNamespace.Text =SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
 	}
+
 	public void chooseSchema_onchange( GuiComboBox control )
 	{
 		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
@@ -207,15 +208,22 @@ public class GeneratedTemplate : DotNetScriptTemplate
 
 
 
+
 	public override void Render()
 	{
-		string className = "";
+		string classNameTypeLibrary = "";
+		string classNameDal = "";
+		string classNameBs = "";
 		string schemaName = "";
 		string classNameSpace = "";
 		string memberVariableName = "";
 		string propertyVariableName = "";
+		
 		string baseNameSpace =input["classNamespace"].ToString();
+		
 		string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
+		string baseNameSpaceDal = baseNameSpace + ".Dal";
+		string baseNameSpaceBs = baseNameSpace + ".Bs";
 		
 		string outputPath = input["outputPath"].ToString();
 		
@@ -230,55 +238,43 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		{
 			ITable table = database.Tables[tableName];
 
-			className = SimetriUtils.SetPascalCase(table.Name);
+			classNameTypeLibrary = SimetriUtils.SetPascalCase(table.Name);
+			classNameDal = SimetriUtils.SetPascalCase(table.Name) + "Dal";
+			classNameBs = SimetriUtils.SetPascalCase(table.Name) +"Bs";
+
 			schemaName = SimetriUtils.SetPascalCase(table.Schema);
-			classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
+			classNameSpace = baseNameSpace + "." + schemaName;
+			bool identityVarmi;
+			string pkcumlesi = "";
+
+			string baseNameSpaceBsWithSchema = baseNameSpace + ".Bs." +schemaName;
+			string baseNameSpaceDalWithSchema = baseNameSpace + ".Dal." +schemaName;
+			
 			
 %>
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
+using Simetri.Core.DataUtil;
+using <%=baseNameSpaceTypeLibrary%>;
+using <%=baseNameSpaceTypeLibrary%>.<%= schemaName %>;
+using <%=baseNameSpace%>;
+using <%=baseNameSpace%>.<%= schemaName %>;
 
-namespace <%=classNameSpace%>
+
+namespace <%=baseNameSpaceBs%>
 {
-    public partial class <%= className %>
+    public partial class <%= classNameBs %> 
     {
-		<%
-		foreach (IColumn column in table.Columns)
-		{
-		memberVariableName = SimetriUtils.SetCamelCase(column.Name);
-		propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
-		%>
-		private <%=column.LanguageType%> <%=memberVariableName%>;<%
-		}
-		%>
-		<%
-		foreach (IColumn column in table.Columns)
-		{
-		memberVariableName = SimetriUtils.SetCamelCase(column.Name);
-		propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
-		%>
-		public <%=column.LanguageType%> <%=propertyVariableName%>
-		{
-			get
-			{
-				return <%=memberVariableName%>;
-			}
-			set
-			{
-				<%=memberVariableName%> = value;
-			}
-		}
-		<%
-		}
-		%>
 
 
     }
 }
 <%
 //			output.writeln(className);
-			output.save( Path.Combine( outputPath + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName , className + ".generated.cs" ), false );
+			output.save( Path.Combine( outputPath + "\\" + baseNameSpace + ".Bs\\" + schemaName   , classNameTypeLibrary + "Bs.generated.cs" ), false );
 			output.clear();
 			}
 

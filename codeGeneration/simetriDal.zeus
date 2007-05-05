@@ -430,55 +430,36 @@ namespace <%=baseNameSpaceDal%>
 		%>		
         }
         protected override void InsertCommandParametersAdd(SqlCommand cmd, <%= classNameTypeLibrary %> row)
-        {<%
+        {
+			ParameterBuilder builder = new ParameterBuilder(cmd);
+<%
 				string paramName = "";
 				foreach (IColumn column in table.Columns)
 				{
-					paramName = "prm" + SimetriUtils.SetPascalCase(column.Name);
 					if (!column.IsAutoKey)
-					{
-					%>
-					SqlParameter <%=paramName %>  = new SqlParameter();
-					<%=paramName %>.ParameterName = "@<%= column.Name %>";					
-					<%=paramName %>.SqlDbType = <%= column.DbTargetType %>;
-					<%=paramName %>.Value = row.<%= SimetriUtils.SetPascalCase(column.Name) %>;
-					cmd.Parameters.Add(<%=paramName %>);
-				<%
+					{%>
+			builder.parameterEkle("@<%= column.Name %>",<%= column.DbTargetType %>, row.<%= SimetriUtils.SetPascalCase(column.Name) %>);<%
 					}
 				}
 				%>
         }
         protected override void UpdateCommandParametersAdd(SqlCommand cmd, <%= classNameTypeLibrary %> row)
-        {<%
-				paramName = "";
+        {
+			ParameterBuilder builder = new ParameterBuilder(cmd);<%
 				foreach (IColumn column in table.Columns)
-				{
-					paramName = "prm" + SimetriUtils.SetPascalCase(column.Name);
-					%>
-					SqlParameter <%=paramName %>  = new SqlParameter();
-					<%=paramName %>.ParameterName = "@<%= column.Name %>";					
-					<%=paramName %>.SqlDbType = <%= column.DbTargetType %>;
-					<%=paramName %>.Value = row.<%= SimetriUtils.SetPascalCase(column.Name) %>;
-					cmd.Parameters.Add(<%=paramName %>);
-				<%
+				{%>
+			builder.parameterEkle("@<%= column.Name %>",<%= column.DbTargetType %>, row.<%= SimetriUtils.SetPascalCase(column.Name) %>);<%
 				}
 				%>
         }
         protected override void DeleteCommandParametersAdd(SqlCommand cmd, <%= classNameTypeLibrary %> row)
-        {<%
-				paramName = "";
+        {
+			ParameterBuilder builder = new ParameterBuilder(cmd);<%
 				foreach (IColumn column in table.Columns)
 				{
-					paramName = "prm" + SimetriUtils.SetPascalCase(column.Name);
 					if (column.IsInPrimaryKey )
-					{
-					%>
-					SqlParameter <%=paramName %>  = new SqlParameter();
-					<%=paramName %>.ParameterName = "@<%= column.Name %>";					
-					<%=paramName %>.SqlDbType = <%= column.DbTargetType %>;
-					<%=paramName %>.Value = row.<%= SimetriUtils.SetPascalCase(column.Name) %>;
-					cmd.Parameters.Add(<%=paramName %>);
-				<%
+					{%>
+			builder.parameterEkle("@<%= column.Name %>",<%= column.DbTargetType %>, row.<%= SimetriUtils.SetPascalCase(column.Name) %>);<%
 					}
 				}
 				%>
