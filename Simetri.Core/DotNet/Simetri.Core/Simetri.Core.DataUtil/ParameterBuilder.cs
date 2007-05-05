@@ -20,56 +20,35 @@ namespace Simetri.Core.DataUtil
         {
             this.command = pCommand;
         }
-        public void parameterEkle(string parameterName, object value)
+        public void parameterEkle(string parameterName,SqlDbType dbType, object value)
         {
-            SqlParameter prm = new SqlParameter();
-            prm.ParameterName = parameterName;
-            paramDbTipiniSetle(prm, value);
-            prm.Value = value;
+            SqlParameter prm = parameterDegerleriniSetle(parameterName, dbType, value);
             command.Parameters.Add(prm);
         }
-        public void parameterEkle(string parameterName, object value, int size)
+
+        private static SqlParameter parameterDegerleriniSetle(string parameterName, SqlDbType dbType, object value)
         {
             SqlParameter prm = new SqlParameter();
             prm.ParameterName = parameterName;
-            paramDbTipiniSetle(prm, value);
-            prm.Value = value;
+            prm.SqlDbType = dbType;
+            if (value == null)
+            {
+                prm.Value = DBNull.Value;
+            }
+            else
+            {
+                prm.Value = value;
+            }
+            return prm;
+        }
+        public void parameterEkle(string parameterName, SqlDbType dbType, object value, int size)
+        {
+            SqlParameter prm = parameterDegerleriniSetle(parameterName, dbType, value);
             prm.Size = size;
             command.Parameters.Add(prm);
         }
 
 
-        private void paramDbTipiniSetle(SqlParameter prm, string value)
-        {
-            prm.SqlDbType = SqlDbType.VarChar;
-        }
-        private void paramDbTipiniSetle(SqlParameter prm, int value)
-        {
-            prm.SqlDbType = SqlDbType.Int;
-        }
-        private void paramDbTipiniSetle(SqlParameter prm, Guid value)
-        {
-            prm.SqlDbType = SqlDbType.UniqueIdentifier;
-        }
-        private void paramDbTipiniSetle(SqlParameter prm, long value)
-        {
-            prm.SqlDbType = SqlDbType.BigInt;
-        }
-        private void paramDbTipiniSetle(SqlParameter prm, byte value)
-        {
-            prm.SqlDbType = SqlDbType.TinyInt;
-        }
-        private void paramDbTipiniSetle(SqlParameter prm, byte[] value)
-        {
-            prm.SqlDbType = SqlDbType.Binary;
-        }
-        private void paramDbTipiniSetle(SqlParameter prm, bool value)
-        {
-            prm.SqlDbType = SqlDbType.Bit;
-        }
-        private void paramDbTipiniSetle(SqlParameter prm, object value)
-        {
-        }
 
 
     }
