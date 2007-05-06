@@ -34,6 +34,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Ortak\Kisi.generated.cs" />
+    <Compile Include="Ortak\KisiAdres.generated.cs" />
+    <Compile Include="Ortak\KisiEkBilgiler.generated.cs" />
+    <Compile Include="Ortak\KisiIletisim.generated.cs" />
+    <Compile Include="Ortak\KisiNufusBilgileri.generated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
