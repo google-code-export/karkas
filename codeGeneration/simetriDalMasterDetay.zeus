@@ -242,24 +242,9 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			
 			string pkType = SimetriUtils.PrimaryKeyTipiniBul(table);
 			string pkAdi = SimetriUtils.PrimaryKeyAdiniBul(table);
-%>using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Text;
-using Simetri.Core.DataUtil;
-using <%=baseNameSpaceTypeLibrary%>;
-using <%=baseNameSpaceTypeLibrary%>.<%= schemaName %>;
-
-
-namespace <%=baseNameSpaceDal%>
-{
-    public partial class <%= classNameTypeLibrary %>Dal : BaseDal<<%= classNameTypeLibrary %>,<%= pkType %>>
-    {
 
 
 
-		<%
 		foreach (IColumn column in table.Columns)
 		{
 			foreach (IForeignKey fkey in column.ForeignKeys)
@@ -285,8 +270,8 @@ namespace <%=baseNameSpaceDal%>
 					whereName = fkey.ForeignColumns[0].Name;
 				}
 
-			%>
-		public List<<%=fKeyTypeLibraryLongClassName%>> sorgula<%=fKeyShortClassName%>Getir(<%= pkType %> p1)
+%>		
+		public List<<%=fKeyTypeLibraryLongClassName%>> sorgula<%=fKeyShortClassName%>Getir(<%= pkType %> p<%= whereName %>)
 		{
 			<%= fKeyDalLongClassName %> dal = new <%= fKeyDalLongClassName %>();
 			List<<%=fKeyTypeLibraryLongClassName%>> liste = new List<<%=fKeyTypeLibraryLongClassName%>>();
@@ -297,23 +282,12 @@ namespace <%=baseNameSpaceDal%>
 		}
 		
 	}
-		%>
-
-
-
-    }
-}
-<%
 //			output.writeln(className);
-			output.save( Path.Combine( outputPath + "\\" + baseNameSpace + ".Dal\\" + schemaName   , classNameTypeLibrary + "Dal.generated.cs" ), false );
-			output.clear();
+//			output.save( Path.Combine( outputPath + "\\" + baseNameSpace + ".Dal\\" + schemaName   , classNameTypeLibrary + "Dal.generated.cs" ), false );
+//			output.clear();
 			}
 
 	}
-	
-	
-
-
 }
 %>
 ##|BODY_END
