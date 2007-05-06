@@ -49,6 +49,36 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.Web.Utility", 
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.TypeLibrary", "Simetri.Core.TypeLibrary\Simetri.Core.TypeLibrary.csproj", "{856567F9-E8D4-4FA4-AA91-A77740A1560A}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.Dal", "Simetri.Core.Dal\Simetri.Core.Dal.csproj", "{638060D9-F3D5-4136-9828-56701AE8EC8C}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.Bs", "Simetri.Core.Bs\Simetri.Core.Bs.csproj", "{81485655-4F3B-461E-943C-8AF5FFB3C5EA}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.BsWrapper", "Simetri.Core.BsWrapper\Simetri.Core.BsWrapper.csproj", "{06EF9016-409B-4592-8EF8-1C5FBA765253}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.WebApp", "Simetri.Core.WebApp\Simetri.Core.WebApp.csproj", "{CFBEFF23-6549-49E0-9B5F-4B55581617BF}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +117,26 @@ Global
 		{3EFFC21B-0F29-4AA2-A504-0B774DFA4C5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EFFC21B-0F29-4AA2-A504-0B774DFA4C5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EFFC21B-0F29-4AA2-A504-0B774DFA4C5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{856567F9-E8D4-4FA4-AA91-A77740A1560A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{856567F9-E8D4-4FA4-AA91-A77740A1560A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{856567F9-E8D4-4FA4-AA91-A77740A1560A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{856567F9-E8D4-4FA4-AA91-A77740A1560A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{638060D9-F3D5-4136-9828-56701AE8EC8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{638060D9-F3D5-4136-9828-56701AE8EC8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{638060D9-F3D5-4136-9828-56701AE8EC8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{638060D9-F3D5-4136-9828-56701AE8EC8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81485655-4F3B-461E-943C-8AF5FFB3C5EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81485655-4F3B-461E-943C-8AF5FFB3C5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81485655-4F3B-461E-943C-8AF5FFB3C5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81485655-4F3B-461E-943C-8AF5FFB3C5EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06EF9016-409B-4592-8EF8-1C5FBA765253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06EF9016-409B-4592-8EF8-1C5FBA765253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06EF9016-409B-4592-8EF8-1C5FBA765253}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06EF9016-409B-4592-8EF8-1C5FBA765253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFBEFF23-6549-49E0-9B5F-4B55581617BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFBEFF23-6549-49E0-9B5F-4B55581617BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFBEFF23-6549-49E0-9B5F-4B55581617BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFBEFF23-6549-49E0-9B5F-4B55581617BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
