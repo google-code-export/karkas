@@ -65,6 +65,34 @@
     <Content Include="SimetriMain.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Themes\GridView\GridView.skin" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Themes\TextBox\TextBox.skin" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Themes\Main\Main.skin" />
+    <Content Include="App_Themes\Main\MainStyleSheet.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AppSettingsDevelopment.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AppSettingsTest.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AppSettingsServer.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ConnectionStringsDevelopment.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ConnectionStringsTest.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ConnectionStringsServer.config" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Ortak\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

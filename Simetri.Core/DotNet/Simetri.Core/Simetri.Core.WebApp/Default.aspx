@@ -2,4 +2,8 @@
 <%@ MasterType TypeName="Simetri.Core.WebApp.SimetriMain" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cph" runat="server">
+
+    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+    
+    
 </asp:Content>
