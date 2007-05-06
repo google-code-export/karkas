@@ -1,9 +1,9 @@
 ﻿##|TYPE Template
-##|UNIQUEID 2ef0e96f-a8f9-418b-9449-bcd580c667dc
-##|TITLE Simetri Type Library Type Library
+##|UNIQUEID a8c327da-e2f8-453e-aa30-d17898eb69f0
+##|TITLE Simetri Type Library Dal Master Detay
 ##|NAMESPACE 
 ##|SOURCE_TYPE Source
-##|OUTPUT_LANGUAGE None
+##|OUTPUT_LANGUAGE C#
 ##|GUI_ENGINE .Net Script
 ##|GUI_LANGUAGE C#
 ##|GUI_BEGIN
@@ -12,7 +12,7 @@ public class GeneratedGui : DotNetScriptGui
 {
 	public GeneratedGui(ZeusContext context) : base(context) {}
 
-	string defaultOutputPath = @"D:\projects\DotnetProjects\Denemeler\Adisyon\Adisyon.TypeLibrary";
+	string defaultOutputPath = "";
 
 	GuiListBox chooseTables = null;
 	GuiTextBox outputPath = null;
@@ -45,7 +45,7 @@ public class GeneratedGui : DotNetScriptGui
 			
 			GuiLabel label2 = ui.AddLabel( "label2", "Namespace: ",  "Nesnelerinizin namespace'ini verin." );
 			label2.Width = 75;
-			classNamespace = ui.AddTextBox( "classNamespace", "Adisyon", "Nesnelerinizin namespace'ini verin." );				
+			classNamespace = ui.AddTextBox( "classNamespace", " ", "Nesnelerinizin namespace'ini verin." );				
 			classNamespace.Width = 150;
 			classNamespace.Top = label2.Top;
 			classNamespace.Left = outputPath.Left;//label2.Left + label2.Width + 5;
@@ -185,6 +185,7 @@ public class GeneratedGui : DotNetScriptGui
 		outputPath.Text = SimetriUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
 		classNamespace.Text =SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
 	}
+
 	public void chooseSchema_onchange( GuiComboBox control )
 	{
 		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
@@ -207,9 +208,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 
 
 
+
 	public override void Render()
 	{
-		string className = "";
+		string classNameTypeLibrary = "";
 		string schemaName = "";
 		string classNameSpace = "";
 		string memberVariableName = "";
@@ -230,54 +232,80 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		{
 			ITable table = database.Tables[tableName];
 
-			className = SimetriUtils.SetPascalCase(table.Name);
+			classNameTypeLibrary = SimetriUtils.SetPascalCase(table.Name);
 			schemaName = SimetriUtils.SetPascalCase(table.Schema);
-			classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
+			classNameSpace = baseNameSpace + "." + schemaName;
+			bool identityVarmi;
+			string pkcumlesi = "";
+
+			string baseNameSpaceDal = baseNameSpace + ".Dal." +schemaName;
 			
+			string pkType = SimetriUtils.PrimaryKeyTipiniBul(table);
+			string pkAdi = SimetriUtils.PrimaryKeyAdiniBul(table);
 %>using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
+using Simetri.Core.DataUtil;
+using <%=baseNameSpaceTypeLibrary%>;
+using <%=baseNameSpaceTypeLibrary%>.<%= schemaName %>;
 
-namespace <%=classNameSpace%>
+
+namespace <%=baseNameSpaceDal%>
 {
-    public partial class <%= className %>
+    public partial class <%= classNameTypeLibrary %>Dal : BaseDal<<%= classNameTypeLibrary %>,<%= pkType %>>
     {
+
+
+
 		<%
 		foreach (IColumn column in table.Columns)
 		{
-		memberVariableName = SimetriUtils.SetCamelCase(column.Name);
-		propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
-		%>
-		private <%=column.LanguageType%> <%=memberVariableName%>;<%
-		}
-		%>
-		<%
-		foreach (IColumn column in table.Columns)
-		{
-		memberVariableName = SimetriUtils.SetCamelCase(column.Name);
-		propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
-		%>
-		public <%=column.LanguageType%> <%=propertyVariableName%>
-		{
-			get
+			foreach (IForeignKey fkey in column.ForeignKeys)
 			{
-				return <%=memberVariableName%>;
-			}
-			set
-			{
-				<%=memberVariableName%> = value;
-			}
+			
+				if (fkey.PrimaryTable.Name != column.Table.Name)
+				{
+				string fKeyShortClassName = SimetriUtils.SetPascalCase(fkey.ForeignTable.Name);
+				string fKeyTypeLibraryLongClassName = baseNameSpace
+					+ ".TypeLibrary"
+					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Schema) 
+					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Name);
+				string fKeyDalLongClassName = SimetriUtils.SetPascalCase(baseNameSpace)
+					+ ".Dal"
+					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Schema) 
+					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Name)
+					+ "Dal";
+				string fKeyPrimaryKeyTipi =SimetriUtils.PrimaryKeyTipiniBul(fkey.ForeignTable);
+				string fKeyPrimaryKeyAdi = SimetriUtils.PrimaryKeyAdiniBul(fkey.ForeignTable);
+				string whereName = "";
+				if (fkey.ForeignColumns.Count == 1)
+				{
+					whereName = fkey.ForeignColumns[0].Name;
+				}
+
+			%>
+		public List<<%=fKeyTypeLibraryLongClassName%>> sorgula<%=fKeyShortClassName%>Getir(<%= pkType %> p1)
+		{
+			<%= fKeyDalLongClassName %> dal = new <%= fKeyDalLongClassName %>();
+			List<<%=fKeyTypeLibraryLongClassName%>> liste = new List<<%=fKeyTypeLibraryLongClassName%>>();
+			dal.SorguCalistir(liste,dal.SelectString + " WHERE  <%= whereName %> = " + String.Format("'{0}'",p1));
+			return liste;
 		}
-		<%
+		<%	}
 		}
+		
+	}
 		%>
+
 
 
     }
 }
 <%
 //			output.writeln(className);
-			output.save( Path.Combine( outputPath + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName , className + ".generated.cs" ), false );
+			output.save( Path.Combine( outputPath + "\\" + baseNameSpace + ".Dal\\" + schemaName   , classNameTypeLibrary + "Dal.generated.cs" ), false );
 			output.clear();
 			}
 

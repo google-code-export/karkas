@@ -243,8 +243,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			string pkType = SimetriUtils.PrimaryKeyTipiniBul(table);
 			string pkAdi = SimetriUtils.PrimaryKeyAdiniBul(table);
 			
-%>
-using System;
+%>using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -464,46 +463,6 @@ namespace <%=baseNameSpaceDal%>
 				}
 				%>
         }
-
-		<%
-		foreach (IColumn column in table.Columns)
-		{
-			foreach (IForeignKey fkey in column.ForeignKeys)
-			{
-			
-				if (fkey.PrimaryTable.Name == column.Table.Name)
-				{
-				string fKeyShortClassName = SimetriUtils.SetPascalCase(fkey.ForeignTable.Name);
-				string fKeyTypeLibraryLongClassName = baseNameSpace
-					+ ".TypeLibrary"
-					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Schema) 
-					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Name);
-				string fKeyDalLongClassName = SimetriUtils.SetPascalCase(baseNameSpace)
-					+ ".Dal"
-					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Schema) 
-					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Name)
-					+ "Dal";
-				string fKeyPrimaryKeyTipi =SimetriUtils.PrimaryKeyTipiniBul(fkey.ForeignTable);
-				string fKeyPrimaryKeyAdi = SimetriUtils.PrimaryKeyAdiniBul(fkey.ForeignTable);
-				string whereName = "";
-				if (fkey.ForeignColumns.Count == 1)
-				{
-					whereName = fkey.ForeignColumns[0].Name;
-				}
-
-			%>
-		public List<<%=fKeyTypeLibraryLongClassName%>> sorgula<%=fKeyShortClassName%>Getir(<%= pkType %> p1)
-		{
-			<%= fKeyDalLongClassName %> dal = new <%= fKeyDalLongClassName %>();
-			List<<%=fKeyTypeLibraryLongClassName%>> liste = new List<<%=fKeyTypeLibraryLongClassName%>>();
-			dal.SorguCalistir(liste,dal.SelectString + " WHERE  <%= whereName %> = " + String.Format("'{0}'",p1));
-			return liste;
-		}
-		<%	}
-		}
-		
-	}
-		%>
 
 
 
