@@ -474,7 +474,7 @@ namespace <%=baseNameSpaceDal%>
 				if (fkey.PrimaryTable.Name == column.Table.Name)
 				{
 				string fKeyShortClassName = SimetriUtils.SetPascalCase(fkey.ForeignTable.Name);
-				string fKeyTypeLibraryLongClassName = SimetriUtils.SetPascalCase(baseNameSpace)
+				string fKeyTypeLibraryLongClassName = baseNameSpace
 					+ ".TypeLibrary"
 					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Schema) 
 					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Name);
