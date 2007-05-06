@@ -9,6 +9,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
+    SIMETRI MAIN MASTER PAGE
         <asp:ContentPlaceHolder ID="cph" runat="server">
         </asp:ContentPlaceHolder>
     </div>
