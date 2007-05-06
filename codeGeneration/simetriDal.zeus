@@ -259,7 +259,7 @@ namespace <%=baseNameSpaceDal%>
     {
 
 
-        public override string SelectString
+        protected override string SelectString
         {
             get 
 			{ 
@@ -367,13 +367,13 @@ namespace <%=baseNameSpaceDal%>
 		public List<<%= classNameTypeLibrary %>> SorgulaHepsiniGetir()
 		{
 			List<<%= classNameTypeLibrary %>> liste = new List<<%= classNameTypeLibrary %>>();
-			SorguCalistir(liste,SelectString);
+			SorguCalistir(liste);
             return liste;
 		}
 		public <%= classNameTypeLibrary %> Sorgula<%= pkAdi %>Ile(<%= pkType %> p1)
 		{
 			List<<%= classNameTypeLibrary %>> liste = new List<<%= classNameTypeLibrary %>>();
-			SorguCalistir(liste,SelectString + " WHERE  <%=pkAdi%> = " + p1);
+			SorguCalistir(liste," <%=pkAdi%> = " + p1);
 
             if (liste.Count > 0)
             {

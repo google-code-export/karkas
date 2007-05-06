@@ -275,7 +275,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		{
 			<%= fKeyDalLongClassName %> dal = new <%= fKeyDalLongClassName %>();
 			List<<%=fKeyTypeLibraryLongClassName%>> liste = new List<<%=fKeyTypeLibraryLongClassName%>>();
-			dal.SorguCalistir(liste,dal.SelectString + " WHERE  <%= whereName %> = " + String.Format("'{0}'",p1));
+			dal.SorguCalistir(liste," <%= whereName %> = " + String.Format("'{0}'",p<%= whereName %>));
 			return liste;
 		}
 		<%	}
