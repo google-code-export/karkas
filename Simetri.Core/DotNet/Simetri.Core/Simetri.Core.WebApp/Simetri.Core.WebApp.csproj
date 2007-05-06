@@ -51,6 +51,9 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimetriMain.Master.cs">
       <DependentUpon>SimetriMain.Master</DependentUpon>
@@ -91,6 +94,41 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ConnectionStringsServer.config" />
+    <Content Include="Global.asax" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simetri.Core.BsWrapper\Simetri.Core.BsWrapper.csproj">
+      <Project>{06EF9016-409B-4592-8EF8-1C5FBA765253}</Project>
+      <Name>Simetri.Core.BsWrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simetri.Core.Bs\Simetri.Core.Bs.csproj">
+      <Project>{81485655-4F3B-461E-943C-8AF5FFB3C5EA}</Project>
+      <Name>Simetri.Core.Bs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simetri.Core.Dal\Simetri.Core.Dal.csproj">
+      <Project>{638060D9-F3D5-4136-9828-56701AE8EC8C}</Project>
+      <Name>Simetri.Core.Dal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simetri.Core.DataUtil\Simetri.Core.DataUtil.csproj">
+      <Project>{4451CDAC-F8E6-4AF8-AA4E-011A4792E915}</Project>
+      <Name>Simetri.Core.DataUtil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simetri.Core.TypeLibrary\Simetri.Core.TypeLibrary.csproj">
+      <Project>{856567F9-E8D4-4FA4-AA91-A77740A1560A}</Project>
+      <Name>Simetri.Core.TypeLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simetri.Core.Utility\Simetri.Core.Utility.csproj">
+      <Project>{92A3FD0E-F64B-4F57-A69D-306874E7F2D8}</Project>
+      <Name>Simetri.Core.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simetri.Core.Validation\Simetri.Core.Validation.csproj">
+      <Project>{29D76493-FFF2-42E2-8EF0-6F0AE71CB80E}</Project>
+      <Name>Simetri.Core.Validation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simetri.Core.Web.Utility\Simetri.Core.Web.Utility.csproj">
+      <Project>{3EFFC21B-0F29-4AA2-A504-0B774DFA4C5B}</Project>
+      <Name>Simetri.Core.Web.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ortak\" />

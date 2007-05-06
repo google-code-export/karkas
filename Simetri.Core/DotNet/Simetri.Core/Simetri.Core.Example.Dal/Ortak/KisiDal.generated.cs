@@ -15,7 +15,7 @@ namespace Simetri.Core.Example.Dal.Ortak
     {
 
 
-        public override string SelectString
+        protected override string SelectString
         {
             get 
 			{ 
