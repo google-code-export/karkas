@@ -1,6 +1,6 @@
 ﻿##|TYPE Template
 ##|UNIQUEID aa374840-1a19-4952-b8a4-692cbd0a3abe
-##|TITLE Simetri Business Services
+##|TITLE Simetri Bs Wrapper
 ##|NAMESPACE 
 ##|SOURCE_TYPE Source
 ##|OUTPUT_LANGUAGE C#
@@ -214,6 +214,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		string classNameTypeLibrary = "";
 		string classNameDal = "";
 		string classNameBs = "";
+		string classNameBsWrapper = "";
 		string schemaName = "";
 		string classNameSpace = "";
 		string memberVariableName = "";
@@ -241,6 +242,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			classNameTypeLibrary = SimetriUtils.SetPascalCase(table.Name);
 			classNameDal = SimetriUtils.SetPascalCase(table.Name) + "Dal";
 			classNameBs = SimetriUtils.SetPascalCase(table.Name) +"Bs";
+			classNameBsWrapper = SimetriUtils.SetPascalCase(table.Name) +"BsWrapper";
 
 			schemaName = SimetriUtils.SetPascalCase(table.Schema);
 			classNameSpace = baseNameSpace + "." + schemaName;
@@ -248,6 +250,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			string pkcumlesi = "";
 
 			string baseNameSpaceBsWithSchema = baseNameSpace + ".Bs." +schemaName;
+			string baseNameSpaceBsWrapperWithSchema = baseNameSpace + ".BsWrapper." +schemaName;
 			string baseNameSpaceDalWithSchema = baseNameSpace + ".Dal." +schemaName;
 			
 			string pkType = SimetriUtils.PrimaryKeyTipiniBul(table);
@@ -259,38 +262,50 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using System.ComponentModel;
+using System.Web;
+using System.Web.Caching;
 using <%=baseNameSpaceTypeLibrary%>;
 using <%=baseNameSpaceTypeLibrary%>.<%= schemaName %>;
-using <%= baseNameSpaceDalWithSchema %>;
+using <%= baseNameSpaceBsWithSchema %>;
 
 
-namespace <%=baseNameSpaceBsWithSchema%>
+namespace <%=baseNameSpaceBsWrapperWithSchema%>
 {
-    public partial class <%= classNameBs %> 
+    [DataObject]
+    public partial class <%= classNameBsWrapper %> 
     {
-        <%= classNameDal %> dal = new <%= classNameDal %>();
-        public void Ekle(<%= classNameTypeLibrary %> k)
+        <%= classNameBs %> bs = new <%= classNameBs %>();
+		
+
+        [DataObjectMethod(DataObjectMethodType.Insert)]
+        public void Ekle(<%= classNameTypeLibrary %> p1)
         {
-            dal.Ekle(k);
+            bs.Ekle(p1);
         }
 
+
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public void Guncelle(<%= classNameTypeLibrary %> k)
         {
-            dal.Guncelle(k);
+            bs.Guncelle(k);
         }
+        [DataObjectMethod(DataObjectMethodType.Delete)]
         public void Sil(<%= classNameTypeLibrary %> k)
         {
-            dal.Sil(k);
+            bs.Sil(k);
         }
 
+        [DataObjectMethod(DataObjectMethodType.Select, true)]
         public List<<%= classNameTypeLibrary %>> SorgulaHepsiniGetir()
         {
-            return dal.SorgulaHepsiniGetir();
+            return bs.SorgulaHepsiniGetir();
         }
 
+        [DataObjectMethod(DataObjectMethodType.Select)]
 		public <%= classNameTypeLibrary %> Sorgula<%= pkAdi %>Ile(<%= pkType %> p1)
 		{
-			return dal.Sorgula<%= pkAdi %>Ile(p1);
+			return bs.Sorgula<%= pkAdi %>Ile(p1);
 		}
 
 
@@ -298,7 +313,7 @@ namespace <%=baseNameSpaceBsWithSchema%>
 }
 <%
 //			output.writeln(className);
-			output.save( Path.Combine( outputPath + "\\" + baseNameSpace + ".Bs\\" + schemaName   , classNameTypeLibrary + "Bs.generated.cs" ), false );
+			output.save( Path.Combine( outputPath + "\\" + baseNameSpace + ".BsWrapper\\" + schemaName   , classNameTypeLibrary + "BsWrapper.generated.cs" ), false );
 			output.clear();
 			}
 
