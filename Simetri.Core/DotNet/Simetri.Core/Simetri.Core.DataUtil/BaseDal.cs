@@ -121,7 +121,14 @@ namespace Simetri.Core.DataUtil
         public void SorguCalistir(List<T> liste, String pFilterString)
         {
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = String.Format("{0}  WHERE  {1}",SelectString , pFilterString);
+            if (String.IsNullOrEmpty(pFilterString))
+            {
+                cmd.CommandText = SelectString;
+            }
+            else
+            {
+                cmd.CommandText = String.Format("{0}  WHERE  {1}", SelectString, pFilterString);
+            }
             cmd.Connection = Connection;
             SqlDataReader reader = null;
             try
