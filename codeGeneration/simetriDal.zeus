@@ -373,7 +373,7 @@ namespace <%=baseNameSpaceDal%>
 		public <%= classNameTypeLibrary %> Sorgula<%= pkAdi %>Ile(<%= pkType %> p1)
 		{
 			List<<%= classNameTypeLibrary %>> liste = new List<<%= classNameTypeLibrary %>>();
-			SorguCalistir(liste," <%=pkAdi%> = " + p1);
+			SorguCalistir(liste,String.Format(" <%=pkAdi%> = '{0}'", p1));
 
             if (liste.Count > 0)
             {
