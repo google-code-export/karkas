@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Simetri.Core.DataUtil
 {
     public class ConnectionSingleton
     {
-        private string connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ADISYON;Data Source=LOCALHOST\SQLEXPRESS";
+
+        private string connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ITO_MTK;Data Source=LOCALHOST\SQLEXPRESS";
 
         public string ConnectionString
         {

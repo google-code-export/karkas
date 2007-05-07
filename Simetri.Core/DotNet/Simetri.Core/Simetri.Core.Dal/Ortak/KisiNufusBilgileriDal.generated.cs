@@ -56,7 +56,7 @@ namespace Simetri.Core.Dal.Ortak
 		public KisiNufusBilgileri SorgulaIDIle(Guid p1)
 		{
 			List<KisiNufusBilgileri> liste = new List<KisiNufusBilgileri>();
-			SorguCalistir(liste," ID = " + p1);
+			SorguCalistir(liste,String.Format(" ID = '{0}'", p1));
 
             if (liste.Count > 0)
             {

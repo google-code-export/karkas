@@ -6,5 +6,7 @@ namespace Simetri.Core.Bs
 {
     public class Class1
     {
+
+
     }
 }

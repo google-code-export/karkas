@@ -37,18 +37,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Simetri.Core.Dal\Simetri.Core.Dal.csproj">
+      <Project>{638060D9-F3D5-4136-9828-56701AE8EC8C}</Project>
+      <Name>Simetri.Core.Dal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simetri.Core.DataUtil\Simetri.Core.DataUtil.csproj">
       <Project>{4451CDAC-F8E6-4AF8-AA4E-011A4792E915}</Project>
       <Name>Simetri.Core.DataUtil</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simetri.Core.Example.Dal\Simetri.Core.Example.Dal.csproj">
-      <Project>{35622E23-72F6-4A8C-BB00-BD2F797E81F0}</Project>
-      <Name>Simetri.Core.Example.Dal</Name>
+    <ProjectReference Include="..\Simetri.Core.TypeLibrary\Simetri.Core.TypeLibrary.csproj">
+      <Project>{856567F9-E8D4-4FA4-AA91-A77740A1560A}</Project>
+      <Name>Simetri.Core.TypeLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simetri.Core.Example.TypeLibrary\Simetri.Core.Example.TypeLibrary.csproj">
-      <Project>{34B5F6BF-FD9C-4963-A972-7DFFA6C0D308}</Project>
-      <Name>Simetri.Core.Example.TypeLibrary</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
