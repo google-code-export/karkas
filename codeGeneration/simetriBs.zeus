@@ -250,6 +250,8 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			string baseNameSpaceBsWithSchema = baseNameSpace + ".Bs." +schemaName;
 			string baseNameSpaceDalWithSchema = baseNameSpace + ".Dal." +schemaName;
 			
+			string pkType = SimetriUtils.PrimaryKeyTipiniBul(table);
+			string pkAdi = SimetriUtils.PrimaryKeyAdiniBul(table);
 			
 %>
 using System;
@@ -257,17 +259,39 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
-using Simetri.Core.DataUtil;
 using <%=baseNameSpaceTypeLibrary%>;
 using <%=baseNameSpaceTypeLibrary%>.<%= schemaName %>;
-using <%=baseNameSpace%>;
-using <%=baseNameSpace%>.<%= schemaName %>;
+using <%= baseNameSpaceDalWithSchema %>;
 
 
-namespace <%=baseNameSpaceBs%>
+namespace <%=baseNameSpaceBsWithSchema%>
 {
     public partial class <%= classNameBs %> 
     {
+        <%= classNameDal %> dal = new <%= classNameDal %>();
+        public void Ekle(<%= classNameTypeLibrary %> k)
+        {
+            dal.Ekle(k);
+        }
+
+        public void Guncelle(<%= classNameTypeLibrary %> k)
+        {
+            dal.Guncelle(k);
+        }
+        public void Sil(<%= classNameTypeLibrary %> k)
+        {
+            dal.Sil(k);
+        }
+
+        public List<<%= classNameTypeLibrary %>> SorgulaHepsiniGetir()
+        {
+            return dal.SorgulaHepsiniGetir();
+        }
+
+		public <%= classNameTypeLibrary %> Sorgula<%= pkAdi %>Ile(<%= pkType %> p1)
+		{
+			return dal.Sorgula<%= pkAdi %>Ile(p1);
+		}
 
 
     }
