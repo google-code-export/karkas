@@ -10,17 +10,13 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
     {
         static void Main(string[] args)
         {
-            KisiDal dal = new KisiDal();
-            Guid kisiID;
-            Kisi k = new Kisi();
-            k.Id = Guid.NewGuid();
-            k.Adi = "Pýnar";
-            k.Soyadi = "Ün";
-            dal.Ekle(k);
+            Fotograf f = new Fotograf();
+            f.Id = Guid.NewGuid();
+            f.KisiKey = new Guid("88eea455-a134-46c1-8df0-7d3592192576");
+            f.FotografVerisi = new byte[] { 100, 200, 120 };
 
-
-            Kisi k2 = dal.SorgulaIDIle(k.Id);
-            Console.WriteLine(k2.Adi);
+            FotografDal fDal = new FotografDal();
+            fDal.Ekle(f);
 
         }
     }
