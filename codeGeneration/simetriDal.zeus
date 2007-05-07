@@ -227,6 +227,19 @@ public class GeneratedTemplate : DotNetScriptTemplate
 
 		ArrayList selectedTables = input["chooseTables"] as ArrayList;
 		
+		foreach (String tableName in selectedTables)
+		{
+			ITable table = database.Tables[tableName];
+			string pkAdi = SimetriUtils.PrimaryKeyAdiniBul(table);
+			if (pkAdi == "")
+			{
+				output.writeln("Sectiginiz tablolardan birinde Primary Key yoktur. Code Generation sadace primaryKey'i olan tablolarda duzgun calisir.");
+				return;
+			}
+			
+		}
+
+
 
 		foreach (String tableName in selectedTables)
 		{
