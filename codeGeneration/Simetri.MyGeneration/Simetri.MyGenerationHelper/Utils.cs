@@ -11,6 +11,8 @@ namespace Simetri.MyGenerationHelper
 {
     public class Utils
     {
+
+
         string xmlFilePath = @"C:\Program Files\MyGeneration\Settings\simetri.xml";
 
         public string ProjeDizininiAl(IDatabase database)
@@ -129,6 +131,7 @@ namespace Simetri.MyGenerationHelper
 
             return column.LanguageType;
         }
+
 
         
         public ITables filterListAccordingToSchemaName(ITables tableList, string schemaName)
@@ -259,6 +262,42 @@ namespace Simetri.MyGenerationHelper
                 }
             }
             return text;
+        }
+
+        public string GetLanguageType(IColumn column)
+        {
+            if (IsValueType(column) && column.IsNullable)
+                return "Nullable<" + column.LanguageType + ">";
+            else
+                return column.LanguageType;
+        }
+
+        public bool IsValueType(IColumn column)
+        {
+            // Array is always reference type
+            if (column.LanguageType.IndexOf("[]") > -1)
+                return false;
+
+            // scan value types
+            switch (column.LanguageType)
+            {
+                case "DateTime":
+                case "decimal":
+                case "bool":
+                case "byte":
+                case "double":
+                case "Guid":
+                case "int":
+                case "float":
+                case "short":
+                case "TimeSpan":
+                case "long":
+                    return true;
+                    break;
+
+                default:
+                    return false;
+            }
         }
 
 
