@@ -449,8 +449,15 @@ namespace <%=baseNameSpaceDal%>
 				foreach (IColumn column in table.Columns)
 				{
 					if (!column.IsAutoKey)
-					{%>
+					{
+						if (column.CharacterMaxLength == 0)
+						{%>
 			builder.parameterEkle("@<%= column.Name %>",<%= column.DbTargetType %>, row.<%= SimetriUtils.SetPascalCase(column.Name) %>);<%
+						}
+						else
+						{%>
+			builder.parameterEkle("@<%= column.Name %>",<%= column.DbTargetType %>, row.<%= SimetriUtils.SetPascalCase(column.Name) %>,<%=Convert.ToString(column.CharacterMaxLength)%>);<%
+						}
 					}
 				}
 				%>
@@ -459,8 +466,15 @@ namespace <%=baseNameSpaceDal%>
         {
 			ParameterBuilder builder = new ParameterBuilder(cmd);<%
 				foreach (IColumn column in table.Columns)
-				{%>
+				{
+					if (column.CharacterMaxLength == 0)
+					{%>
 			builder.parameterEkle("@<%= column.Name %>",<%= column.DbTargetType %>, row.<%= SimetriUtils.SetPascalCase(column.Name) %>);<%
+						}
+						else
+						{%>
+			builder.parameterEkle("@<%= column.Name %>",<%= column.DbTargetType %>, row.<%= SimetriUtils.SetPascalCase(column.Name) %>,<%=Convert.ToString(column.CharacterMaxLength)%>);<%
+						}
 				}
 				%>
         }
@@ -470,8 +484,15 @@ namespace <%=baseNameSpaceDal%>
 				foreach (IColumn column in table.Columns)
 				{
 					if (column.IsInPrimaryKey )
-					{%>
+					{
+						if (column.CharacterMaxLength == 0)
+						{%>
 			builder.parameterEkle("@<%= column.Name %>",<%= column.DbTargetType %>, row.<%= SimetriUtils.SetPascalCase(column.Name) %>);<%
+						}
+						else
+						{%>
+			builder.parameterEkle("@<%= column.Name %>",<%= column.DbTargetType %>, row.<%= SimetriUtils.SetPascalCase(column.Name) %>,<%=Convert.ToString(column.CharacterMaxLength)%>);<%
+						}
 					}
 				}
 				%>
