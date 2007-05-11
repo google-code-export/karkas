@@ -20,10 +20,17 @@ namespace Simetri.Core.DataUtil
         {
             this.command = pCommand;
         }
+
+        List<SqlParameter> parameterList;
+        public ParameterBuilder()
+        {
+            parameterList = new List<SqlParameter>();
+        }
+
         public void parameterEkle(string parameterName,SqlDbType dbType, object value)
         {
             SqlParameter prm = parameterDegerleriniSetle(parameterName, dbType, value);
-            command.Parameters.Add(prm);
+            parameteriyiCommandYadaListeyeEkle(prm);
         }
 
         private static SqlParameter parameterDegerleriniSetle(string parameterName, SqlDbType dbType, object value)
@@ -45,7 +52,24 @@ namespace Simetri.Core.DataUtil
         {
             SqlParameter prm = parameterDegerleriniSetle(parameterName, dbType, value);
             prm.Size = size;
-            command.Parameters.Add(prm);
+            parameteriyiCommandYadaListeyeEkle(prm);
+        }
+
+        private void parameteriyiCommandYadaListeyeEkle(SqlParameter prm)
+        {
+            if (command != null)
+            {
+                command.Parameters.Add(prm);
+            }
+            else
+            {
+                parameterList.Add(prm);
+            }
+        }
+
+        public SqlParameter[] GetParameterArray()
+        {
+            return parameterList.ToArray();
         }
 
 

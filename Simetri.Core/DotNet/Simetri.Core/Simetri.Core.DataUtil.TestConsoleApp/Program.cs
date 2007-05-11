@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Simetri.Core.Dal.Ortak;
 using Simetri.Core.TypeLibrary.Ortak;
+using System.Data;
 
 namespace Simetri.Core.DataUtil.TestConsoleApp
 {
@@ -10,13 +11,21 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
     {
         static void Main(string[] args)
         {
-            Fotograf f = new Fotograf();
-            f.Id = Guid.NewGuid();
-            f.KisiKey = new Guid("88eea455-a134-46c1-8df0-7d3592192576");
-            f.FotografVerisi = new byte[] { 100, 200, 120 };
+            string sql = @"SELECT     ID, TcKimlikNo, Adi, Soyadi, WindowsUserName, IkinciAdi
+                                FROM         ORTAK.KISI
+                                WHERE Adi LIKE @Adi + '%'";
+            ParameterBuilder builder = new ParameterBuilder();
+            builder.parameterEkle("@Adi", SqlDbType.VarChar, "A");
 
-            FotografDal fDal = new FotografDal();
-            fDal.Ekle(f);
+            DataTable dt = new DataTable();
+            AdoTemplate template = new AdoTemplate();
+            template.DataTableDoldur(dt, sql, builder.GetParameterArray());
+
+            foreach (DataRow row in dt.Rows)
+            {
+                Console.WriteLine(row["Adi"]);
+            }
+
 
         }
     }
