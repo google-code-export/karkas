@@ -38,8 +38,8 @@ FROM         ORTAK.KISI LEFT JOIN
             
             DataTable dt2 = new DataTable();
             ParameterBuilder b = new ParameterBuilder();
-            b.parameterEkle("@Adi", SqlDbType.VarChar, "D");
-            template.DataTableDoldurSayfalamaYap(dt2, sqlToExecute, b.GetParameterArray(), 3, 1, "Adi");
+            b.parameterEkle("@Adi", SqlDbType.VarChar, "");
+            template.DataTableDoldurSayfalamaYap(dt2, sqlToExecute, b.GetParameterArray(), 3, 2, "Soyadi");
 
             foreach (DataRow row in dt2.Rows)
             {

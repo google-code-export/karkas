@@ -166,6 +166,34 @@ namespace Simetri.Core.DataUtil
             SorguCalistir(dataTable, sql, CommandType.Text, parameters);
         }
 
+        #endregion
+
+        #region "DataTable Olustur Sayfalama Yap"
+        public DataTable DataTableDoldurSayfalamaYap(string sql
+        , SqlParameter[] parameters, int pPageSize, int pPageNumber, string pOrderBy)
+        {
+            DataTable dataTable = new DataTable();
+            pagingSqliniAyarla(ref sql, pPageSize, ref pPageNumber, pOrderBy);
+            ValidateFillArguments(dataTable, sql);
+            SorguCalistir(dataTable, sql, CommandType.Text, parameters);
+            return dataTable;
+        }
+
+
+        public DataTable DataTableDoldurSayfalamaYap(string sql
+                , int pPageSize, int pPageNumber, string pOrderBy)
+        {
+            DataTable dataTable = new DataTable();
+            pagingSqliniAyarla(ref sql, pPageSize, ref pPageNumber, pOrderBy);
+            ValidateFillArguments(dataTable, sql);
+            SorguCalistir(dataTable, sql, CommandType.Text);
+            return dataTable;
+        }
+
+        #endregion
+
+        #region "DataTable Doldur Sayfalama Yap"
+
         public void DataTableDoldurSayfalamaYap(DataTable dataTable, string sql
                 , SqlParameter[] parameters, int pPageSize, int pPageNumber, string pOrderBy)
         {
@@ -174,16 +202,6 @@ namespace Simetri.Core.DataUtil
             SorguCalistir(dataTable, sql, CommandType.Text, parameters);
         }
 
-        private  const string PAGING_SQL = @"
-                                WITH temp AS 
-                                ( 
-                                {0}
-                                ) 
-                                SELECT * 
-                                FROM temp 
-                                WHERE RowNumber >= {1} AND RowNumber  <= {2}
-                                ";
-                                //Where RowNumber >= @RowStart and RowNumber <= @RowEnd
 
         public void DataTableDoldurSayfalamaYap(DataTable dataTable, string sql
                 , int pPageSize, int pPageNumber, string pOrderBy)
@@ -192,6 +210,17 @@ namespace Simetri.Core.DataUtil
             ValidateFillArguments(dataTable, sql);
             SorguCalistir(dataTable, sql, CommandType.Text);
         }
+
+        private const string PAGING_SQL = @"
+                                WITH temp AS 
+                                ( 
+                                {0}
+                                ) 
+                                SELECT * 
+                                FROM temp 
+                                WHERE RowNumber >= {1} AND RowNumber  <= {2}
+                                ";
+        //Where RowNumber >= @RowStart and RowNumber <= @RowEnd
 
         private static void pagingSqliniAyarla(ref string sql, int pPageSize, ref int pPageNumber, string pOrderBy)
         {
