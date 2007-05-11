@@ -169,10 +169,7 @@ namespace Simetri.Core.DataUtil
         public void DataTableDoldurSayfalamaYap(DataTable dataTable, string sql
                 , SqlParameter[] parameters, int pPageSize, int pPageNumber, string pOrderBy)
         {
-            if (pPageNumber == 0)
-            {
-                sql = sql.Replace("SELECT", "SELECT TOP " + pPageSize);
-            }
+            pagingSqliniAyarla(ref sql, pPageSize, ref pPageNumber, pOrderBy);
             ValidateFillArguments(dataTable, sql);
             SorguCalistir(dataTable, sql, CommandType.Text, parameters);
         }
@@ -191,6 +188,13 @@ namespace Simetri.Core.DataUtil
         public void DataTableDoldurSayfalamaYap(DataTable dataTable, string sql
                 , int pPageSize, int pPageNumber, string pOrderBy)
         {
+            pagingSqliniAyarla(ref sql, pPageSize, ref pPageNumber, pOrderBy);
+            ValidateFillArguments(dataTable, sql);
+            SorguCalistir(dataTable, sql, CommandType.Text);
+        }
+
+        private static void pagingSqliniAyarla(ref string sql, int pPageSize, ref int pPageNumber, string pOrderBy)
+        {
             if (pPageNumber == 0)
             {
                 sql = sql.Replace("SELECT", "SELECT TOP " + pPageSize);
@@ -200,12 +204,10 @@ namespace Simetri.Core.DataUtil
             {
                 pPageNumber--;
                 int rowStart = pPageSize * pPageNumber + 1;
-                int rowEnd = rowStart+ pPageSize - 1;
-                sql = sql.Replace("FROM", String.Format(",ROW_NUMBER() OVER (order by {0}) as RowNumber FROM ",pOrderBy));
+                int rowEnd = rowStart + pPageSize - 1;
+                sql = sql.Replace("FROM", String.Format(",ROW_NUMBER() OVER (order by {0}) as RowNumber FROM ", pOrderBy));
                 sql = String.Format(PAGING_SQL, sql, rowStart, rowEnd);
             }
-            ValidateFillArguments(dataTable, sql);
-            SorguCalistir(dataTable, sql, CommandType.Text);
         }
 
         #endregion

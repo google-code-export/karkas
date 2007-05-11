@@ -37,9 +37,12 @@ ID
 ,WindowsUserName
 ,IkinciAdi
 FROM ORTAK.KISI
+WHERE Adi Like @Adi + '%'
 ";
             DataTable dt2 = new DataTable();
-            template.DataTableDoldurSayfalamaYap(dt2, sqlToExecute, 2, 3, "Adi");
+            ParameterBuilder b = new ParameterBuilder();
+            b.parameterEkle("@Adi", SqlDbType.VarChar, "A");
+            template.DataTableDoldurSayfalamaYap(dt2, sqlToExecute, b.GetParameterArray(), 2, 1, "Adi");
 
             foreach (DataRow row in dt2.Rows)
             {
