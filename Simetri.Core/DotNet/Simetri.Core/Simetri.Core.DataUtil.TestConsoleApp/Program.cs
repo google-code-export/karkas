@@ -28,25 +28,23 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
 //            }
 
 
-            string sqlToExecute = @"
-SELECT     
-ID
-,TcKimlikNo
-,Adi
-,Soyadi
-,WindowsUserName
-,IkinciAdi
-FROM ORTAK.KISI
-WHERE Adi Like @Adi + '%'
-";
+                string sqlToExecute = @"
+SELECT     ORTAK.KISI.Adi, ORTAK.KISI.Soyadi, ORTAK.KISI.TcKimlikNo, ORTAK.KISI_ADRES.Adres
+FROM         ORTAK.KISI LEFT JOIN
+                      ORTAK.KISI_ADRES ON ORTAK.KISI.ID = ORTAK.KISI_ADRES.KisiKey
+                WHERE Adi Like @Adi + '%'
+                ";
+
+            
             DataTable dt2 = new DataTable();
             ParameterBuilder b = new ParameterBuilder();
-            b.parameterEkle("@Adi", SqlDbType.VarChar, "A");
-            template.DataTableDoldurSayfalamaYap(dt2, sqlToExecute, b.GetParameterArray(), 2, 1, "Adi");
+            b.parameterEkle("@Adi", SqlDbType.VarChar, "D");
+            template.DataTableDoldurSayfalamaYap(dt2, sqlToExecute, b.GetParameterArray(), 3, 1, "Adi");
 
             foreach (DataRow row in dt2.Rows)
             {
                 Console.WriteLine(row["Adi"]);
+                Console.WriteLine(row["Adres"]);
             }
 
 
