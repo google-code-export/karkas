@@ -166,6 +166,48 @@ namespace Simetri.Core.DataUtil
             SorguCalistir(dataTable, sql, CommandType.Text, parameters);
         }
 
+        public void DataTableDoldurSayfalamaYap(DataTable dataTable, string sql
+                , SqlParameter[] parameters, int pPageSize, int pPageNumber, string pOrderBy)
+        {
+            if (pPageNumber == 0)
+            {
+                sql = sql.Replace("SELECT", "SELECT TOP " + pPageSize);
+            }
+            ValidateFillArguments(dataTable, sql);
+            SorguCalistir(dataTable, sql, CommandType.Text, parameters);
+        }
+
+        private  const string PAGING_SQL = @"
+                                WITH temp AS 
+                                ( 
+                                {0}
+                                ) 
+                                SELECT * 
+                                FROM temp 
+                                WHERE RowNumber >= {1} AND RowNumber  <= {2}
+                                ";
+                                //Where RowNumber >= @RowStart and RowNumber <= @RowEnd
+
+        public void DataTableDoldurSayfalamaYap(DataTable dataTable, string sql
+                , int pPageSize, int pPageNumber, string pOrderBy)
+        {
+            if (pPageNumber == 0)
+            {
+                sql = sql.Replace("SELECT", "SELECT TOP " + pPageSize);
+                sql = sql + "ORDER BY " + pOrderBy;
+            }
+            else
+            {
+                pPageNumber--;
+                int rowStart = pPageSize * pPageNumber + 1;
+                int rowEnd = rowStart+ pPageSize - 1;
+                sql = sql.Replace("FROM", String.Format(",ROW_NUMBER() OVER (order by {0}) as RowNumber FROM ",pOrderBy));
+                sql = String.Format(PAGING_SQL, sql, rowStart, rowEnd);
+            }
+            ValidateFillArguments(dataTable, sql);
+            SorguCalistir(dataTable, sql, CommandType.Text);
+        }
+
         #endregion
 
         #region "Helpers"
