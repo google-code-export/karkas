@@ -39,6 +39,15 @@ namespace Simetri.Core.DataUtil
         {
             SorguHariciKomutCalistirDelete(DeleteString, row);
         }
+
+        public void TopluEkle(List<T> liste)
+        {
+            foreach (T t in liste)
+            {
+                Ekle(t);
+            }
+        }
+
         public M Ekle(T row)
         {
             M sonuc = default(M);
@@ -118,6 +127,26 @@ namespace Simetri.Core.DataUtil
         {
             SorguCalistir(liste, "");
         }
+        public void SorguCalistir(List<T> liste, String pFilterString, SqlParameter[] parameterArray)
+        {
+            SqlCommand cmd = new SqlCommand();
+            if (String.IsNullOrEmpty(pFilterString))
+            {
+                cmd.CommandText = SelectString;
+            }
+            else
+            {
+                cmd.CommandText = String.Format("{0}  WHERE  {1}", SelectString, pFilterString);
+            }
+            cmd.Connection = Connection;
+            foreach (SqlParameter prm in parameterArray)
+            {
+                cmd.Parameters.Add(prm);
+            }
+            sorguCalistirInternal(liste, cmd);
+
+        }
+
         public void SorguCalistir(List<T> liste, String pFilterString)
         {
             SqlCommand cmd = new SqlCommand();
@@ -130,6 +159,11 @@ namespace Simetri.Core.DataUtil
                 cmd.CommandText = String.Format("{0}  WHERE  {1}", SelectString, pFilterString);
             }
             cmd.Connection = Connection;
+            sorguCalistirInternal(liste, cmd);
+        }
+
+        private void sorguCalistirInternal(List<T> liste, SqlCommand cmd)
+        {
             SqlDataReader reader = null;
             try
             {
@@ -161,8 +195,6 @@ namespace Simetri.Core.DataUtil
                 }
             }
             return;
-
-
         }
 
         protected abstract string SelectString
