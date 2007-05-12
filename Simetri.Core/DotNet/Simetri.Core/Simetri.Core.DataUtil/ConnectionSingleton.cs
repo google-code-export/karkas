@@ -9,11 +9,14 @@ namespace Simetri.Core.DataUtil
     public class ConnectionSingleton
     {
 
-        private string connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ITO_MTK;Data Source=LOCALHOST\SQLEXPRESS";
+        private string connectionString = null;
 
         public string ConnectionString
         {
-            get { return connectionString; }
+            get 
+            {
+                return connectionString; 
+            }
             set { connectionString = value; }
         }
 
@@ -35,7 +38,18 @@ namespace Simetri.Core.DataUtil
         }
         private ConnectionSingleton()
         {
+            if (connectionString == null)
+            {
+                if (ConfigurationManager.ConnectionStrings["Main"].ConnectionString != null)
+                {
+                    connectionString = ConfigurationManager.ConnectionStrings["Main"].ConnectionString;
+                }
+                else
+                {
+                    connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ITO_MTK;Data Source=LOCALHOST\SQLEXPRESS";
+                }
 
+            }
         }
 
     }

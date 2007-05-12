@@ -170,7 +170,7 @@ namespace Simetri.Core.DataUtil
 
         #region "DataTable Olustur Sayfalama Yap"
         public DataTable DataTableDoldurSayfalamaYap(string sql
-        , SqlParameter[] parameters, int pPageSize, int pPageNumber, string pOrderBy)
+        , int pPageSize, int pPageNumber, string pOrderBy, SqlParameter[] parameters)
         {
             DataTable dataTable = new DataTable();
             pagingSqliniAyarla(ref sql, pPageSize, ref pPageNumber, pOrderBy);
@@ -195,7 +195,7 @@ namespace Simetri.Core.DataUtil
         #region "DataTable Doldur Sayfalama Yap"
 
         public void DataTableDoldurSayfalamaYap(DataTable dataTable, string sql
-                , SqlParameter[] parameters, int pPageSize, int pPageNumber, string pOrderBy)
+                , int pPageSize, int pPageNumber, string pOrderBy, SqlParameter[] parameters)
         {
             pagingSqliniAyarla(ref sql, pPageSize, ref pPageNumber, pOrderBy);
             ValidateFillArguments(dataTable, sql);
