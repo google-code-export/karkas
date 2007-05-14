@@ -238,6 +238,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		foreach (String tableName in selectedTables)
 		{
 			ITable table = database.Tables[tableName];
+			baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database,table.Schema);
+			baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
+			baseNameSpaceDal = baseNameSpace + ".Dal";
+			baseNameSpaceBs = baseNameSpace + ".Bs";
 
 			classNameTypeLibrary = SimetriUtils.SetPascalCase(table.Name);
 			classNameDal = SimetriUtils.SetPascalCase(table.Name) + "Dal";
@@ -312,8 +316,9 @@ namespace <%=baseNameSpaceBsWrapperWithSchema%>
     }
 }
 <%
-//			output.writeln(className);
-			output.save( Path.Combine( outputPath + "\\" + baseNameSpace + ".BsWrapper\\" + schemaName   , classNameTypeLibrary + "BsWrapper.generated.cs" ), false );
+			string savePath= Path.Combine( SimetriUtils.DizininiAlDatabaseVeSchemaIle(database,table.Schema) + "\\" + baseNameSpace + ".BsWrapper\\" + schemaName   , classNameTypeLibrary + "BsWrapper.generated.cs" );
+			//output.writeln(savePath);
+			output.save( savePath,true );
 			output.clear();
 			}
 

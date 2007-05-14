@@ -216,8 +216,6 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		string classNameSpace = "";
 		string memberVariableName = "";
 		string propertyVariableName = "";
-		string baseNameSpace =input["classNamespace"].ToString();
-		string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 		
 		string outputPath = input["outputPath"].ToString();
 		
@@ -227,9 +225,14 @@ public class GeneratedTemplate : DotNetScriptTemplate
 
 		ArrayList selectedTables = input["chooseTables"] as ArrayList;
 		
+		string baseNameSpace = "";
+		string baseNameSpaceTypeLibrary = "";
 		foreach (String tableName in selectedTables)
 		{
 			ITable table = database.Tables[tableName];
+			baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database,table.Schema);
+			baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
+			
 			string pkAdi = SimetriUtils.PrimaryKeyAdiniBul(table);
 			if (pkAdi == "")
 			{
@@ -504,7 +507,7 @@ namespace <%=baseNameSpaceDal%>
 }
 <%
 //			output.writeln(className);
-			output.save( Path.Combine( outputPath + "\\" + baseNameSpace + ".Dal\\" + schemaName   , classNameTypeLibrary + "Dal.generated.cs" ), false );
+			output.save( Path.Combine( SimetriUtils.DizininiAlDatabaseVeSchemaIle(database,table.Schema) + "\\" + baseNameSpace + ".Dal\\" + schemaName   , classNameTypeLibrary + "Dal.generated.cs" ), false );
 			output.clear();
 			}
 
