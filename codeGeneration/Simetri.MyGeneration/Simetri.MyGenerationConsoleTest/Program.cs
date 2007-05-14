@@ -9,7 +9,9 @@ namespace Simetri.MyGenerationConsoleTest
     {
         public static void Main(string[] args)
         {
-            Utils u = new Utils();
+            SimetriXmlParser parser = new SimetriXmlParser();
+            Console.WriteLine(parser.ProjeDizininiAl(null));
+            Console.WriteLine(parser.ProjeDizininiAlSchemaIle(null,"ORTAK"));
 
         }
     }
