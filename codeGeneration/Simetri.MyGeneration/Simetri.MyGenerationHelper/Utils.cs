@@ -23,13 +23,13 @@ namespace Simetri.MyGenerationHelper
             return parser.ProjeDizininiAl(database);
         }
 
-        public string ProjeDizininiAlSchemaIle(IDatabase database, string schemaName)
+        public string DizininiAlDatabaseVeSchemaIle(IDatabase database, string schemaName)
         {
-            return parser.ProjeDizininiAlSchemaIle(database, schemaName);
+            return parser.DizininiAlDatabaseVeSchemaIle(database, schemaName);
         }
-        public string ProjeNamespaceIniAlSchemaIle(IDatabase database, string schemaName)
+        public string NamespaceIniAlSchemaIle(IDatabase database, string schemaName)
         {
-            return parser.ProjeNamespaceIniAlSchemaIle(database, schemaName);
+            return parser.NamespaceIniAlSchemaIle(database, schemaName);
         }
 
 

@@ -56,7 +56,7 @@ namespace Simetri.MyGenerationHelper
         }
 
 
-        public string ProjeDizininiAlSchemaIle(IDatabase database,string schemaName)
+        public string DizininiAlDatabaseVeSchemaIle(IDatabase database,string schemaName)
         {
             string dbName = getDbName(database);
             string sonuc = "";
@@ -73,7 +73,7 @@ namespace Simetri.MyGenerationHelper
             }
             return sonuc;
         }
-        public string ProjeNamespaceIniAlSchemaIle(IDatabase database, string schemaName)
+        public string NamespaceIniAlSchemaIle(IDatabase database, string schemaName)
         {
             string dbName = getDbName(database);
             string sonuc = "";
@@ -82,7 +82,7 @@ namespace Simetri.MyGenerationHelper
             navigator = navigator.SelectSingleNode(String.Format("//database[@name='{0}']/schema[@name='{1}']/SchemaNamespace", dbName, schemaName));
             if (navigator == null)
             {
-                sonuc = ProjeDizininiAl(database);
+                sonuc = ProjeNamespaceIsminiAl(database);
             }
             else
             {

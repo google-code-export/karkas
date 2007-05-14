@@ -10,8 +10,8 @@ namespace Simetri.MyGenerationConsoleTest
         public static void Main(string[] args)
         {
             SimetriXmlParser parser = new SimetriXmlParser();
-            Console.WriteLine(parser.ProjeDizininiAlSchemaIle(null, "DENEME"));
-            Console.WriteLine(parser.ProjeDizininiAlSchemaIle(null, "ORTAK"));
+            Console.WriteLine(parser.DizininiAlDatabaseVeSchemaIle(null, "TSM"));
+            Console.WriteLine(parser.DizininiAlDatabaseVeSchemaIle(null, "ORTAK"));
 
         }
     }
