@@ -59,20 +59,36 @@ namespace Simetri.MyGenerationHelper
         public string ProjeDizininiAlSchemaIle(IDatabase database,string schemaName)
         {
             string dbName = getDbName(database);
-            //employee[@employeeid='1']
+            string sonuc = "";
             XPathDocument doc = new XPathDocument(xmlFilePath);
             XPathNavigator navigator = doc.CreateNavigator();
-            navigator = navigator.SelectSingleNode(String.Format("//database[@name='{0}']/schema[@name='{1}']/SchemaFolder", database));
-            return navigator.Value;
+            navigator = navigator.SelectSingleNode(String.Format("//database[@name='{0}']/schema[@name='{1}']/SchemaFolder", dbName,schemaName));
+            if (navigator == null)
+            {
+                sonuc = ProjeDizininiAl(database);
+            }
+            else
+            {
+                sonuc = navigator.Value;
+            }
+            return sonuc;
         }
         public string ProjeNamespaceIniAlSchemaIle(IDatabase database, string schemaName)
         {
             string dbName = getDbName(database);
-            //employee[@employeeid='1']
+            string sonuc = "";
             XPathDocument doc = new XPathDocument(xmlFilePath);
             XPathNavigator navigator = doc.CreateNavigator();
-            navigator = navigator.SelectSingleNode(String.Format("//database[@name='{0}']/schema[@name='{1}']/SchemaNamespace", database));
-            return navigator.Value;
+            navigator = navigator.SelectSingleNode(String.Format("//database[@name='{0}']/schema[@name='{1}']/SchemaNamespace", dbName, schemaName));
+            if (navigator == null)
+            {
+                sonuc = ProjeDizininiAl(database);
+            }
+            else
+            {
+                sonuc = navigator.Value;
+            }
+            return sonuc;
         }
     }
 }
