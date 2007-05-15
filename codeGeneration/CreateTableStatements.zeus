@@ -1,194 +1,197 @@
 ﻿##|TYPE Template
-##|UNIQUEID 98451047-c7ef-497b-a490-f43e8c53eef0
-##|TITLE Create Table Statements 
-##|NAMESPACE Tutorials.C#.Chapter 2
+##|UNIQUEID 650f5ee4-4b1a-4d42-b06a-ee9731077b3e
+##|TITLE Simetri Create Table Statements
+##|NAMESPACE 
 ##|SOURCE_TYPE Source
 ##|OUTPUT_LANGUAGE None
 ##|GUI_ENGINE .Net Script
 ##|GUI_LANGUAGE C#
 ##|GUI_BEGIN
-<%#REFERENCE System.Windows.Forms.dll, System.Drawing.dll %>
-<%#NAMESPACE System.Windows.Forms, System.Drawing %>
 
 public class GeneratedGui : DotNetScriptGui
 {
 	public GeneratedGui(ZeusContext context) : base(context) {}
-	
-	public override void Setup() 
+
+	string defaultOutputPath = @"D:\projects\DotnetProjects\Denemeler\Adisyon\Adisyon.TypeLibrary";
+
+	GuiListBox chooseTables = null;
+	GuiTextBox outputPath = null;
+	GuiTextBox classNamespace = null;
+	public override void Setup()
 	{
-		MyForm form = new MyForm(MyMeta, input); 
-
-		if (form.ShowDialog() != DialogResult.OK) 
+		if ( !input.Contains( "chooseTables" ) || !input.Contains( "txtPath" ) ||
+				( !input.Contains( "chkClass" ) && !input.Contains( "chkNaming" ) ) )
 		{
-			ui.IsCanceled = true;
-		}
-	}
-}
-
-public class MyForm : System.Windows.Forms.Form
-{
-	private System.Windows.Forms.Label lblDatabases;
-	private System.Windows.Forms.ComboBox cboxDatabases;
-	private System.Windows.Forms.Label lblTables;
-	private System.Windows.Forms.ListBox lboxTables;
-	private System.Windows.Forms.Button btnOkay;
+			ui.Title = "Simetri Create Table Code Gen";
+			ui.Width = 600;
+			ui.Height =600;
 	
-	private dbRoot myMeta;
-	private IZeusInput zeusInput;
-
-	/// <summary>
-	/// Required designer variable.
-	/// </summary>
-	private System.ComponentModel.Container components = null;
-	
-	public MyForm(dbRoot myMeta, IZeusInput zeusInput)
-	{
-		this.myMeta    = myMeta;
-		this.zeusInput = zeusInput;
-		
-		InitializeComponent();
-	}	
-
-	private void MyForm_Load(object sender, System.EventArgs e)
-	{
-		this.cboxDatabases.DataSource    = this.myMeta.Databases;
-		this.cboxDatabases.DisplayMember = "Name";	
-		
-		if(this.myMeta.DefaultDatabase != null)
-		{
-			this.cboxDatabases.SelectedIndex = this.cboxDatabases.FindStringExact(this.myMeta.DefaultDatabase.Name);
-		}
-
-		if(this.myMeta.DefaultDatabase != null)
-		{
-			this.lboxTables.DataSource = this.myMeta.DefaultDatabase.Tables;
-			this.lboxTables.DisplayMember = "Name";
-		}	
-	}
-	
-	private void cboxDatabases_SelectionChangeCommitted(object sender, System.EventArgs e)
-	{
-		IDatabase database = this.cboxDatabases.SelectedValue as IDatabase;
-
-		if(database != null)
-		{
-			this.lboxTables.DataSource = database.Tables;
-			this.lboxTables.DisplayMember = "Name";
-		}	
-	}	
-	
-	public void btnOkay_Click(object sender, EventArgs args) 
-	{
-		if ((cboxDatabases.SelectedIndex >= 0) && (lboxTables.SelectedIndex >= 0)) 
-		{
-			IDatabase database = this.cboxDatabases.SelectedValue as IDatabase;
-			ITable    table    = this.lboxTables.SelectedValue as ITable;
+			// Grab default output path
+			string sOutputPath = defaultOutputPath;
 			
-			this.zeusInput["databaseName"] = database.Name;
-			this.zeusInput["tableName"]    = table.Name;
+
+			// Setup Folder selection input control.
+			GuiLabel label1 = ui.AddLabel( "label1", "Output path:", "Select the output path in the field below." );
+			label1.Width =75;
+			outputPath = ui.AddTextBox( "outputPath", sOutputPath, "Select the Output Path." );
+			outputPath.Width = 250;
 			
-			this.DialogResult = DialogResult.OK;
-			this.Close();
+			outputPath.Left = label1.Left + label1.Width;
+			outputPath.Top = label1.Top;
+			GuiFilePicker selectPath = ui.AddFilePicker( "selectPath", "Dizin Secin", "Cıktı Dizininini Şeçin.", "outputPath", true );
+			selectPath.Top = outputPath.Top;
+			selectPath.Width = 100;
+			selectPath.Left = outputPath.Left + outputPath.Width + 5;
+			
+			GuiLabel label2 = ui.AddLabel( "label2", "Namespace: ",  "Nesnelerinizin namespace'ini verin." );
+			label2.Width = 75;
+			classNamespace = ui.AddTextBox( "classNamespace", "Adisyon", "Nesnelerinizin namespace'ini verin." );				
+			classNamespace.Width = 150;
+			classNamespace.Top = label2.Top;
+			classNamespace.Left = outputPath.Left;//label2.Left + label2.Width + 5;
+			
+			
+			
+             
+			
+			// Setup Database selection combobox.
+			GuiLabel label4 = ui.AddLabel( "label4", "Select a DB:", "Select a database in the dropdown below." );
+			label4.Width = 75;
+//			label4.Top = lblUsing.Top;
+			GuiComboBox chooseDatabase = ui.AddComboBox( "chooseDatabase", "Select a database." );
+			chooseDatabase.Width = 200;
+			chooseDatabase.Top = label4.Top;
+			chooseDatabase.Left = outputPath.Left;
+			
+			
+			// Setup Database selection combobox.
+			GuiLabel labelDBPrefixSub = ui.AddLabel( "labelDBPrefixSub", " To :", "Select a database in the dropdown below." );
+			labelDBPrefixSub.Width = 75;
+
+			
+			
+			
+	
+	
+			// Setup Tables selection multi-select listbox.
+			GuiLabel label7 = ui.AddLabel( "label7", "Select tables:", "Select tables from the listbox below." );
+			chooseTables = ui.AddListBox( "chooseTables", "Select tables." );
+			chooseTables.Height = 150;
+	
+			// Setup Views selection multi-select listbox.
+			GuiLabel label8 = ui.AddLabel( "label8", "Schema Listesi", "Schema Listesini Asagidan Secin" );
+			GuiComboBox chooseViews = ui.AddComboBox( "chooseViews", "Select views." );
+			chooseViews.AttachEvent( "onchange", "chooseSchema_onchange" );
+
+
+			// Attach the onchange event to the cmbDatabases control.
+			setupDatabaseDropdown( chooseDatabase );
+			chooseDatabase.AttachEvent( "onchange", "chooseDatabase_onchange" );
+	
+			ui.ShowGui = true;
 		}
 		else 
 		{
-			MessageBox.Show("Please choose a Table");
+			ui.ShowGui = false;
 		}
 	}
 	
-
-	/// <summary>
-	/// Clean up any resources being used.
-	/// </summary>
-	protected override void Dispose( bool disposing )
+	public void setupDatabaseDropdown( GuiComboBox Databases )
 	{
-		if( disposing )
-		{
-			if (components != null) 
+		try 
+		{	
+			if( MyMeta.IsConnected )
 			{
-				components.Dispose();
+				Databases.BindData( MyMeta.Databases );
+				if( MyMeta.DefaultDatabase != null ) 
+				{
+					Databases.SelectedValue = MyMeta.DefaultDatabase.Alias;
+					bindTables( Databases.SelectedValue,"dbo" );
+					bindViews( Databases.SelectedValue );
+				}
 			}
 		}
-		base.Dispose( disposing );
+		catch
+		{
+		}
 	}
-
-
-	/// <summary>
-	/// Required method for Designer support - do not modify
-	/// the contents of this method with the code editor.
-	/// </summary>
-	private void InitializeComponent()
+	
+	public void bindTables( string sDatabase )
 	{
-		this.lblDatabases = new System.Windows.Forms.Label();
-		this.cboxDatabases = new System.Windows.Forms.ComboBox();
-		this.lblTables = new System.Windows.Forms.Label();
-		this.lboxTables = new System.Windows.Forms.ListBox();
-		this.btnOkay = new System.Windows.Forms.Button();
-		this.SuspendLayout();
-		// 
-		// lblDatabases
-		// 
-		this.lblDatabases.Location = new System.Drawing.Point(16, 16);
-		this.lblDatabases.Name = "lblDatabases";
-		this.lblDatabases.TabIndex = 0;
-		this.lblDatabases.Text = "Select a database:";
-		// 
-		// cboxDatabases
-		// 
-		this.cboxDatabases.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
-		this.cboxDatabases.Location = new System.Drawing.Point(16, 40);
-		this.cboxDatabases.Name = "cboxDatabases";
-		this.cboxDatabases.Size = new System.Drawing.Size(256, 21);
-		this.cboxDatabases.TabIndex = 1;
-		this.cboxDatabases.SelectionChangeCommitted += new System.EventHandler(this.cboxDatabases_SelectionChangeCommitted);
+	
+		GuiListBox lstTables = ui["chooseTables"] as GuiListBox;
 		
-		// 
-		// lblTables
-		// 
-		this.lblTables.Location = new System.Drawing.Point(16, 72);
-		this.lblTables.Name = "lblTables";
-		this.lblTables.TabIndex = 0;
-		this.lblTables.Text = "Select a table:";
-		// 
-		// lboxTables
-		// 
-		this.lboxTables.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
-		this.lboxTables.Location = new System.Drawing.Point(16, 104);
-		this.lboxTables.Name = "lboxTables";
-		this.lboxTables.Size = new System.Drawing.Size(256, 108);
-		this.lboxTables.TabIndex = 2;
-		// 
-		// btnOkay
-		// 
-		this.btnOkay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
-		this.btnOkay.Location = new System.Drawing.Point(16, 224);
-		this.btnOkay.Name = "btnOkay";
-		this.btnOkay.Size = new System.Drawing.Size(256, 23);
-		this.btnOkay.TabIndex = 3;
-		this.btnOkay.Text = "OK";
-		this.btnOkay.Click += new System.EventHandler(this.btnOkay_Click);
-		// 
-		// Form1
-		// 
-		this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-		this.ClientSize = new System.Drawing.Size(292, 266);
-		this.Controls.Add(this.btnOkay);
-		this.Controls.Add(this.lboxTables);
-		this.Controls.Add(this.cboxDatabases);
-		this.Controls.Add(this.lblDatabases);
-		this.Controls.Add(this.lblTables);
-		this.HelpButton = true;
-		this.Name = "Chapter 2";
-		this.Text = "Chapter 2";		
-		this.MaximizeBox = false;
-		this.MinimizeBox = false;		
-		this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-		this.Load += new System.EventHandler(this.MyForm_Load);		
-		this.ResumeLayout(false);
+		try 
+		{	
+			IDatabase db = MyMeta.Databases[sDatabase];
+			lstTables.BindData( db.Tables );
+		}
+		catch
+		{
+		}
 	}
+
+	public void bindTables( string sDatabase ,string pSchemaName)
+	{
+
+
+			GuiListBox lstTables = ui["chooseTables"] as GuiListBox;
+			IDatabase db = MyMeta.Databases[sDatabase];
+			ArrayList liste = new ArrayList();
+			
+			chooseTables.Clear();
+			foreach (ITable table in db.Tables)
+			{
+				if (table.Schema == pSchemaName)
+				{
+					chooseTables[table.Name] = table.Name;
+//					liste.Add(table.Name);
+				}
+			}
+
+//			lstTables.BindData( db.Tables );
+
+//			lstTables.BindData( liste );
+	}
+
+	public void bindViews( string sDatabase )
+	{
+	
+		GuiComboBox lstViews = ui["chooseViews"] as GuiComboBox;
+		
+		IDatabase db = MyMeta.Databases[sDatabase];
+		ArrayList liste = new ArrayList();
+		
+		foreach (ITable table in db.Tables)
+		{
+			if (!liste.Contains(table.Schema))
+			{
+				liste.Add(table.Schema);
+			}
+		}
+
+		lstViews.BindData( liste );
+	}
+	
+	public void chooseDatabase_onchange( GuiComboBox control )
+	{
+
+		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
+		string dbName = cmbDatabases.SelectedText;
+	
+		bindTables( dbName,"dbo" );
+		bindViews( dbName );
+		
+		outputPath.Text = SimetriUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
+		classNamespace.Text =SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
+	}
+	public void chooseSchema_onchange( GuiComboBox control )
+	{
+		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
+		GuiComboBox cmbSchema = ui["chooseViews"] as GuiComboBox;
+		bindTables( cmbDatabases.SelectedText,cmbSchema.SelectedText );
+	}
+
 }
 ##|GUI_END
 ##|BODY_MODE Markup
@@ -197,47 +200,50 @@ public class MyForm : System.Windows.Forms.Form
 ##|BODY_TAG_START <%
 ##|BODY_TAG_END %>
 ##|BODY_BEGIN
-<%
+<%#NAMESPACE System.IO, System.Text, System.Text.RegularExpressions, System.Globalization %><%
 public class GeneratedTemplate : DotNetScriptTemplate
 {
 	public GeneratedTemplate(ZeusContext context) : base(context) {}
 
+
+
 	public override void Render()
 	{
-		string databaseName = input["databaseName"].ToString();
-		string tableName    = input["tableName"].ToString();
+		string className = "";
+		string schemaName = "";
+		string classNameSpace = "";
+		string memberVariableName = "";
+		string propertyVariableName = "";
 		
+		string outputPath = input["outputPath"].ToString();
+		
+
+		string databaseName = input["chooseDatabase"].ToString();;
 		IDatabase database = MyMeta.Databases[databaseName];
-		ITable table = database.Tables[tableName];
+
+		ArrayList selectedTables = input["chooseTables"] as ArrayList;
 		
-		output.writeln("Columns for Table '" + table.Name + "'");
-		output.writeln("");
-		
-		
-		
-		output.writeln("CREATE TABLE " + table.Schema + "." + table.Name + "(");
-		
-		foreach (IColumn column in table.Columns)
+
+		foreach (String tableName in selectedTables)
 		{
-		output.write(column.Name + " " + column.DataTypeName);
-			if (column.IsNullable)
-			{
-				output.write(" NULL");
-			}
-			else
-			{
-				output.write(" NOT NULL");
-			}
-			if (column.HasDefault)
-			{
-				output.write(" DEFAULT" + column.Default);
-			}
-			output.writeln("");
+			ITable table = database.Tables[tableName];
+			string baseNameSpace = SimetriUtils.ProjeNamespaceIsminiAl(database);
+			
+			output.writeln(SimetriUtils.GetTableDescription(databaseName,table.Schema,tableName,MyMeta.ConnectionString));
+			output.save( Path.Combine( SimetriUtils.ProjeDizininiAl(database) + "\\" + baseNameSpace + ".database\\Create Scripts" , table.Schema + "_" + tableName + ".CreateTable.sql") , false );
+			output.clear();
+
+			output.writeln(SimetriUtils.GetTableRelationDescriptions(databaseName,table.Schema,tableName,MyMeta.ConnectionString));
+			output.save( Path.Combine( SimetriUtils.ProjeDizininiAl(database) + "\\" + baseNameSpace + ".database\\Create Scripts" , table.Schema + "_" + tableName + ".Relations.sql") , false );
+			output.clear();
+
 		}
-		output.writeln(")");
 
 	}
+	
+	
+
+
 }
 %>
-
 ##|BODY_END

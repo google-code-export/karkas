@@ -36,6 +36,19 @@ namespace Simetri.MyGenerationHelper
 #endregion
 
 
+        #region "SMO Helper Fonksiyonlari"
+        SimetriSmoHelper smoHelper = new SimetriSmoHelper();
+        public string GetTableRelationDescriptions(string pDatabaseName, string pSchemaName, string pTableName,string pConnectionString)
+        {
+            return smoHelper.GetTableRelationDescriptions(pDatabaseName, pSchemaName, pTableName, pConnectionString);
+        }
+        public string GetTableDescription(string pDatabaseName, string pSchemaName, string pTableName,string pConnectionString)
+        {
+            return smoHelper.GetTableDescription(pDatabaseName, pSchemaName, pTableName, pConnectionString);
+        }
+
+        #endregion
+
 
         public void deneme()
         {

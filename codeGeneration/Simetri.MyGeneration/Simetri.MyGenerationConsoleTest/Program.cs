@@ -9,9 +9,9 @@ namespace Simetri.MyGenerationConsoleTest
     {
         public static void Main(string[] args)
         {
-            SimetriXmlParser parser = new SimetriXmlParser();
-            Console.WriteLine(parser.DizininiAlDatabaseVeSchemaIle(null, "TSM"));
-            Console.WriteLine(parser.DizininiAlDatabaseVeSchemaIle(null, "ORTAK"));
+            SimetriSmoHelper helper = new SimetriSmoHelper();
+//            Console.WriteLine(helper.GetTableDescription("ITO_MTK", "INSAN_KAYNAKLARI", "KISI_CALISTIGI_YERLER"));
+            Console.WriteLine(helper.GetTableRelationDescriptions("ITO_MTK", "INSAN_KAYNAKLARI", "KISI_CALISTIGI_YERLER", ""));
 
         }
     }
