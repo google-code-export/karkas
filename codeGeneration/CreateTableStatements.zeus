@@ -230,11 +230,11 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			string baseNameSpace = SimetriUtils.ProjeNamespaceIsminiAl(database);
 			
 			output.writeln(SimetriUtils.GetTableDescription(databaseName,table.Schema,tableName,MyMeta.ConnectionString));
-			output.save( Path.Combine( SimetriUtils.ProjeDizininiAl(database) + "\\" + baseNameSpace + ".database\\Create Scripts" , table.Schema + "_" + tableName + ".CreateTable.sql") , false );
+			output.save( Path.Combine( SimetriUtils.ProjeDizininiAl(database) + "\\" + baseNameSpace + ".database\\CreateScripts\\"  + table.Schema, table.Schema + "_" + tableName + ".CreateTable.sql") , false );
 			output.clear();
 
 			output.writeln(SimetriUtils.GetTableRelationDescriptions(databaseName,table.Schema,tableName,MyMeta.ConnectionString));
-			output.save( Path.Combine( SimetriUtils.ProjeDizininiAl(database) + "\\" + baseNameSpace + ".database\\Create Scripts\\" + table.Schema , table.Schema + "_" + tableName + ".Relations.sql") , false );
+			output.save( Path.Combine( SimetriUtils.ProjeDizininiAl(database) + "\\" + baseNameSpace + ".database\\CreateRelationScripts\\" + table.Schema , table.Schema + "_" + tableName + ".Relations.sql") , false );
 			output.clear();
 
 		}
