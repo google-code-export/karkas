@@ -14,8 +14,12 @@ namespace Simetri.MyGenerationHelper
 
         public string GetTableDescription(string pDatabaseName, string pSchemaName, string pTableName, string connectionString)
         {
-            int count = connectionString.IndexOf(';');
-            connectionString = connectionString.Remove(0,count);
+            if (connectionString.Contains("Provider"))
+            {
+                int providerBaslangic = connectionString.IndexOf("Provider");
+                int providerBitis = connectionString.IndexOf(';', providerBaslangic + 1);
+                connectionString = connectionString.Remove(providerBaslangic, providerBitis + 1);
+            }
             Server server = new Server(new ServerConnection(new SqlConnection(connectionString)));
             Database db = server.Databases[pDatabaseName];
             Table t = db.Tables[pTableName, pSchemaName];
@@ -47,7 +51,7 @@ namespace Simetri.MyGenerationHelper
             {
                 sb.Append(s);
                 sb.Append(Environment.NewLine);
-                sb.Append("GO" + Environment.NewLine);
+                sb.Append("GO --ExecuteThisSql" + Environment.NewLine);
             }
             return sb.ToString();
         }
