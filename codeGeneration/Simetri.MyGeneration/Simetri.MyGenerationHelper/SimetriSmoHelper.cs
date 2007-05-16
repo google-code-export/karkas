@@ -14,12 +14,7 @@ namespace Simetri.MyGenerationHelper
 
         public string GetTableDescription(string pDatabaseName, string pSchemaName, string pTableName, string connectionString)
         {
-            if (connectionString.Contains("Provider"))
-            {
-                int providerBaslangic = connectionString.IndexOf("Provider");
-                int providerBitis = connectionString.IndexOf(';', providerBaslangic + 1);
-                connectionString = connectionString.Remove(providerBaslangic, providerBitis + 1);
-            }
+            connectionString = removeProviderFromConnectionString(connectionString);
             Server server = new Server(new ServerConnection(new SqlConnection(connectionString)));
             Database db = server.Databases[pDatabaseName];
             Table t = db.Tables[pTableName, pSchemaName];
@@ -44,6 +39,17 @@ namespace Simetri.MyGenerationHelper
             return StringOlustur(yaziDizisi);
         }
 
+        private static string removeProviderFromConnectionString(string connectionString)
+        {
+            if (connectionString.Contains("Provider"))
+            {
+                int providerBaslangic = connectionString.IndexOf("Provider");
+                int providerBitis = connectionString.IndexOf(';', providerBaslangic + 1);
+                connectionString = connectionString.Remove(providerBaslangic, providerBitis + 1);
+            }
+            return connectionString;
+        }
+
         private static string StringOlustur(StringCollection yaziDizisi)
         {
             StringBuilder sb = new StringBuilder();
@@ -57,8 +63,7 @@ namespace Simetri.MyGenerationHelper
         }
         public string GetTableRelationDescriptions(string pDatabaseName, string pSchemaName, string pTableName, string connectionString)
         {
-            int count = connectionString.IndexOf(';');
-            connectionString = connectionString.Remove(0, count);
+            connectionString = removeProviderFromConnectionString(connectionString);
             Server server = new Server(new ServerConnection(new SqlConnection(connectionString)));
             Database db = server.Databases[pDatabaseName];
             Table t = db.Tables[pTableName, pSchemaName];
@@ -70,6 +75,10 @@ namespace Simetri.MyGenerationHelper
             baseOptions.DriPrimaryKey = true;
 
             baseOptions.DriAll = true;
+            baseOptions.IncludeHeaders = false;
+            baseOptions.IncludeIfNotExists = true;
+
+            baseOptions.SchemaQualifyForeignKeysReferences = true;
 
 
             baseOptions.EnforceScriptingOptions = true;
