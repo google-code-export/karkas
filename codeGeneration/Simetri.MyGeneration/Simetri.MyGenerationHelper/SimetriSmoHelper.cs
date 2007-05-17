@@ -96,7 +96,7 @@ namespace Simetri.MyGenerationHelper
                 {
                     sb.Append(s);
                     sb.Append(Environment.NewLine);
-                    sb.Append("GO");
+                    sb.Append("GO --ExecuteThisSql" + Environment.NewLine);
                     sb.Append(Environment.NewLine);
                 }
             }
