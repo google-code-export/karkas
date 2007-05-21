@@ -9,25 +9,25 @@ namespace Simetri.Core.TypeLibrary.Ortak
 		
 		private Guid id;
 		private Guid kisiKey;
-		private decimal tCKimlikNo;
+		private Nullable<decimal> tCKimlikNo;
 		private string ad;
 		private string ikinciAdi;
 		private string soyad;
-		private short uyrukTipNo;
+		private Nullable<short> uyrukTipNo;
 		private string cilt;
 		private string sayfa;
 		private string kutuk;
-		private int dogumYeriNo;
-		private int nufusaKayitliOlduguSehirNo;
-		private int nufusaKayitliOlduguIlceNo;
-		private int nufusaKayitliOlduguMahalleKoyKey;
+		private Nullable<int> dogumYeriNo;
+		private Nullable<int> nufusaKayitliOlduguSehirNo;
+		private Nullable<int> nufusaKayitliOlduguIlceNo;
+		private Nullable<int> nufusaKayitliOlduguMahalleKoyKey;
 		private string anaAdi;
 		private string babaAdi;
 		private DateTime dogumTarihi;
-		private byte medeniDurumTuruTipNo;
-		private byte dinTuruTipNo;
-		private byte cinsiyetTuruTipNo;
-		private byte kanGrubuTuruTipNo;
+		private Nullable<byte> medeniDurumTuruTipNo;
+		private Nullable<byte> dinTuruTipNo;
+		private Nullable<byte> cinsiyetTuruTipNo;
+		private Nullable<byte> kanGrubuTuruTipNo;
 		
 		public Guid Id
 		{
@@ -53,7 +53,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public decimal TCKimlikNo
+		public Nullable<decimal> TCKimlikNo
 		{
 			get
 			{
@@ -101,7 +101,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public short UyrukTipNo
+		public Nullable<short> UyrukTipNo
 		{
 			get
 			{
@@ -149,7 +149,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public int DogumYeriNo
+		public Nullable<int> DogumYeriNo
 		{
 			get
 			{
@@ -161,7 +161,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public int NufusaKayitliOlduguSehirNo
+		public Nullable<int> NufusaKayitliOlduguSehirNo
 		{
 			get
 			{
@@ -173,7 +173,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public int NufusaKayitliOlduguIlceNo
+		public Nullable<int> NufusaKayitliOlduguIlceNo
 		{
 			get
 			{
@@ -185,7 +185,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public int NufusaKayitliOlduguMahalleKoyKey
+		public Nullable<int> NufusaKayitliOlduguMahalleKoyKey
 		{
 			get
 			{
@@ -233,7 +233,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public byte MedeniDurumTuruTipNo
+		public Nullable<byte> MedeniDurumTuruTipNo
 		{
 			get
 			{
@@ -245,7 +245,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public byte DinTuruTipNo
+		public Nullable<byte> DinTuruTipNo
 		{
 			get
 			{
@@ -257,7 +257,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public byte CinsiyetTuruTipNo
+		public Nullable<byte> CinsiyetTuruTipNo
 		{
 			get
 			{
@@ -269,7 +269,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public byte KanGrubuTuruTipNo
+		public Nullable<byte> KanGrubuTuruTipNo
 		{
 			get
 			{

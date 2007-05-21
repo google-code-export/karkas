@@ -18,7 +18,7 @@ namespace Simetri.Core.Dal.Ortak
         {
             get 
 			{ 
-				return @"SELECT  ID,TcKimlikNo,Adi,Soyadi,IkinciAdi FROM ORTAK.KISI";
+				return @"SELECT  ID,TcKimlikNo,Adi,Soyadi,IkinciAdi,WindowsUserName FROM ORTAK.KISI";
 			}
         }
 
@@ -34,7 +34,7 @@ namespace Simetri.Core.Dal.Ortak
             get 
 			{ 
 				return @"UPDATE ORTAK.KISI SET 
-				TcKimlikNo = @TcKimlikNo,Adi = @Adi,Soyadi = @Soyadi,IkinciAdi = @IkinciAdi
+				TcKimlikNo = @TcKimlikNo,Adi = @Adi,Soyadi = @Soyadi,IkinciAdi = @IkinciAdi,WindowsUserName = @WindowsUserName
 				WHERE ID = @ID ";
 			}
         }
@@ -44,7 +44,7 @@ namespace Simetri.Core.Dal.Ortak
             get 
 			{ 
 				return @"INSERT INTO ORTAK.KISI 
-				   (ID,TcKimlikNo,Adi,Soyadi,IkinciAdi) VALUES (@ID,@TcKimlikNo,@Adi,@Soyadi,@IkinciAdi)";
+				   (ID,TcKimlikNo,Adi,Soyadi,IkinciAdi,WindowsUserName) VALUES (@ID,@TcKimlikNo,@Adi,@Soyadi,@IkinciAdi,@WindowsUserName)";
 			}
         }
 		public List<Kisi> SorgulaHepsiniGetir()
@@ -100,6 +100,11 @@ namespace Simetri.Core.Dal.Ortak
 					{
 						row.IkinciAdi = dr.GetString(4);
 					}
+					
+					if (!dr.IsDBNull(5))
+					{
+						row.WindowsUserName = dr.GetString(5);
+					}
 							
         }
         protected override void InsertCommandParametersAdd(SqlCommand cmd, Kisi row)
@@ -108,18 +113,20 @@ namespace Simetri.Core.Dal.Ortak
 
 			builder.parameterEkle("@ID",SqlDbType.UniqueIdentifier, row.Id);
 			builder.parameterEkle("@TcKimlikNo",SqlDbType.Decimal, row.TcKimlikNo);
-			builder.parameterEkle("@Adi",SqlDbType.VarChar, row.Adi);
-			builder.parameterEkle("@Soyadi",SqlDbType.VarChar, row.Soyadi);
-			builder.parameterEkle("@IkinciAdi",SqlDbType.VarChar, row.IkinciAdi);
+			builder.parameterEkle("@Adi",SqlDbType.VarChar, row.Adi,50);
+			builder.parameterEkle("@Soyadi",SqlDbType.VarChar, row.Soyadi,50);
+			builder.parameterEkle("@IkinciAdi",SqlDbType.VarChar, row.IkinciAdi,50);
+			builder.parameterEkle("@WindowsUserName",SqlDbType.VarChar, row.WindowsUserName,255);
         }
         protected override void UpdateCommandParametersAdd(SqlCommand cmd, Kisi row)
         {
 			ParameterBuilder builder = new ParameterBuilder(cmd);
 			builder.parameterEkle("@ID",SqlDbType.UniqueIdentifier, row.Id);
 			builder.parameterEkle("@TcKimlikNo",SqlDbType.Decimal, row.TcKimlikNo);
-			builder.parameterEkle("@Adi",SqlDbType.VarChar, row.Adi);
-			builder.parameterEkle("@Soyadi",SqlDbType.VarChar, row.Soyadi);
-			builder.parameterEkle("@IkinciAdi",SqlDbType.VarChar, row.IkinciAdi);
+			builder.parameterEkle("@Adi",SqlDbType.VarChar, row.Adi,50);
+			builder.parameterEkle("@Soyadi",SqlDbType.VarChar, row.Soyadi,50);
+			builder.parameterEkle("@IkinciAdi",SqlDbType.VarChar, row.IkinciAdi,50);
+			builder.parameterEkle("@WindowsUserName",SqlDbType.VarChar, row.WindowsUserName,255);
         }
         protected override void DeleteCommandParametersAdd(SqlCommand cmd, Kisi row)
         {

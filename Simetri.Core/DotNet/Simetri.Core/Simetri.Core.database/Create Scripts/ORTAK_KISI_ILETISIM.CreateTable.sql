@@ -1,0 +1,20 @@
+/****** Object:  Table [ORTAK].[KISI_ILETISIM]    Script Date: 05/15/2007 00:44:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [ORTAK].[KISI_ILETISIM](
+	[ID] [uniqueidentifier] NOT NULL CONSTRAINT [DF_Iletisim_OID]  DEFAULT (newid()),
+	[IletisimTuruTipNo] [int] NOT NULL,
+	[Iletisim] [varchar](200) NOT NULL CONSTRAINT [DF_Iletisim_Iletisim]  DEFAULT (''),
+	[KisiKey] [uniqueidentifier] NOT NULL,
+	[AktifMi] [bit] NULL CONSTRAINT [DF_KISI_ILETISIM_AktifMi]  DEFAULT ((1)),
+	[Oncelik] [int] NULL,
+ CONSTRAINT [PK_KISI_ILETISIM] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+

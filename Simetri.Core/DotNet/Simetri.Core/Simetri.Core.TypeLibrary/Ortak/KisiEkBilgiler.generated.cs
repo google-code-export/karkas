@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,12 +8,14 @@ namespace Simetri.Core.TypeLibrary.Ortak
     {
 		
 		private Guid kisiKey;
-		private int vergiDairesiTipNo;
+		private Nullable<int> vergiDairesiTipNo;
 		private string vergiNo;
-		private int sosyalGuvenlikTipNo;
+		private Nullable<int> sosyalGuvenlikTipNo;
 		private string sosyalGuvenlikNo;
-		private int pasaportTipNo;
+		private Nullable<int> pasaportTipNo;
 		private string pasaportNo;
+		private bool sigaraKullanıpKullanmadıgı;
+		private Nullable<byte> ehliyetKey;
 		
 		public Guid KisiKey
 		{
@@ -28,7 +29,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public int VergiDairesiTipNo
+		public Nullable<int> VergiDairesiTipNo
 		{
 			get
 			{
@@ -52,7 +53,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public int SosyalGuvenlikTipNo
+		public Nullable<int> SosyalGuvenlikTipNo
 		{
 			get
 			{
@@ -76,7 +77,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public int PasaportTipNo
+		public Nullable<int> PasaportTipNo
 		{
 			get
 			{
@@ -97,6 +98,30 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			set
 			{
 				pasaportNo = value;
+			}
+		}
+		
+		public bool SigaraKullanıpKullanmadıgı
+		{
+			get
+			{
+				return sigaraKullanıpKullanmadıgı;
+			}
+			set
+			{
+				sigaraKullanıpKullanmadıgı = value;
+			}
+		}
+		
+		public Nullable<byte> EhliyetKey
+		{
+			get
+			{
+				return ehliyetKey;
+			}
+			set
+			{
+				ehliyetKey = value;
 			}
 		}
 		

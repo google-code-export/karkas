@@ -8,10 +8,11 @@ namespace Simetri.Core.TypeLibrary.Ortak
     {
 		
 		private Guid id;
-		private decimal tcKimlikNo;
+		private Nullable<decimal> tcKimlikNo;
 		private string adi;
 		private string soyadi;
 		private string ikinciAdi;
+		private string windowsUserName;
 		
 		public Guid Id
 		{
@@ -25,7 +26,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public decimal TcKimlikNo
+		public Nullable<decimal> TcKimlikNo
 		{
 			get
 			{
@@ -70,6 +71,18 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			set
 			{
 				ikinciAdi = value;
+			}
+		}
+		
+		public string WindowsUserName
+		{
+			get
+			{
+				return windowsUserName;
+			}
+			set
+			{
+				windowsUserName = value;
 			}
 		}
 		

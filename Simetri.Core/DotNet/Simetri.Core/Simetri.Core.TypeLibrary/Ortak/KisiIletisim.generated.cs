@@ -11,8 +11,8 @@ namespace Simetri.Core.TypeLibrary.Ortak
 		private int iletisimTuruTipNo;
 		private string iletisim;
 		private Guid kisiKey;
-		private bool aktifMi;
-		private int oncelik;
+		private Nullable<bool> aktifMi;
+		private Nullable<int> oncelik;
 		
 		public Guid Id
 		{
@@ -62,7 +62,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public bool AktifMi
+		public Nullable<bool> AktifMi
 		{
 			get
 			{
@@ -74,7 +74,7 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public int Oncelik
+		public Nullable<int> Oncelik
 		{
 			get
 			{

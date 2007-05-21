@@ -11,6 +11,7 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
     {
         static void Main(string[] args)
         {
+            KisiDal kDal = new KisiDal();
             AdoTemplate template = new AdoTemplate();
 
 //            string sql = @"SELECT     ID, TcKimlikNo, Adi, Soyadi, WindowsUserName, IkinciAdi
@@ -39,7 +40,7 @@ FROM         ORTAK.KISI LEFT JOIN
             DataTable dt2 = new DataTable();
             ParameterBuilder b = new ParameterBuilder();
             b.parameterEkle("@Adi", SqlDbType.VarChar, "");
-            template.DataTableDoldurSayfalamaYap(dt2, sqlToExecute, 3, 2, "Soyadi", b.GetParameterArray());
+            template.DataTableDoldurSayfalamaYap(dt2, sqlToExecute, 4, 1, "Soyadi", b.GetParameterArray());
 
             foreach (DataRow row in dt2.Rows)
             {

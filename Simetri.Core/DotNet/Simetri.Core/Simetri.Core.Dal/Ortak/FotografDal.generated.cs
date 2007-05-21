@@ -90,14 +90,14 @@ namespace Simetri.Core.Dal.Ortak
 
 			builder.parameterEkle("@ID",SqlDbType.UniqueIdentifier, row.Id);
 			builder.parameterEkle("@KisiKey",SqlDbType.UniqueIdentifier, row.KisiKey);
-			builder.parameterEkle("@FotografVerisi",SqlDbType.Image, row.FotografVerisi);
+			builder.parameterEkle("@FotografVerisi",SqlDbType.Image, row.FotografVerisi,2147483647);
         }
         protected override void UpdateCommandParametersAdd(SqlCommand cmd, Fotograf row)
         {
 			ParameterBuilder builder = new ParameterBuilder(cmd);
 			builder.parameterEkle("@ID",SqlDbType.UniqueIdentifier, row.Id);
 			builder.parameterEkle("@KisiKey",SqlDbType.UniqueIdentifier, row.KisiKey);
-			builder.parameterEkle("@FotografVerisi",SqlDbType.Image, row.FotografVerisi);
+			builder.parameterEkle("@FotografVerisi",SqlDbType.Image, row.FotografVerisi,2147483647);
         }
         protected override void DeleteCommandParametersAdd(SqlCommand cmd, Fotograf row)
         {

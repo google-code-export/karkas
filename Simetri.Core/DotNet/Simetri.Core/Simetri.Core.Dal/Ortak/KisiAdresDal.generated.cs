@@ -109,7 +109,7 @@ namespace Simetri.Core.Dal.Ortak
 
 			builder.parameterEkle("@ID",SqlDbType.UniqueIdentifier, row.Id);
 			builder.parameterEkle("@KisiKey",SqlDbType.UniqueIdentifier, row.KisiKey);
-			builder.parameterEkle("@Adres",SqlDbType.VarChar, row.Adres);
+			builder.parameterEkle("@Adres",SqlDbType.VarChar, row.Adres,500);
 			builder.parameterEkle("@AdresTuruTipNo",SqlDbType.TinyInt, row.AdresTuruTipNo);
 			builder.parameterEkle("@Oncelik",SqlDbType.Int, row.Oncelik);
 			builder.parameterEkle("@AktifMi",SqlDbType.Bit, row.AktifMi);
@@ -119,7 +119,7 @@ namespace Simetri.Core.Dal.Ortak
 			ParameterBuilder builder = new ParameterBuilder(cmd);
 			builder.parameterEkle("@ID",SqlDbType.UniqueIdentifier, row.Id);
 			builder.parameterEkle("@KisiKey",SqlDbType.UniqueIdentifier, row.KisiKey);
-			builder.parameterEkle("@Adres",SqlDbType.VarChar, row.Adres);
+			builder.parameterEkle("@Adres",SqlDbType.VarChar, row.Adres,500);
 			builder.parameterEkle("@AdresTuruTipNo",SqlDbType.TinyInt, row.AdresTuruTipNo);
 			builder.parameterEkle("@Oncelik",SqlDbType.Int, row.Oncelik);
 			builder.parameterEkle("@AktifMi",SqlDbType.Bit, row.AktifMi);
