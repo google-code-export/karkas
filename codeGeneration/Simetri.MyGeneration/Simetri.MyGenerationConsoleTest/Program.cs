@@ -14,8 +14,8 @@ namespace Simetri.MyGenerationConsoleTest
 
 
             SimetriSmoHelper helper = new SimetriSmoHelper();
-//            Console.WriteLine(helper.GetTableDescription("ITO", "INSAN_KAYNAKLARI", "KISI_CALISTIGI_YERLER", connectionStringWithProvider));
-            Console.WriteLine(helper.GetTableRelationDescriptions("ITO", "INSAN_KAYNAKLARI", "KISI_OKUL_BILGILERI", connectionString));
+            Console.WriteLine(helper.GetTableDescription("ITO", "INSAN_KAYNAKLARI", "KISI_CALISTIGI_YERLER", connectionStringWithProvider));
+//            Console.WriteLine(helper.GetTableRelationDescriptions("ITO", "INSAN_KAYNAKLARI", "KISI_OKUL_BILGILERI", connectionString));
 
         }
     }

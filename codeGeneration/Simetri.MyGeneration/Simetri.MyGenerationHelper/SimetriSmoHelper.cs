@@ -22,7 +22,7 @@ namespace Simetri.MyGenerationHelper
             baseOptions.NoCollation = true;
             baseOptions.SchemaQualify = true;
             baseOptions.DriDefaults = true;
-            baseOptions.IncludeHeaders = true;
+            baseOptions.IncludeHeaders = false;
             baseOptions.DriPrimaryKey = true;
 
 //            baseOptions.DriAll = true;
