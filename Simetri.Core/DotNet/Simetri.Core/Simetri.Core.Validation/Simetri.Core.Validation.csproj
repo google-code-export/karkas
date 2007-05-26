@@ -33,6 +33,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseTypeLibrary.cs" />
     <Compile Include="CompareOperator.cs" />
     <Compile Include="ForPonos\BaseValidator.cs" />
     <Compile Include="ForPonos\CompareValidator.cs" />

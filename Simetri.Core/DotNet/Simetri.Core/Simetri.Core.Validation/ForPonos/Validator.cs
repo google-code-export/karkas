@@ -75,5 +75,12 @@ namespace Simetri.Core.Validation.ForPonos
             }
             return sb.ToString();
         }
+        public string Hatalar
+        {
+            get
+            {
+                return ToString();
+            }
+        }
     }
 }
