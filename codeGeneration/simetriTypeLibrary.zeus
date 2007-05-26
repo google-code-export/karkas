@@ -240,6 +240,7 @@ using System.Text;
 
 namespace <%=classNameSpace%>
 {
+    [Serializable]
     public partial class <%= className %>
     {
 		<%
