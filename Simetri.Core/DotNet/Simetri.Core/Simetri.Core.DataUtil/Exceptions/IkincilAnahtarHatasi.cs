@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 
 namespace Simetri.Core.DataUtil.Exceptions
 {
+    [Serializable]
     public class IkincilAnahtarHatasi : SimetriVeriHatasi
     {
         public IkincilAnahtarHatasi()
