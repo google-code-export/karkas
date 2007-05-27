@@ -298,6 +298,10 @@ namespace <%=baseNameSpaceBsWithSchema%>
 			return dal.Sorgula<%= pkAdi %>Ile(p1);
 		}
 
+        public void TopluEkle(List<<%= classNameTypeLibrary %>> liste)
+        {
+            dal.TopluEkle(liste);
+        }
 
     }
 }

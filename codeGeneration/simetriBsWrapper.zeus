@@ -311,6 +311,12 @@ namespace <%=baseNameSpaceBsWrapperWithSchema%>
 		{
 			return bs.Sorgula<%= pkAdi %>Ile(p1);
 		}
+		
+        [DataObjectMethod(DataObjectMethodType.Insert)]
+        public void TopluEkle(List<<%= classNameTypeLibrary %>> liste)
+        {
+            bs.TopluEkle(liste);
+        }
 
 
     }
