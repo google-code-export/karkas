@@ -13,6 +13,12 @@ namespace Simetri.Core.Validation.ForPonos
         {
 
         }
+        public OnlyCharacterAndNumberValidator(object pUzerindeCalisilacakNesne, string pPropertyName,string pErrorMessage)
+            : base(pUzerindeCalisilacakNesne, pPropertyName, REGEX_ONLY_CHARACTER_NUMBER, RegexOptions.None,pErrorMessage)
+        {
+
+        }
+
         protected override string BuildErrorMessage()
         {
             return string.Format("{0} sadace harf ve sayý girilmelidir", this.Property.Name);

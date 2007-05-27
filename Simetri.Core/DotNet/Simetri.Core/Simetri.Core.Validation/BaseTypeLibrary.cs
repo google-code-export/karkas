@@ -5,7 +5,7 @@ using Simetri.Core.Validation.ForPonos;
 
 namespace Simetri.Core.TypeLibrary
 {
-    public class BaseTypeLibrary
+    public abstract class BaseTypeLibrary
     {
         private Validator validator;
 
@@ -13,6 +13,7 @@ namespace Simetri.Core.TypeLibrary
         public BaseTypeLibrary()
         {
             validator = new Validator(this);
+            ValidationListesiniOlusturCodeGeneration();
             ValidationListesiniOlustur();
         }
         public Validator Validator
@@ -22,6 +23,7 @@ namespace Simetri.Core.TypeLibrary
                 return validator;
             }
         }
+        protected abstract void ValidationListesiniOlusturCodeGeneration();
 
         protected virtual void ValidationListesiniOlustur()
         {

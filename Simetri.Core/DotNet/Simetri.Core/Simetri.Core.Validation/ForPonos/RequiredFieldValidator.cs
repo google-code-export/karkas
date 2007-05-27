@@ -10,6 +10,10 @@ namespace Simetri.Core.Validation.ForPonos
         public RequiredFieldValidator(object pUzerindeCalisilacakNesne,string pPropertyName) : base(pUzerindeCalisilacakNesne,pPropertyName)
         {
         }
+        public RequiredFieldValidator(object pUzerindeCalisilacakNesne, string pPropertyName,string pErrorMessage)
+            : base(pUzerindeCalisilacakNesne, pPropertyName,pErrorMessage)
+        {
+        }
 
 
         public override bool Perform(object instance, object fieldValue)

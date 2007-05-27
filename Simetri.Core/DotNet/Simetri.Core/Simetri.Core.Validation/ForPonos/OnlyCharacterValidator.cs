@@ -12,6 +12,10 @@ namespace Simetri.Core.Validation.ForPonos
             : base(pUzerindeCalisilacakNesne, pPropertyName, REGEX_ONLY_CHARACTER, RegexOptions.None)
         {
         }
+        public OnlyCharacterValidator(object pUzerindeCalisilacakNesne, string pPropertyName,string pErrorMessage)
+            : base(pUzerindeCalisilacakNesne, pPropertyName, REGEX_ONLY_CHARACTER, RegexOptions.None,pErrorMessage)
+        {
+        }
 
 
         protected override string BuildErrorMessage()

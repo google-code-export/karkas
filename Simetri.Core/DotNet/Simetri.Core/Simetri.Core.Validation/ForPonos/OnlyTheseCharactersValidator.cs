@@ -14,6 +14,12 @@ namespace Simetri.Core.Validation.ForPonos
         {
 
         }
+        public OnlyTheseCharactersValidator(object pUzerindeCalisilacakNesne, string pPropertyName, char[] pCharList,string pErrorMessage)
+            : base(pUzerindeCalisilacakNesne, pPropertyName, getRegexString(pCharList)
+            , RegexOptions.None,pErrorMessage)
+        {
+
+        }
 
 
         private static string getRegexString(char[] pCharlist)

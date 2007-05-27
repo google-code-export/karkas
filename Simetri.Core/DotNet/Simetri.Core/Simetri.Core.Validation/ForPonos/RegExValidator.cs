@@ -17,6 +17,16 @@ namespace Simetri.Core.Validation.ForPonos
             this.regExOptions = pRegExOptions;
             this.regularExpression = pRegularExpression;
         }
+
+        public RegExValidator(object pUzerindeCalisilacakNesne, string pPropertyName,
+            string pRegularExpression, RegexOptions pRegExOptions,string pErrorMessage)
+            : base(pUzerindeCalisilacakNesne, pPropertyName,pErrorMessage)
+        {
+            this.regExOptions = pRegExOptions;
+            this.regularExpression = pRegularExpression;
+        }
+        
+        
         public override bool Perform(object instance, object fieldValue)
         {
             if (instance == null)

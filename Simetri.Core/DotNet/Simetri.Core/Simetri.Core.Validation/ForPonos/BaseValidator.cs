@@ -15,6 +15,13 @@ namespace Simetri.Core.Validation.ForPonos
                 property = t.GetProperty(propertyName);
                 ErrorMessage = BuildErrorMessage();
             }
+            public BaseValidator(object uzerindeCalisilacakNesne, string pPropertyName,string pErrorMessage)
+            {
+                this.propertyName = pPropertyName;
+                Type t = uzerindeCalisilacakNesne.GetType();
+                property = t.GetProperty(propertyName);
+                ErrorMessage = pErrorMessage;
+            }
 
 
             private String errorMessage;

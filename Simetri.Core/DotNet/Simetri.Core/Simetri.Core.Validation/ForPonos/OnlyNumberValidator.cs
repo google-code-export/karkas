@@ -13,6 +13,11 @@ namespace Simetri.Core.Validation.ForPonos
         {
 
         }
+        public OnlyNumberValidator(object pUzerindeCalisilacakNesne, string pPropertyName,string pErrorMessage)
+            : base(pUzerindeCalisilacakNesne, pPropertyName, REGEX_ONLY_NUMBER, RegexOptions.None,pErrorMessage)
+        {
+
+        }
 
 
         protected override string BuildErrorMessage()

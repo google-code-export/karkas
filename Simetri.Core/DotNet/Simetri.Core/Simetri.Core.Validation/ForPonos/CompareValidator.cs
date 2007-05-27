@@ -17,6 +17,13 @@ namespace Simetri.Core.Validation.ForPonos
             compareOperator = pCompareOperator;
         }
 
+        public CompareValidator(object pUzerindeCalisilacakNesne, string pPropertyName
+            , IComparable pValue, CompareOperator pCompareOperator,string pErrorMessage)
+            : base(pUzerindeCalisilacakNesne, pPropertyName,pErrorMessage)
+        {
+            value = pValue;
+            compareOperator = pCompareOperator;
+        }
 
         public override bool Perform(object instance, object fieldValue)
         {
