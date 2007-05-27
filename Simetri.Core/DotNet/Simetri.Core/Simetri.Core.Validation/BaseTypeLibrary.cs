@@ -5,6 +5,7 @@ using Simetri.Core.Validation.ForPonos;
 
 namespace Simetri.Core.TypeLibrary
 {
+    [Serializable]
     public abstract class BaseTypeLibrary
     {
         private Validator validator;
