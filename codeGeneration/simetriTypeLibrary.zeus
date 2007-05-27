@@ -237,11 +237,12 @@ public class GeneratedTemplate : DotNetScriptTemplate
 %>using System;
 using System.Collections.Generic;
 using System.Text;
+using Simetri.Core.TypeLibrary;
 
 namespace <%=classNameSpace%>
 {
     [Serializable]
-    public partial class <%= className %>
+    public partial class <%= className %> : BaseTypeLibrary
     {
 		<%
 		foreach (IColumn column in table.Columns)
@@ -272,6 +273,10 @@ namespace <%=classNameSpace%>
 		<%
 		}
 		%>
+		protected override void ValidationListesiniOlusturCodeGeneration()
+		{
+		}
+
 
 
     }
