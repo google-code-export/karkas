@@ -42,6 +42,10 @@ namespace Simetri.Core.DataUtil
 
         public void TopluEkle(List<T> liste)
         {
+            if (liste == null)
+            {
+                return;
+            }
             foreach (T t in liste)
             {
                 Ekle(t);
