@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Simetri.Core.Validation.ForPonos
 {
+    [Serializable]
     public class CompareValidator : BaseValidator
     {
         IComparable value;

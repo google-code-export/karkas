@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Simetri.Core.Validation.ForPonos
 {
+    [Serializable]
     public class RegExValidator : BaseValidator
     {
         private string regularExpression;

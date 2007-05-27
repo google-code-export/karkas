@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Simetri.Core.Validation.ForPonos
 {
+    [Serializable]
     public class OnlyCharacterAndNumberValidator : RegExValidator
     {
         private const string REGEX_ONLY_CHARACTER_NUMBER = "^[a-zA-ZüðiþçöýÜÐÝÞÇÖI0-9]*$";

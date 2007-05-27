@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Simetri.Core.Validation.ForPonos
 {
+    [Serializable]
     public class OnlyTheseCharactersValidator : RegExValidator
     {
         private const string REGEX_ONLY_THESECHARACTERS = "^[{0}]*$";

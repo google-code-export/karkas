@@ -5,6 +5,7 @@ using System.Reflection;
 
 namespace Simetri.Core.Validation.ForPonos
 {
+    [Serializable]
     public class RequiredFieldValidator : BaseValidator
     {
         public RequiredFieldValidator(object pUzerindeCalisilacakNesne,string pPropertyName) : base(pUzerindeCalisilacakNesne,pPropertyName)

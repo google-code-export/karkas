@@ -5,6 +5,7 @@ using System.Reflection;
 
 namespace Simetri.Core.Validation.ForPonos
 {
+        [Serializable]
         public abstract class BaseValidator
         {
             string propertyName;
