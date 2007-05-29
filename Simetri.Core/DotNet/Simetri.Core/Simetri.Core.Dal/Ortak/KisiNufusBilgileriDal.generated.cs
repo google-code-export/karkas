@@ -148,10 +148,6 @@ namespace Simetri.Core.Dal.Ortak
 						row.CinsiyetTuruTipNo = dr.GetByte(19);
 					}
 					
-					if (!dr.IsDBNull(20))
-					{
-						row.KanGrubuTuruTipNo = dr.GetByte(20);
-					}
 							
         }
         protected override void InsertCommandParametersAdd(SqlCommand cmd, KisiNufusBilgileri row)
@@ -178,7 +174,6 @@ namespace Simetri.Core.Dal.Ortak
 			builder.parameterEkle("@MedeniDurumTuruTipNo",SqlDbType.TinyInt, row.MedeniDurumTuruTipNo);
 			builder.parameterEkle("@DinTuruTipNo",SqlDbType.TinyInt, row.DinTuruTipNo);
 			builder.parameterEkle("@CinsiyetTuruTipNo",SqlDbType.TinyInt, row.CinsiyetTuruTipNo);
-			builder.parameterEkle("@KanGrubuTuruTipNo",SqlDbType.TinyInt, row.KanGrubuTuruTipNo);
         }
         protected override void UpdateCommandParametersAdd(SqlCommand cmd, KisiNufusBilgileri row)
         {
@@ -203,7 +198,6 @@ namespace Simetri.Core.Dal.Ortak
 			builder.parameterEkle("@MedeniDurumTuruTipNo",SqlDbType.TinyInt, row.MedeniDurumTuruTipNo);
 			builder.parameterEkle("@DinTuruTipNo",SqlDbType.TinyInt, row.DinTuruTipNo);
 			builder.parameterEkle("@CinsiyetTuruTipNo",SqlDbType.TinyInt, row.CinsiyetTuruTipNo);
-			builder.parameterEkle("@KanGrubuTuruTipNo",SqlDbType.TinyInt, row.KanGrubuTuruTipNo);
         }
         protected override void DeleteCommandParametersAdd(SqlCommand cmd, KisiNufusBilgileri row)
         {

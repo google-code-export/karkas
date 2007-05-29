@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web.UI;
 
-namespace Simetri.Core.Web.Utility
+namespace Simetri.Core.Web
 {
     public abstract class SimetriBasePage : Page
     {
