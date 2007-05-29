@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Simetri.Core.TypeLibrary;
 
 namespace Simetri.Core.TypeLibrary.Ortak
 {
-    public partial class Fotograf
+    [Serializable]
+    public partial class Fotograf : BaseTypeLibrary
     {
 		
 		private Guid id;
@@ -47,6 +49,10 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
+		protected override void ValidationListesiniOlusturCodeGeneration()
+		{
+		}
+
 
 
     }

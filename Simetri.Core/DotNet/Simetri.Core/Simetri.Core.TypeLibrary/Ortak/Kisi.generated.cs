@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Simetri.Core.TypeLibrary;
 
 namespace Simetri.Core.TypeLibrary.Ortak
 {
-    public partial class Kisi
+    [Serializable]
+    public partial class Kisi : BaseTypeLibrary
     {
 		
 		private Guid id;
@@ -86,6 +88,10 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
+		protected override void ValidationListesiniOlusturCodeGeneration()
+		{
+		}
+
 
 
     }

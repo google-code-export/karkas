@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Simetri.Core.TypeLibrary;
 
 namespace Simetri.Core.TypeLibrary.Ortak
 {
-    public partial class KisiNufusBilgileri
+    [Serializable]
+    public partial class KisiNufusBilgileri : BaseTypeLibrary
     {
 		
 		private Guid id;
@@ -27,7 +29,6 @@ namespace Simetri.Core.TypeLibrary.Ortak
 		private Nullable<byte> medeniDurumTuruTipNo;
 		private Nullable<byte> dinTuruTipNo;
 		private Nullable<byte> cinsiyetTuruTipNo;
-		private Nullable<byte> kanGrubuTuruTipNo;
 		
 		public Guid Id
 		{
@@ -269,18 +270,10 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public Nullable<byte> KanGrubuTuruTipNo
+		protected override void ValidationListesiniOlusturCodeGeneration()
 		{
-			get
-			{
-				return kanGrubuTuruTipNo;
-			}
-			set
-			{
-				kanGrubuTuruTipNo = value;
-			}
 		}
-		
+
 
 
     }

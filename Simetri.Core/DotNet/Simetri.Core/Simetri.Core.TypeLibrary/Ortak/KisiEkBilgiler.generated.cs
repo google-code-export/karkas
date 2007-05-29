@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Simetri.Core.TypeLibrary;
 
 namespace Simetri.Core.TypeLibrary.Ortak
 {
-    public partial class KisiEkBilgiler
+    [Serializable]
+    public partial class KisiEkBilgiler : BaseTypeLibrary
     {
 		
 		private Guid kisiKey;
@@ -14,8 +16,9 @@ namespace Simetri.Core.TypeLibrary.Ortak
 		private string sosyalGuvenlikNo;
 		private Nullable<int> pasaportTipNo;
 		private string pasaportNo;
-		private bool sigaraKullanıpKullanmadıgı;
+		private Nullable<bool> sigaraKullanimi;
 		private Nullable<byte> ehliyetKey;
+		private Nullable<byte> kanGrubuTipNo;
 		
 		public Guid KisiKey
 		{
@@ -101,15 +104,15 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
-		public bool SigaraKullanıpKullanmadıgı
+		public Nullable<bool> SigaraKullanimi
 		{
 			get
 			{
-				return sigaraKullanıpKullanmadıgı;
+				return sigaraKullanimi;
 			}
 			set
 			{
-				sigaraKullanıpKullanmadıgı = value;
+				sigaraKullanimi = value;
 			}
 		}
 		
@@ -125,6 +128,22 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
+		public Nullable<byte> KanGrubuTipNo
+		{
+			get
+			{
+				return kanGrubuTipNo;
+			}
+			set
+			{
+				kanGrubuTipNo = value;
+			}
+		}
+		
+		protected override void ValidationListesiniOlusturCodeGeneration()
+		{
+		}
+
 
 
     }

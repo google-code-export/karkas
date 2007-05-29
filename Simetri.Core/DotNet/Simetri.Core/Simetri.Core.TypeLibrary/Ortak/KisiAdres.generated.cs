@@ -1,14 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Simetri.Core.TypeLibrary;
 
 namespace Simetri.Core.TypeLibrary.Ortak
 {
-    public partial class KisiAdres
+    [Serializable]
+    public partial class KisiAdres : BaseTypeLibrary
     {
 		
 		private Guid id;
 		private Guid kisiKey;
+		private Nullable<int> sehirNo;
+		private Nullable<int> ilceNo;
 		private string adres;
 		private Nullable<byte> adresTuruTipNo;
 		private Nullable<int> oncelik;
@@ -35,6 +39,30 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			set
 			{
 				kisiKey = value;
+			}
+		}
+		
+		public Nullable<int> SehirNo
+		{
+			get
+			{
+				return sehirNo;
+			}
+			set
+			{
+				sehirNo = value;
+			}
+		}
+		
+		public Nullable<int> IlceNo
+		{
+			get
+			{
+				return ilceNo;
+			}
+			set
+			{
+				ilceNo = value;
 			}
 		}
 		
@@ -86,6 +114,10 @@ namespace Simetri.Core.TypeLibrary.Ortak
 			}
 		}
 		
+		protected override void ValidationListesiniOlusturCodeGeneration()
+		{
+		}
+
 
 
     }
