@@ -14,7 +14,7 @@ namespace Simetri.MyGenerationHelper
 
         public string GetTableDescription(string pDatabaseName, string pSchemaName, string pTableName, string connectionString)
         {
-            connectionString = removeProviderFromConnectionString(connectionString);
+            connectionString = ConnectionHelper.RemoveProviderFromConnectionString(connectionString);
             Server server = new Server(new ServerConnection(new SqlConnection(connectionString)));
             Database db = server.Databases[pDatabaseName];
             Table t = db.Tables[pTableName, pSchemaName];
@@ -39,16 +39,6 @@ namespace Simetri.MyGenerationHelper
             return StringOlustur(yaziDizisi);
         }
 
-        private static string removeProviderFromConnectionString(string connectionString)
-        {
-            if (connectionString.Contains("Provider"))
-            {
-                int providerBaslangic = connectionString.IndexOf("Provider");
-                int providerBitis = connectionString.IndexOf(';', providerBaslangic + 1);
-                connectionString = connectionString.Remove(providerBaslangic, providerBitis + 1);
-            }
-            return connectionString;
-        }
 
         private static string StringOlustur(StringCollection yaziDizisi)
         {
@@ -63,7 +53,7 @@ namespace Simetri.MyGenerationHelper
         }
         public string GetTableRelationDescriptions(string pDatabaseName, string pSchemaName, string pTableName, string connectionString)
         {
-            connectionString = removeProviderFromConnectionString(connectionString);
+            connectionString = ConnectionHelper.RemoveProviderFromConnectionString(connectionString);
             Server server = new Server(new ServerConnection(new SqlConnection(connectionString)));
             Database db = server.Databases[pDatabaseName];
             Table t = db.Tables[pTableName, pSchemaName];
@@ -105,6 +95,7 @@ namespace Simetri.MyGenerationHelper
 
 
         }
+
 
 
     }

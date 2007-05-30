@@ -82,6 +82,54 @@ namespace Simetri.MyGenerationHelper
             return tip;
         }
 
+        public string GetCSharpTypeFromDotNetType(string pDotNetType)
+        {
+            string sonuc = "";
+            switch (pDotNetType)
+            {
+                case "System.Int16":
+                    sonuc = "short";
+                    break;
+
+                case "System.Int32":
+                    sonuc = "int";
+                    break;
+                case "System.Int64":
+                    sonuc = "long";
+                    break;
+                case "System.Byte":
+                    sonuc = "byte";
+                    break;
+            }
+            return sonuc;
+        }
+
+        public string ReplaceTurkishChars(string str)
+        {
+            str = str.Replace('ð', 'g');
+            str = str.Replace('Ð', 'G');
+
+            str = str.Replace('ü', 'u');
+            str = str.Replace('Ü', 'U');
+
+            str = str.Replace('þ', 's');
+            str = str.Replace('Þ', 'S');
+
+            str = str.Replace('ý', 'i');
+            str = str.Replace('Ý', 'I');
+
+            str = str.Replace('ö', 'o');
+            str = str.Replace('Ö', 'O');
+
+            str = str.Replace('ç', 'c');
+            str = str.Replace('Ç', 'C');
+
+            return str;
+
+
+
+
+        }
 
         public string GetDataReaderSyntax(IColumn column)
         {
@@ -300,6 +348,11 @@ namespace Simetri.MyGenerationHelper
             }
         }
 
+        public string GetEnumDescription(string dbName, string schemaName, string tableName, string connectionString)
+        {
+            EnumHelper eHelper = new EnumHelper();
+            return eHelper.GetEnumDescription(dbName, schemaName, tableName, connectionString);
+        }
 
 
     }
