@@ -21,6 +21,17 @@ namespace Simetri.MyGenerationHelper
             SqlDataReader reader = null;
             reader = cmd.ExecuteReader();
             DataTable dtSchema = reader.GetSchemaTable();
+            int enumAdiOrdinal = 1;
+            for (int i = 0; i < dtSchema.Rows.Count; i++)
+			{
+			    if (dtSchema.Rows[i]["DataType"].ToString() == "System.String")
+                {
+                    enumAdiOrdinal = i;
+                    break;
+                }
+
+			}
+
             DataRow row = dtSchema.Rows[0];
             string dataTypeOfEnum = row["DataType"].ToString();
 
@@ -30,16 +41,21 @@ namespace Simetri.MyGenerationHelper
                                     ,u.GetCSharpTypeFromDotNetType(dataTypeOfEnum)));
             sb.Append(  @"
     {");
+            bool removeComma = false;
             while (reader.Read())
             {
                 sb.Append(Environment.NewLine);
                 sb.Append("\t\t");
-                sb.Append(u.SetPascalCase( u.ReplaceTurkishChars((reader.GetString(1)))));
+                sb.Append(u.SetPascalCase( u.ReplaceTurkishChars((reader.GetString(enumAdiOrdinal)))));
                 sb.Append(" = ");
                 sb.Append(u.SetPascalCase((reader.GetValue(0).ToString())));
                 sb.Append(",");
+                removeComma = true;
             }
-            sb.Remove(sb.Length - 1, 1);
+            if (removeComma)
+            {
+                sb.Remove(sb.Length - 1, 1);
+            }
             sb.Append(@"
     }                   ");
             conn.Close();

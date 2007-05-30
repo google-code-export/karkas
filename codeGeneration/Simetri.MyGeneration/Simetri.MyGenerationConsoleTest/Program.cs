@@ -14,7 +14,7 @@ namespace Simetri.MyGenerationConsoleTest
 
 
             EnumHelper eHelper = new EnumHelper();
-            Console.WriteLine(eHelper.GetEnumDescription("ITO", "TT_TSM", "FIRMA_NEVI", connectionString));
+            Console.WriteLine(eHelper.GetEnumDescription("ITO", "TT_TSM", "HARC_TURU", connectionString));
 
 
         }
