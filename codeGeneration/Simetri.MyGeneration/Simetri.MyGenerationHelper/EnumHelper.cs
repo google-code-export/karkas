@@ -39,7 +39,7 @@ namespace Simetri.MyGenerationHelper
                 sb.Append(u.SetPascalCase((reader.GetValue(0).ToString())));
                 sb.Append(",");
             }
-            sb.Remove(sb.Length - 2, 1);
+            sb.Remove(sb.Length - 1, 1);
             sb.Append(@"
     }                   ");
             conn.Close();

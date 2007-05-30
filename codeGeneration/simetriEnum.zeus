@@ -248,8 +248,8 @@ namespace <%=classNameSpace%>
 <%
 //			output.writeln(className);
 
-//			output.save( Path.Combine( SimetriUtils.DizininiAlDatabaseVeSchemaIle(database,table.Schema) + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName , className + ".generated.cs" ), false );
-//			output.clear();
+			output.save( Path.Combine( SimetriUtils.DizininiAlDatabaseVeSchemaIle(database,table.Schema) + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName , className + ".cs" ), false );
+			output.clear();
 			}
 
 	}
