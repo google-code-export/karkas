@@ -37,7 +37,7 @@ namespace Simetri.MyGenerationHelper
             string dataTypeOfEnum = row["DataType"].ToString();
 
             StringBuilder sb = new StringBuilder();
-            sb.Append(string.Format("public enum {0} : {1}"
+            sb.Append(string.Format("public enum {0}Enum : {1}"
                                     , u.SetPascalCase(tableName)
                                     ,u.GetCSharpTypeFromDotNetType(dataTypeOfEnum)));
             sb.Append(  @"
