@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
+using Simetri.Core.TypeLibrary;
 
 namespace Simetri.Core.DataUtil
 {
@@ -12,7 +13,7 @@ namespace Simetri.Core.DataUtil
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="M"></typeparam>
-    public abstract class BaseDal<T,M> where T : new()
+    public abstract class BaseDal<T, M> where T : BaseTypeLibrary,new()
     {
 
         public BaseDal()

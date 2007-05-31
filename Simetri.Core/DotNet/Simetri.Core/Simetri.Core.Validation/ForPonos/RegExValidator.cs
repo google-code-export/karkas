@@ -30,7 +30,7 @@ namespace Simetri.Core.Validation.ForPonos
         
         public override bool Perform(object instance, object fieldValue)
         {
-            if (instance == null)
+            if (instance == null || fieldValue == null)
             {
                 return false;
             }

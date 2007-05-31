@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Ortak\Fotograf.generated.cs" />
+    <Compile Include="Ortak\Kisi.cs" />
     <Compile Include="Ortak\Kisi.generated.cs" />
     <Compile Include="Ortak\KisiAdres.generated.cs" />
     <Compile Include="Ortak\KisiEkBilgiler.generated.cs" />

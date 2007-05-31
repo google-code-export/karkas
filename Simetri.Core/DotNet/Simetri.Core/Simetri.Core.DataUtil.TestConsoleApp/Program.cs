@@ -4,6 +4,7 @@ using System.Text;
 using Simetri.Core.Dal.Ortak;
 using Simetri.Core.TypeLibrary.Ortak;
 using System.Data;
+using Simetri.Core.Validation.ForPonos;
 
 namespace Simetri.Core.DataUtil.TestConsoleApp
 {
@@ -11,42 +12,20 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
     {
         static void Main(string[] args)
         {
-            KisiDal kDal = new KisiDal();
+            string sql = @"SELECT     Customers.CustomerID, Customers.CompanyName, Customers.ContactName, Customers.ContactTitle, Customers.Address, Orders.OrderID, 
+                     [Order Details].ProductID, [Order Details].UnitPrice, [Order Details].Quantity
+FROM         Customers INNER JOIN
+                      Orders ON Customers.CustomerID = Orders.CustomerID INNER JOIN
+                      [Order Details] ON Orders.OrderID = [Order Details].OrderID
+                WHERE Customers.CompanyName LIKE @CompanyName + '%'";
+
             AdoTemplate template = new AdoTemplate();
+            ParameterBuilder builder = new ParameterBuilder();
+            builder.parameterEkle("@CompanyName", SqlDbType.VarChar, "S");
 
-//            string sql = @"SELECT     ID, TcKimlikNo, Adi, Soyadi, WindowsUserName, IkinciAdi
-//                                FROM         ORTAK.KISI
-//                                WHERE Adi LIKE @Adi + '%'";
-//            ParameterBuilder builder = new ParameterBuilder();
-//            builder.parameterEkle("@Adi", SqlDbType.VarChar, "A");
+//            DataTable dt = template.DataTableOlustur(sql, builder.GetParameterArray());
+            DataTable dt2 = template.DataTableDoldurSayfalamaYap(sql, 20, 5, "Customers.CustomerID", builder.GetParameterArray());
 
-//            DataTable dt = new DataTable();
-//            template.DataTableDoldur(dt, sql, builder.GetParameterArray());
-
-//            foreach (DataRow row in dt.Rows)
-//            {
-//                Console.WriteLine(row["Adi"]);
-//            }
-
-
-                string sqlToExecute = @"
-SELECT     ORTAK.KISI.Adi, ORTAK.KISI.Soyadi, ORTAK.KISI.TcKimlikNo, ORTAK.KISI_ADRES.Adres
-FROM         ORTAK.KISI LEFT JOIN
-                      ORTAK.KISI_ADRES ON ORTAK.KISI.ID = ORTAK.KISI_ADRES.KisiKey
-                WHERE Adi Like @Adi + '%'
-                ";
-
-            
-            DataTable dt2 = new DataTable();
-            ParameterBuilder b = new ParameterBuilder();
-            b.parameterEkle("@Adi", SqlDbType.VarChar, "");
-            template.DataTableDoldurSayfalamaYap(dt2, sqlToExecute, 4, 1, "Soyadi", b.GetParameterArray());
-
-            foreach (DataRow row in dt2.Rows)
-            {
-                Console.WriteLine(row["Adi"]);
-                Console.WriteLine(row["Adres"]);
-            }
 
 
 

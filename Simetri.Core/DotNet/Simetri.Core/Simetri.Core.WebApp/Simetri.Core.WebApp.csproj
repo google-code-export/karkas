@@ -125,10 +125,6 @@
       <Project>{29D76493-FFF2-42E2-8EF0-6F0AE71CB80E}</Project>
       <Name>Simetri.Core.Validation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simetri.Core.Web.Utility\Simetri.Core.Web.Utility.csproj">
-      <Project>{3EFFC21B-0F29-4AA2-A504-0B774DFA4C5B}</Project>
-      <Name>Simetri.Core.Web.Utility</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ortak\" />

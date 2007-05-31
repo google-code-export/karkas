@@ -49,6 +49,10 @@
       <Project>{856567F9-E8D4-4FA4-AA91-A77740A1560A}</Project>
       <Name>Simetri.Core.TypeLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Simetri.Core.Validation\Simetri.Core.Validation.csproj">
+      <Project>{29D76493-FFF2-42E2-8EF0-6F0AE71CB80E}</Project>
+      <Name>Simetri.Core.Validation</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

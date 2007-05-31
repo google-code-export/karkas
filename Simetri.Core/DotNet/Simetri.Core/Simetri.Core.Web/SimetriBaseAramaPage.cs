@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Simetri.Core.Web
 {
-    public abstract class SimetriBaseAramaPage : SimetriBasePage
-    {
-    }
+    //public abstract class SimetriBaseAramaPage : SimetriBasePage
+    //{
+    //}
 }

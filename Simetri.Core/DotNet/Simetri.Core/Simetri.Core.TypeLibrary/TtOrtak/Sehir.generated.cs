@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Simetri.Core.TypeLibrary.TtOrtak
 {
-    public partial class Sehir
+    public partial class Sehir : BaseTypeLibrary
     {
 		
 		private int id;
@@ -60,8 +60,13 @@ namespace Simetri.Core.TypeLibrary.TtOrtak
 				turkiyeIcindeMi = value;
 			}
 		}
-		
 
 
+
+
+        protected override void ValidationListesiniOlusturCodeGeneration()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
     }
 }

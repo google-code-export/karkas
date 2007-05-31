@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Simetri.Core.Web
 {
-    public class SimetriMasterPage : System.Web.UI.MasterPage
-    {
+    //public class SimetriMasterPage : System.Web.UI.MasterPage
+    //{
 
-    }
+    //}
 }

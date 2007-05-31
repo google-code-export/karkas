@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Simetri.Core.TypeLibrary.TtOrtak
 {
-    public partial class Din
+    public partial class Din : BaseTypeLibrary
     {
 		
 		private byte no;
@@ -47,8 +47,13 @@ namespace Simetri.Core.TypeLibrary.TtOrtak
 				aktifMi = value;
 			}
 		}
-		
 
 
+
+
+        protected override void ValidationListesiniOlusturCodeGeneration()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
     }
 }

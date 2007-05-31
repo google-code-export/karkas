@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Simetri.Core.TypeLibrary.TtOrtak
 {
-    public partial class KanGrubu
+    public partial class KanGrubu : BaseTypeLibrary
     {
 		
 		private byte no;
@@ -34,8 +34,13 @@ namespace Simetri.Core.TypeLibrary.TtOrtak
 				adi = value;
 			}
 		}
-		
 
 
+
+
+        protected override void ValidationListesiniOlusturCodeGeneration()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
     }
 }

@@ -45,6 +45,12 @@
     <Compile Include="ParameterBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simetri.Core.Validation\Simetri.Core.Validation.csproj">
+      <Project>{29D76493-FFF2-42E2-8EF0-6F0AE71CB80E}</Project>
+      <Name>Simetri.Core.Validation</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

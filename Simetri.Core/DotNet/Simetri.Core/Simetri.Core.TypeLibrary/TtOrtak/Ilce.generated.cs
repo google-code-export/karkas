@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Simetri.Core.TypeLibrary.TtOrtak
 {
-    public partial class Ilce
+    public partial class Ilce : BaseTypeLibrary
     {
 		
 		private int id;
@@ -60,8 +60,13 @@ namespace Simetri.Core.TypeLibrary.TtOrtak
 				aktifMi = value;
 			}
 		}
-		
 
 
+
+
+        protected override void ValidationListesiniOlusturCodeGeneration()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
     }
 }

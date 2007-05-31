@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Simetri.Core.TypeLibrary.TtOrtak
 {
-    public partial class AdresTuru
+    public partial class AdresTuru : BaseTypeLibrary
     {
 		
 		private byte no;
@@ -47,8 +47,13 @@ namespace Simetri.Core.TypeLibrary.TtOrtak
 				isAdresiTuruMu = value;
 			}
 		}
-		
 
 
+
+
+        protected override void ValidationListesiniOlusturCodeGeneration()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
     }
 }

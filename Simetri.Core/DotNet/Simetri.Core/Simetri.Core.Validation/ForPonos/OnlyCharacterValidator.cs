@@ -8,7 +8,7 @@ namespace Simetri.Core.Validation.ForPonos
     [Serializable]
     public class OnlyCharacterValidator : RegExValidator
     {
-        protected const string REGEX_ONLY_CHARACTER = "^[a-zA-ZüðiþçöýÜÐÝÞÇÖI]*$";
+        protected const string REGEX_ONLY_CHARACTER = "^[a-zA-ZüðiþçöýÜÐÝÞÇÖI ]*$";
         public OnlyCharacterValidator(object pUzerindeCalisilacakNesne, string pPropertyName)
             : base(pUzerindeCalisilacakNesne, pPropertyName, REGEX_ONLY_CHARACTER, RegexOptions.None)
         {

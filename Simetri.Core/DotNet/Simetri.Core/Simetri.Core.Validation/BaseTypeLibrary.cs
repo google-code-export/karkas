@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Simetri.Core.Validation.ForPonos;
+using System.Data;
 
 namespace Simetri.Core.TypeLibrary
 {
@@ -13,6 +14,7 @@ namespace Simetri.Core.TypeLibrary
 
         public BaseTypeLibrary()
         {
+            rowState = DataRowState.Added;
             validator = new Validator(this);
             ValidationListesiniOlusturCodeGeneration();
             ValidationListesiniOlustur();
@@ -34,6 +36,18 @@ namespace Simetri.Core.TypeLibrary
         {
             return validator.Validate();
         }
+
+        private DataRowState rowState;
+
+        public DataRowState RowState
+        {
+            get 
+            {
+                return rowState; 
+            }
+            set { rowState = value; }
+        }
+
 
 
     }

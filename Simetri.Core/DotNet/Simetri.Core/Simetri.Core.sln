@@ -25,12 +25,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.DataUtil.TestC
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.Web.Utility", "Simetri.Core.Web.Utility\Simetri.Core.Web.Utility.csproj", "{3EFFC21B-0F29-4AA2-A504-0B774DFA4C5B}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.TypeLibrary", "Simetri.Core.TypeLibrary\Simetri.Core.TypeLibrary.csproj", "{856567F9-E8D4-4FA4-AA91-A77740A1560A}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
@@ -89,10 +83,6 @@ Global
 		{080B5FFC-3533-4414-B5DC-EBC39ED8CCF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{080B5FFC-3533-4414-B5DC-EBC39ED8CCF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{080B5FFC-3533-4414-B5DC-EBC39ED8CCF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3EFFC21B-0F29-4AA2-A504-0B774DFA4C5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3EFFC21B-0F29-4AA2-A504-0B774DFA4C5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3EFFC21B-0F29-4AA2-A504-0B774DFA4C5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3EFFC21B-0F29-4AA2-A504-0B774DFA4C5B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{856567F9-E8D4-4FA4-AA91-A77740A1560A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{856567F9-E8D4-4FA4-AA91-A77740A1560A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{856567F9-E8D4-4FA4-AA91-A77740A1560A}.Release|Any CPU.ActiveCfg = Release|Any CPU
