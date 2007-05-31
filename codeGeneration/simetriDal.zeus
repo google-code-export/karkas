@@ -208,6 +208,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 
 
 
+	private bool generateAllTables = true;
 
 	public override void Render()
 	{
@@ -223,13 +224,31 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		string databaseName = input["chooseDatabase"].ToString();;
 		IDatabase database = MyMeta.Databases[databaseName];
 
-		ArrayList selectedTables = input["chooseTables"] as ArrayList;
+		IList selectedTables = null;
+		if (generateAllTables)
+		{
+			selectedTables = database.Tables as IList;
+		}
+		else
+		{
+			selectedTables = input["chooseTables"] as IList;
+		}
 		
 		string baseNameSpace = "";
 		string baseNameSpaceTypeLibrary = "";
-		foreach (String tableName in selectedTables)
+		for (int i =0; i<selectedTables.Count ;i++)
 		{
-			ITable table = database.Tables[tableName];
+			ITable table = null;
+			if (generateAllTables)
+			{
+				table = selectedTables[i] as ITable;
+			}
+			else
+			{
+				string tableName = selectedTables[i] as String;
+				table = database.Tables[tableName];
+			}
+
 			baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database,table.Schema);
 			baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 			
@@ -244,9 +263,18 @@ public class GeneratedTemplate : DotNetScriptTemplate
 
 
 
-		foreach (String tableName in selectedTables)
+		for (int i =0; i<selectedTables.Count ;i++)
 		{
-			ITable table = database.Tables[tableName];
+			ITable table = null;
+			if (generateAllTables)
+			{
+				table = selectedTables[i] as ITable;
+			}
+			else
+			{
+				string tableName = selectedTables[i] as String;
+				table = database.Tables[tableName];
+			}
 
 			classNameTypeLibrary = SimetriUtils.SetPascalCase(table.Name);
 			schemaName = SimetriUtils.SetPascalCase(table.Schema);
