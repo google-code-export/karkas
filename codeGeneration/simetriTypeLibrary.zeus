@@ -300,7 +300,7 @@ namespace <%=classNameSpace%>
 			{
 				if (!column.IsNullable)
 				{%>
-					this.Validator.ValidatorList.Add(new RequiredFieldValidator(this, "<%=column.Name%>"));
+					//this.Validator.ValidatorList.Add(new RequiredFieldValidator(this, "<%=column.Name%>"));
 				<%}
 			}
 			%>
