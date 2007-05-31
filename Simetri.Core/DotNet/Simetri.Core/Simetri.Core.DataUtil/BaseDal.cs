@@ -187,10 +187,10 @@ namespace Simetri.Core.DataUtil
                 reader = cmd.ExecuteReader();
 
                 T row = default(T);
-                row.RowState = DataRowState.Unchanged;
                 while (reader.Read())
                 {
                     row = new T();
+                    row.RowState = DataRowState.Unchanged;
                     ProcessRow(reader, row);
                     liste.Add(row);
                 }

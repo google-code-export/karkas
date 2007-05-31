@@ -15,9 +15,6 @@ namespace Simetri.Core.TypeLibrary
         public BaseTypeLibrary()
         {
             rowState = DataRowState.Added;
-            validator = new Validator(this);
-            ValidationListesiniOlusturCodeGeneration();
-            ValidationListesiniOlustur();
         }
         public Validator Validator
         {
@@ -34,6 +31,9 @@ namespace Simetri.Core.TypeLibrary
 
         public bool Validate()
         {
+            validator = new Validator(this);
+            ValidationListesiniOlusturCodeGeneration();
+            ValidationListesiniOlustur();
             return validator.Validate();
         }
 
