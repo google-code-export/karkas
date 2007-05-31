@@ -263,16 +263,16 @@ public class GeneratedTemplate : DotNetScriptTemplate
 
 
 
-		for (int i =0; i<selectedTables.Count ;i++)
+		for (int j =0; j<selectedTables.Count ;j++)
 		{
 			ITable table = null;
 			if (generateAllTables)
 			{
-				table = selectedTables[i] as ITable;
+				table = selectedTables[j] as ITable;
 			}
 			else
 			{
-				string tableName = selectedTables[i] as String;
+				string tableName = selectedTables[j] as String;
 				table = database.Tables[tableName];
 			}
 

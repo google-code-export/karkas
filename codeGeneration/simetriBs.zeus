@@ -22,7 +22,7 @@ public class GeneratedGui : DotNetScriptGui
 		if ( !input.Contains( "chooseTables" ) || !input.Contains( "txtPath" ) ||
 				( !input.Contains( "chkClass" ) && !input.Contains( "chkNaming" ) ) )
 		{
-			ui.Title = "Simetri Type Library Code Gen";
+			ui.Title = "Simetri Business Services Code Gen";
 			ui.Width = 600;
 			ui.Height =600;
 	

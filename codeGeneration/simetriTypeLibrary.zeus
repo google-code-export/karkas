@@ -245,6 +245,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 				string tableName = selectedTables[i] as String;
 				table = database.Tables[tableName];
 			}
+
 			string baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database,table.Schema);
 			string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
