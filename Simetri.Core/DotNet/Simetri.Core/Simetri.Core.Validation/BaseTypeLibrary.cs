@@ -48,6 +48,18 @@ namespace Simetri.Core.TypeLibrary
             set { rowState = value; }
         }
 
+        public void SilinmesiIcinIsaretle()
+        {
+            rowState = DataRowState.Deleted;
+        }
+        public void EklenmesiIcinIsaretle()
+        {
+            rowState = DataRowState.Added;
+        }
+        public void GuncellenmesiIcinIsaretle()
+        {
+            rowState = DataRowState.Modified;
+        }
 
 
     }

@@ -41,7 +41,7 @@ namespace Simetri.Core.DataUtil
             SorguHariciKomutCalistirDelete(DeleteString, row);
         }
 
-        public void TopluEkle(List<T> liste)
+        public void TopluEkleGuncelleVeyaSil(List<T> liste)
         {
             if (liste == null)
             {
@@ -49,7 +49,18 @@ namespace Simetri.Core.DataUtil
             }
             foreach (T t in liste)
             {
-                Ekle(t);
+                switch (t.RowState)
+                {
+                    case DataRowState.Added:
+                        Ekle(t);
+                        break;
+                    case DataRowState.Deleted:
+                        Sil(t);
+                        break;
+                    case DataRowState.Modified:
+                        Guncelle(t);
+                        break;
+                }
             }
         }
 
@@ -176,6 +187,7 @@ namespace Simetri.Core.DataUtil
                 reader = cmd.ExecuteReader();
 
                 T row = default(T);
+                row.RowState = DataRowState.Unchanged;
                 while (reader.Read())
                 {
                     row = new T();
