@@ -8,6 +8,7 @@ namespace Simetri.MyGenerationHelper
 {
     public class EnumHelper
     {
+        TurkishHelper tHelper = new TurkishHelper();
         public string GetEnumDescription(string dbName, string schemaName, string tableName, string connectionString)
         {
             Utils u = new Utils();
@@ -46,7 +47,7 @@ namespace Simetri.MyGenerationHelper
             {
                 sb.Append(Environment.NewLine);
                 sb.Append("\t\t");
-                sb.Append(u.SetPascalCase( u.ReplaceTurkishChars((reader.GetString(enumAdiOrdinal)))));
+                sb.Append(u.SetPascalCase( tHelper.ReplaceTurkishChars((reader.GetString(enumAdiOrdinal)))));
                 sb.Append(" = ");
                 sb.Append(u.SetPascalCase((reader.GetValue(0).ToString())));
                 sb.Append(",");

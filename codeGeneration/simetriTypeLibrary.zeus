@@ -275,6 +275,15 @@ namespace <%=classNameSpace%>
 		%>
 		protected override void ValidationListesiniOlusturCodeGeneration()
 		{
+			
+			<%= foreach (IColumn column in table.Columns)
+			{
+				if (!column.IsNullable)
+				{%>
+					this.Validator.ValidatorList.Add(new RequiredFieldValidator(this, "<%=column.Name%>", "Adı bilgisini girmeniz gereklidir"));
+				<%}
+			}
+			%>
 		}
 
 

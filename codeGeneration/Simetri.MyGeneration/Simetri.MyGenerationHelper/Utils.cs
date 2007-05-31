@@ -104,33 +104,6 @@ namespace Simetri.MyGenerationHelper
             return sonuc;
         }
 
-        public string ReplaceTurkishChars(string str)
-        {
-            str = str.Replace('ð', 'g');
-            str = str.Replace('Ð', 'G');
-
-            str = str.Replace('ü', 'u');
-            str = str.Replace('Ü', 'U');
-
-            str = str.Replace('þ', 's');
-            str = str.Replace('Þ', 'S');
-
-            str = str.Replace('ý', 'i');
-            str = str.Replace('Ý', 'I');
-
-            str = str.Replace('ö', 'o');
-            str = str.Replace('Ö', 'O');
-
-            str = str.Replace('ç', 'c');
-            str = str.Replace('Ç', 'C');
-
-            return str;
-
-
-
-
-        }
-
         public string GetDataReaderSyntax(IColumn column)
         {
             //            return column.LanguageType;

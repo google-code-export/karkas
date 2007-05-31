@@ -228,11 +228,11 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		{
 			ITable table = database.Tables[tableName];
 			string baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database,table.Schema);
-			string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary.Enums";
+			string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
 			className = SimetriUtils.SetPascalCase(table.Name);
 			schemaName = SimetriUtils.SetPascalCase(table.Schema);
-			classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
+			classNameSpace = baseNameSpaceTypeLibrary + ".Enums." + schemaName;
 			
 %>using System;
 using System.Collections.Generic;
@@ -248,7 +248,7 @@ namespace <%=classNameSpace%>
 <%
 //			output.writeln(className);
 
-			output.save( Path.Combine( SimetriUtils.DizininiAlDatabaseVeSchemaIle(database,table.Schema) + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName , className + ".cs" ), false );
+			output.save( Path.Combine( SimetriUtils.DizininiAlDatabaseVeSchemaIle(database,table.Schema) + "\\" + baseNameSpaceTypeLibrary + "\\Enums\\" + schemaName , className + ".cs" ), false );
 			output.clear();
 			}
 

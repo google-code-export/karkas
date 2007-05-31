@@ -12,9 +12,11 @@ namespace Simetri.MyGenerationConsoleTest
         public static void Main(string[] args)
         {
 
+            TurkishHelper tHelper = new TurkishHelper();
+            Console.WriteLine(tHelper.TurkceyeCevir("Adi"));
+            Console.WriteLine(tHelper.TurkceyeCevir("Soyadi"));
 
-            EnumHelper eHelper = new EnumHelper();
-            Console.WriteLine(eHelper.GetEnumDescription("ITO", "TT_TSM", "HARC_TURU", connectionString));
+            Console.WriteLine(tHelper.ReplaceTurkishChars("Þanlýurfa"));
 
 
         }
