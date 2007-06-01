@@ -58,6 +58,8 @@ namespace Simetri.Core.Validation.ForPonos
             }
         }
 
+
+
         private List<BaseValidator> validatorList = new List<BaseValidator>();
 
         public List<BaseValidator> ValidatorList
@@ -82,6 +84,11 @@ namespace Simetri.Core.Validation.ForPonos
             {
                 return ToString();
             }
+        }
+
+        public void SetError(string pPropertyName, string pErrorMessage)
+        {
+            this.ValidatorList.Add(new AlwaysFail(null, pPropertyName, pErrorMessage));
         }
     }
 }
