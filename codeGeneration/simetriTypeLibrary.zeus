@@ -36,6 +36,8 @@ public class GeneratedGui : DotNetScriptGui
 			outputPath = ui.AddTextBox( "outputPath", sOutputPath, "Select the Output Path." );
 			outputPath.Width = 250;
 			
+
+			
 			outputPath.Left = label1.Left + label1.Width;
 			outputPath.Top = label1.Top;
 			GuiFilePicker selectPath = ui.AddFilePicker( "selectPath", "Dizin Secin", "Cıktı Dizininini Şeçin.", "outputPath", true );
@@ -78,10 +80,16 @@ public class GeneratedGui : DotNetScriptGui
 			chooseTables = ui.AddListBox( "chooseTables", "Select tables." );
 			chooseTables.Height = 150;
 	
-			// Setup Views selection multi-select listbox.
+			// Setup Schema selection multi-select listbox.
 			GuiLabel label8 = ui.AddLabel( "label8", "Schema Listesi", "Schema Listesini Asagidan Secin" );
-			GuiComboBox chooseViews = ui.AddComboBox( "chooseViews", "Select views." );
-			chooseViews.AttachEvent( "onchange", "chooseSchema_onchange" );
+			GuiComboBox chooseSchemas = ui.AddComboBox( "chooseSchemas", "Schema Seçiniz." );
+			chooseSchemas.AttachEvent( "onchange", "chooseSchema_onchange" );
+
+
+
+			GuiCheckBox chkBox = ui.AddCheckBox("chkBox", "Tum Tablolari Generate et", false, "Eğer bu checkbox'ı seçerseniz, tablo seçiminiz dikkate almadan tüm veritabanından kod üretir");
+			chkBox.Top = chooseSchemas.Top;
+			chkBox.Left = label1.Left; 
 
 
 			// Attach the onchange event to the cmbDatabases control.
@@ -107,7 +115,7 @@ public class GeneratedGui : DotNetScriptGui
 				{
 					Databases.SelectedValue = MyMeta.DefaultDatabase.Alias;
 					bindTables( Databases.SelectedValue,"dbo" );
-					bindViews( Databases.SelectedValue );
+					bindSchemas( Databases.SelectedValue );
 				}
 			}
 		}
@@ -154,10 +162,10 @@ public class GeneratedGui : DotNetScriptGui
 //			lstTables.BindData( liste );
 	}
 
-	public void bindViews( string sDatabase )
+	public void bindSchemas( string sDatabase )
 	{
 	
-		GuiComboBox lstViews = ui["chooseViews"] as GuiComboBox;
+		GuiComboBox lstSchemas = ui["chooseSchemas"] as GuiComboBox;
 		
 		IDatabase db = MyMeta.Databases[sDatabase];
 		ArrayList liste = new ArrayList();
@@ -170,7 +178,7 @@ public class GeneratedGui : DotNetScriptGui
 			}
 		}
 
-		lstViews.BindData( liste );
+		lstSchemas.BindData( liste );
 	}
 	
 	public void chooseDatabase_onchange( GuiComboBox control )
@@ -180,7 +188,7 @@ public class GeneratedGui : DotNetScriptGui
 		string dbName = cmbDatabases.SelectedText;
 	
 		bindTables( dbName,"dbo" );
-		bindViews( dbName );
+		bindSchemas( dbName );
 		
 		outputPath.Text = SimetriUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
 		classNamespace.Text =SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
@@ -188,7 +196,7 @@ public class GeneratedGui : DotNetScriptGui
 	public void chooseSchema_onchange( GuiComboBox control )
 	{
 		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
-		GuiComboBox cmbSchema = ui["chooseViews"] as GuiComboBox;
+		GuiComboBox cmbSchema = ui["chooseSchemas"] as GuiComboBox;
 		bindTables( cmbDatabases.SelectedText,cmbSchema.SelectedText );
 	}
 
@@ -300,7 +308,7 @@ namespace <%=classNameSpace%>
 			{
 				if (!column.IsNullable)
 				{%>
-					//this.Validator.ValidatorList.Add(new RequiredFieldValidator(this, "<%=column.Name%>"));
+					this.Validator.ValidatorList.Add(new RequiredFieldValidator(this, "<%=SimetriUtils.SetPascalCase(column.Name)%>"));
 				<%}
 			}
 			%>

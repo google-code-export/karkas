@@ -321,6 +321,11 @@ namespace <%=baseNameSpaceBsWithSchema%>
         {
             dal.TopluEkleGuncelleVeyaSil(liste);
         }
+		
+        public void Guncelle(<%= classNameTypeLibrary %> k)
+        {
+            dal.Guncelle(k);
+        }
 
     }
 }

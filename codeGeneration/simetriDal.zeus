@@ -302,6 +302,13 @@ namespace <%=baseNameSpaceDal%>
     public partial class <%= classNameTypeLibrary %>Dal : BaseDal<<%= classNameTypeLibrary %>,<%= pkType %>>
     {
 
+        protected override string SelectCountString
+        {
+            get 
+			{ 
+				return @"SELECT COUNT(*) FROM <%=table.Schema %>.<%=table.Name%>";
+			}
+		}
 
         protected override string SelectString
         {
