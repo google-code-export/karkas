@@ -306,7 +306,7 @@ namespace <%=classNameSpace%>
 			
 			<%= foreach (IColumn column in table.Columns)
 			{
-				if (!column.IsNullable)
+				if ((!column.IsNullable) && (!column.IsInPrimaryKey ))
 				{%>
 					this.Validator.ValidatorList.Add(new RequiredFieldValidator(this, "<%=SimetriUtils.SetPascalCase(column.Name)%>"));
 				<%}
