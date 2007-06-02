@@ -30,6 +30,15 @@ namespace Simetri.Core.DataUtil
         }
 
 
+        public int TablodakiSatirSayisi
+        {
+            get
+            {
+                AdoTemplate template = new AdoTemplate();
+                object o = template.TekDegerGetir(SelectCountString);
+                return Convert.ToInt32(o);
+            }
+        }
 
 
         public void Guncelle(T row)
@@ -227,6 +236,10 @@ namespace Simetri.Core.DataUtil
             get;
         }
         protected abstract string DeleteString
+        {
+            get;
+        }
+        protected abstract string SelectCountString
         {
             get;
         }

@@ -9,6 +9,12 @@ namespace Simetri.Core.Validation.ForPonos
         public abstract class BaseValidator
         {
             string propertyName;
+
+            public string PropertyName
+            {
+                get { return propertyName; }
+                set { propertyName = value; }
+            }
             public BaseValidator(object uzerindeCalisilacakNesne, string pPropertyName)
             {
                 this.propertyName = pPropertyName;

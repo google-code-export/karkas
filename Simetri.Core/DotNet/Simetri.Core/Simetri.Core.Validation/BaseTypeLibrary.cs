@@ -20,6 +20,10 @@ namespace Simetri.Core.TypeLibrary
         {
             get
             {
+                if (validator == null)
+                {
+                    validationListeleriniOlustur();
+                }
                 return validator;
             }
         }
@@ -31,10 +35,15 @@ namespace Simetri.Core.TypeLibrary
 
         public bool Validate()
         {
+            validationListeleriniOlustur();
+            return Validator.Validate();
+        }
+
+        private void validationListeleriniOlustur()
+        {
             validator = new Validator(this);
             ValidationListesiniOlusturCodeGeneration();
             ValidationListesiniOlustur();
-            return validator.Validate();
         }
 
         private DataRowState rowState;

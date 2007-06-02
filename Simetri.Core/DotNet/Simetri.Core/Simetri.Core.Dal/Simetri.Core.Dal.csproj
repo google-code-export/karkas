@@ -34,26 +34,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Ortak\FotografDal.generated.cs" />
-    <Compile Include="Ortak\KisiAdresDal.generated.cs" />
     <Compile Include="Ortak\KisiDal.generated.cs" />
-    <Compile Include="Ortak\KisiEkBilgilerDal.generated.cs" />
-    <Compile Include="Ortak\KisiIletisimDal.generated.cs" />
-    <Compile Include="Ortak\KisiNufusBilgileriDal.generated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TtOrtak\AdresTuruDal.generated.cs" />
-    <Compile Include="TtOrtak\CinsiyetDal.generated.cs" />
-    <Compile Include="TtOrtak\DinDal.generated.cs" />
-    <Compile Include="TtOrtak\IlceDal.generated.cs" />
-    <Compile Include="TtOrtak\IletisimTuruDal.generated.cs" />
-    <Compile Include="TtOrtak\KanGrubuDal.generated.cs" />
-    <Compile Include="TtOrtak\MahalleDal.generated.cs" />
-    <Compile Include="TtOrtak\MedeniDurumDal.generated.cs" />
-    <Compile Include="TtOrtak\SehirDal.generated.cs" />
-    <Compile Include="TtOrtak\SosyalGuvenlikTuruDal.generated.cs" />
-    <Compile Include="TtOrtak\UlkeDal.generated.cs" />
-    <Compile Include="TtOrtak\VergiDairesiDal.generated.cs" />
-    <Compile Include="TtOrtak\YabanciDilTipDal.generated.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simetri.Core.DataUtil\Simetri.Core.DataUtil.csproj">
@@ -68,6 +50,9 @@
       <Project>{29D76493-FFF2-42E2-8EF0-6F0AE71CB80E}</Project>
       <Name>Simetri.Core.Validation</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TtOrtak\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

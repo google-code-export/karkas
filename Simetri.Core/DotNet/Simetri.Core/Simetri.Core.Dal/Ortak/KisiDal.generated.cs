@@ -13,6 +13,10 @@ namespace Simetri.Core.Dal.Ortak
     public partial class KisiDal : BaseDal<Kisi,Guid>
     {
 
+        protected override string SelectCountString
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
 
         protected override string SelectString
         {
