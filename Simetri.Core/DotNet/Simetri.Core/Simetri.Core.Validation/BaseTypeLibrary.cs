@@ -77,7 +77,7 @@ namespace Simetri.Core.TypeLibrary
         /// <code>
         ///try
         ///{
-        ///     = Convert.ToInt32(SayiOlacakTextBox.Text);
+        ///   f.SayiOlacak  = Convert.ToInt32(SayiOlacakTextBox.Text);
 
         ///}
         ///catch
@@ -97,6 +97,7 @@ namespace Simetri.Core.TypeLibrary
         {
             this.Validator.SetError("", pErrorMessage);
         }
+
 
     }
 }

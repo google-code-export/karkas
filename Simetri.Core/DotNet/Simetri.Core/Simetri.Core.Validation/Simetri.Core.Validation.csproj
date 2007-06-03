@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTypeLibrary.cs" />
+    <Compile Include="BaseTypeLibraryList.cs" />
     <Compile Include="CompareOperator.cs" />
     <Compile Include="ForPonos\AlwaysFail.cs" />
     <Compile Include="ForPonos\BaseValidator.cs" />

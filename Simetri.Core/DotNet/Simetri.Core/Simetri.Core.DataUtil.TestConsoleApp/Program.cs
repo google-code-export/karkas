@@ -4,6 +4,7 @@ using System.Text;
 using Simetri.Core.TypeLibrary.Ortak;
 using System.Data;
 using Simetri.Core.Validation.ForPonos;
+using Simetri.Core.TypeLibrary;
 
 namespace Simetri.Core.DataUtil.TestConsoleApp
 {
@@ -11,6 +12,10 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
     {
         static void Main(string[] args)
         {
+
+            BaseTypeLibraryList btl = new BaseTypeLibraryList();
+
+
             Kisi k = new Kisi();
             decimal a;
             if (decimal.TryParse("DENEME", out a))
