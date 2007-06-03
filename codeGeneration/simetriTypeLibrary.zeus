@@ -214,7 +214,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 	public GeneratedTemplate(ZeusContext context) : base(context) {}
 
 
-	private bool generateAllTables = true;
+	private bool generateAllTables = false;
 	public override void Render()
 	{
 		string className = "";

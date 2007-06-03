@@ -208,7 +208,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 
 
 
-	private bool generateAllTables = true;
+	private bool generateAllTables = false;
 
 	public override void Render()
 	{
