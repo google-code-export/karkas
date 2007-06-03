@@ -35,7 +35,7 @@ namespace Simetri.Core.Validation.ForPonos
 
         protected override string BuildErrorMessage()
         {
-            return string.Format("{0} hatalý", this.Property.Name);
+            return string.Format("{0} hatalý", this.PropertyName);
         }
     }
 }

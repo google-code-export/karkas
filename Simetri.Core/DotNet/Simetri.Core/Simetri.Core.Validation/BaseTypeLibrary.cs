@@ -69,7 +69,34 @@ namespace Simetri.Core.TypeLibrary
         {
             rowState = DataRowState.Modified;
         }
+        /// <summary>
+        /// Bu nesnenin onaylama sýrasýnda daima hatalý olarak davranmasýný saðlar. 
+        /// Mesela sayý girilmesi gereken bir yere yazi girildi. Ornek: (sadv)
+        /// Bu degeri Convert.ToInt32 kullanarak alamayýz. Bu durumda hata göstermek istiyorsak.
+        /// Asaðýdaki gibi bir kod yazarýz.
+        /// <code>
+        ///try
+        ///{
+        ///     = Convert.ToInt32(SayiOlacakTextBox.Text);
 
+        ///}
+        ///catch
+        ///{
+        ///    f.HataliOlarakIsaretle("SayiOlacak","Sayi Olacak degeri sayý olmalýdýr");
+        ///}
+        /// </code>
+        /// Mesajýnýz yazýn.
+        /// </summary>
+        /// <param name="pMessage"></param>
+        public void HataliOlarakIsaretle(string pPropertyName,string pErrorMessage)
+        {
+            this.Validator.SetError(pPropertyName, pErrorMessage);
+        }
+
+        public void HataliOlarakIsaretle(string pErrorMessage)
+        {
+            this.Validator.SetError("", pErrorMessage);
+        }
 
     }
 }
