@@ -322,9 +322,12 @@ namespace <%=baseNameSpaceBsWithSchema%>
             dal.TopluEkleGuncelleVeyaSil(liste);
         }
 		
-        public void Guncelle(<%= classNameTypeLibrary %> k)
+        public int TablodakiSatirSayisi
         {
-            dal.Guncelle(k);
+			get
+			{
+				return dal.TablodakiSatirSayisi;
+			}
         }
 
     }
