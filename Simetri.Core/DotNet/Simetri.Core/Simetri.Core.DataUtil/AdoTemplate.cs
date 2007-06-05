@@ -39,6 +39,32 @@ namespace Simetri.Core.DataUtil
             }
             return sonuc;
         }
+        public Object TekDegerGetir(string cmdText, SqlParameter[] parameters)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = cmdText;
+            cmd.Connection = Connection;
+            foreach (SqlParameter p in parameters)
+            {
+                cmd.Parameters.Add(p);
+            }
+
+            object sonuc = 0;
+            try
+            {
+                Connection.Open();
+                sonuc = cmd.ExecuteScalar();
+            }
+            catch (SqlException ex)
+            {
+                ExceptionDegistirici.Degistir(ex, cmdText);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+            return sonuc;
+        }
         
         public void SorguHariciKomutCalistir(String cmdText)
         {
