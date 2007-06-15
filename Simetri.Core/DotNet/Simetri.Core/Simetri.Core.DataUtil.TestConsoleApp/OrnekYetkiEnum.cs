@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Simetri.Core.DataUtil.TestConsoleApp
 {
-    public class OrnekYetkiEnum
+    public partial class OrnekYetkiEnum
     {
-        public const 
+
     }
 }
