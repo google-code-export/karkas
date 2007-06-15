@@ -84,9 +84,9 @@ namespace Simetri.Core.Yetki
             return clientContext;
         }
 
+        // TODO Bunu yaz
         private void CloseCurrentContext()
         {
-            throw new Exception("The method or operation is not implemented.");
         }
 
         private IAzClientContext GetClientContext()
@@ -134,21 +134,55 @@ namespace Simetri.Core.Yetki
             return clientContext;
 
         }
+        // TODO Keith Brown Azman In the enterprise part III koduna bak ve bunu duzelt.
 
-        public bool HasAccess(IIdentity identity, string operation)
+        public bool YetkiliMi(IIdentity identity, string operation)
         {
-            object[] operations = { GetOperationByName(operation) };
-            object[] result = (object[])GetClientContext(identity).AccessCheck(azApplication.Name, scopes, operations, null, null, null, null, null);
-            return (int)result[0] == VALID_OPERATION;
+            return YetkiliMi(identity, GetOperationByName(operation));
         }
-        public bool HasAccess(IIdentity identity, int operation)
+        public bool YetkiliMi(IIdentity identity, int operation)
         {
             object[] operations = { operation };
             object[] result = (object[])GetClientContext(identity).AccessCheck(azApplication.Name, scopes, operations, null, null, null, null, null);
             return (int)result[0] == VALID_OPERATION;
         }
+        // TODO bunun overload'i params alan yap
+        // TODO dizi veya params alip, bool[] donduren yaz.
+        // int[] yerine enum[] alani dusun.
+        public bool HepsineYetkiliMi(IIdentity identity, int[] pOperations)
+        {
+            object[] operations = new object[pOperations.Length];
+            for (int i = 0; i < pOperations.Length; i++)
+            {
+                operations[i] = pOperations[i];
+            }
+            object[] result = (object[])GetClientContext(identity).AccessCheck(azApplication.Name, scopes, operations, null, null, null, null, null);
+            bool sonuc = true;
+            for (int i = 0; i < result.Length; i++)
+            {
+                sonuc = sonuc && (int)result[i] == VALID_OPERATION;
+            }
 
-        private object GetOperationByName(string operation)
+            return sonuc;
+        }
+        public bool EnAzBirineYetkiliMi(IIdentity identity, int[] pOperations)
+        {
+            object[] operations = new object[pOperations.Length];
+            for (int i = 0; i < pOperations.Length; i++)
+            {
+                operations[i] = pOperations[i];
+            }
+            object[] result = (object[])GetClientContext(identity).AccessCheck(azApplication.Name, scopes, operations, null, null, null, null, null);
+            bool sonuc = false;
+            for (int i = 0; i < result.Length; i++)
+            {
+                sonuc = sonuc || (int)result[i] == VALID_OPERATION;
+            }
+
+            return sonuc;
+        }
+
+        private int GetOperationByName(string operation)
         {
             throw new Exception("The method or operation is not implemented.");
         } 

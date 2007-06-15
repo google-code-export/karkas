@@ -4,13 +4,13 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 
-namespace Simetri.Yetki
+namespace Simetri.Core.Yetki
 {
     public class LogOnUser
     {
         //LogonUser parameters
         [DllImport("advapi32.dll")]
-        public static extern bool LogonUser(String lpszUsername,
+        private static extern bool LogonUser(String lpszUsername,
                                                 String lpszDomain,
                                                 String lpszPassword,
                                                 int dwLogonType,
@@ -20,7 +20,7 @@ namespace Simetri.Yetki
         //CloseHandle parameters. When you are finished, 
         //free the memory allocated for the handle.
         [DllImport("kernel32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
-        public static extern bool CloseHandle(IntPtr handle);
+        private static extern bool CloseHandle(IntPtr handle);
 
         public static WindowsIdentity GetWindowsIdentity(string pUserName, string pDomain, string pPassword)
         {
