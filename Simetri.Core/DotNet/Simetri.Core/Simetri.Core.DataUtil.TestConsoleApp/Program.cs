@@ -5,6 +5,9 @@ using Simetri.Core.TypeLibrary.Ortak;
 using System.Data;
 using Simetri.Core.Validation.ForPonos;
 using Simetri.Core.TypeLibrary;
+using Simetri.Core.Yetki;
+using System.Threading;
+using System.Security.Principal;
 
 namespace Simetri.Core.DataUtil.TestConsoleApp
 {
@@ -12,26 +15,18 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
     {
         static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
+            IIdentity identity = null;
+            identity = LogOnUser.GetWindowsIdentity("stajyer", "itodomain", "123456");
+            AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
+            identity = Thread.CurrentPrincipal.Identity;
 
-            BaseTypeLibraryList btl = new BaseTypeLibraryList();
 
-
-            Kisi k = new Kisi();
-            decimal a;
-            if (decimal.TryParse("DENEME", out a))
+            AzmanHelper helper = new AzmanHelper();
+            if (helper.HepsineYetkiliMi(identity, new int[] { 1, 2 }))
             {
-                k.TcKimlikNo = a;
-
+                Console.WriteLine("Kisi Silme Hakkiniz var");
             }
-            else
-            {
-                k.Validator.SetError("TcKimlikNo", "Tc KimlikNo formatý yanlýþ");
-            }
-
-           
-
-
-
 
         }
     }

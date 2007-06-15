@@ -33,6 +33,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OrnekYetkiEnum.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -49,9 +50,17 @@
       <Project>{29D76493-FFF2-42E2-8EF0-6F0AE71CB80E}</Project>
       <Name>Simetri.Core.Validation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Simetri.Core.Yetki\Simetri.Core.Yetki.csproj">
+      <Project>{A4B4B2C0-CC59-4B4C-8B67-FA2158BCE192}</Project>
+      <Name>Simetri.Core.Yetki</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="yetkiEnumOlustur.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="azmanStore.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
