@@ -214,7 +214,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 	public GeneratedTemplate(ZeusContext context) : base(context) {}
 
 
-	private bool generateAllTables = false;
+	private bool generateAllTables = true;
 	public override void Render()
 	{
 		string className = "";
@@ -266,6 +266,7 @@ using System.Collections.Generic;
 using System.Text;
 using Simetri.Core.TypeLibrary;
 using Simetri.Core.Validation.ForPonos;
+using System.Data;
 
 namespace <%=classNameSpace%>
 {
@@ -295,6 +296,11 @@ namespace <%=classNameSpace%>
 			}
 			set
 			{
+				if ((this.RowState == DataRowState.Unchanged) && (<%=memberVariableName%>  != value))
+                {
+                    this.RowState = DataRowState.Modified;
+                }
+
 				<%=memberVariableName%> = value;
 			}
 		}
