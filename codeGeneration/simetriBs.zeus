@@ -307,6 +307,11 @@ namespace <%=baseNameSpaceBsWithSchema%>
             dal.Sil(k);
         }
 
+        public void DurumaGoreEkleGuncelleVeyaSil(<%= classNameTypeLibrary %> k)
+        {
+            dal.DurumaGoreEkleGuncelleVeyaSil(k);
+        }
+
         public List<<%= classNameTypeLibrary %>> SorgulaHepsiniGetir()
         {
             return dal.SorgulaHepsiniGetir();

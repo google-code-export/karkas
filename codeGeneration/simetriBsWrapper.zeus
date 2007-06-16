@@ -319,6 +319,12 @@ namespace <%=baseNameSpaceBsWrapperWithSchema%>
             bs.Sil(k);
         }
 
+        public void DurumaGoreEkleGuncelleVeyaSil(<%= classNameTypeLibrary %> k)
+        {
+            bs.DurumaGoreEkleGuncelleVeyaSil(k);
+        }
+
+
         [DataObjectMethod(DataObjectMethodType.Select, true)]
         public List<<%= classNameTypeLibrary %>> SorgulaHepsiniGetir()
         {
