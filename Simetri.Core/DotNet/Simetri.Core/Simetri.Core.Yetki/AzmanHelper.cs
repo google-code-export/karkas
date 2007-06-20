@@ -11,6 +11,15 @@ namespace Simetri.Core.Yetki
 {
     public class AzmanHelper
     {
+        private static AzmanHelper instance = new AzmanHelper();
+
+        public static AzmanHelper Instance
+        {
+            get { return AzmanHelper.instance; }
+        }
+
+
+
         const string AZ_MAN_STORE_KEY = "AzManStore";
         const string APPLICATION = "Ito";
         const int VALID_OPERATION = 0;
@@ -142,6 +151,11 @@ namespace Simetri.Core.Yetki
         }
         public bool YetkiliMi(IIdentity identity, int operation)
         {
+            if (identity.IsAuthenticated == false)
+            {
+                return false;
+            }
+
             object[] operations = { operation };
             object[] result = (object[])GetClientContext(identity).AccessCheck(azApplication.Name, scopes, operations, null, null, null, null, null);
             return (int)result[0] == VALID_OPERATION;

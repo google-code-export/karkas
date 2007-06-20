@@ -35,5 +35,14 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
                 Console.WriteLine("Kisi Silme Hakkiniz var");
             }
         }
+
+        [YetkiAttribute(OrnekYetkiEnum.KisiSil)]
+        [YetkiAttribute(OrnekYetkiEnum.KisiEkle)]
+        public static void YetkiAttributeDeneme()
+        {
+        }
+
+
+
     }
 }

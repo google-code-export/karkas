@@ -195,22 +195,22 @@ namespace Simetri.Core.DataUtil
         #endregion
 
         #region "DataTable Olustur Sayfalama Yap"
-        public DataTable DataTableDoldurSayfalamaYap(string sql
-        , int pPageSize, int pPageNumber, string pOrderBy, SqlParameter[] parameters)
+        public DataTable DataTableOlusturSayfalamaYap(string sql
+        , int pPageSize, int pStartRowIndex, string pOrderBy, SqlParameter[] parameters)
         {
             DataTable dataTable = new DataTable();
-            pagingSqliniAyarla(ref sql, pPageSize, ref pPageNumber, pOrderBy);
+            pagingSqliniAyarla(ref sql, pPageSize, ref pStartRowIndex, pOrderBy);
             ValidateFillArguments(dataTable, sql);
             SorguCalistir(dataTable, sql, CommandType.Text, parameters);
             return dataTable;
         }
 
 
-        public DataTable DataTableDoldurSayfalamaYap(string sql
-                , int pPageSize, int pPageNumber, string pOrderBy)
+        public DataTable DataTableOlusturSayfalamaYap(string sql
+                , int pPageSize, int pStartRowIndex, string pOrderBy)
         {
             DataTable dataTable = new DataTable();
-            pagingSqliniAyarla(ref sql, pPageSize, ref pPageNumber, pOrderBy);
+            pagingSqliniAyarla(ref sql, pPageSize, ref pStartRowIndex, pOrderBy);
             ValidateFillArguments(dataTable, sql);
             SorguCalistir(dataTable, sql, CommandType.Text);
             return dataTable;
@@ -221,18 +221,18 @@ namespace Simetri.Core.DataUtil
         #region "DataTable Doldur Sayfalama Yap"
 
         public void DataTableDoldurSayfalamaYap(DataTable dataTable, string sql
-                , int pPageSize, int pPageNumber, string pOrderBy, SqlParameter[] parameters)
+                , int pPageSize, int pStartRowIndex, string pOrderBy, SqlParameter[] parameters)
         {
-            pagingSqliniAyarla(ref sql, pPageSize, ref pPageNumber, pOrderBy);
+            pagingSqliniAyarla(ref sql, pPageSize, ref pStartRowIndex, pOrderBy);
             ValidateFillArguments(dataTable, sql);
             SorguCalistir(dataTable, sql, CommandType.Text, parameters);
         }
 
 
         public void DataTableDoldurSayfalamaYap(DataTable dataTable, string sql
-                , int pPageSize, int pPageNumber, string pOrderBy)
+                , int pPageSize, int pStartRowIndex, string pOrderBy)
         {
-            pagingSqliniAyarla(ref sql, pPageSize, ref pPageNumber, pOrderBy);
+            pagingSqliniAyarla(ref sql, pPageSize, ref pStartRowIndex, pOrderBy);
             ValidateFillArguments(dataTable, sql);
             SorguCalistir(dataTable, sql, CommandType.Text);
         }
@@ -248,24 +248,27 @@ namespace Simetri.Core.DataUtil
                                 ";
         //Where RowNumber >= @RowStart and RowNumber <= @RowEnd
 
-        private static void pagingSqliniAyarla(ref string sql, int pPageSize, ref int pPageNumber, string pOrderBy)
+        private static void pagingSqliniAyarla(ref string sql, int pPageSize, ref int pStartRowNumber, string pOrderBy)
         {
-            if (pPageNumber == 0)
+            if (pStartRowNumber == 0)
             {
                 sql = sql.Replace("SELECT", "SELECT TOP " + pPageSize);
                 sql = sql + "ORDER BY " + pOrderBy;
             }
             else
             {
-                pPageNumber--;
-                int rowStart = pPageSize * pPageNumber + 1;
-                int rowEnd = rowStart + pPageSize - 1;
+                int rowEnd = pStartRowNumber + pPageSize - 1;
                 sql = sql.Replace("FROM", String.Format(",ROW_NUMBER() OVER (order by {0}) as RowNumber FROM ", pOrderBy));
-                sql = String.Format(PAGING_SQL, sql, rowStart, rowEnd);
+                sql = String.Format(PAGING_SQL, sql, pStartRowNumber, rowEnd);
             }
         }
 
         #endregion
+
+        public int SayfalamaSayisiniGetir(string sql)
+        {
+            return 0;
+        }
 
         #region "Helpers"
 
