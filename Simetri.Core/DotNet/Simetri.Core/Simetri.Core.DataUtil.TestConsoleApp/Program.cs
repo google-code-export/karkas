@@ -15,6 +15,13 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
     {
         static void Main(string[] args)
         {
+            AdoTemplate template = new AdoTemplate();
+
+
+        }
+
+        private static void yetkiDeneme()
+        {
             AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
             IIdentity identity = null;
             identity = LogOnUser.GetWindowsIdentity("stajyer", "itodomain", "123456");
@@ -27,7 +34,6 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
             {
                 Console.WriteLine("Kisi Silme Hakkiniz var");
             }
-
         }
     }
 }
