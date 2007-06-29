@@ -22,6 +22,13 @@ namespace Simetri.Core.Yetki
         [DllImport("kernel32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
         private static extern bool CloseHandle(IntPtr handle);
 
+
+        public static WindowsIdentity GetWindowsIdentity(string pUserName, string pDomain)
+        {
+            return null;
+        }
+
+
         public static WindowsIdentity GetWindowsIdentity(string pUserName, string pDomain, string pPassword)
         {
             IntPtr tokenHandle = IntPtr.Zero;

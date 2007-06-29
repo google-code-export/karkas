@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Simetri.Core.DataUtil.TestConsoleApp
 {
-    public partial class OrnekYetkiEnum
+    public partial class YetkiEnum
     {
 
     }

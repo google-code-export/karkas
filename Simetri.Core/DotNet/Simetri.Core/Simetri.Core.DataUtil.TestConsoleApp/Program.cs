@@ -13,10 +13,25 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
 {
     class Program
     {
+        const string userAccount = @"ATILLA\SicilMemuru";
         static void Main(string[] args)
         {
-            AdoTemplate template = new AdoTemplate();
+//            WindowsIdentity identity = new WindowsIdentity(
 
+            bool sonuc = AzmanHelper.Instance.YetkiliMi(userAccount, YetkiEnum.FaaliyetBelgesiTahakkukuKes);
+            if (sonuc)
+            {
+                Console.WriteLine("Yetkili");
+            }
+
+            NTAccount name = new NTAccount(userAccount);
+
+            Console.WriteLine(name);
+            SecurityIdentifier sid = (SecurityIdentifier)
+              name.Translate(typeof(SecurityIdentifier));
+            Console.WriteLine(sid);
+            name = (NTAccount)sid.Translate(typeof(NTAccount));
+            Console.WriteLine(name);
 
         }
 
@@ -36,8 +51,8 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
             }
         }
 
-        [YetkiAttribute(OrnekYetkiEnum.KisiSil)]
-        [YetkiAttribute(OrnekYetkiEnum.KisiEkle)]
+        [YetkiAttribute(YetkiEnum.KisiSil)]
+        [YetkiAttribute(YetkiEnum.KisiEkle)]
         public static void YetkiAttributeDeneme()
         {
         }

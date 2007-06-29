@@ -149,6 +149,22 @@ namespace Simetri.Core.Yetki
         {
             return YetkiliMi(identity, GetOperationByName(operation));
         }
+        /// <summary>
+        /// Kullanici adi ve operation ile yetki kontrol eder.
+        /// </summary>
+        /// <param name="upnUsername"> username'in domain\username seklinde olmasi gerekiyor.</param>
+        /// <param name="operation"></param>
+        /// <returns></returns>
+        public bool YetkiliMi(string upnUsername, int operation)
+        {
+
+            object[] operations = { operation };
+            object[] result = (object[])GetClientContext(upnUsername).AccessCheck(azApplication.Name, scopes, operations, null, null, null, null, null);
+            return (int)result[0] == VALID_OPERATION;
+        }
+
+        
+
         public bool YetkiliMi(IIdentity identity, int operation)
         {
             if (identity.IsAuthenticated == false)
