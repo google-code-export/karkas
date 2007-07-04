@@ -6,6 +6,7 @@ using System.Security.Principal;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using System.Configuration;
+using System.IO;
 
 namespace Simetri.Core.Yetki
 {
@@ -19,11 +20,11 @@ namespace Simetri.Core.Yetki
         }
 
 
-
-        const string AZ_MAN_STORE_KEY = "AzManStore";
+       
+        const string AZ_MAN_STORE_KEY = "LocalPolicyStore";
         const string APPLICATION = "Ito";
         const int VALID_OPERATION = 0;
-        readonly string store = ConfigurationManager.ConnectionStrings["LocalPolicyStore"].ConnectionString ;
+        readonly string store = ConfigurationManager.ConnectionStrings[AZ_MAN_STORE_KEY].ConnectionString;
         IAzAuthorizationStore azManStore;
         IAzApplication azApplication;
         IAzClientContext clientContext;
@@ -35,6 +36,10 @@ namespace Simetri.Core.Yetki
             {
                 if (this.azApplication == null)
                 {
+                    if (store == null)
+                    {
+                        throw new Exception(string.Format("Azman icin gerekli connection string yok, connection stringler icinde {0} olduguna emin olun", AZ_MAN_STORE_KEY));
+                    }
                     azManStore = new AzAuthorizationStoreClass();
                     try
                     {
@@ -44,6 +49,15 @@ namespace Simetri.Core.Yetki
                     {
                         throw new Exception("IAzAuthorizationStore.Initialize", x);
                     }
+                    catch (FileNotFoundException ex)
+                    {
+                        throw new Exception("Authorization Manager, Azman'a Hatali Baglanti, lutfen baglanti yazisini kontrol ediniz,olmayan dosya", ex);
+                    }
+                    catch (DirectoryNotFoundException ex)
+                    {
+                        throw new Exception("Authorization Manager, Azman'a Hatali Baglanti, lutfen baglanti yazisini kontrol ediniz, varolmayan dizin", ex);
+                    }
+
                     try
                     {
                         azApplication = azManStore.OpenApplication(APPLICATION, null);
