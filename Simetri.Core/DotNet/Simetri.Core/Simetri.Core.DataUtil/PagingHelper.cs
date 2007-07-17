@@ -18,7 +18,7 @@ namespace Simetri.Core.DataUtil
                                 ) 
                                 SELECT * 
                                 FROM temp 
-                                WHERE RowNumber >= {1} AND RowNumber  <= {2}
+                                WHERE RowNumber > {1} AND RowNumber  <= {2}
                                 ";
 
         //Where RowNumber >= @RowStart and RowNumber <= @
@@ -88,7 +88,7 @@ namespace Simetri.Core.DataUtil
             }
             else
             {
-                int rowEnd = pStartRowNumber + pPageSize - 1;
+                int rowEnd = pStartRowNumber + pPageSize;
                 sql = sql.Replace("FROM", String.Format(",ROW_NUMBER() OVER (order by {0}) as RowNumber FROM ", pOrderBy));
                 sql = String.Format(PAGING_SQL, sql, pStartRowNumber, rowEnd);
             }
