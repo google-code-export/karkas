@@ -16,6 +16,9 @@ namespace Simetri.Core.DataUtil
             set { connection = value; }
         }
 
+        private HelperFunctions helper = new HelperFunctions();
+        private PagingHelper pagingHelper = new PagingHelper();
+
 
 
         public Object TekDegerGetir(string cmdText)
@@ -65,7 +68,7 @@ namespace Simetri.Core.DataUtil
             }
             return sonuc;
         }
-        
+
         public void SorguHariciKomutCalistir(String cmdText)
         {
             SqlCommand cmd = new SqlCommand();
@@ -171,154 +174,71 @@ namespace Simetri.Core.DataUtil
         #region "DataTable Doldurma Methodlari"
         public void DataTableDoldur(DataTable dataTable, string sql, CommandType commandType)
         {
-            ValidateFillArguments(dataTable, sql);
-            SorguCalistir(dataTable, sql, commandType);
+            helper.ValidateFillArguments(dataTable, sql);
+            helper.SorguCalistir(dataTable, sql, commandType);
         }
         public void DataTableDoldur(DataTable dataTable, string sql)
         {
-            ValidateFillArguments(dataTable, sql);
-            SorguCalistir(dataTable, sql, CommandType.Text);
+            helper.ValidateFillArguments(dataTable, sql);
+            helper.SorguCalistir(dataTable, sql, CommandType.Text);
         }
         public void DataTableDoldur(DataTable dataTable, string sql, CommandType commandType
                 , SqlParameter[] parameters)
         {
-            ValidateFillArguments(dataTable, sql);
-            SorguCalistir(dataTable, sql, commandType, parameters);
+            helper.ValidateFillArguments(dataTable, sql);
+            helper.SorguCalistir(dataTable, sql, commandType, parameters);
         }
         public void DataTableDoldur(DataTable dataTable, string sql
                 , SqlParameter[] parameters)
         {
-            ValidateFillArguments(dataTable, sql);
-            SorguCalistir(dataTable, sql, CommandType.Text, parameters);
+            helper.ValidateFillArguments(dataTable, sql);
+            helper.SorguCalistir(dataTable, sql, CommandType.Text, parameters);
         }
 
         #endregion
 
         #region "DataTable Olustur Sayfalama Yap"
+
         public DataTable DataTableOlusturSayfalamaYap(string sql
-        , int pPageSize, int pStartRowIndex, string pOrderBy, SqlParameter[] parameters)
+, int pPageSize, int pStartRowIndex, string pOrderBy, SqlParameter[] parameters)
         {
-            DataTable dataTable = new DataTable();
-            pagingSqliniAyarla(ref sql, pPageSize, ref pStartRowIndex, pOrderBy);
-            ValidateFillArguments(dataTable, sql);
-            SorguCalistir(dataTable, sql, CommandType.Text, parameters);
-            return dataTable;
+            return pagingHelper.DataTableOlusturSayfalamaYap(sql, pPageSize, pStartRowIndex, pOrderBy, parameters);
         }
 
 
         public DataTable DataTableOlusturSayfalamaYap(string sql
-                , int pPageSize, int pStartRowIndex, string pOrderBy)
+, int pPageSize, int pStartRowIndex, string pOrderBy)
         {
-            DataTable dataTable = new DataTable();
-            pagingSqliniAyarla(ref sql, pPageSize, ref pStartRowIndex, pOrderBy);
-            ValidateFillArguments(dataTable, sql);
-            SorguCalistir(dataTable, sql, CommandType.Text);
-            return dataTable;
+            return pagingHelper.DataTableOlusturSayfalamaYap(sql, pPageSize, pStartRowIndex, pOrderBy);
         }
+
+
+
 
         #endregion
 
         #region "DataTable Doldur Sayfalama Yap"
 
         public void DataTableDoldurSayfalamaYap(DataTable dataTable, string sql
-                , int pPageSize, int pStartRowIndex, string pOrderBy, SqlParameter[] parameters)
+        , int pPageSize, int pStartRowIndex, string pOrderBy, SqlParameter[] parameters)
         {
-            pagingSqliniAyarla(ref sql, pPageSize, ref pStartRowIndex, pOrderBy);
-            ValidateFillArguments(dataTable, sql);
-            SorguCalistir(dataTable, sql, CommandType.Text, parameters);
+            pagingHelper.DataTableDoldurSayfalamaYap(dataTable, sql, pPageSize, pStartRowIndex, pOrderBy, parameters);
         }
 
 
         public void DataTableDoldurSayfalamaYap(DataTable dataTable, string sql
                 , int pPageSize, int pStartRowIndex, string pOrderBy)
         {
-            pagingSqliniAyarla(ref sql, pPageSize, ref pStartRowIndex, pOrderBy);
-            ValidateFillArguments(dataTable, sql);
-            SorguCalistir(dataTable, sql, CommandType.Text);
+            pagingHelper.DataTableDoldurSayfalamaYap(dataTable, sql, pPageSize, pStartRowIndex, pOrderBy);
         }
 
-        private const string PAGING_SQL = @"
-                                WITH temp AS 
-                                ( 
-                                {0}
-                                ) 
-                                SELECT * 
-                                FROM temp 
-                                WHERE RowNumber >= {1} AND RowNumber  <= {2}
-                                ";
-        //Where RowNumber >= @RowStart and RowNumber <= @RowEnd
 
-        private static void pagingSqliniAyarla(ref string sql, int pPageSize, ref int pStartRowNumber, string pOrderBy)
-        {
-            if (pStartRowNumber == 0)
-            {
-                sql = sql.Replace("SELECT", "SELECT TOP " + pPageSize);
-                sql = sql + "ORDER BY " + pOrderBy;
-            }
-            else
-            {
-                int rowEnd = pStartRowNumber + pPageSize - 1;
-                sql = sql.Replace("FROM", String.Format(",ROW_NUMBER() OVER (order by {0}) as RowNumber FROM ", pOrderBy));
-                sql = String.Format(PAGING_SQL, sql, pStartRowNumber, rowEnd);
-            }
-        }
 
         #endregion
 
-        public int SayfalamaSayisiniGetir(string sql)
-        {
-            return 0;
-        }
 
         #region "Helpers"
 
-        protected void SorguCalistir(DataTable dt, string sql, CommandType cmdType)
-        {
-            SqlConnection conn = ConnectionSingleton.Instance.Connection;
-            SqlCommand cmd = new SqlCommand(sql, conn);
-            cmd.CommandType = cmdType;
-
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            try
-            {
-                adapter.Fill(dt);
-            }
-            catch (SqlException ex)
-            {
-                ExceptionDegistirici.Degistir(ex, sql);
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-        }
-
-        protected void SorguCalistir(DataTable dt, string sql, CommandType cmdType, SqlParameter[] parameters)
-        {
-            SqlConnection conn = ConnectionSingleton.Instance.Connection;
-            SqlCommand cmd = new SqlCommand(sql, conn);
-            cmd.CommandType = cmdType;
-            foreach (SqlParameter p in parameters)
-            {
-                cmd.Parameters.Add(p);
-            }
-
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            try
-            {
-                adapter.Fill(dt);
-            }
-            catch (SqlException ex)
-            {
-                ExceptionDegistirici.Degistir(ex, sql);
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-        }
 
         protected virtual DataTable CreateDataTable()
         {
@@ -334,58 +254,6 @@ namespace Simetri.Core.DataUtil
             return dataSet;
         }
 
-        protected virtual void ValidateFillArguments(DataTable dataTable, string sql)
-        {
-            if (dataTable == null)
-            {
-                throw new ArgumentNullException("dataTable", "DataTable argument can not be null");
-            }
-            if (sql == null)
-            {
-                throw new ArgumentNullException("sql", "SQL for DataSet Fill operation can not be null");
-            }
-        }
-        protected virtual void ValidateFillArguments(DataSet dataSet, string sql)
-        {
-            if (dataSet == null)
-            {
-                throw new ArgumentNullException("dataSet", "DataSet argument can not be null");
-            }
-            if (sql == null)
-            {
-                throw new ArgumentNullException("sql", "SQL for DataSet Fill operation can not be null");
-            }
-        }
-        protected virtual void ValidateFillArguments(DataSet dataSet, string sql, SqlParameter[] parameters)
-        {
-            if (dataSet == null)
-            {
-                throw new ArgumentNullException("dataSet", "DataSet argument can not be null");
-            }
-            if (sql == null)
-            {
-                throw new ArgumentNullException("sql", "SQL for DataSet Fill operation can not be null");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters", "Parameters for DataSet Fill operations can not be null");
-            }
-        }
-        protected virtual void ValidateFillArguments(DataTable dataTable, string sql, SqlParameter[] parameters)
-        {
-            if (dataTable == null)
-            {
-                throw new ArgumentNullException("dataTable", "DataTable argument can not be null");
-            }
-            if (sql == null)
-            {
-                throw new ArgumentNullException("sql", "SQL for DataTable Fill operation can not be null");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters", "Parameters for DataTable Fill operations can not be null");
-            }
-        }
         #endregion
 
     }

@@ -42,6 +42,8 @@
     <Compile Include="Exceptions\SimetriVeriHatasi.cs" />
     <Compile Include="Exceptions\VeritabaniBaglantiHatasi.cs" />
     <Compile Include="Exceptions\YanlisSqlCumlesiHatasi.cs" />
+    <Compile Include="HelperFunctions.cs" />
+    <Compile Include="PagingHelper.cs" />
     <Compile Include="ParameterBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
