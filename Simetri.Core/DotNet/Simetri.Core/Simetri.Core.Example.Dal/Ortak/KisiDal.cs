@@ -20,12 +20,18 @@ namespace Simetri.Core.Example.Dal.Ortak
 
         }
 
-        public int SelectCountMethod(int pageSize,int startRowIndex)
+        public int SelectCountMethod(int pageSize, int startRowIndex)
         {
             AdoTemplate template = new AdoTemplate();
             string sql = "SELECT COUNT(*) FROM ORTAK.KISI";
-            return (int) template.TekDegerGetir(sql);
+            return (int)template.TekDegerGetir(sql);
 
+        }
+        public int SelectCountMethod()
+        {
+            AdoTemplate template = new AdoTemplate();
+            string sql = "SELECT COUNT(*) FROM ORTAK.KISI";
+            return (int)template.TekDegerGetir(sql);
         }
 
     }
