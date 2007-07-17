@@ -16,8 +16,10 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
         const string userAccount = @"ATILLA\SicilMemuru";
         static void Main(string[] args)
         {
-//            WindowsIdentity identity = new WindowsIdentity(
+        }
 
+        private static void ornekYetkiMethodu()
+        {
             bool sonuc = AzmanHelper.Instance.YetkiliMi(userAccount, YetkiEnum.FaaliyetBelgesiTahakkukuKes);
             if (sonuc)
             {
@@ -32,7 +34,6 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
             Console.WriteLine(sid);
             name = (NTAccount)sid.Translate(typeof(NTAccount));
             Console.WriteLine(name);
-
         }
 
         private static void yetkiDeneme()

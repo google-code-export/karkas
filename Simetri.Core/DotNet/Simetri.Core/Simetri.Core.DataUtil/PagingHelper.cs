@@ -47,6 +47,7 @@ namespace Simetri.Core.DataUtil
 
         #endregion
 
+        #region "DataTable Olustur"
 
         public DataTable DataTableOlusturSayfalamaYap(string sql
         , int pPageSize, int pStartRowIndex, string pOrderBy)
@@ -69,6 +70,7 @@ namespace Simetri.Core.DataUtil
             return dataTable;
         }
 
+        #endregion
 
 
         public int KayitSayisiniBul(string sql, string orderby, int startRowIndex, int pageSize)
@@ -82,7 +84,7 @@ namespace Simetri.Core.DataUtil
             if (pStartRowNumber == 0)
             {
                 sql = sql.Replace("SELECT", "SELECT TOP " + pPageSize);
-                sql = sql + "ORDER BY " + pOrderBy;
+                sql = sql + " ORDER BY " + pOrderBy;
             }
             else
             {

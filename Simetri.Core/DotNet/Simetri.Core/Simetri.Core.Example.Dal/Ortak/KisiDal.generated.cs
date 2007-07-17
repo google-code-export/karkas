@@ -5,8 +5,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using Simetri.Core.DataUtil;
-using Simetri.Core.Example.TypeLibrary;
-using Simetri.Core.Example.TypeLibrary.Ortak;
+using Simetri.Core.TypeLibrary;
+using Simetri.Core.TypeLibrary.Ortak;
 
 
 namespace Simetri.Core.Example.Dal.Ortak
@@ -80,163 +80,30 @@ namespace Simetri.Core.Example.Dal.Ortak
 		
         protected override void ProcessRow(System.Data.IDataReader dr, Kisi row)
         {
-		
-					row.KisiKey = dr.GetGuid(0);
-					if (!dr.IsDBNull(1))
-					{
-						row.TCKimlikNo = dr.GetString(1);
-					}
 					
-					row.Adi = dr.GetString(2);
-					if (!dr.IsDBNull(3))
-					{
-						row.IkinciAdi = dr.GetString(3);
-					}
 					
-					row.Soyadi = dr.GetString(4);
-					if (!dr.IsDBNull(5))
-					{
-						row.KayitTarihi = dr.GetDateTime(5);
-					}
-					
-					if (!dr.IsDBNull(6))
-					{
-						row.CinsiyetTipNo = dr.GetByte(6);
-					}
-					
-					if (!dr.IsDBNull(7))
-					{
-						row.UyrukNo = dr.GetInt16(7);
-					}
-					
-					if (!dr.IsDBNull(8))
-					{
-						row.DurumNo = dr.GetInt16(8);
-					}
 							
         }
         protected override void InsertCommandParametersAdd(SqlCommand cmd, Kisi row)
         {
-					SqlParameter prmKisiKey  = new SqlParameter();
-					prmKisiKey.ParameterName = "@KisiKey";					
-					prmKisiKey.SqlDbType = SqlDbType.UniqueIdentifier;
-					prmKisiKey.Value = row.KisiKey;
-					cmd.Parameters.Add(prmKisiKey);
 				
-					SqlParameter prmTCKimlikNo  = new SqlParameter();
-					prmTCKimlikNo.ParameterName = "@TCKimlikNo";					
-					prmTCKimlikNo.SqlDbType = SqlDbType.Char;
-					prmTCKimlikNo.Value = row.TCKimlikNo;
-					cmd.Parameters.Add(prmTCKimlikNo);
 				
-					SqlParameter prmAdi  = new SqlParameter();
-					prmAdi.ParameterName = "@Adi";					
-					prmAdi.SqlDbType = SqlDbType.VarChar;
-					prmAdi.Value = row.Adi;
-					cmd.Parameters.Add(prmAdi);
 				
-					SqlParameter prmIkinciAdi  = new SqlParameter();
-					prmIkinciAdi.ParameterName = "@IkinciAdi";					
-					prmIkinciAdi.SqlDbType = SqlDbType.VarChar;
-					prmIkinciAdi.Value = row.IkinciAdi;
-					cmd.Parameters.Add(prmIkinciAdi);
-				
-					SqlParameter prmSoyadi  = new SqlParameter();
-					prmSoyadi.ParameterName = "@Soyadi";					
-					prmSoyadi.SqlDbType = SqlDbType.VarChar;
-					prmSoyadi.Value = row.Soyadi;
-					cmd.Parameters.Add(prmSoyadi);
-				
-					SqlParameter prmKayitTarihi  = new SqlParameter();
-					prmKayitTarihi.ParameterName = "@KayitTarihi";					
-					prmKayitTarihi.SqlDbType = SqlDbType.SmallDateTime;
-					prmKayitTarihi.Value = row.KayitTarihi;
-					cmd.Parameters.Add(prmKayitTarihi);
-				
-					SqlParameter prmCinsiyetTipNo  = new SqlParameter();
-					prmCinsiyetTipNo.ParameterName = "@CinsiyetTipNo";					
-					prmCinsiyetTipNo.SqlDbType = SqlDbType.TinyInt;
-					prmCinsiyetTipNo.Value = row.CinsiyetTipNo;
-					cmd.Parameters.Add(prmCinsiyetTipNo);
-				
-					SqlParameter prmUyrukNo  = new SqlParameter();
-					prmUyrukNo.ParameterName = "@UyrukNo";					
-					prmUyrukNo.SqlDbType = SqlDbType.SmallInt;
-					prmUyrukNo.Value = row.UyrukNo;
-					cmd.Parameters.Add(prmUyrukNo);
-				
-					SqlParameter prmDurumNo  = new SqlParameter();
-					prmDurumNo.ParameterName = "@DurumNo";					
-					prmDurumNo.SqlDbType = SqlDbType.SmallInt;
-					prmDurumNo.Value = row.DurumNo;
-					cmd.Parameters.Add(prmDurumNo);
 				
         }
         protected override void UpdateCommandParametersAdd(SqlCommand cmd, Kisi row)
         {
-					SqlParameter prmKisiKey  = new SqlParameter();
-					prmKisiKey.ParameterName = "@KisiKey";					
-					prmKisiKey.SqlDbType = SqlDbType.UniqueIdentifier;
-					prmKisiKey.Value = row.KisiKey;
-					cmd.Parameters.Add(prmKisiKey);
 				
-					SqlParameter prmTCKimlikNo  = new SqlParameter();
-					prmTCKimlikNo.ParameterName = "@TCKimlikNo";					
-					prmTCKimlikNo.SqlDbType = SqlDbType.Char;
-					prmTCKimlikNo.Value = row.TCKimlikNo;
-					cmd.Parameters.Add(prmTCKimlikNo);
-				
-					SqlParameter prmAdi  = new SqlParameter();
-					prmAdi.ParameterName = "@Adi";					
-					prmAdi.SqlDbType = SqlDbType.VarChar;
-					prmAdi.Value = row.Adi;
-					cmd.Parameters.Add(prmAdi);
-				
-					SqlParameter prmIkinciAdi  = new SqlParameter();
-					prmIkinciAdi.ParameterName = "@IkinciAdi";					
-					prmIkinciAdi.SqlDbType = SqlDbType.VarChar;
-					prmIkinciAdi.Value = row.IkinciAdi;
-					cmd.Parameters.Add(prmIkinciAdi);
-				
-					SqlParameter prmSoyadi  = new SqlParameter();
-					prmSoyadi.ParameterName = "@Soyadi";					
-					prmSoyadi.SqlDbType = SqlDbType.VarChar;
-					prmSoyadi.Value = row.Soyadi;
-					cmd.Parameters.Add(prmSoyadi);
-				
-					SqlParameter prmKayitTarihi  = new SqlParameter();
-					prmKayitTarihi.ParameterName = "@KayitTarihi";					
-					prmKayitTarihi.SqlDbType = SqlDbType.SmallDateTime;
-					prmKayitTarihi.Value = row.KayitTarihi;
-					cmd.Parameters.Add(prmKayitTarihi);
-				
-					SqlParameter prmCinsiyetTipNo  = new SqlParameter();
-					prmCinsiyetTipNo.ParameterName = "@CinsiyetTipNo";					
-					prmCinsiyetTipNo.SqlDbType = SqlDbType.TinyInt;
-					prmCinsiyetTipNo.Value = row.CinsiyetTipNo;
-					cmd.Parameters.Add(prmCinsiyetTipNo);
-				
-					SqlParameter prmUyrukNo  = new SqlParameter();
-					prmUyrukNo.ParameterName = "@UyrukNo";					
-					prmUyrukNo.SqlDbType = SqlDbType.SmallInt;
-					prmUyrukNo.Value = row.UyrukNo;
-					cmd.Parameters.Add(prmUyrukNo);
-				
-					SqlParameter prmDurumNo  = new SqlParameter();
-					prmDurumNo.ParameterName = "@DurumNo";					
-					prmDurumNo.SqlDbType = SqlDbType.SmallInt;
-					prmDurumNo.Value = row.DurumNo;
-					cmd.Parameters.Add(prmDurumNo);
 				
         }
         protected override void DeleteCommandParametersAdd(SqlCommand cmd, Kisi row)
         {
-					SqlParameter prmKisiKey  = new SqlParameter();
-					prmKisiKey.ParameterName = "@KisiKey";					
-					prmKisiKey.SqlDbType = SqlDbType.UniqueIdentifier;
-					prmKisiKey.Value = row.KisiKey;
-					cmd.Parameters.Add(prmKisiKey);
 				
+        }
+
+        protected override string SelectCountString
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
         }
 
 
