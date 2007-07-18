@@ -20,6 +20,33 @@ namespace Simetri.Core.WebApp.OrnekSayfalar {
     public partial class KisiSayfalama {
         
         /// <summary>
+        /// adiTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox adiTextBox;
+        
+        /// <summary>
+        /// soyadiTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox soyadiTextBox;
+        
+        /// <summary>
+        /// araButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button araButton;
+        
+        /// <summary>
         /// GridView1 control.
         /// </summary>
         /// <remarks>

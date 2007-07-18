@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace Simetri.Core.DataUtil
 {
     internal class PagingHelper
     {
+
 
         private HelperFunctions helper = new HelperFunctions();
 
@@ -35,7 +37,7 @@ namespace Simetri.Core.DataUtil
         }
 
 
-        public void DataTableDoldurSayfalamaYap(DataTable dataTable, string sql
+        internal void DataTableDoldurSayfalamaYap(DataTable dataTable, string sql
         , int pPageSize, int pStartRowIndex, string pOrderBy)
         {
             pagingSqliniAyarla(ref sql, pPageSize, ref pStartRowIndex, pOrderBy);
@@ -49,7 +51,7 @@ namespace Simetri.Core.DataUtil
 
         #region "DataTable Olustur"
 
-        public DataTable DataTableOlusturSayfalamaYap(string sql
+        internal DataTable DataTableOlusturSayfalamaYap(string sql
         , int pPageSize, int pStartRowIndex, string pOrderBy)
         {
             DataTable dataTable = new DataTable();
@@ -60,7 +62,7 @@ namespace Simetri.Core.DataUtil
         }
 
 
-        public DataTable DataTableOlusturSayfalamaYap(string sql
+        internal DataTable DataTableOlusturSayfalamaYap(string sql
 , int pPageSize, int pStartRowIndex, string pOrderBy, SqlParameter[] parameters)
         {
             DataTable dataTable = new DataTable();
@@ -72,11 +74,9 @@ namespace Simetri.Core.DataUtil
 
         #endregion
 
+        
 
-        public int KayitSayisiniBul(string sql, string orderby, int startRowIndex, int pageSize)
-        {
-            return 0;
-        }
+
 
         #region HelperFunctions
         private static void pagingSqliniAyarla(ref string sql, int pPageSize, ref int pStartRowNumber, string pOrderBy)
