@@ -26,7 +26,7 @@ public class GeneratedGui : DotNetScriptGui
 		{
 			ui.Title = "Simetri Type Library Kod Üreteci";
 			ui.Width = 580;
-			ui.Height =570;
+			ui.Height =540;
 	
 			// Grab default output path
 			string sOutputPath = defaultOutputPath;
@@ -68,7 +68,28 @@ public class GeneratedGui : DotNetScriptGui
 			// Setup Database selection combobox.
 			// GuiLabel labelDBPrefixSub = ui.AddLabel( "labelDBPrefixSub", "", "" );
 			// labelDBPrefixSub.Width = 50;
+			
+			
+			// Setup Schema selection multi-select listbox.
+			GuiLabel label8 = ui.AddLabel( "label8", "Şema Seçin:", "Aşağıdaki Listeden Şema Seçin." );
+			label8.Width = 75;
+			GuiComboBox chooseSchemas = ui.AddComboBox( "chooseSchemas", "Şema Seçin." );
+			chooseSchemas.AttachEvent( "onchange", "chooseSchema_onchange" );
+			chooseSchemas.Width = 475;
+			chooseSchemas.Top = label8.Top;
+			chooseSchemas.Left = outputPath.Left;
 
+			//Tüm Tablolar CheckBox
+			GuiCheckBox chkBox = ui.AddCheckBox("chkBox", "Tüm Tabloları Generate Et", false, "Eğer bu seçeneği tıklarsanız, tablo seçiminiz dikkate alınmadan tüm veritabanından kod üretir."); 
+			chkBox.Width = 250;
+			
+			
+			//Tüm Viewlar CheckBox
+			GuiCheckBox viewBox = ui.AddCheckBox("viewBox", "Tüm Viewları Generate Et",false, "Eğer bu seçeneği tıklarsanız, view seçiminiz dikkate alınmadan tüm veritabanından kod üretir.");
+			viewBox.Width = 250;
+			viewBox.Top = chkBox.Top;
+			viewBox.Left = chkBox.Left + 300;
+			
 
 			// Setup Tables selection multi-select listbox.
 			GuiLabel label7 = ui.AddLabel( "label7", "Tablo Seçin:", "Listeden Tablo Seçin." );
@@ -92,26 +113,7 @@ public class GeneratedGui : DotNetScriptGui
 			label9.Top = chooseViews.Top-25;
 			label9.Left = chooseViews.Left;
 	
-	
-			// Setup Schema selection multi-select listbox.
-			GuiLabel label8 = ui.AddLabel( "label8", "Şema Seçin:", "Aşağıdaki Listeden Şema Seçin." );
-			GuiComboBox chooseSchemas = ui.AddComboBox( "chooseSchemas", "Şema Seçin." );
-			chooseSchemas.AttachEvent( "onchange", "chooseSchema_onchange" );
-			chooseSchemas.Width = 550;
 
-
-			//Tüm Tablolar CheckBox
-			GuiCheckBox chkBox = ui.AddCheckBox("chkBox", "Tüm Tabloları Generate Et", false, "Eğer bu seçeneği tıklarsanız, tablo seçiminiz dikkate alınmadan tüm veritabanından kod üretir."); 
-			chkBox.Width = 250;
-			
-			
-			//Tüm Viewlar CheckBox
-			GuiCheckBox viewBox = ui.AddCheckBox("viewBox", "Tüm Viewları Generate Et",false, "Eğer bu seçeneği tıklarsanız, view seçiminiz dikkate alınmadan tüm veritabanından kod üretir.");
-			viewBox.Width = 250;
-			//viewBox.Top = chkBox.Top;
-			//viewBox.Left = chkBox.Left + 300;
-			
-			
 			// Attach the onchange event to the cmbDatabases control.
 			setupDatabaseDropdown( chooseDatabase );
 			chooseDatabase.AttachEvent( "onchange", "chooseDatabase_onchange" );
