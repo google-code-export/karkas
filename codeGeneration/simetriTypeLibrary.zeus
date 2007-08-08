@@ -17,84 +17,105 @@ public class GeneratedGui : DotNetScriptGui
 	GuiListBox chooseTables = null;
 	GuiTextBox outputPath = null;
 	GuiTextBox classNamespace = null;
+	GuiListBox chooseViews = null;
+	
 	public override void Setup()
 	{
 		if ( !input.Contains( "chooseTables" ) || !input.Contains( "txtPath" ) ||
 				( !input.Contains( "chkClass" ) && !input.Contains( "chkNaming" ) ) )
 		{
-			ui.Title = "Simetri Type Library Code Gen";
-			ui.Width = 600;
-			ui.Height =600;
+			ui.Title = "Simetri Type Library Kod Üreteci";
+			ui.Width = 580;
+			ui.Height =570;
 	
 			// Grab default output path
 			string sOutputPath = defaultOutputPath;
 			
-
+			// Çıkış Dizini TextBox
 			// Setup Folder selection input control.
-			GuiLabel label1 = ui.AddLabel( "label1", "Output path:", "Select the output path in the field below." );
+			GuiLabel label1 = ui.AddLabel( "label1", "Çıkış Dizini:", "Çıkış Dizinini Seçin." );
 			label1.Width =75;
-			outputPath = ui.AddTextBox( "outputPath", sOutputPath, "Select the Output Path." );
-			outputPath.Width = 250;
+			outputPath = ui.AddTextBox( "outputPath", sOutputPath, "Çıkış Dizinini Seçin." );
+			outputPath.Width = 420;
 			
-
-			
+			// Seç Butonu :)
 			outputPath.Left = label1.Left + label1.Width;
 			outputPath.Top = label1.Top;
-			GuiFilePicker selectPath = ui.AddFilePicker( "selectPath", "Dizin Secin", "Cıktı Dizininini Şeçin.", "outputPath", true );
+			GuiFilePicker selectPath = ui.AddFilePicker( "selectPath", "Seç", "Çıkış Dizinini Şeçin.", "outputPath", true );
 			selectPath.Top = outputPath.Top;
-			selectPath.Width = 100;
+			selectPath.Width = 50;
 			selectPath.Left = outputPath.Left + outputPath.Width + 5;
 			
-			GuiLabel label2 = ui.AddLabel( "label2", "Namespace: ",  "Nesnelerinizin namespace'ini verin." );
+			// İsim alanı TextBox
+			GuiLabel label2 = ui.AddLabel( "label2", "İsim Alanı: ",  "Nesnelerinizin isim alanını verin." );
 			label2.Width = 75;
-			classNamespace = ui.AddTextBox( "classNamespace", "Adisyon", "Nesnelerinizin namespace'ini verin." );				
-			classNamespace.Width = 150;
+			classNamespace = ui.AddTextBox( "classNamespace", "Adisyon", "Nesnelerinizin isim alanını verin." );				
+			classNamespace.Width = 474;
 			classNamespace.Top = label2.Top;
 			classNamespace.Left = outputPath.Left;//label2.Left + label2.Width + 5;
-			
-			
-			
-             
-			
+		
+		
 			// Setup Database selection combobox.
-			GuiLabel label4 = ui.AddLabel( "label4", "Select a DB:", "Select a database in the dropdown below." );
+			GuiLabel label4 = ui.AddLabel( "label4", "Veritabanı:", "Açılır Listeden Veritabanı Seçin." );
 			label4.Width = 75;
 //			label4.Top = lblUsing.Top;
-			GuiComboBox chooseDatabase = ui.AddComboBox( "chooseDatabase", "Select a database." );
-			chooseDatabase.Width = 200;
+			GuiComboBox chooseDatabase = ui.AddComboBox( "chooseDatabase", "Veritabanı Seçin." );
+			chooseDatabase.Width = 475;
 			chooseDatabase.Top = label4.Top;
 			chooseDatabase.Left = outputPath.Left;
 			
 			
 			// Setup Database selection combobox.
-			GuiLabel labelDBPrefixSub = ui.AddLabel( "labelDBPrefixSub", " To :", "Select a database in the dropdown below." );
-			labelDBPrefixSub.Width = 75;
+			// GuiLabel labelDBPrefixSub = ui.AddLabel( "labelDBPrefixSub", "", "" );
+			// labelDBPrefixSub.Width = 50;
 
-			
-			
-			
-	
-	
+
 			// Setup Tables selection multi-select listbox.
-			GuiLabel label7 = ui.AddLabel( "label7", "Select tables:", "Select tables from the listbox below." );
-			chooseTables = ui.AddListBox( "chooseTables", "Select tables." );
-			chooseTables.Height = 150;
+			GuiLabel label7 = ui.AddLabel( "label7", "Tablo Seçin:", "Listeden Tablo Seçin." );
+			label7.Width=150;
+			chooseTables = ui.AddListBox( "chooseTables", "Tablo Seçin." );
+			chooseTables.Height = 260;
+			chooseTables.Width = 250;
+			
+			
+			//View ListBox
+			GuiLabel label9 = ui.AddLabel("label9", "View Seçin:", "Listeden View Seçin.");
+			label9.Width = 150;
+			chooseViews = ui.AddListBox("chooseViews", "View Seçin.");
+			
+			//chooseViews.AttachEvent ("onchange", "chooseViews_onchange");
+			
+			chooseViews.Height = 260;
+			chooseViews.Width = 250;
+			chooseViews.Top = chooseTables.Top;
+			chooseViews.Left = chooseTables.Left + 300;
+			label9.Top = chooseViews.Top-25;
+			label9.Left = chooseViews.Left;
+	
 	
 			// Setup Schema selection multi-select listbox.
-			GuiLabel label8 = ui.AddLabel( "label8", "Schema Listesi", "Schema Listesini Asagidan Secin" );
-			GuiComboBox chooseSchemas = ui.AddComboBox( "chooseSchemas", "Schema Seçiniz." );
+			GuiLabel label8 = ui.AddLabel( "label8", "Şema Seçin:", "Aşağıdaki Listeden Şema Seçin." );
+			GuiComboBox chooseSchemas = ui.AddComboBox( "chooseSchemas", "Şema Seçin." );
 			chooseSchemas.AttachEvent( "onchange", "chooseSchema_onchange" );
+			chooseSchemas.Width = 550;
 
 
-
-			GuiCheckBox chkBox = ui.AddCheckBox("chkBox", "Tum Tablolari Generate et", false, "Eğer bu checkbox'ı seçerseniz, tablo seçiminiz dikkate almadan tüm veritabanından kod üretir");
-			chkBox.Top = chooseSchemas.Top;
-			chkBox.Left = label1.Left; 
-
-
+			//Tüm Tablolar CheckBox
+			GuiCheckBox chkBox = ui.AddCheckBox("chkBox", "Tüm Tabloları Generate Et", false, "Eğer bu seçeneği tıklarsanız, tablo seçiminiz dikkate alınmadan tüm veritabanından kod üretir."); 
+			chkBox.Width = 250;
+			
+			
+			//Tüm Viewlar CheckBox
+			GuiCheckBox viewBox = ui.AddCheckBox("viewBox", "Tüm Viewları Generate Et",false, "Eğer bu seçeneği tıklarsanız, view seçiminiz dikkate alınmadan tüm veritabanından kod üretir.");
+			viewBox.Width = 250;
+			//viewBox.Top = chkBox.Top;
+			//viewBox.Left = chkBox.Left + 300;
+			
+			
 			// Attach the onchange event to the cmbDatabases control.
 			setupDatabaseDropdown( chooseDatabase );
 			chooseDatabase.AttachEvent( "onchange", "chooseDatabase_onchange" );
+			
 	
 			ui.ShowGui = true;
 		}
