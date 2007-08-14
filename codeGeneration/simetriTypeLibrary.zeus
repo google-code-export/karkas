@@ -246,10 +246,12 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		string classNameSpace = "";
 		string memberVariableName = "";
 		string propertyVariableName = "";
-		
+		string outputFullFileName = "";
 		string outputPath = input["outputPath"].ToString();
-		System.Diagnostics.Debugger.Launch();
-		if (input["chkAllTablesBox"])
+
+		// debugger icin
+		//System.Diagnostics.Debugger.Launch();
+		if (Convert.ToBoolean(input["chkAllTablesBox"]))
 		{
 			generateAllTables = true;
 		}
@@ -288,7 +290,11 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			className = SimetriUtils.SetPascalCase(table.Name);
 			schemaName = SimetriUtils.SetPascalCase(table.Schema);
 			classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
-			
+			outputFullFileName = Path.Combine( SimetriUtils.DizininiAlDatabaseVeSchemaIle(database,table.Schema) + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName , className + ".generated.cs" );
+
+
+			output.setPreserveSource(outputFullFileName, "//::", ":://");
+
 %>using System;
 using System.Collections.Generic;
 using System.Text;
@@ -299,8 +305,25 @@ using System.Data;
 namespace <%=classNameSpace%>
 {
     [Serializable]
-    public partial class <%= className %> : BaseTypeLibrary
-    {
+    public partial class <%= className %>
+<%
+	try
+	{
+		output.getPreservedData("inheritance");
+		output.preserve("inheritance");
+	}
+	catch(NullReferenceException)
+	{
+		string preservedBlock = output.getPreserveBlock("inheritance");
+		string newBlock = preservedBlock.Replace("////", 
+												"// " + Environment.NewLine 
+												+ ": BaseTypeLibrary " + Environment.NewLine + "//");
+		output.write(newBlock); 
+	}
+
+%>    
+	{
+
 		<%
 		foreach (IColumn column in table.Columns)
 		{
@@ -355,7 +378,7 @@ namespace <%=classNameSpace%>
 <%
 //			output.writeln(className);
 
-			output.save( Path.Combine( SimetriUtils.DizininiAlDatabaseVeSchemaIle(database,table.Schema) + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName , className + ".generated.cs" ), false );
+			output.save( outputFullFileName, false );
 			output.clear();
 			}
 
