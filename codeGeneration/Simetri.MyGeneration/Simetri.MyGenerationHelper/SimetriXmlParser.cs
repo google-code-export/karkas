@@ -62,7 +62,7 @@ namespace Simetri.MyGenerationHelper
             string sonuc = "";
             XPathDocument doc = new XPathDocument(xmlFilePath);
             XPathNavigator navigator = doc.CreateNavigator();
-            navigator = navigator.SelectSingleNode(String.Format("//database[@name='{0}']/schema[@name='{1}']/SchemaFolder", dbName,schemaName));
+            navigator = navigator.SelectSingleNode(String.Format("//database[@name='{0}']/schema[@name='{1}']/SchemaFolder", dbName, schemaName));
             if (navigator == null)
             {
                 sonuc = ProjeDizininiAl(database);

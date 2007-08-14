@@ -147,25 +147,8 @@ public class GeneratedGui : DotNetScriptGui
 		}
 	}
 	
-	public void bindTables( string sDatabase )
-	{
-	
-		GuiListBox lstTables = ui["chooseTables"] as GuiListBox;
-		
-		try 
-		{	
-			IDatabase db = MyMeta.Databases[sDatabase];
-			lstTables.BindData( db.Tables );
-		}
-		catch
-		{
-		}
-	}
-
 	public void bindTables( string sDatabase ,string pSchemaName)
 	{
-
-
 			GuiListBox lstTables = ui["chooseTables"] as GuiListBox;
 			IDatabase db = MyMeta.Databases[sDatabase];
 			ArrayList liste = new ArrayList();
@@ -176,23 +159,31 @@ public class GeneratedGui : DotNetScriptGui
 				if (table.Schema == pSchemaName)
 				{
 					chooseTables[table.Name] = table.Name;
-//					liste.Add(table.Name);
 				}
 			}
-
-//			lstTables.BindData( db.Tables );
-
-//			lstTables.BindData( liste );
 	}
+	public void bindViews( string sDatabase ,string pSchemaName)
+	{
+			GuiListBox lst = ui["chooseTables"] as GuiListBox;
+			IDatabase db = MyMeta.Databases[sDatabase];
+			ArrayList liste = new ArrayList();
+			
+			chooseViews.Clear();
+			foreach (IView view in db.Views)
+			{
+				if (view.Schema == pSchemaName)
+				{
+					chooseViews[view.Name] = view.Name;
+				}
+			}
+	}
+
 
 	public void bindSchemas( string sDatabase )
 	{
-	
 		GuiComboBox lstSchemas = ui["chooseSchemas"] as GuiComboBox;
-		
 		IDatabase db = MyMeta.Databases[sDatabase];
 		ArrayList liste = new ArrayList();
-		
 		foreach (ITable table in db.Tables)
 		{
 			if (!liste.Contains(table.Schema))
@@ -200,7 +191,6 @@ public class GeneratedGui : DotNetScriptGui
 				liste.Add(table.Schema);
 			}
 		}
-
 		lstSchemas.BindData( liste );
 	}
 	
@@ -211,16 +201,19 @@ public class GeneratedGui : DotNetScriptGui
 		string dbName = cmbDatabases.SelectedText;
 	
 		bindTables( dbName,"dbo" );
+		bindViews( dbName,"dbo" );
 		bindSchemas( dbName );
 		
 		outputPath.Text = SimetriUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
 		classNamespace.Text =SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
 	}
+	
 	public void chooseSchema_onchange( GuiComboBox control )
 	{
 		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
 		GuiComboBox cmbSchema = ui["chooseSchemas"] as GuiComboBox;
 		bindTables( cmbDatabases.SelectedText,cmbSchema.SelectedText );
+		bindViews( cmbDatabases.SelectedText,cmbSchema.SelectedText );
 	}
 
 }
@@ -237,6 +230,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 	public GeneratedTemplate(ZeusContext context) : base(context) {}
 
 
+	private bool isDEBUG = true;
 	private bool generateAllTables = false;
 	private bool generateAllViews = false;
 	public override void Render()
@@ -250,7 +244,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		string outputPath = input["outputPath"].ToString();
 
 		// debugger icin
-		//System.Diagnostics.Debugger.Launch();
+		if (isDEBUG)
+		{
+			System.Diagnostics.Debugger.Launch();
+		}
 		if (Convert.ToBoolean(input["chkAllTablesBox"]))
 		{
 			generateAllTables = true;
@@ -290,6 +287,12 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			className = SimetriUtils.SetPascalCase(table.Name);
 			schemaName = SimetriUtils.SetPascalCase(table.Schema);
 			classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
+
+			if (isDEBUG)
+			{
+				System.Diagnostics.Debugger.Break();
+			}
+
 			outputFullFileName = Path.Combine( SimetriUtils.DizininiAlDatabaseVeSchemaIle(database,table.Schema) + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName , className + ".generated.cs" );
 
 
