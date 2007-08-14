@@ -80,15 +80,15 @@ public class GeneratedGui : DotNetScriptGui
 			chooseSchemas.Left = outputPath.Left;
 
 			//Tüm Tablolar CheckBox
-			GuiCheckBox chkBox = ui.AddCheckBox("chkBox", "Tüm Tabloları Generate Et", false, "Eğer bu seçeneği tıklarsanız, tablo seçiminiz dikkate alınmadan tüm veritabanından kod üretir."); 
-			chkBox.Width = 250;
+			GuiCheckBox chkAllTablesBox = ui.AddCheckBox("chkAllTablesBox", "Tüm Tabloları Generate Et", false, "Eğer bu seçeneği tıklarsanız, tablo seçiminiz dikkate alınmadan tüm veritabanından kod üretir."); 
+			chkAllTablesBox.Width = 250;
 			
 			
 			//Tüm Viewlar CheckBox
-			GuiCheckBox viewBox = ui.AddCheckBox("viewBox", "Tüm Viewları Generate Et",false, "Eğer bu seçeneği tıklarsanız, view seçiminiz dikkate alınmadan tüm veritabanından kod üretir.");
-			viewBox.Width = 250;
-			viewBox.Top = chkBox.Top;
-			viewBox.Left = chkBox.Left + 300;
+			GuiCheckBox chkAllViewsBox = ui.AddCheckBox("chkAllViewsBox", "Tüm Viewları Generate Et",false, "Eğer bu seçeneği tıklarsanız, view seçiminiz dikkate alınmadan tüm veritabanından kod üretir.");
+			chkAllViewsBox.Width = 250;
+			chkAllViewsBox.Top = chkAllTablesBox.Top;
+			chkAllViewsBox.Left = chkAllTablesBox.Left + 300;
 			
 
 			// Setup Tables selection multi-select listbox.
@@ -231,13 +231,14 @@ public class GeneratedGui : DotNetScriptGui
 ##|BODY_TAG_START <%
 ##|BODY_TAG_END %>
 ##|BODY_BEGIN
-<%#NAMESPACE System.IO, System.Text, System.Text.RegularExpressions, System.Globalization %><%
+<%#DEBUG%><%#NAMESPACE System.IO, System.Text, System.Text.RegularExpressions, System.Globalization %><%
 public class GeneratedTemplate : DotNetScriptTemplate
 {
 	public GeneratedTemplate(ZeusContext context) : base(context) {}
 
 
 	private bool generateAllTables = false;
+	private bool generateAllViews = false;
 	public override void Render()
 	{
 		string className = "";
@@ -247,7 +248,11 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		string propertyVariableName = "";
 		
 		string outputPath = input["outputPath"].ToString();
-		
+		System.Diagnostics.Debugger.Launch();
+		if (input["chkAllTablesBox"])
+		{
+			generateAllTables = true;
+		}
 
 		string databaseName = input["chooseDatabase"].ToString();;
 		IDatabase database = MyMeta.Databases[databaseName];
