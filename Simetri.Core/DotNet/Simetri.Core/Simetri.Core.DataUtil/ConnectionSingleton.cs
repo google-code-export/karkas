@@ -46,7 +46,7 @@ namespace Simetri.Core.DataUtil
                 }
                 else
                 {
-                    connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ITO_MTK;Data Source=LOCALHOST\SQLEXPRESS";
+                    throw new ArgumentException("Connection Stringler arasýnda Main bulunamadý, lütfen config dosyasýný(web.config/app.config) kontrol ediniz");
                 }
 
             }

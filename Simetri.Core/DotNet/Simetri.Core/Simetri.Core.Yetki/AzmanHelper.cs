@@ -84,6 +84,10 @@ namespace Simetri.Core.Yetki
 
         private IAzClientContext GetClientContext(string username)
         {
+            if (String.IsNullOrEmpty(username))
+            {
+                throw new ArgumentException("username null olmamalýdýr");
+            }
             Regex rex = new Regex(@"^([\w]+)\\([\w]+)$");
             Match m = rex.Match(username);
             if (m.Success)
@@ -94,15 +98,20 @@ namespace Simetri.Core.Yetki
                 {
                     clientContext = this.Application.InitializeClientContextFromName(user, domain, null);
                 }
-                catch (System.Runtime.InteropServices.COMException x)
+                catch (COMException ex)
                 {
-                    throw new Exception("IAzApplication.InitializeClientContextFromName", x);
+                    throw new Exception("IAzApplication.InitializeClientContextFromName", ex);
                 }
+                catch (ArgumentException ex)
+                {
+                    throw new ArgumentException("Kullanýcý adý bu domain/pc'de tanýmlý deðil", ex);
+                }
+
 
             }
             else
             {
-                //                throw new ValidationException(@"User name should be formed as ""domain\user");
+                throw new Exception(@"User name should be formed as ""domain\user");
             }
             return clientContext;
         }
@@ -171,9 +180,10 @@ namespace Simetri.Core.Yetki
         /// <returns></returns>
         public bool YetkiliMi(string upnUsername, int operation)
         {
-
+            // TODO buraya, upnusername'in bos gelmesini kontrol eden bir kod yaz.
+            // DOMAIN\\ gelebiliyor.
             object[] operations = { operation };
-            object[] result = (object[])GetClientContext(upnUsername).AccessCheck(azApplication.Name, scopes, operations, null, null, null, null, null);
+            object[] result = (object[])GetClientContext(upnUsername).AccessCheck(Application.Name, scopes, operations, null, null, null, null, null);
             return (int)result[0] == VALID_OPERATION;
         }
 
@@ -187,7 +197,7 @@ namespace Simetri.Core.Yetki
             }
 
             object[] operations = { operation };
-            object[] result = (object[])GetClientContext(identity).AccessCheck(azApplication.Name, scopes, operations, null, null, null, null, null);
+            object[] result = (object[])GetClientContext(identity).AccessCheck(Application.Name, scopes, operations, null, null, null, null, null);
             return (int)result[0] == VALID_OPERATION;
         }
         // TODO bunun overload'i params alan yap
@@ -200,7 +210,7 @@ namespace Simetri.Core.Yetki
             {
                 operations[i] = pOperations[i];
             }
-            object[] result = (object[])GetClientContext(identity).AccessCheck(azApplication.Name, scopes, operations, null, null, null, null, null);
+            object[] result = (object[])GetClientContext(identity).AccessCheck(Application.Name, scopes, operations, null, null, null, null, null);
             bool sonuc = true;
             for (int i = 0; i < result.Length; i++)
             {
@@ -216,7 +226,7 @@ namespace Simetri.Core.Yetki
             {
                 operations[i] = pOperations[i];
             }
-            object[] result = (object[])GetClientContext(identity).AccessCheck(azApplication.Name, scopes, operations, null, null, null, null, null);
+            object[] result = (object[])GetClientContext(identity).AccessCheck(Application.Name, scopes, operations, null, null, null, null, null);
             bool sonuc = false;
             for (int i = 0; i < result.Length; i++)
             {
