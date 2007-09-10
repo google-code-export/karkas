@@ -230,7 +230,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 	public GeneratedTemplate(ZeusContext context) : base(context) {}
 
 
-	private bool isDEBUG = true;
+	private bool isDEBUG = false;
 	private bool generateAllTables = false;
 	private bool generateAllViews = false;
 	public override void Render()
@@ -324,10 +324,8 @@ namespace <%=classNameSpace%>
 		output.write(newBlock); 
 	}
 
-%>    
-	{
-
-		<%
+%>  
+	{<%
 		foreach (IColumn column in table.Columns)
 		{
 		memberVariableName = SimetriUtils.SetCamelCase(column.Name);
@@ -354,7 +352,6 @@ namespace <%=classNameSpace%>
                 {
                     this.RowState = DataRowState.Modified;
                 }
-
 				<%=memberVariableName%> = value;
 			}
 		}
@@ -362,20 +359,14 @@ namespace <%=classNameSpace%>
 		}
 		%>
 		protected override void ValidationListesiniOlusturCodeGeneration()
-		{
-			
-			<%= foreach (IColumn column in table.Columns)
+		{<%= foreach (IColumn column in table.Columns)
 			{
 				if ((!column.IsNullable) && (!column.IsInPrimaryKey ))
 				{%>
-					this.Validator.ValidatorList.Add(new RequiredFieldValidator(this, "<%=SimetriUtils.SetPascalCase(column.Name)%>"));
-				<%}
-			}
-			%>
+				this.Validator.ValidatorList.Add(new RequiredFieldValidator(this, "<%=SimetriUtils.SetPascalCase(column.Name)%>"));<%
+				}
+			}%>
 		}
-
-
-
     }
 }
 <%
