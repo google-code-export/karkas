@@ -281,101 +281,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 				string tableName = selectedTables[i] as String;
 				table = database.Tables[tableName];
 			}
+			
+			SimetriUtils.RenderTypeLibraryCode(output,table);
 
-			string baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database,table.Schema);
-			string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
-
-			className = SimetriUtils.SetPascalCase(table.Name);
-			schemaName = SimetriUtils.SetPascalCase(table.Schema);
-			classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
-
-			if (isDEBUG)
-			{
-				System.Diagnostics.Debugger.Break();
-			}
-
-			outputFullFileName = Path.Combine( SimetriUtils.ProjeDizininiAl(database) + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName , className + ".generated.cs" );
-
-
-			output.setPreserveSource(outputFullFileName, "//::", ":://");
-
-%>using System;
-using System.Collections.Generic;
-using System.Text;
-using Simetri.Core.TypeLibrary;
-using Simetri.Core.Validation.ForPonos;
-using System.Data;
-
-namespace <%=classNameSpace%>
-{
-    [Serializable]
-    public partial class <%= className %>
-<%
-	try
-	{
-		output.getPreservedData("inheritance");
-		output.preserve("inheritance");
-	}
-	catch(NullReferenceException)
-	{
-		string preservedBlock = output.getPreserveBlock("inheritance");
-		string newBlock = preservedBlock.Replace("////", 
-												"// " + Environment.NewLine 
-												+ ": BaseTypeLibrary " + Environment.NewLine + "//");
-		output.write(newBlock); 
-	}
-
-%>  
-	{<%
-		foreach (IColumn column in table.Columns)
-		{
-		memberVariableName = SimetriUtils.SetCamelCase(column.Name);
-		propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
-		%>
-		private <%=SimetriUtils.GetLanguageType(column)%> <%=memberVariableName%>;<%
 		}
-		%>
-		<%
-		foreach (IColumn column in table.Columns)
-		{
-		memberVariableName = SimetriUtils.SetCamelCase(column.Name);
-		propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
-		%>
-		public <%=SimetriUtils.GetLanguageType(column)%> <%=propertyVariableName%>
-		{
-			get
-			{
-				return <%=memberVariableName%>;
-			}
-			set
-			{
-				if ((this.RowState == DataRowState.Unchanged) && (<%=memberVariableName%>  != value))
-                {
-                    this.RowState = DataRowState.Modified;
-                }
-				<%=memberVariableName%> = value;
-			}
-		}
-		<%
-		}
-		%>
-		protected override void ValidationListesiniOlusturCodeGeneration()
-		{<%= foreach (IColumn column in table.Columns)
-			{
-				if ((!column.IsNullable) && (!column.IsInPrimaryKey ))
-				{%>
-				this.Validator.ValidatorList.Add(new RequiredFieldValidator(this, "<%=SimetriUtils.SetPascalCase(column.Name)%>"));<%
-				}
-			}%>
-		}
-    }
-}
-<%
-//			output.writeln(className);
-
-			output.save( outputFullFileName, false );
-			output.clear();
-			}
 
 	}
 	
