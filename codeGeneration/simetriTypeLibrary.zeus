@@ -12,7 +12,6 @@ public class GeneratedGui : DotNetScriptGui
 {
 	public GeneratedGui(ZeusContext context) : base(context) {}
 
-	string defaultOutputPath = @"D:\projects\DotnetProjects\Denemeler\Adisyon\Adisyon.TypeLibrary";
 
 	GuiListBox chooseTables = null;
 	GuiTextBox outputPath = null;
@@ -29,8 +28,10 @@ public class GeneratedGui : DotNetScriptGui
 			ui.Height =540;
 	
 			// Grab default output path
-			string sOutputPath = defaultOutputPath;
-			
+			string sOutputPath = SimetriUtils.ProjeDizininiAl( MyMeta.DefaultDatabase);
+			string sNamespace = SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.DefaultDatabase);
+
+
 			// Çıkış Dizini TextBox
 			// Setup Folder selection input control.
 			GuiLabel label1 = ui.AddLabel( "label1", "Çıkış Dizini:", "Çıkış Dizinini Seçin." );
@@ -49,7 +50,7 @@ public class GeneratedGui : DotNetScriptGui
 			// İsim alanı TextBox
 			GuiLabel label2 = ui.AddLabel( "label2", "İsim Alanı: ",  "Nesnelerinizin isim alanını verin." );
 			label2.Width = 75;
-			classNamespace = ui.AddTextBox( "classNamespace", "Adisyon", "Nesnelerinizin isim alanını verin." );				
+			classNamespace = ui.AddTextBox( "classNamespace", sNamespace, "Nesnelerinizin isim alanını verin." );				
 			classNamespace.Width = 474;
 			classNamespace.Top = label2.Top;
 			classNamespace.Left = outputPath.Left;//label2.Left + label2.Width + 5;
@@ -293,7 +294,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 				System.Diagnostics.Debugger.Break();
 			}
 
-			outputFullFileName = Path.Combine( SimetriUtils.DizininiAlDatabaseVeSchemaIle(database,table.Schema) + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName , className + ".generated.cs" );
+			outputFullFileName = Path.Combine( SimetriUtils.ProjeDizininiAl(database) + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName , className + ".generated.cs" );
 
 
 			output.setPreserveSource(outputFullFileName, "//::", ":://");
