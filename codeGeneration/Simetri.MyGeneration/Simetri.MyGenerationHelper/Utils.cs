@@ -6,11 +6,23 @@ using MyMeta;
 using System.Data;
 using System.Data.SqlClient;
 using System.Xml;
+using Simetri.MyGenerationHelper.Generators;
+using Zeus;
 
 namespace Simetri.MyGenerationHelper
 {
     public class Utils
     {
+        #region Generator Helper Fonksiyonlari
+        public void RenderTypeLibraryCode(IZeusOutput output, ITable table)
+        {
+            TypeLibraryGenerator gen = new TypeLibraryGenerator();
+            gen.RenderTypeLibraryCode(output, table);
+        }
+
+        #endregion
+
+
         #region "Parser Helper Fonksiyonlari"
         SimetriXmlParser parser = new SimetriXmlParser();
 
