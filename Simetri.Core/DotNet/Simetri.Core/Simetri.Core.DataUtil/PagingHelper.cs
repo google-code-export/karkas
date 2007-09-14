@@ -20,7 +20,7 @@ namespace Simetri.Core.DataUtil
                                 ) 
                                 SELECT * 
                                 FROM temp 
-                                WHERE RowNumber > {1} AND RowNumber  <= {2}
+                                WHERE RowNumber >= {1} AND RowNumber  < {2}
                                 ";
 
         //Where RowNumber >= @RowStart and RowNumber <= @
