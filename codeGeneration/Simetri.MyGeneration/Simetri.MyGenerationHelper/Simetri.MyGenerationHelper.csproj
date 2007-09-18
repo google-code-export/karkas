@@ -51,6 +51,7 @@
     <Compile Include="ConnectionHelper.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="Generators\TypeLibraryGenerator.cs" />
+    <Compile Include="Generators\TypeLibraryHelper.cs" />
     <Compile Include="SimetriSmoHelper.cs" />
     <Compile Include="SimetriXmlParser.cs" />
     <Compile Include="TurkishHelper.cs" />

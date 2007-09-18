@@ -26,10 +26,7 @@ namespace Simetri.MyGenerationHelper.Generators
             string className = SimetriUtils.SetPascalCase(table.Name);
             string schemaName = SimetriUtils.SetPascalCase(table.Schema);
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
-
             string outputFullFileName = Path.Combine(SimetriUtils.ProjeDizininiAl(database) + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
-
-
             output.setPreserveSource(outputFullFileName, "//::", ":://");
 
 
@@ -50,9 +47,9 @@ namespace Simetri.MyGenerationHelper.Generators
 
             output.autoTabLn("{");
 
-            writeMemberVariables(output, table);
+            TypeLibraryHelper.writeMemberVariablesTable(output, table);
 
-            writeProperties(output, table);
+            TypeLibraryHelper.writePropertiesTable(output, table);
 
             output.writeln("");
 
@@ -114,48 +111,6 @@ namespace Simetri.MyGenerationHelper.Generators
             output.autoTabLn("}");
         }
 
-        private void writeProperties(IZeusOutput output, ITable table)
-        {
-            output.incTab();
-            foreach (IColumn column in table.Columns)
-            {
-                string memberVariableName = SimetriUtils.SetCamelCase(column.Name);
-                string propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
-
-                output.autoTabLn(string.Format("public {0} {1}", SimetriUtils.GetLanguageType(column), propertyVariableName));
-                output.autoTabLn("{");
-                output.incTab();
-                output.autoTabLn("get");
-                output.autoTabLn("{");
-                output.autoTabLn(string.Format("\treturn {0};", memberVariableName));
-                output.autoTabLn("}");
-                output.autoTabLn("set");
-                output.autoTabLn("{");
-                output.incTab();
-                output.autoTabLn(string.Format("if ((this.RowState == DataRowState.Unchanged) && ({0}!= value))", memberVariableName));
-                output.autoTabLn("{");
-                output.autoTabLn("\tthis.RowState = DataRowState.Modified;");
-                output.autoTabLn("}");
-                output.decTab();
-                output.autoTabLn(string.Format("{0} = value;", memberVariableName));
-                output.autoTabLn("}");
-                output.decTab();
-                output.autoTabLn("}");
-                output.writeln("");
-            }
-            output.decTab();
-        }
-
-        private void writeMemberVariables(IZeusOutput output, ITable table)
-        {
-            output.incTab();
-            foreach (IColumn column in table.Columns)
-            {
-                output.autoTabLn(String.Format("private {0} {1};", SimetriUtils.GetLanguageType(column), SimetriUtils.SetCamelCase(column.Name)));
-            }
-            output.decTab();
-            output.writeln("");
-        }
 
     }
 
