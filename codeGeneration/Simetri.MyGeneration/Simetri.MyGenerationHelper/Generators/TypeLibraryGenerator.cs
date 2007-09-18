@@ -15,7 +15,7 @@ namespace Simetri.MyGenerationHelper.Generators
 
         Utils SimetriUtils = new Utils();
 
-        public void RenderTypeLibraryCodeTable(IZeusOutput output, ITable table)
+        public void RenderTypeLibraryCode(IZeusOutput output, ITable table)
         {
             IDatabase database = table.Database;
             output.tabLevel = 0;
@@ -26,22 +26,11 @@ namespace Simetri.MyGenerationHelper.Generators
             string className = SimetriUtils.SetPascalCase(table.Name);
             string schemaName = SimetriUtils.SetPascalCase(table.Schema);
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
-            string outputFullFileName = Path.Combine(SimetriUtils.ProjeDizininiAl(database) + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
+            string outputFullFileName = Path.Combine(SimetriUtils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
             output.setPreserveSource(outputFullFileName, "//::", ":://");
 
 
-            output.autoTabLn("using System;");
-            output.autoTabLn("using System.Collections.Generic;");
-            output.autoTabLn("using System.Text;");
-            output.autoTabLn("using Simetri.Core.TypeLibrary;");
-            output.autoTabLn("using Simetri.Core.Validation.ForPonos;");
-            output.autoTabLn("using System.Data;");
-            output.autoTabLn("");
-            output.autoTab("namespace ");
-            output.autoTab(classNameSpace);
-            output.autoTabLn("");
-            output.autoTabLn("{");
-
+            writeNamespaces(output, classNameSpace);
 
             writeClassName(output, className);
 
@@ -64,7 +53,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.clear();
         }
 
-        public void RenderTypeLibraryCodeView(IZeusOutput output, IView view)
+        public void RenderTypeLibraryCode(IZeusOutput output, IView view)
         {
             IDatabase database = view.Database;
             output.tabLevel = 0;
@@ -75,21 +64,11 @@ namespace Simetri.MyGenerationHelper.Generators
             string className = SimetriUtils.SetPascalCase(view.Name);
             string schemaName = SimetriUtils.SetPascalCase(view.Schema);
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
-            string outputFullFileName = Path.Combine(SimetriUtils.ProjeDizininiAl(database) + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
+            string outputFullFileName = Path.Combine(SimetriUtils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
             output.setPreserveSource(outputFullFileName, "//::", ":://");
 
 
-            output.autoTabLn("using System;");
-            output.autoTabLn("using System.Collections.Generic;");
-            output.autoTabLn("using System.Text;");
-            output.autoTabLn("using Simetri.Core.TypeLibrary;");
-            output.autoTabLn("using Simetri.Core.Validation.ForPonos;");
-            output.autoTabLn("using System.Data;");
-            output.autoTabLn("");
-            output.autoTab("namespace ");
-            output.autoTab(classNameSpace);
-            output.autoTabLn("");
-            output.autoTabLn("{");
+            writeNamespaces(output, classNameSpace);
 
 
             writeClassName(output, className);
@@ -111,6 +90,21 @@ namespace Simetri.MyGenerationHelper.Generators
 
             output.save(outputFullFileName, false);
             output.clear();
+        }
+
+        private static void writeNamespaces(IZeusOutput output, string classNameSpace)
+        {
+            output.autoTabLn("using System;");
+            output.autoTabLn("using System.Collections.Generic;");
+            output.autoTabLn("using System.Text;");
+            output.autoTabLn("using Simetri.Core.TypeLibrary;");
+            output.autoTabLn("using Simetri.Core.Validation.ForPonos;");
+            output.autoTabLn("using System.Data;");
+            output.autoTabLn("");
+            output.autoTab("namespace ");
+            output.autoTab(classNameSpace);
+            output.autoTabLn("");
+            output.autoTabLn("{");
         }
 
         private static void writeClassName(IZeusOutput output, string className)
