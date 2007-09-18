@@ -25,7 +25,7 @@ public class GeneratedGui : DotNetScriptGui
 		{
 			ui.Title = "Simetri Type Library Kod Üreteci";
 			ui.Width = 980;
-			ui.Height =540;
+			ui.Height =640;
 	
 			// Grab default output path
 			string sOutputPath = SimetriUtils.ProjeDizininiAl( MyMeta.DefaultDatabase);
@@ -259,6 +259,11 @@ public class GeneratedTemplate : DotNetScriptTemplate
 	private bool isDEBUG = false;
 	private bool generateAllTables = false;
 	private bool generateAllViews = false;
+	private bool generateTypeLibrary = false;
+	private bool generateDal = false;
+	private bool generateBs = false;
+	private bool generateBsWrapper = false;
+
 	public override void Render()
 	{
 		string className = "";
@@ -281,6 +286,22 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		if (Convert.ToBoolean(input["chkAllViewsBox"]))
 		{
 			generateAllViews = true;
+		}
+		if (Convert.ToBoolean(input["chkTypeLibraryBox"]))
+		{
+			generateTypeLibrary = true;
+		}
+		if (Convert.ToBoolean(input["chkDalBox"]))
+		{
+			generateDal = true;
+		}
+		if (Convert.ToBoolean(input["chkBsBox"]))
+		{
+			generateBs = true;
+		}
+		if (Convert.ToBoolean(input["chkBsWrapperBox"]))
+		{
+			generateBsWrapper = true;
 		}
 
 		string databaseName = input["chooseDatabase"].ToString();;
@@ -308,7 +329,14 @@ public class GeneratedTemplate : DotNetScriptTemplate
 				string tableName = selectedTables[i] as String;
 				table = database.Tables[tableName];
 			}
-			SimetriUtils.RenderTypeLibraryCode(output,table);
+			if (generateTypeLibrary)
+			{
+				SimetriUtils.RenderTypeLibraryCode(output,table);
+			}
+			if (generateDal)
+			{
+				SimetriUtils.RenderDalCode(output,table);
+			}
 		}
 		IList selectedViews = null;
 		if (generateAllViews)
