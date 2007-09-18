@@ -15,7 +15,7 @@ namespace Simetri.MyGenerationHelper.Generators
 
         Utils SimetriUtils = new Utils();
 
-        public void RenderTypeLibraryCode(IZeusOutput output, ITable table)
+        public void RenderTypeLibraryCodeTable(IZeusOutput output, ITable table)
         {
             IDatabase database = table.Database;
             output.tabLevel = 0;
@@ -42,7 +42,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.autoTabLn("");
             output.autoTabLn("{");
 
-            
+
             writeClassName(output, className);
 
             output.autoTabLn("{");
@@ -53,7 +53,56 @@ namespace Simetri.MyGenerationHelper.Generators
 
             output.writeln("");
 
-//            writeValidationCode(output, table);
+            //            writeValidationCode(output, table);
+            output.autoTabLn("}");
+            output.decTab();
+            output.autoTabLn("}");
+
+            //			output.autoTabLn(className);
+
+            output.save(outputFullFileName, false);
+            output.clear();
+        }
+
+        public void RenderTypeLibraryCodeView(IZeusOutput output, IView table)
+        {
+            IDatabase database = table.Database;
+            output.tabLevel = 0;
+
+            string baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database, table.Schema);
+            string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
+
+            string className = SimetriUtils.SetPascalCase(table.Name);
+            string schemaName = SimetriUtils.SetPascalCase(table.Schema);
+            string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
+            string outputFullFileName = Path.Combine(SimetriUtils.ProjeDizininiAl(database) + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
+            output.setPreserveSource(outputFullFileName, "//::", ":://");
+
+
+            output.autoTabLn("using System;");
+            output.autoTabLn("using System.Collections.Generic;");
+            output.autoTabLn("using System.Text;");
+            output.autoTabLn("using Simetri.Core.TypeLibrary;");
+            output.autoTabLn("using Simetri.Core.Validation.ForPonos;");
+            output.autoTabLn("using System.Data;");
+            output.autoTabLn("");
+            output.autoTab("namespace ");
+            output.autoTab(classNameSpace);
+            output.autoTabLn("");
+            output.autoTabLn("{");
+
+
+            writeClassName(output, className);
+
+            output.autoTabLn("{");
+
+            TypeLibraryHelper.writeMemberVariablesView(output, table);
+
+            TypeLibraryHelper.writePropertiesView(output, table);
+
+            output.writeln("");
+
+            //            writeValidationCode(output, table);
             output.autoTabLn("}");
             output.decTab();
             output.autoTabLn("}");

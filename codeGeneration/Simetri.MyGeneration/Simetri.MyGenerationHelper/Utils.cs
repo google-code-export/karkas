@@ -17,7 +17,7 @@ namespace Simetri.MyGenerationHelper
         public void RenderTypeLibraryCode(IZeusOutput output, ITable table)
         {
             TypeLibraryGenerator gen = new TypeLibraryGenerator();
-            gen.RenderTypeLibraryCode(output, table);
+            gen.RenderTypeLibraryCodeTable(output, table);
         }
 
         #endregion
