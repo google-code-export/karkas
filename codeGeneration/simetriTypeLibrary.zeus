@@ -254,6 +254,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		{
 			generateAllTables = true;
 		}
+		if (Convert.ToBoolean(input["chkAllViewsBox"]))
+		{
+			generateAllViews = true;
+		}
 
 		string databaseName = input["chooseDatabase"].ToString();;
 		IDatabase database = MyMeta.Databases[databaseName];
@@ -281,6 +285,30 @@ public class GeneratedTemplate : DotNetScriptTemplate
 				table = database.Tables[tableName];
 			}
 			SimetriUtils.RenderTypeLibraryCode(output,table);
+		}
+		IList selectedViews = null;
+		if (generateAllViews)
+		{
+			selectedViews = database.Views as IList;
+		}
+		else
+		{
+			selectedViews = input["chooseViews"] as IList;
+		}
+
+		for (int i =0; i<selectedViews.Count ;i++)
+		{
+			IView view = null;
+			if (generateAllViews)
+			{
+				view = selectedViews[i] as IView;
+			}
+			else
+			{
+				string viewName = selectedViews[i] as String;
+				view = database.Views[viewName];
+			}
+			SimetriUtils.RenderTypeLibraryCode(output,view);
 		}
 
 
