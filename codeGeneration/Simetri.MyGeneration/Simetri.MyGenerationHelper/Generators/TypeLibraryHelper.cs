@@ -9,7 +9,7 @@ namespace Simetri.MyGenerationHelper.Generators
     public class TypeLibraryHelper
     {
         private static Utils SimetriUtils = new Utils();
-        public static void writePropertiesTable(IZeusOutput output, ITable table)
+        public static void writeProperties(IZeusOutput output, ITable table)
         {
             output.incTab();
             foreach (IColumn column in table.Columns)
@@ -31,8 +31,8 @@ namespace Simetri.MyGenerationHelper.Generators
                 output.autoTabLn("{");
                 output.autoTabLn("\tthis.RowState = DataRowState.Modified;");
                 output.autoTabLn("}");
-                output.decTab();
                 output.autoTabLn(string.Format("{0} = value;", memberVariableName));
+                output.decTab();
                 output.autoTabLn("}");
                 output.decTab();
                 output.autoTabLn("}");
@@ -42,7 +42,7 @@ namespace Simetri.MyGenerationHelper.Generators
         }
 
 
-        public static void writePropertiesView(IZeusOutput output, IView view)
+        public static void writeProperties(IZeusOutput output, IView view)
         {
             output.incTab();
             foreach (IColumn column in view.Columns)
@@ -64,8 +64,8 @@ namespace Simetri.MyGenerationHelper.Generators
                 output.autoTabLn("{");
                 output.autoTabLn("\tthis.RowState = DataRowState.Modified;");
                 output.autoTabLn("}");
-                output.decTab();
                 output.autoTabLn(string.Format("{0} = value;", memberVariableName));
+                output.decTab();
                 output.autoTabLn("}");
                 output.decTab();
                 output.autoTabLn("}");
@@ -76,7 +76,7 @@ namespace Simetri.MyGenerationHelper.Generators
 
 
 
-        public static void writeMemberVariablesTable(IZeusOutput output, ITable table)
+        public static void writeMemberVariables(IZeusOutput output, ITable table)
         {
             output.incTab();
             foreach (IColumn column in table.Columns)

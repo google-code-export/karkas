@@ -267,8 +267,6 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		{
 			selectedTables = input["chooseTables"] as IList;
 		}
-		
-		
 
 		for (int i =0; i<selectedTables.Count ;i++)
 		{
@@ -282,10 +280,12 @@ public class GeneratedTemplate : DotNetScriptTemplate
 				string tableName = selectedTables[i] as String;
 				table = database.Tables[tableName];
 			}
-			
 			SimetriUtils.RenderTypeLibraryCode(output,table);
-
 		}
+
+
+		
+
 
 	}
 	

@@ -47,9 +47,9 @@ namespace Simetri.MyGenerationHelper.Generators
 
             output.autoTabLn("{");
 
-            TypeLibraryHelper.writeMemberVariablesTable(output, table);
+            TypeLibraryHelper.writeMemberVariables(output, table);
 
-            TypeLibraryHelper.writePropertiesTable(output, table);
+            TypeLibraryHelper.writeProperties(output, table);
 
             output.writeln("");
 
@@ -98,7 +98,7 @@ namespace Simetri.MyGenerationHelper.Generators
 
             TypeLibraryHelper.writeMemberVariablesView(output, table);
 
-            TypeLibraryHelper.writePropertiesView(output, table);
+            TypeLibraryHelper.writeProperties(output, table);
 
             output.writeln("");
 
