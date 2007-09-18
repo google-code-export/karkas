@@ -18,9 +18,8 @@ namespace Simetri.MyGenerationHelper.Generators
         public void RenderTypeLibraryCode(IZeusOutput output, ITable table)
         {
             IDatabase database = table.Database;
+            output.tabLevel = 0;
 
-            string memberVariableName = "";
-            string propertyVariableName = "";
             string baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database, table.Schema);
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
@@ -34,21 +33,47 @@ namespace Simetri.MyGenerationHelper.Generators
             output.setPreserveSource(outputFullFileName, "//::", ":://");
 
 
-            output.writeln("using System;");
-            output.writeln("using System.Collections.Generic;");
-            output.writeln("using System.Text;");
-            output.writeln("using Simetri.Core.TypeLibrary;");
-            output.writeln("using Simetri.Core.Validation.ForPonos;");
-            output.writeln("using System.Data;");
+            output.autoTabLn("using System;");
+            output.autoTabLn("using System.Collections.Generic;");
+            output.autoTabLn("using System.Text;");
+            output.autoTabLn("using Simetri.Core.TypeLibrary;");
+            output.autoTabLn("using Simetri.Core.Validation.ForPonos;");
+            output.autoTabLn("using System.Data;");
+            output.autoTabLn("");
+            output.autoTab("namespace ");
+            output.autoTab(classNameSpace);
+            output.autoTabLn("");
+            output.autoTabLn("{");
+
+            
+            writeClassName(output, className);
+
+            output.autoTabLn("{");
+
+            writeMemberVariables(output, table);
+
+            writeProperties(output, table);
+
             output.writeln("");
-            output.write("namespace ");
-            output.write(classNameSpace);
-            output.writeln("");
-            output.writeln("{");
-            output.writeln("    [Serializable]");
-            output.write("    public partial class ");
-            output.write(className);
-            output.writeln("");
+
+//            writeValidationCode(output, table);
+            output.autoTabLn("}");
+            output.decTab();
+            output.autoTabLn("}");
+
+            //			output.autoTabLn(className);
+
+            output.save(outputFullFileName, false);
+            output.clear();
+        }
+
+        private static void writeClassName(IZeusOutput output, string className)
+        {
+            output.incTab();
+            output.autoTabLn("[Serializable]");
+            output.autoTab("public partial class ");
+            output.autoTab(className);
+            output.autoTabLn("");
 
             try
             {
@@ -61,88 +86,75 @@ namespace Simetri.MyGenerationHelper.Generators
                 string newBlock = preservedBlock.Replace("////",
                 "// " + Environment.NewLine
                 + ": BaseTypeLibrary " + Environment.NewLine + "//");
-                output.write(newBlock);
-            }
-
-
-            output.writeln("  ");
-            output.write("\t{");
-
-            foreach (IColumn column in table.Columns)
-            {
-                memberVariableName = SimetriUtils.SetCamelCase(column.Name);
-                propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
-
                 output.writeln("");
-                output.write("\t\tprivate ");
-                output.write(SimetriUtils.GetLanguageType(column));
-                output.write(" ");
-                output.write(memberVariableName);
-                output.write(";");
-
+                output.autoTab(newBlock);
             }
 
             output.writeln("");
-            output.write("\t\t");
+        }
 
-            foreach (IColumn column in table.Columns)
-            {
-                memberVariableName = SimetriUtils.SetCamelCase(column.Name);
-                propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
-
-                output.writeln("");
-                output.write("\t\tpublic ");
-                output.write(SimetriUtils.GetLanguageType(column));
-                output.write(" ");
-                output.write(propertyVariableName);
-                output.writeln("");
-                output.writeln("\t\t{");
-                output.writeln("\t\t\tget");
-                output.writeln("\t\t\t{");
-                output.write("\t\t\t\treturn ");
-                output.write(memberVariableName);
-                output.writeln(";");
-                output.writeln("\t\t\t}");
-                output.writeln("\t\t\tset");
-                output.writeln("\t\t\t{");
-                output.write("\t\t\t\tif ((this.RowState == DataRowState.Unchanged) && (");
-                output.write(memberVariableName);
-                output.writeln("  != value))");
-                output.writeln("                {");
-                output.writeln("                    this.RowState = DataRowState.Modified;");
-                output.writeln("                }");
-                output.write("\t\t\t\t");
-                output.write(memberVariableName);
-                output.writeln(" = value;");
-                output.writeln("\t\t\t}");
-                output.writeln("\t\t}");
-                output.write("\t\t");
-
-            }
-
-            output.writeln("");
-            output.writeln("\t\tprotected override void ValidationListesiniOlusturCodeGeneration()");
-            output.write("\t\t{");
+        private void writeValidationCode(IZeusOutput output, ITable table)
+        {
+            output.autoTabLn("protected override void ValidationListesiniOlusturCodeGeneration()");
+            output.autoTab("{");
+            output.incTab();
             foreach (IColumn column in table.Columns)
             {
                 if ((!column.IsNullable) && (!column.IsInPrimaryKey))
                 {
-                    output.writeln("");
-                    output.write("\t\t\t\tthis.Validator.ValidatorList.Add(new RequiredFieldValidator(this, \"");
-                    output.write(SimetriUtils.SetPascalCase(column.Name));
-                    output.write("\"));");
+                    output.autoTabLn("");
+                    output.autoTab("this.Validator.ValidatorList.Add(new RequiredFieldValidator(this, \"");
+                    output.autoTab(SimetriUtils.SetPascalCase(column.Name));
+                    output.autoTab("\"));");
 
                 }
             }
+            output.decTab();
+            output.autoTabLn("");
+            output.autoTabLn("}");
+        }
+
+        private void writeProperties(IZeusOutput output, ITable table)
+        {
+            output.incTab();
+            foreach (IColumn column in table.Columns)
+            {
+                string memberVariableName = SimetriUtils.SetCamelCase(column.Name);
+                string propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
+
+                output.autoTabLn(string.Format("public {0} {1}", SimetriUtils.GetLanguageType(column), propertyVariableName));
+                output.autoTabLn("{");
+                output.incTab();
+                output.autoTabLn("get");
+                output.autoTabLn("{");
+                output.autoTabLn(string.Format("\treturn {0};", memberVariableName));
+                output.autoTabLn("}");
+                output.autoTabLn("set");
+                output.autoTabLn("{");
+                output.incTab();
+                output.autoTabLn(string.Format("if ((this.RowState == DataRowState.Unchanged) && ({0}!= value))", memberVariableName));
+                output.autoTabLn("{");
+                output.autoTabLn("\tthis.RowState = DataRowState.Modified;");
+                output.autoTabLn("}");
+                output.decTab();
+                output.autoTabLn(string.Format("{0} = value;", memberVariableName));
+                output.autoTabLn("}");
+                output.decTab();
+                output.autoTabLn("}");
+                output.writeln("");
+            }
+            output.decTab();
+        }
+
+        private void writeMemberVariables(IZeusOutput output, ITable table)
+        {
+            output.incTab();
+            foreach (IColumn column in table.Columns)
+            {
+                output.autoTabLn(String.Format("private {0} {1};", SimetriUtils.GetLanguageType(column), SimetriUtils.SetCamelCase(column.Name)));
+            }
+            output.decTab();
             output.writeln("");
-            output.writeln("\t\t}");
-            output.writeln("    }");
-            output.writeln("}");
-
-            //			output.writeln(className);
-
-            output.save(outputFullFileName, false);
-            output.clear();
         }
 
     }
