@@ -17,7 +17,7 @@ namespace Simetri.MyGenerationHelper
         public void RenderTypeLibraryCode(IZeusOutput output, ITable table)
         {
             TypeLibraryGenerator gen = new TypeLibraryGenerator();
-            gen.RenderTypeLibraryCode(output, table);
+            gen.Render(output, table);
         }
         public void RenderTypeLibraryCode(IZeusOutput output, IView view)
         {
@@ -27,12 +27,17 @@ namespace Simetri.MyGenerationHelper
         public void RenderDalCode(IZeusOutput output, ITable table)
         {
             DalGenerator gen = new DalGenerator();
-            gen.RenderDalCode(output, table);
+            gen.Render(output, table);
         }
         public void RenderBsCode(IZeusOutput output, ITable table)
         {
             BsGenerator gen = new BsGenerator();
-            gen.RenderBsCode(output, table);
+            gen.Render(output, table);
+        }
+        public void RenderBsWrapperCode(IZeusOutput output, ITable table)
+        {
+            BsWrapperGenerator gen = new BsWrapperGenerator();
+            gen.Render(output, table);
         }
 
 

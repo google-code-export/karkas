@@ -15,7 +15,7 @@ namespace Simetri.MyGenerationHelper.Generators
 
         Utils SimetriUtils = new Utils();
 
-        public void RenderTypeLibraryCode(IZeusOutput output, ITable table)
+        public void Render(IZeusOutput output, ITable table)
         {
             IDatabase database = table.Database;
             output.tabLevel = 0;
