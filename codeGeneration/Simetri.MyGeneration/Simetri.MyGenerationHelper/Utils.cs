@@ -26,8 +26,8 @@ namespace Simetri.MyGenerationHelper
         }
         public void RenderDalCode(IZeusOutput output, ITable table)
         {
-            TypeLibraryGenerator gen = new TypeLibraryGenerator();
-            gen.RenderTypeLibraryCode(output, table);
+            DalGenerator gen = new DalGenerator();
+            gen.RenderDalCode(output, table);
         }
 
         #endregion
