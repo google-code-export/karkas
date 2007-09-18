@@ -24,7 +24,7 @@ public class GeneratedGui : DotNetScriptGui
 				( !input.Contains( "chkClass" ) && !input.Contains( "chkNaming" ) ) )
 		{
 			ui.Title = "Simetri Type Library Kod Üreteci";
-			ui.Width = 580;
+			ui.Width = 980;
 			ui.Height =540;
 	
 			// Grab default output path
@@ -139,6 +139,7 @@ public class GeneratedGui : DotNetScriptGui
 				{
 					Databases.SelectedValue = MyMeta.DefaultDatabase.Alias;
 					bindTables( Databases.SelectedValue,"dbo" );
+					bindViews( Databases.SelectedValue,"dbo" );
 					bindSchemas( Databases.SelectedValue );
 				}
 			}
