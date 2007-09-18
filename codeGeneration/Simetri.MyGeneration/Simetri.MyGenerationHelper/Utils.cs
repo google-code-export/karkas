@@ -29,6 +29,13 @@ namespace Simetri.MyGenerationHelper
             DalGenerator gen = new DalGenerator();
             gen.RenderDalCode(output, table);
         }
+        public void RenderBsCode(IZeusOutput output, ITable table)
+        {
+            BsGenerator gen = new BsGenerator();
+            gen.RenderBsCode(output, table);
+        }
+
+
 
         #endregion
 

@@ -337,6 +337,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			{
 				SimetriUtils.RenderDalCode(output,table);
 			}
+			if (generateBs)
+			{
+				SimetriUtils.RenderBsCode(output,table);
+			}
 		}
 		IList selectedViews = null;
 		if (generateAllViews)
