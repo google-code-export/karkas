@@ -53,7 +53,7 @@ namespace Simetri.MyGenerationHelper.Generators
 
             output.writeln("");
 
-            //            writeValidationCode(output, table);
+            writeValidationCode(output, table);
             output.autoTabLn("}");
             output.decTab();
             output.autoTabLn("}");
@@ -64,16 +64,16 @@ namespace Simetri.MyGenerationHelper.Generators
             output.clear();
         }
 
-        public void RenderTypeLibraryCodeView(IZeusOutput output, IView table)
+        public void RenderTypeLibraryCodeView(IZeusOutput output, IView view)
         {
-            IDatabase database = table.Database;
+            IDatabase database = view.Database;
             output.tabLevel = 0;
 
-            string baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database, table.Schema);
+            string baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database, view.Schema);
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
-            string className = SimetriUtils.SetPascalCase(table.Name);
-            string schemaName = SimetriUtils.SetPascalCase(table.Schema);
+            string className = SimetriUtils.SetPascalCase(view.Name);
+            string schemaName = SimetriUtils.SetPascalCase(view.Schema);
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
             string outputFullFileName = Path.Combine(SimetriUtils.ProjeDizininiAl(database) + "\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
             output.setPreserveSource(outputFullFileName, "//::", ":://");
@@ -96,13 +96,13 @@ namespace Simetri.MyGenerationHelper.Generators
 
             output.autoTabLn("{");
 
-            TypeLibraryHelper.writeMemberVariablesView(output, table);
+            TypeLibraryHelper.writeMemberVariablesView(output, view);
 
-            TypeLibraryHelper.writeProperties(output, table);
+            TypeLibraryHelper.writeProperties(output, view);
 
             output.writeln("");
 
-            //            writeValidationCode(output, table);
+            writeValidationCode(output, view);
             output.autoTabLn("}");
             output.decTab();
             output.autoTabLn("}");
@@ -138,6 +138,12 @@ namespace Simetri.MyGenerationHelper.Generators
 
             output.writeln("");
         }
+
+        private void writeValidationCode(IZeusOutput output, IView view)
+        {
+            output.autoTabLn("protected override void ValidationListesiniOlusturCodeGeneration(){}");
+        }
+        
 
         private void writeValidationCode(IZeusOutput output, ITable table)
         {
