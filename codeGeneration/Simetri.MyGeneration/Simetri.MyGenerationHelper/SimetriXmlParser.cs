@@ -13,18 +13,36 @@ namespace Simetri.MyGenerationHelper
 
         public string ProjeNamespaceIsminiAl(IDatabase database)
         {
-            string dbName = getDbName(database);
-            XmlNode databaseNode = getDatabaseNode(dbName);
-            return databaseNode.SelectSingleNode("ProjectNamespace").InnerText;
+            try
+            {
+                string dbName = getDbName(database);
+                XmlNode databaseNode = getDatabaseNode(dbName);
+                return databaseNode.SelectSingleNode("ProjectNamespace").InnerText;
+
+            }
+            catch (Exception)
+            {
+                
+                return "";
+            }
         }
 
 
 
         public string ProjeDizininiAl(IDatabase database)
         {
-            string dbName = getDbName(database);
-            XmlNode databaseNode = getDatabaseNode(dbName);
-            return databaseNode.SelectSingleNode("ProjectFolder").InnerText;
+
+            try
+            {
+                string dbName = getDbName(database);
+                XmlNode databaseNode = getDatabaseNode(dbName);
+                return databaseNode.SelectSingleNode("ProjectFolder").InnerText;
+
+            }
+            catch (Exception)
+            {
+                return "";
+            }
         }
         private XmlNode getDatabaseNode(string dbName)
         {
@@ -75,20 +93,27 @@ namespace Simetri.MyGenerationHelper
         }
         public string NamespaceIniAlSchemaIle(IDatabase database, string schemaName)
         {
-            string dbName = getDbName(database);
             string sonuc = "";
-            XPathDocument doc = new XPathDocument(xmlFilePath);
-            XPathNavigator navigator = doc.CreateNavigator();
-            navigator = navigator.SelectSingleNode(String.Format("//database[@name='{0}']/schema[@name='{1}']/SchemaNamespace", dbName, schemaName));
-            if (navigator == null)
+            try
             {
-                sonuc = ProjeNamespaceIsminiAl(database);
+                string dbName = getDbName(database);
+                XPathDocument doc = new XPathDocument(xmlFilePath);
+                XPathNavigator navigator = doc.CreateNavigator();
+                navigator = navigator.SelectSingleNode(String.Format("//database[@name='{0}']/schema[@name='{1}']/SchemaNamespace", dbName, schemaName));
+                if (navigator == null)
+                {
+                    sonuc = ProjeNamespaceIsminiAl(database);
+                }
+                else
+                {
+                    sonuc = navigator.Value;
+                }
+                return sonuc;
             }
-            else
+            catch
             {
-                sonuc = navigator.Value;
+                return sonuc;
             }
-            return sonuc;
         }
     }
 }
