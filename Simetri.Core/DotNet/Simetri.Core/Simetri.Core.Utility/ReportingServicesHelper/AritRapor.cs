@@ -7,6 +7,8 @@ using System.Security.Principal;
 using System.Web;
 using System.Collections.Generic;
 
+using Microsoft.Reporting.WebForms;
+
 namespace Simetri.Core.Utility.ReportingServicesHelper
 {
     public class AritRapor
@@ -19,10 +21,10 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
 
         static AritRapor()
         {
-           RaporUser=System.Configuration.ConfigurationManager.AppSettings["RaporUser"].ToString();
-           RaporPassword=System.Configuration.ConfigurationManager.AppSettings["RaporPassword"].ToString();
-           RaporCredentialsDomain=System.Configuration.ConfigurationManager.AppSettings["RaporCredentialsDomain"].ToString();
-           RaporSunucuUrl = System.Configuration.ConfigurationManager.AppSettings["RaporURL"].ToString();
+            RaporUser = System.Configuration.ConfigurationManager.AppSettings["RaporUser"].ToString();
+            RaporPassword = System.Configuration.ConfigurationManager.AppSettings["RaporPassword"].ToString();
+            RaporCredentialsDomain = System.Configuration.ConfigurationManager.AppSettings["RaporCredentialsDomain"].ToString();
+            RaporSunucuUrl = System.Configuration.ConfigurationManager.AppSettings["RaporURL"].ToString();
 
         }
         public AritRapor()
@@ -89,12 +91,13 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
 
         private List<Parametre> ParametreListesi = new List<Parametre>();
 
-        public void ParameterEkle(string pAdi, string pDegeri)
+        public void ParametreEkle(string pAdi, string pDegeri)
         {
             ParametreListesi.Add(new Parametre(pAdi, pDegeri));
         }
 
-        public void RaporAc()
+
+        public byte[] RaporAl()
         {
             ReportingService rs = new ReportingService();
             rs.Url = RaporSunucuUrl;
@@ -106,7 +109,7 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
             ParameterValue[] paramatersUsed = null;
             ParameterValue[] parameters = null;
             DataSourceCredentials[] dsCredentials = null;
-            rs.Credentials = new NetworkCredential(RaporUser,RaporPassword,RaporCredentialsDomain);
+            rs.Credentials = new NetworkCredential(RaporUser, RaporPassword, RaporCredentialsDomain);
 
             parameters = new ParameterValue[ParametreListesi.Count];
             for (int ix = 0; ix < ParametreListesi.Count; ix++)
@@ -118,36 +121,55 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
                 parameters[ix].Name = oParametre.Adi;
                 parameters[ix].Value = oParametre.Degeri;
             }
-
-            // rs.Timeout
-            HttpContext.Current.Response.Charset = "UTF-8";
-            HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.Default;
-            byte[] buf;
+            byte[] buf = null;
             switch (RaporFormat)
             {
                 case RaporFormats.PDF:
-                HttpContext.Current.Response.AppendHeader("content-disposition", "attachment; filename=" + RaporDosyaAd + ".pdf");
-                HttpContext.Current.Response.ContentType = "application/pdf";
-                 buf = rs.Render(raporAd, "PDF", null, "", parameters, dsCredentials, "", out encoding, out mimeType, out paramatersUsed, out warnings, out streamids);
-                HttpContext.Current.Response.BinaryWrite(buf);
+                    buf = rs.Render(raporAd, "PDF", null, "", parameters, dsCredentials, "", out encoding, out mimeType, out paramatersUsed, out warnings, out streamids);
                     break;
                 case RaporFormats.EXCEL:
-                HttpContext.Current.Response.AppendHeader("content-disposition", "attachment; filename=" + RaporDosyaAd + ".xls");
-                HttpContext.Current.Response.ContentType = "application/vnd.ms-excel";
-                buf = rs.Render(raporAd, "EXCEL", null, "", parameters, dsCredentials, "", out encoding, out mimeType, out paramatersUsed, out warnings, out streamids);
-                HttpContext.Current.Response.BinaryWrite(buf);
+                    buf = rs.Render(raporAd, "EXCEL", null, "", parameters, dsCredentials, "", out encoding, out mimeType, out paramatersUsed, out warnings, out streamids);
                     break;
                 case RaporFormats.IMAGE:
-                HttpContext.Current.Response.AppendHeader("content-disposition", "attachment; filename=" + RaporDosyaAd + ".tiff");
-                HttpContext.Current.Response.ContentType = "image/tiff";
-                 buf = rs.Render(raporAd, "IMAGE", null, "", parameters, dsCredentials, "", out encoding, out mimeType, out paramatersUsed, out warnings, out streamids);
-                HttpContext.Current.Response.BinaryWrite(buf);
+                    buf = rs.Render(raporAd, "IMAGE", null, "", parameters, dsCredentials, "", out encoding, out mimeType, out paramatersUsed, out warnings, out streamids);
                     break;
                 case RaporFormats.WORD:
-                HttpContext.Current.Response.AppendHeader("content-disposition", "attachment; filename=" + RaporDosyaAd + ".doc");
-                HttpContext.Current.Response.ContentType = "application/msword";
-                 buf = rs.Render(raporAd, "WORD", null, "", parameters, dsCredentials, "", out encoding, out mimeType, out paramatersUsed, out warnings, out streamids);
-                HttpContext.Current.Response.BinaryWrite(buf);
+                    buf = rs.Render(raporAd, "WORD", null, "", parameters, dsCredentials, "", out encoding, out mimeType, out paramatersUsed, out warnings, out streamids);
+                    break;
+            }
+            return buf;
+
+        }
+
+        public void RaporAc()
+        {
+
+            // rs.Timeout
+            byte[] buf = RaporAl();
+            HttpContext.Current.Response.Charset = "UTF-8";
+            HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.Default;
+
+            switch (RaporFormat)
+            {
+                case RaporFormats.PDF:
+                    HttpContext.Current.Response.AppendHeader("content-disposition", "attachment; filename=" + RaporDosyaAd + ".pdf");
+                    HttpContext.Current.Response.ContentType = "application/pdf";
+                    HttpContext.Current.Response.BinaryWrite(buf);
+                    break;
+                case RaporFormats.EXCEL:
+                    HttpContext.Current.Response.AppendHeader("content-disposition", "attachment; filename=" + RaporDosyaAd + ".xls");
+                    HttpContext.Current.Response.ContentType = "application/vnd.ms-excel";
+                    HttpContext.Current.Response.BinaryWrite(buf);
+                    break;
+                case RaporFormats.IMAGE:
+                    HttpContext.Current.Response.AppendHeader("content-disposition", "attachment; filename=" + RaporDosyaAd + ".tiff");
+                    HttpContext.Current.Response.ContentType = "image/tiff";
+                    HttpContext.Current.Response.BinaryWrite(buf);
+                    break;
+                case RaporFormats.WORD:
+                    HttpContext.Current.Response.AppendHeader("content-disposition", "attachment; filename=" + RaporDosyaAd + ".doc");
+                    HttpContext.Current.Response.ContentType = "application/msword";
+                    HttpContext.Current.Response.BinaryWrite(buf);
                     break;
             }
 
