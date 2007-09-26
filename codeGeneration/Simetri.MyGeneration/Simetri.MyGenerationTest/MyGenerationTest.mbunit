@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MbUnitProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TreeState>
+    <NodeStates>
+      <NodeState FullPath="Simetri.MyGenerationTest 1.0\Namespaces" IsVisible="true" IsExpanded="false" />
+      <NodeState FullPath="Simetri.MyGenerationTest 1.0\Importances" IsVisible="true" IsExpanded="false" />
+      <NodeState FullPath="Simetri.MyGenerationTest 1.0\Authors" IsVisible="true" IsExpanded="false" />
+      <NodeState FullPath="Simetri.MyGenerationTest 1.0\TestsOns" IsVisible="true" IsExpanded="false" />
+      <NodeState FullPath="Simetri.MyGenerationTest 1.0" IsVisible="true" IsExpanded="true" />
+      <NodeState FullPath="Simetri.MyGenerationTest 1.0\Categories" IsVisible="true" IsExpanded="false" />
+    </NodeStates>
+  </TreeState>
+  <assemblies>
+    <assembly>D:\atilla\projects\DotNetProjects\codeGeneration\Simetri.MyGeneration\Simetri.MyGenerationTest\bin\Debug\Simetri.MyGenerationTest.dll</assembly>
+  </assemblies>
+</MbUnitProject>
