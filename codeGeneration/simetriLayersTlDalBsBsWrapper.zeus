@@ -1,6 +1,6 @@
 ﻿##|TYPE Template
-##|UNIQUEID 2ef0e96f-a8f9-418b-9449-bcd580c667dc
-##|TITLE Simetri Type Library
+##|UNIQUEID 110e43e8-0883-4594-b169-ecec306ea4e8
+##|TITLE Simetri Type Library,Dal,Bs,BsWrapper
 ##|NAMESPACE 
 ##|SOURCE_TYPE Source
 ##|OUTPUT_LANGUAGE None
@@ -90,6 +90,16 @@ public class GeneratedGui : DotNetScriptGui
 			chkAllViewsBox.Width = 250;
 			chkAllViewsBox.Top = chkAllTablesBox.Top;
 			chkAllViewsBox.Left = chkAllTablesBox.Left + 300;
+
+			//dbo Ignore CheckBox
+			GuiCheckBox DboIgnoreCheckBox = ui.AddCheckBox("DboIgnoreCheckBox", "dbo ignore",false, "Eğer bu seçeneği tıklarsanız, dbo scheması dikkate alınmadan veritabanından kod üretir.");
+			DboIgnoreCheckBox.Width = 250;
+
+			//dbo Ignore CheckBox
+			GuiCheckBox isDebugCheckBox = ui.AddCheckBox("isDebugCheckBox", "Debug",false, "Eğer bu seçeneği tıklarsanız, debugger launch edilir.");
+			isDebugCheckBox.Width = 250;
+			isDebugCheckBox.Top = DboIgnoreCheckBox.Top;
+			isDebugCheckBox.Left = DboIgnoreCheckBox.Left + 300;
 			
 
 			//TypeLibrary CheckBox
@@ -250,7 +260,7 @@ public class GeneratedGui : DotNetScriptGui
 ##|BODY_TAG_START <%
 ##|BODY_TAG_END %>
 ##|BODY_BEGIN
-<%#DEBUG%><%#NAMESPACE System.IO, System.Text, System.Text.RegularExpressions, System.Globalization %><%
+<%#DEBUG%><%#NAMESPACE System.IO, System.Text, System.Text.RegularExpressions, System.Globalization,System.Collections.Generic %><%
 public class GeneratedTemplate : DotNetScriptTemplate
 {
 	public GeneratedTemplate(ZeusContext context) : base(context) {}
@@ -263,6 +273,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 	private bool generateDal = false;
 	private bool generateBs = false;
 	private bool generateBsWrapper = false;
+	private bool ignoreDbo = false;
 
 	public override void Render()
 	{
@@ -274,10 +285,19 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		string outputFullFileName = "";
 		string outputPath = input["outputPath"].ToString();
 
+		if (Convert.ToBoolean(input["isDebugCheckBox"]))
+		{
+			isDEBUG = true;
+		}
+
 		// debugger icin
 		if (isDEBUG)
 		{
 			System.Diagnostics.Debugger.Launch();
+		}
+		if (isDEBUG)
+		{
+			System.Diagnostics.Debugger.Break();
 		}
 		if (Convert.ToBoolean(input["chkAllTablesBox"]))
 		{
@@ -303,6 +323,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		{
 			generateBsWrapper = true;
 		}
+		if (Convert.ToBoolean(input["DboIgnoreCheckBox"]))
+		{
+			ignoreDbo = true;
+		}
 
 		string databaseName = input["chooseDatabase"].ToString();;
 		IDatabase database = MyMeta.Databases[databaseName];
@@ -310,12 +334,32 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		IList selectedTables = null;
 		if (generateAllTables)
 		{
-			selectedTables = database.Tables as IList;
+			if (ignoreDbo)
+			{
+				selectedTables = database.Tables as IList;
+				List<ITable> liste = new List<ITable>();
+				foreach (ITable t in selectedTables)
+				{
+					if (t.Schema != "dbo")
+					{
+						liste.Add(t);
+					}
+				}
+				selectedTables = liste;
+			
+			}
+			else
+			{
+				selectedTables = database.Tables as IList;
+			}
 		}
 		else
 		{
 			selectedTables = input["chooseTables"] as IList;
 		}
+		
+		
+		
 
 		for (int i =0; i<selectedTables.Count ;i++)
 		{
