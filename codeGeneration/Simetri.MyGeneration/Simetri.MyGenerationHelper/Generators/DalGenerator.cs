@@ -12,7 +12,7 @@ using System.Globalization;
 
 namespace Simetri.MyGenerationHelper.Generators
 {
-    class DalGenerator
+    public class DalGenerator
     {
         private static Utils SimetriUtils = new Utils();
         public void Render(IZeusOutput output, ITable table)
@@ -31,6 +31,7 @@ namespace Simetri.MyGenerationHelper.Generators
             baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
             string pkAdi = SimetriUtils.PrimaryKeyAdiniBul(table);
+            string identityColumnAdi = SimetriUtils.IdentityColumnAdiniBul(table);
             if (pkAdi == "")
             {
                 output.writeln("Sectiginiz tablolardan birinde Primary Key yoktur. Code Generation sadace primaryKey'i olan tablolarda duzgun calisir.");
@@ -41,12 +42,14 @@ namespace Simetri.MyGenerationHelper.Generators
             classNameTypeLibrary = SimetriUtils.SetPascalCase(table.Name);
             schemaName = SimetriUtils.SetPascalCase(table.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
-            bool identityVarmi;
+            bool identityVarmi = SimetriUtils.IdentityVarMi(table);
+            bool pkGuidMi = SimetriUtils.PkGuidMi(table);
             string pkcumlesi = "";
 
             string baseNameSpaceDal = baseNameSpace + ".Dal." + schemaName;
 
             string pkType = SimetriUtils.PrimaryKeyTipiniBul(table);
+            string identityType = SimetriUtils.IdentityTipiniBul(table);
 
 
             output.writeln("using System;");
@@ -71,11 +74,20 @@ namespace Simetri.MyGenerationHelper.Generators
             output.writeln("{");
             output.write("    public partial class ");
             output.write(classNameTypeLibrary);
-            output.write("Dal : BaseDal<");
-            output.write(classNameTypeLibrary);
-            output.write(",");
-            output.write(pkType);
-            output.writeln(">");
+            if (identityVarmi)
+            {
+                output.write("Dal : BaseDalForIdentity<");
+                output.write(classNameTypeLibrary);
+                output.write(",");
+                output.write(identityType);
+                output.writeln(">");
+            }
+            else
+            {
+                output.write("Dal : BaseDal<");
+                output.write(classNameTypeLibrary);
+                output.writeln(">");
+            }
             output.writeln("    {");
             output.writeln("");
             output.writeln("        protected override string SelectCountString");
@@ -291,6 +303,33 @@ namespace Simetri.MyGenerationHelper.Generators
             output.writeln("        }");
             output.writeln("");
             output.writeln("\t\t");
+
+            string pkGuidMiSonuc = "";
+            if (SimetriUtils.PkGuidMi(table))
+            {
+                pkGuidMiSonuc = "true";
+            }
+            else
+            {
+                pkGuidMiSonuc = "false";
+            }
+            
+
+            output.writeln(" ");
+            output.writeln("        protected override bool PkGuidMi");
+            output.writeln("        {");
+            output.writeln("            get");
+            output.writeln("            {");
+            output.write("                return ");
+            output.write(pkGuidMiSonuc);
+            output.writeln(";");
+            output.writeln("            }");
+            output.writeln("        }");
+            output.writeln("");
+            output.writeln("\t\t");
+
+
+
             output.write("        protected override void ProcessRow(System.Data.IDataReader dr, ");
             output.write(classNameTypeLibrary);
             output.writeln(" row)");

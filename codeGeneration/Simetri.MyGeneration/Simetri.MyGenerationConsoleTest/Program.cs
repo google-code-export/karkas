@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Simetri.MyGenerationHelper;
+using Simetri.MyGenerationHelper.Generators;
 
 namespace Simetri.MyGenerationConsoleTest
 {
     public class Program
     {
-        static string connectionStringWithProvider = @"Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=False;User ID=sa;Initial Catalog=ITO;Data Source=ATILAPTOP\SQLEXPRESS";
-        static string connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ITO;Data Source=.\SQLEXPRESS";
         public static void Main(string[] args)
         {
+            //EnumHelper eh = new EnumHelper();
+            //string enumSonuc = eh.GetEnumDescription("ITO", "TT_ORTAK", "SEHIR", connectionString);
+            //Console.WriteLine(enumSonuc);
+            DalGenerator dalGenerator = new DalGenerator();
+            Zeus.ZeusOutput output = new Zeus.ZeusOutput();
 
-            TurkishHelper tHelper = new TurkishHelper();
-            Console.WriteLine(tHelper.TurkceyeCevir("Adi"));
-            Console.WriteLine(tHelper.TurkceyeCevir("Soyadi"));
+            MyMeta.Sql.SqlTable table = new MyMeta.Sql.SqlTable();
 
-            Console.WriteLine(tHelper.ReplaceTurkishChars("Þanlýurfa"));
-
+            dalGenerator.Render(output, table);
 
         }
     }

@@ -8,12 +8,25 @@ using System.Data.SqlClient;
 using System.Xml;
 using Simetri.MyGenerationHelper.Generators;
 using Zeus;
+using System.IO;
 
 namespace Simetri.MyGenerationHelper
 {
     public class Utils
     {
         #region Generator Helper Fonksiyonlari
+
+		public void RenderDatabaseTablesCode(IZeusOutput output,ITable table,string connectionString)
+        {
+            output.writeln(GetTableDescription(table.Database.Name, table.Schema, table.Name, connectionString));
+            output.save(Path.Combine(DizininiAlDatabaseVeSchemaIle(table.Database, table.Schema) + "\\Database\\CreateScripts\\" + table.Schema, table.Schema + "_" + table.Name + ".CreateTable.sql"), false);
+            output.clear();
+            output.writeln(GetTableRelationDescriptions(table.Database.Name, table.Schema, table.Name, connectionString));
+            output.save(Path.Combine(DizininiAlDatabaseVeSchemaIle(table.Database, table.Schema) + "\\Database\\CreateRelationScripts\\" + table.Schema, table.Schema + "_" + table.Name + ".Relations.sql"), false);
+            output.clear();
+            
+        }
+
         public void RenderTypeLibraryCode(IZeusOutput output, ITable table)
         {
             TypeLibraryGenerator gen = new TypeLibraryGenerator();
@@ -57,6 +70,8 @@ namespace Simetri.MyGenerationHelper
             return parser.ProjeDizininiAl(database);
         }
 
+
+
         public string DizininiAlDatabaseVeSchemaIle(IDatabase database, string schemaName)
         {
             return parser.DizininiAlDatabaseVeSchemaIle(database, schemaName);
@@ -90,6 +105,19 @@ namespace Simetri.MyGenerationHelper
             //reader.GetInt16();
             //reader.GetInt64
         }
+        public string IdentityColumnAdiniBul(ITable table)
+        {
+            string adi = "";
+            foreach (IColumn column in table.Columns)
+            {
+                if (column.IsAutoKey)
+                {
+                    adi = column.Name;
+                }
+            }
+            return adi;
+        }
+
         public string PrimaryKeyAdiniBul(ITable table)
         {
             string adi = "";
@@ -114,6 +142,43 @@ namespace Simetri.MyGenerationHelper
                 }
             }
             return tip;
+        }
+        public string IdentityTipiniBul(ITable table)
+        {
+            string tip = "";
+            foreach (IColumn column in table.Columns)
+            {
+                if (column.IsAutoKey)
+                {
+                    tip = column.LanguageType;
+                }
+            }
+            return tip;
+        }
+        public bool IdentityVarMi(ITable table)
+        {
+            bool sonuc = false;
+            foreach (IColumn column in table.Columns)
+            {
+                if (column.IsAutoKey)
+                {
+                    sonuc = true;
+                }
+            }
+            return sonuc;
+        }
+
+        public string IdentityVarMiAsString(ITable table)
+        {
+            string sonuc = "false";
+            foreach (IColumn column in table.Columns)
+            {
+                if (column.IsAutoKey)
+                {
+                    sonuc = "true";
+                }
+            }
+            return sonuc;
         }
 
         public string GetCSharpTypeFromDotNetType(string pDotNetType)
@@ -362,5 +427,18 @@ namespace Simetri.MyGenerationHelper
         }
 
 
+
+        public bool PkGuidMi(ITable table)
+        {
+            bool sonuc = false;
+            foreach (IColumn column in table.Columns)
+            {
+                if ((column.IsInPrimaryKey) && (column.LanguageType == "Guid"))
+                {
+                    sonuc = true;
+                }
+            }
+            return sonuc;
+        }
     }
 }

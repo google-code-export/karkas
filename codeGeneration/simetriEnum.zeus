@@ -248,7 +248,8 @@ namespace <%=classNameSpace%>
 <%
 //			output.writeln(className);
 
-			output.save( Path.Combine( SimetriUtils.DizininiAlDatabaseVeSchemaIle(database,table.Schema) + "\\" + baseNameSpaceTypeLibrary + "\\Enums\\" + schemaName , className + ".cs" ), false );
+			string outputFile =Path.Combine( SimetriUtils.DizininiAlDatabaseVeSchemaIle(database,table.Schema) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\Enums\\" + schemaName , className + ".cs");
+			output.save( outputFile, false );
 			output.clear();
 			}
 

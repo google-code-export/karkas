@@ -92,7 +92,7 @@ public class GeneratedGui : DotNetScriptGui
 			chkAllViewsBox.Left = chkAllTablesBox.Left + 300;
 
 			//dbo Ignore CheckBox
-			GuiCheckBox DboIgnoreCheckBox = ui.AddCheckBox("DboIgnoreCheckBox", "dbo ignore",false, "Eğer bu seçeneği tıklarsanız, dbo scheması dikkate alınmadan veritabanından kod üretir.");
+			GuiCheckBox DboIgnoreCheckBox = ui.AddCheckBox("DboIgnoreCheckBox", "dbo ignore",true, "Eğer bu seçeneği tıklarsanız, dbo scheması dikkate alınmadan veritabanından kod üretir.");
 			DboIgnoreCheckBox.Width = 250;
 
 			//dbo Ignore CheckBox
@@ -101,6 +101,9 @@ public class GeneratedGui : DotNetScriptGui
 			isDebugCheckBox.Top = DboIgnoreCheckBox.Top;
 			isDebugCheckBox.Left = DboIgnoreCheckBox.Left + 300;
 			
+			//TypeLibrary CheckBox
+			GuiCheckBox chkDatabaseBox = ui.AddCheckBox("chkDatabaseBox", "Database tabloları Generate Et", true, "Eğer bu seçeneği tıklarsanız,Database Tabloları üretilir"); 
+			chkDatabaseBox.Width = 250;
 
 			//TypeLibrary CheckBox
 			GuiCheckBox chkTypeLibraryBox = ui.AddCheckBox("chkTypeLibraryBox", "Type Library Generate Et", true, "Eğer bu seçeneği tıklarsanız,Type Library Kodu üretilir"); 
@@ -269,6 +272,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 	private bool isDEBUG = false;
 	private bool generateAllTables = false;
 	private bool generateAllViews = false;
+	private bool generateDatabaseTables = false;
 	private bool generateTypeLibrary = false;
 	private bool generateDal = false;
 	private bool generateBs = false;
@@ -306,6 +310,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		if (Convert.ToBoolean(input["chkAllViewsBox"]))
 		{
 			generateAllViews = true;
+		}
+		if (Convert.ToBoolean(input["chkDatabaseBox"]))
+		{
+			generateDatabaseTables = true;
 		}
 		if (Convert.ToBoolean(input["chkTypeLibraryBox"]))
 		{
@@ -372,6 +380,17 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			{
 				string tableName = selectedTables[i] as String;
 				table = database.Tables[tableName];
+			}
+			if (generateDatabaseTables)
+			{
+//				output.writeln(SimetriUtils.GetTableDescription(databaseName,table.Schema,tableName,MyMeta.ConnectionString));
+//				output.save( Path.Combine( SimetriUtils.DizininiAlDatabaseVeSchemaIle(database) + "\\" + baseNameSpace + ".database\\CreateScripts\\"  + table.Schema, table.Schema + "_" + tableName + ".CreateTable.sql") , false );
+//				output.clear();
+
+//				output.writeln(SimetriUtils.GetTableRelationDescriptions(databaseName,table.Schema,tableName,MyMeta.ConnectionString));
+//				output.save( Path.Combine( SimetriUtils.ProjeDizininiAl(database) + "\\" + baseNameSpace + ".database\\CreateRelationScripts\\" + table.Schema , table.Schema + "_" + tableName + ".Relations.sql") , false );
+//				output.clear();
+				SimetriUtils.RenderDatabaseTablesCode(output,table,MyMeta.ConnectionString);
 			}
 			if (generateTypeLibrary)
 			{

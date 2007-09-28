@@ -35,27 +35,21 @@ namespace Simetri.MyGenerationHelper
 
             DataRow row = dtSchema.Rows[0];
             string dataTypeOfEnum = row["DataType"].ToString();
+            string charpDataTypeOfEnum = u.GetCSharpTypeFromDotNetType(dataTypeOfEnum);
 
             StringBuilder sb = new StringBuilder();
-            sb.Append(string.Format("public enum {0}Enum : {1}"
-                                    , u.SetPascalCase(tableName)
-                                    ,u.GetCSharpTypeFromDotNetType(dataTypeOfEnum)));
+            sb.Append(string.Format("public class {0}Enum"
+                                    , u.SetPascalCase(tableName)));
             sb.Append(  @"
     {");
-            bool removeComma = false;
             while (reader.Read())
             {
                 sb.Append(Environment.NewLine);
-                sb.Append("\t\t");
-                sb.Append(u.SetPascalCase( tHelper.ReplaceTurkishChars((reader.GetString(enumAdiOrdinal)))));
-                sb.Append(" = ");
-                sb.Append(u.SetPascalCase((reader.GetValue(0).ToString())));
-                sb.Append(",");
-                removeComma = true;
-            }
-            if (removeComma)
-            {
-                sb.Remove(sb.Length - 1, 1);
+                sb.Append(String.Format("\t\tpublic const {0} {1} = {2};"
+                    ,charpDataTypeOfEnum
+                    ,u.SetPascalCase( tHelper.ReplaceTurkishChars((reader.GetString(enumAdiOrdinal))))
+                    ,u.SetPascalCase((reader.GetValue(0).ToString()))
+                ));
             }
             sb.Append(@"
     }                   ");

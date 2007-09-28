@@ -27,7 +27,8 @@ public class GeneratedGui : DotNetScriptGui
 			ui.Height =600;
 	
 			// Grab default output path
-			string sOutputPath = defaultOutputPath;
+			string sOutputPath = SimetriUtils.ProjeDizininiAl( MyMeta.DefaultDatabase);
+			string sNamespace = SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.DefaultDatabase);
 			
 
 			// Setup Folder selection input control.
@@ -45,7 +46,7 @@ public class GeneratedGui : DotNetScriptGui
 			
 			GuiLabel label2 = ui.AddLabel( "label2", "Namespace: ",  "Nesnelerinizin namespace'ini verin." );
 			label2.Width = 75;
-			classNamespace = ui.AddTextBox( "classNamespace", "Adisyon", "Nesnelerinizin namespace'ini verin." );				
+			classNamespace = ui.AddTextBox( "classNamespace", sNamespace, "Nesnelerinizin namespace'ini verin." );				
 			classNamespace.Width = 150;
 			classNamespace.Top = label2.Top;
 			classNamespace.Left = outputPath.Left;//label2.Left + label2.Width + 5;
@@ -70,6 +71,10 @@ public class GeneratedGui : DotNetScriptGui
 
 			
 			
+			// Setup Views selection multi-select listbox.
+			GuiLabel label8 = ui.AddLabel( "label8", "Schema Listesi", "Schema Listesini Asagidan Secin" );
+			GuiComboBox chooseViews = ui.AddComboBox( "chooseViews", "Select views." );
+			chooseViews.AttachEvent( "onchange", "chooseSchema_onchange" );
 			
 	
 	
@@ -78,10 +83,6 @@ public class GeneratedGui : DotNetScriptGui
 			chooseTables = ui.AddListBox( "chooseTables", "Select tables." );
 			chooseTables.Height = 150;
 	
-			// Setup Views selection multi-select listbox.
-			GuiLabel label8 = ui.AddLabel( "label8", "Schema Listesi", "Schema Listesini Asagidan Secin" );
-			GuiComboBox chooseViews = ui.AddComboBox( "chooseViews", "Select views." );
-			chooseViews.AttachEvent( "onchange", "chooseSchema_onchange" );
 
 
 			// Attach the onchange event to the cmbDatabases control.
