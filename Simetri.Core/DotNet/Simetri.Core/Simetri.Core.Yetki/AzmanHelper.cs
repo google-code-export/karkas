@@ -47,7 +47,7 @@ namespace Simetri.Core.Yetki
                     }
                     catch (System.Runtime.InteropServices.COMException x)
                     {
-                        throw new Exception("IAzAuthorizationStore.Initialize", x);
+                        throw new Exception("IAzAuthorizationStore.Initialize cagrýsýnda sorun çýktý.", x);
                     }
                     catch (FileNotFoundException ex)
                     {
@@ -66,7 +66,7 @@ namespace Simetri.Core.Yetki
                     {
                         Release(azManStore);
                         azManStore = null;
-                        throw new Exception("IAzAuthorizationStore.OpenApplication", x);
+                        throw new Exception("IAzAuthorizationStore.OpenApplication uygulamanýn açýlmasýnda sýrasýnda COM hatasý", x);
                     }
                 }
                 return this.azApplication;
@@ -75,12 +75,17 @@ namespace Simetri.Core.Yetki
 
         private void Release(IAzAuthorizationStore azManStore)
         {
-            throw new Exception("The method or operation is not implemented.");
         }
 
 
 
-        WindowsIdentity currentIdentity; //= OperationContext.Current.ServiceSecurityContext.WindowsIdentity.Name;
+        WindowsIdentity currentIdentity;
+
+        private IAzClientContext GetClientContext(string pUserName, string pDomainName)
+        {
+            initClientContext(pUserName, pDomainName);
+            return clientContext;
+        }
 
         private IAzClientContext GetClientContext(string username)
         {
@@ -92,28 +97,29 @@ namespace Simetri.Core.Yetki
             Match m = rex.Match(username);
             if (m.Success)
             {
-                string domain = m.Groups[1].Value;
-                string user = m.Groups[2].Value;
-                try
-                {
-                    clientContext = this.Application.InitializeClientContextFromName(user, domain, null);
-                }
-                catch (COMException ex)
-                {
-                    throw new Exception("IAzApplication.InitializeClientContextFromName", ex);
-                }
-                catch (ArgumentException ex)
-                {
-                    throw new ArgumentException("Kullanýcý adý bu domain/pc'de tanýmlý deðil", ex);
-                }
-
-
+                initClientContext(m.Groups[2].Value, m.Groups[1].Value);
             }
             else
             {
                 throw new Exception(@"User name should be formed as ""domain\user");
             }
             return clientContext;
+        }
+
+        private void initClientContext(string user, string domain)
+        {
+            try
+            {
+                clientContext = this.Application.InitializeClientContextFromName(user, domain, null);
+            }
+            catch (COMException ex)
+            {
+                throw new Exception("IAzApplication.InitializeClientContextFromName", ex);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException("Kullanýcý adý bu domain/pc'de tanýmlý deðil", ex);
+            }
         }
 
         // TODO Bunu yaz
@@ -239,7 +245,8 @@ namespace Simetri.Core.Yetki
         private int GetOperationByName(string operation)
         {
             throw new Exception("The method or operation is not implemented.");
-        } 
+        }
+ 
 
     }
 }
