@@ -6,10 +6,12 @@ using Simetri.Core.DataUtil;
 using System.Data;
 using System.Data.SqlClient;
 using Simetri.Core.TypeLibrary.Ortak;
+using System.ComponentModel;
 
 namespace Simetri.Core.Example.Dal.Ortak
 {
-    public partial class KisiDal : BaseDal<Kisi,Guid>
+    [DataObject]
+    public partial class KisiDal : BaseDal<Kisi>
     {
 
         public DataTable KisiGetir(int pageSize,int startRowIndex)

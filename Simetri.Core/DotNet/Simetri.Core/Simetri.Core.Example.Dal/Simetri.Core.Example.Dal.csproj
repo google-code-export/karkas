@@ -51,6 +51,13 @@
       <Name>Simetri.Core.Validation</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Simetri.Core.Example.Dal.Ortak.KisiDal.datasource" />
+    <None Include="Properties\DataSources\Simetri.Core.TypeLibrary.Ortak.Kisi.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="KisiReport.rdlc" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -8,6 +8,7 @@ using Simetri.Core.TypeLibrary;
 using Simetri.Core.Yetki;
 using System.Threading;
 using System.Security.Principal;
+using Simetri.Core.Utility.ReportingServicesHelper;
 
 namespace Simetri.Core.DataUtil.TestConsoleApp
 {
@@ -16,6 +17,16 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
         const string userAccount = @"ATILLA\SicilMemuru";
         static void Main(string[] args)
         {
+
+        }
+
+        private static void RaporAlOrnek()
+        {
+            AritRapor oAritRapor = new AritRapor("/StajRaporlari/FirmaBasvurusu");
+            oAritRapor.RaporDosyaAd = "FirmaBasvurusu";
+            oAritRapor.RaporFormat = RaporFormats.PDF;
+            oAritRapor.ParametreEkle("sayi", "4");
+            Byte[] sonuc = oAritRapor.RaporAl();
         }
 
         private static void ornekYetkiMethodu()
@@ -38,6 +49,10 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
 
         private static void yetkiDeneme()
         {
+
+
+
+
             AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
             IIdentity identity = null;
             identity = LogOnUser.GetWindowsIdentity("stajyer", "itodomain", "123456");

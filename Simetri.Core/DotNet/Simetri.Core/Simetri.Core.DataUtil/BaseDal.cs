@@ -13,7 +13,7 @@ namespace Simetri.Core.DataUtil
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="M"></typeparam>
-    public abstract class BaseDal<T, M> where T : BaseTypeLibrary,new()
+    public abstract class BaseDal<T> where T : BaseTypeLibrary, new()
     {
 
         public BaseDal()
@@ -78,9 +78,8 @@ namespace Simetri.Core.DataUtil
             }
         }
 
-        public M Ekle(T row)
+        public void Ekle(T row)
         {
-            M sonuc = default(M);
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = InsertString;
             cmd.Connection = Connection;
@@ -88,15 +87,7 @@ namespace Simetri.Core.DataUtil
             try
             {
                 Connection.Open();
-                if (IdentityVarMi)
-                {
-                    object o = cmd.ExecuteScalar();
-                    sonuc =(M) Convert.ChangeType(o, sonuc.GetType());
-                }
-                else
-                {
-                    cmd.ExecuteNonQuery();
-                }
+                cmd.ExecuteNonQuery();
             }
             catch (SqlException ex)
             {
@@ -107,7 +98,6 @@ namespace Simetri.Core.DataUtil
                 Connection.Close();
             }
 
-            return sonuc;
         }
 
         protected void SorguHariciKomutCalistirUpdate(string cmdText, T row)
@@ -249,6 +239,11 @@ namespace Simetri.Core.DataUtil
             get;
         }
         protected abstract bool IdentityVarMi
+        {
+            get;
+        }
+
+        protected abstract bool PkGuidMi
         {
             get;
         }

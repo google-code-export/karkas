@@ -7,11 +7,12 @@ using System.Text;
 using Simetri.Core.DataUtil;
 using Simetri.Core.TypeLibrary;
 using Simetri.Core.TypeLibrary.Ortak;
+using System.ComponentModel;
 
 
 namespace Simetri.Core.Example.Dal.Ortak
 {
-    public partial class KisiDal : BaseDal<Kisi,Guid>
+    public partial class KisiDal : BaseDal<Kisi>
     {
 
 
@@ -48,6 +49,10 @@ namespace Simetri.Core.Example.Dal.Ortak
 				   (KisiKey,TCKimlikNo,Adi,IkinciAdi,Soyadi,KayitTarihi,CinsiyetTipNo,UyrukNo,DurumNo) VALUES (@KisiKey,@TCKimlikNo,@Adi,@IkinciAdi,@Soyadi,@KayitTarihi,@CinsiyetTipNo,@UyrukNo,@DurumNo)";
 			}
         }
+
+        // TODO Bswrapperlari projeye katmadigim icin bunu kullaniyoruz.
+        // daha sonra kaldir.
+        [DataObjectMethod(DataObjectMethodType.Select)]
 		public List<Kisi> SorgulaHepsiniGetir()
 		{
 			List<Kisi> liste = new List<Kisi>();
@@ -77,6 +82,13 @@ namespace Simetri.Core.Example.Dal.Ortak
             }
         }
 
+        protected override bool PkGuidMi
+        {
+            get
+            {
+                return true;
+            }
+        }
 		
         protected override void ProcessRow(System.Data.IDataReader dr, Kisi row)
         {
