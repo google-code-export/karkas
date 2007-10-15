@@ -69,6 +69,11 @@ public class GeneratedGui : DotNetScriptGui
 			labelDBPrefixSub.Width = 75;
 
 			
+			// Setup Views selection multi-select listbox.
+			GuiLabel label8 = ui.AddLabel( "label8", "Schema Listesi", "Schema Listesini Asagidan Secin" );
+			GuiComboBox chooseViews = ui.AddComboBox( "chooseViews", "Select views." );
+			chooseViews.AttachEvent( "onchange", "chooseSchema_onchange" );
+
 			
 			
 	
@@ -78,11 +83,6 @@ public class GeneratedGui : DotNetScriptGui
 			chooseTables = ui.AddListBox( "chooseTables", "Select tables." );
 			chooseTables.Height = 150;
 	
-			// Setup Views selection multi-select listbox.
-			GuiLabel label8 = ui.AddLabel( "label8", "Schema Listesi", "Schema Listesini Asagidan Secin" );
-			GuiComboBox chooseViews = ui.AddComboBox( "chooseViews", "Select views." );
-			chooseViews.AttachEvent( "onchange", "chooseSchema_onchange" );
-
 
 			// Attach the onchange event to the cmbDatabases control.
 			setupDatabaseDropdown( chooseDatabase );
