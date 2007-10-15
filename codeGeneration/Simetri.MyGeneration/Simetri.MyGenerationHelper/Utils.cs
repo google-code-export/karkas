@@ -334,9 +334,19 @@ namespace Simetri.MyGenerationHelper
             return text;
         }
 
+        public const char degisicekChar = '_';
+        private string kotuKarakterlerdenAyir(string name)
+        {
+            name = name.Replace('-',degisicekChar );
+            name = name.Replace('(', degisicekChar);
+            name = name.Replace(')', degisicekChar);
+            name = name.Replace('/',degisicekChar);
+            return name;
+        }
 
         public string SetPascalCase(string name)
         {
+            name = kotuKarakterlerdenAyir(name);
             string text = "";
             bool flag = true;
             bool flag2 = true;
