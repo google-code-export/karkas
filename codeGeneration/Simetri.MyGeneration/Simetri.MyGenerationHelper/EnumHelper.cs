@@ -45,11 +45,19 @@ namespace Simetri.MyGenerationHelper
             while (reader.Read())
             {
                 sb.Append(Environment.NewLine);
-                sb.Append(String.Format("\t\tpublic const {0} {1} = {2};"
-                    ,charpDataTypeOfEnum
-                    ,u.SetPascalCase( tHelper.ReplaceTurkishChars((reader.GetString(enumAdiOrdinal))))
-                    ,u.SetPascalCase((reader.GetValue(0).ToString()))
-                ));
+                try
+                {
+                    sb.Append(String.Format("\t\tpublic const {0} {1} = {2};"
+                , charpDataTypeOfEnum
+                , u.SetPascalCase(tHelper.ReplaceTurkishChars((reader.GetString(enumAdiOrdinal))))
+                , u.SetPascalCase((reader.GetValue(0).ToString()))
+            ));
+
+                }
+                catch
+                {
+                    // Yut
+                }
             }
             sb.Append(@"
     }                   ");
