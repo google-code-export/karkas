@@ -38,7 +38,7 @@ namespace Simetri.MyGenerationHelper
             string charpDataTypeOfEnum = u.GetCSharpTypeFromDotNetType(dataTypeOfEnum);
 
             StringBuilder sb = new StringBuilder();
-            sb.Append(string.Format("public class {0}Enum"
+            sb.Append(string.Format("public partial class {0}Enum"
                                     , u.SetPascalCase(tableName)));
             sb.Append(  @"
     {");
