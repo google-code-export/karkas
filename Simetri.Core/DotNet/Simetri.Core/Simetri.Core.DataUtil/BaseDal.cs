@@ -194,8 +194,8 @@ namespace Simetri.Core.DataUtil
                 while (reader.Read())
                 {
                     row = new T();
-                    row.RowState = DataRowState.Unchanged;
                     ProcessRow(reader, row);
+                    row.RowState = DataRowState.Unchanged;
                     liste.Add(row);
                 }
 
