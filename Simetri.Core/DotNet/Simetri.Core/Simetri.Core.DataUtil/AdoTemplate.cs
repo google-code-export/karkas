@@ -117,6 +117,10 @@ namespace Simetri.Core.DataUtil
             SqlConnection conn = ConnectionSingleton.Instance.Connection;
             SqlCommand cmd = new SqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
+            foreach (SqlParameter p in prmListesi)
+            {
+                cmd.Parameters.Add(p);
+            }
 
 
 
