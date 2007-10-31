@@ -17,7 +17,46 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
         const string userAccount = @"ATILLA\SicilMemuru";
         static void Main(string[] args)
         {
+            Kisi k = new Kisi();
+            k.Soyadi = "";
 
+            ValidateKisiHataMesajlariniGoster(k);
+
+            Console.WriteLine("------------------");
+
+            k.Adi = "111";
+
+            ValidateKisiHataMesajlariniGoster(k);
+
+            Console.WriteLine("------------------");
+
+            k.Adi = "AAAAA";
+
+            ValidateKisiHataMesajlariniGoster(k);
+
+            Console.WriteLine("------------------");
+
+            k.Adi = "AA";
+
+            ValidateKisiHataMesajlariniGoster(k);
+
+            Console.WriteLine("------------------");
+
+        }
+
+        private static void ValidateKisiHataMesajlariniGoster(Kisi k)
+        {
+            if (!k.Validate())
+            {
+                foreach (String s in k.Validator.ErrorList)
+                {
+                    Console.WriteLine(s);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Hata yok");
+            }
         }
 
         private static void RaporAlOrnek()

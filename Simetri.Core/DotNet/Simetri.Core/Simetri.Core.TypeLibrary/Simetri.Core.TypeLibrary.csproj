@@ -34,6 +34,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Ornekler\OrnekGuidPkIdentityColumnTable.generated.cs" />
+    <Compile Include="Ornekler\OrnekGuidPkTable.generated.cs" />
+    <Compile Include="Ornekler\OrnekIdentityPkTable.generated.cs" />
     <Compile Include="Ortak\Fotograf.generated.cs" />
     <Compile Include="Ortak\Kisi.cs" />
     <Compile Include="Ortak\Kisi.generated.cs" />

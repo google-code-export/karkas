@@ -12,7 +12,10 @@ namespace Simetri.Core.TypeLibrary.Ortak
         {
             this.Validator.ValidatorList.Add(new RequiredFieldValidator(this,"Adi","Adý deðerinini girmeniz gereklidir"));
             this.Validator.ValidatorList.Add(new OnlyCharacterValidator(this, "Adi", "Ad olarak sadace türkçe karakter kullanabilirsiniz"));
-            this.Validator.ValidatorList.Add(new CompareValidator(this,"Adi",3,CompareOperator.Equal,"Adý 3 karakterden oluþmalýdýr"));
+            this.Validator.ValidatorList.Add(new CompareValidator(this, "Adi",3,CompareOperator.GreatThanEqual, "Adýn 3 karakter veya daha büyük olmasý gerekir"));
+            
+            this.Validator.ValidatorList.Add(new RequiredFieldValidator(this, "Soyadi", "Soyadý deðerinini girmeniz gereklidir"));
+            this.Validator.ValidatorList.Add(new OnlyCharacterValidator(this, "Soyadi", "Soyadý olarak sadace türkçe karakter kullanabilirsiniz"));
             base.ValidationListesiniOlustur();
         }
     }
