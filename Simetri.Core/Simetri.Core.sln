@@ -25,37 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.DataUtil.TestC
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.TypeLibrary", "Simetri.Core.TypeLibrary\Simetri.Core.TypeLibrary.csproj", "{856567F9-E8D4-4FA4-AA91-A77740A1560A}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.WebApp", "Simetri.Core.WebApp\Simetri.Core.WebApp.csproj", "{CFBEFF23-6549-49E0-9B5F-4B55581617BF}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.Web", "Simetri.Core.Web\Simetri.Core.Web.csproj", "{9DB45D17-CF8A-45AB-BA76-8C0D66A7F919}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.Yetki", "Simetri.Core.Yetki\Simetri.Core.Yetki.csproj", "{A4B4B2C0-CC59-4B4C-8B67-FA2158BCE192}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.Example.Dal", "Simetri.Core.Example.Dal\Simetri.Core.Example.Dal.csproj", "{35622E23-72F6-4A8C-BB00-BD2F797E81F0}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.Core.DataUtil.Test", "Simetri.Core.DataUtil.Test\Simetri.Core.DataUtil.Test.csproj", "{0DB8ABE6-1D82-4258-8279-8EAFB4872C93}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
@@ -83,30 +53,10 @@ Global
 		{080B5FFC-3533-4414-B5DC-EBC39ED8CCF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{080B5FFC-3533-4414-B5DC-EBC39ED8CCF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{080B5FFC-3533-4414-B5DC-EBC39ED8CCF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{856567F9-E8D4-4FA4-AA91-A77740A1560A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{856567F9-E8D4-4FA4-AA91-A77740A1560A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{856567F9-E8D4-4FA4-AA91-A77740A1560A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{856567F9-E8D4-4FA4-AA91-A77740A1560A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CFBEFF23-6549-49E0-9B5F-4B55581617BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CFBEFF23-6549-49E0-9B5F-4B55581617BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CFBEFF23-6549-49E0-9B5F-4B55581617BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CFBEFF23-6549-49E0-9B5F-4B55581617BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9DB45D17-CF8A-45AB-BA76-8C0D66A7F919}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9DB45D17-CF8A-45AB-BA76-8C0D66A7F919}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9DB45D17-CF8A-45AB-BA76-8C0D66A7F919}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9DB45D17-CF8A-45AB-BA76-8C0D66A7F919}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A4B4B2C0-CC59-4B4C-8B67-FA2158BCE192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A4B4B2C0-CC59-4B4C-8B67-FA2158BCE192}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4B4B2C0-CC59-4B4C-8B67-FA2158BCE192}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4B4B2C0-CC59-4B4C-8B67-FA2158BCE192}.Release|Any CPU.Build.0 = Release|Any CPU
-		{35622E23-72F6-4A8C-BB00-BD2F797E81F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{35622E23-72F6-4A8C-BB00-BD2F797E81F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{35622E23-72F6-4A8C-BB00-BD2F797E81F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{35622E23-72F6-4A8C-BB00-BD2F797E81F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0DB8ABE6-1D82-4258-8279-8EAFB4872C93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0DB8ABE6-1D82-4258-8279-8EAFB4872C93}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0DB8ABE6-1D82-4258-8279-8EAFB4872C93}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0DB8ABE6-1D82-4258-8279-8EAFB4872C93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
