@@ -14,19 +14,75 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
     public class AritRapor
     {
 
-        private static string RaporUser;
-        private static string RaporPassword;
-        private static string RaporCredentialsDomain;
-        private static string RaporSunucuUrl;
+        private string raporUser;
 
-        static AritRapor()
+        public string RaporUser
         {
-            RaporUser = System.Configuration.ConfigurationManager.AppSettings["RaporUser"].ToString();
-            RaporPassword = System.Configuration.ConfigurationManager.AppSettings["RaporPassword"].ToString();
-            RaporCredentialsDomain = System.Configuration.ConfigurationManager.AppSettings["RaporCredentialsDomain"].ToString();
-            RaporSunucuUrl = System.Configuration.ConfigurationManager.AppSettings["RaporURL"].ToString();
-
+            get
+            {
+                if (String.IsNullOrEmpty(raporUser))
+                {
+                    raporUser = System.Configuration.ConfigurationManager.AppSettings["RaporUser"].ToString();
+                }
+                return raporUser;
+            }
+            set
+            {
+                raporUser = value;
+            }
         }
+        private string raporPassword;
+
+        public string RaporPassword
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(raporPassword))
+                {
+                    raporPassword = System.Configuration.ConfigurationManager.AppSettings["RaporPassword"].ToString();
+                }
+                return raporPassword;
+            }
+            set
+            {
+                raporPassword = value;
+            }
+        }
+        private string raporCredentialsDomain;
+
+        public string RaporCredentialsDomain
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(raporCredentialsDomain))
+                {
+                    raporCredentialsDomain = System.Configuration.ConfigurationManager.AppSettings["RaporCredentialsDomain"].ToString();
+                }
+                return raporCredentialsDomain;
+            }
+            set
+            {
+                raporCredentialsDomain = value;
+            }
+        }
+        private string raporSunucuUrl;
+
+        public string RaporSunucuUrl
+        {
+            get 
+            {
+                if (String.IsNullOrEmpty(raporSunucuUrl))
+                {
+                    raporSunucuUrl = System.Configuration.ConfigurationManager.AppSettings["RaporSunucuURL"].ToString();
+                }
+                return raporSunucuUrl; 
+            }
+            set 
+            { 
+                raporSunucuUrl = value; 
+            }
+        }
+
         public AritRapor()
         {
 
