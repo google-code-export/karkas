@@ -7,12 +7,53 @@ using System.Security.Principal;
 using System.Web;
 using System.Collections.Generic;
 
-using Microsoft.Reporting.WebForms;
+
+using Simetri.Core.Utility.ReportingServicesHelper.Generated;
 
 namespace Simetri.Core.Utility.ReportingServicesHelper
 {
     public class AritRapor
     {
+        ReportingService rs = new ReportingService();
+
+        public AritRapor()
+        {
+            rs.UseDefaultCredentials = UseDefaultCredentials;
+        }
+
+        public AritRapor(string pRaporAd):this()
+        {
+            RaporAd = pRaporAd;
+        }
+
+        private ICredentials credentials;
+        private bool useDefaultCredentials = false;
+
+        public bool UseDefaultCredentials
+        {
+            get { return useDefaultCredentials; }
+            set { useDefaultCredentials = value; }
+        }
+
+        public ICredentials Credentials
+        {
+            get 
+            {
+                if (credentials == null )
+                {
+                    if (useDefaultCredentials)
+                    {
+                        credentials = CredentialCache.DefaultCredentials;
+                    }
+                    else
+                    {
+                        credentials = new NetworkCredential(RaporUser, RaporPassword, RaporCredentialsDomain);
+                    }
+                }
+                return credentials; 
+            }
+            set { credentials = value; }
+        }
 
         private string raporUser;
 
@@ -83,15 +124,6 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
             }
         }
 
-        public AritRapor()
-        {
-
-        }
-
-        public AritRapor(string pRaporAd)
-        {
-            RaporAd = pRaporAd;
-        }
 
         string raporAd;
         string raporDosyaAd;
@@ -120,19 +152,7 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
                 raporFormat = value;
             }
         }
-        private string reportServerURL;
 
-        public string ReportServerURL
-        {
-            get
-            {
-                return reportServerURL;
-            }
-            set
-            {
-                reportServerURL = value;
-            }
-        }
         public string RaporDosyaAd
         {
             get
@@ -156,7 +176,8 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
         public byte[] RaporAl()
         {
             ReportingService rs = new ReportingService();
-            rs.Url = RaporSunucuUrl;
+            
+            rs.Credentials = Credentials;
 
             Warning[] warnings;
             string[] streamids;
@@ -165,7 +186,8 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
             ParameterValue[] paramatersUsed = null;
             ParameterValue[] parameters = null;
             DataSourceCredentials[] dsCredentials = null;
-            rs.Credentials = new NetworkCredential(RaporUser, RaporPassword, RaporCredentialsDomain);
+            byte[] buf = null;
+
 
             parameters = new ParameterValue[ParametreListesi.Count];
             for (int ix = 0; ix < ParametreListesi.Count; ix++)
@@ -177,7 +199,6 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
                 parameters[ix].Name = oParametre.Adi;
                 parameters[ix].Value = oParametre.Degeri;
             }
-            byte[] buf = null;
             switch (RaporFormat)
             {
                 case RaporFormats.PDF:
