@@ -52,7 +52,7 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
             {
                 if (String.IsNullOrEmpty(webServiceSecurityModel))
                 {
-                    raporUser = System.Configuration.ConfigurationManager.AppSettings["RaporWebServiceSecurityModel"].ToString();
+                    webServiceSecurityModel = System.Configuration.ConfigurationManager.AppSettings["RaporWebServiceSecurityModel"].ToString();
                 }
                 return webServiceSecurityModel;
             }

@@ -13,14 +13,20 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
         public static void Main(string[] args)
         {
             AritRapor oAritRapor = new AritRapor("/MtkTsmRaporlar/IsYeriBilgileriMtk");
+            Byte[] rapor = oAritRapor.RaporAl();
+
+//            raporKurulusBildirimFormuAlUserNamePassword();
+        }
+
+        private static void disardanDegerleriSetleyerekRaporAl()
+        {
+            AritRapor oAritRapor = new AritRapor("/MtkTsmRaporlar/IsYeriBilgileriMtk");
             oAritRapor.UseDefaultCredentials = false;
             oAritRapor.RaporUser = "builduser";
             oAritRapor.RaporPassword = "123";
             oAritRapor.RaporCredentialsDomain = "ATILLA";
-            oAritRapor.WebServiceSecurityModel = AritRapor.WebServiceSecurityModelConstants.NTML;
+            oAritRapor.WebServiceSecurityModel = AritRapor.WebServiceSecurityModelConstants.BASIC;
             Byte[] rapor = oAritRapor.RaporAl();
-
-//            raporKurulusBildirimFormuAlUserNamePassword();
         }
 
         //public static void raporKurulusBildirimFormuAlUserNamePassword()
