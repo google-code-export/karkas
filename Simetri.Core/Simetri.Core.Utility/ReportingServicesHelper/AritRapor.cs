@@ -14,6 +14,13 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
 {
     public class AritRapor
     {
+        public class WebServiceSecurityModelConstants
+        {
+            public const string BASIC = "Basic";
+            public const string DIGEST = "Digest";
+            public const string NTML = "NTML";
+        }
+
         ReportingService rs = new ReportingService();
 
         public AritRapor()
@@ -21,7 +28,8 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
             rs.UseDefaultCredentials = UseDefaultCredentials;
         }
 
-        public AritRapor(string pRaporAd):this()
+        public AritRapor(string pRaporAd)
+            : this()
         {
             RaporAd = pRaporAd;
         }
@@ -35,11 +43,26 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
             set { useDefaultCredentials = value; }
         }
 
+        private string webServiceSecurityModel;
+
+        public string WebServiceSecurityModel
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(webServiceSecurityModel))
+                {
+                    raporUser = System.Configuration.ConfigurationManager.AppSettings["RaporWebServiceSecurityModel"].ToString();
+                }
+                return webServiceSecurityModel;
+            }
+            set { webServiceSecurityModel = value; }
+        }
+
         public ICredentials Credentials
         {
-            get 
+            get
             {
-                if (credentials == null )
+                if (credentials == null)
                 {
                     if (useDefaultCredentials)
                     {
@@ -47,10 +70,12 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
                     }
                     else
                     {
-                        credentials = new NetworkCredential(RaporUser, RaporPassword, RaporCredentialsDomain);
+                        CredentialCache cache = new CredentialCache();
+                        cache.Add(new Uri(RaporSunucuUrl), WebServiceSecurityModel, new NetworkCredential(RaporUser, RaporPassword, RaporCredentialsDomain));
+                        credentials = cache;
                     }
                 }
-                return credentials; 
+                return credentials;
             }
             set { credentials = value; }
         }
@@ -110,17 +135,17 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
 
         public string RaporSunucuUrl
         {
-            get 
+            get
             {
                 if (String.IsNullOrEmpty(raporSunucuUrl))
                 {
                     raporSunucuUrl = System.Configuration.ConfigurationManager.AppSettings["RaporSunucuURL"].ToString();
                 }
-                return raporSunucuUrl; 
+                return raporSunucuUrl;
             }
-            set 
-            { 
-                raporSunucuUrl = value; 
+            set
+            {
+                raporSunucuUrl = value;
             }
         }
 
@@ -176,7 +201,7 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
         public byte[] RaporAl()
         {
             ReportingService rs = new ReportingService();
-            
+
             rs.Credentials = Credentials;
 
             Warning[] warnings;
