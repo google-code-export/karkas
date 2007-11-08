@@ -14,11 +14,13 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
 {
     public class AritRapor
     {
+        // TODO NTLM ILE
+
         public class WebServiceSecurityModelConstants
         {
             public const string BASIC = "Basic";
             public const string DIGEST = "Digest";
-            public const string NTML = "NTML";
+            public const string NTLM = "NTLM";
             public const string NEGOTIATE = "Negotiate";
         }
 

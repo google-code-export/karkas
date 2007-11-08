@@ -12,6 +12,7 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
     {
         public static void Main(string[] args)
         {
+            disardanDegerleriSetleyerekRaporAl();
             AritRapor oAritRapor = new AritRapor("/MtkTsmRaporlar/IsYeriBilgileriMtk");
             Byte[] rapor = oAritRapor.RaporAl();
 
@@ -25,7 +26,7 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
             oAritRapor.RaporUser = "builduser";
             oAritRapor.RaporPassword = "123";
             oAritRapor.RaporCredentialsDomain = "ATILLA";
-            oAritRapor.WebServiceSecurityModel = AritRapor.WebServiceSecurityModelConstants.BASIC;
+            oAritRapor.WebServiceSecurityModel = AritRapor.WebServiceSecurityModelConstants.NTLM;
             Byte[] rapor = oAritRapor.RaporAl();
         }
 
