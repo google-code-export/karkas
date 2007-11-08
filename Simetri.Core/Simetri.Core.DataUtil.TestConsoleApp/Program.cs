@@ -17,7 +17,7 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
             oAritRapor.RaporUser = "builduser";
             oAritRapor.RaporPassword = "123";
             oAritRapor.RaporCredentialsDomain = "ATILLA";
-            oAritRapor.WebServiceSecurityModel = AritRapor.WebServiceSecurityModelConstants.BASIC;
+            oAritRapor.WebServiceSecurityModel = AritRapor.WebServiceSecurityModelConstants.NTML;
             Byte[] rapor = oAritRapor.RaporAl();
 
 //            raporKurulusBildirimFormuAlUserNamePassword();

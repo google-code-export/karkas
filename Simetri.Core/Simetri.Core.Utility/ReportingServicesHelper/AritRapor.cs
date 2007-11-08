@@ -19,6 +19,7 @@ namespace Simetri.Core.Utility.ReportingServicesHelper
             public const string BASIC = "Basic";
             public const string DIGEST = "Digest";
             public const string NTML = "NTML";
+            public const string NEGOTIATE = "Negotiate";
         }
 
         ReportingService rs = new ReportingService();
