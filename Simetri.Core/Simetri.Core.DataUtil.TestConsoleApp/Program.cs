@@ -13,7 +13,7 @@ namespace Simetri.Core.DataUtil.TestConsoleApp
         public static void Main(string[] args)
         {
             AritRapor oAritRapor = new AritRapor("/MtkTsmRaporlar/IsYeriBilgileriMtk");
-            oAritRapor.UseDefaultCredentials = true;
+            oAritRapor.UseDefaultCredentials = false;
             oAritRapor.RaporUser = "builduser";
             oAritRapor.RaporPassword = "123";
             oAritRapor.RaporCredentialsDomain = "ATILLA";
