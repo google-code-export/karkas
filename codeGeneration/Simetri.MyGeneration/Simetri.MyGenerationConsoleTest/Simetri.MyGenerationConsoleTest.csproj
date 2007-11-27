@@ -28,6 +28,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MbUnit.Framework, Version=1.0.2700.29885, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\MbUnit.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="MyMeta, Version=1.2.0.0, Culture=neutral, PublicKeyToken=647678227438c82a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\MyGeneration\MyMeta.dll</HintPath>
@@ -45,8 +49,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionHelperTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TurkishHelperTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simetri.MyGenerationHelper\Simetri.MyGenerationHelper.csproj">

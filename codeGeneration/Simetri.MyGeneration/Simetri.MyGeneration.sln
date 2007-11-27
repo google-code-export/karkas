@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.MyGenerationHelper"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.MyGenerationConsoleTest", "Simetri.MyGenerationConsoleTest\Simetri.MyGenerationConsoleTest.csproj", "{BAB01BD3-050F-4553-A3FD-9E6231E5BD55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.MyGenerationTest", "Simetri.MyGenerationTest\Simetri.MyGenerationTest.csproj", "{DDA4EBB7-F4D7-48D1-A61A-58C875785EAB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,10 +19,6 @@ Global
 		{BAB01BD3-050F-4553-A3FD-9E6231E5BD55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAB01BD3-050F-4553-A3FD-9E6231E5BD55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAB01BD3-050F-4553-A3FD-9E6231E5BD55}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DDA4EBB7-F4D7-48D1-A61A-58C875785EAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDA4EBB7-F4D7-48D1-A61A-58C875785EAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DDA4EBB7-F4D7-48D1-A61A-58C875785EAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDA4EBB7-F4D7-48D1-A61A-58C875785EAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
