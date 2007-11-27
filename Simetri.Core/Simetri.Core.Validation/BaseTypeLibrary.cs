@@ -98,6 +98,15 @@ namespace Simetri.Core.TypeLibrary
             this.Validator.SetError("", pErrorMessage);
         }
 
+        public String Hatalar
+        {
+            get
+            {
+                return Validator.Hatalar;
+            }
+        }
+
+
 
     }
 }
