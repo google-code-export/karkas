@@ -144,20 +144,22 @@ namespace Simetri.MyGenerationHelper.Generators
             output.autoTabLn("protected override void ValidationListesiniOlusturCodeGeneration()");
             output.autoTab("{");
             output.incTab();
+            output.incTab();
             foreach (IColumn column in table.Columns)
             {
                 if ((!column.IsNullable) && (!column.IsInPrimaryKey))
                 {
                     output.autoTabLn("");
                     output.autoTab("this.Validator.ValidatorList.Add(new RequiredFieldValidator(this, \"");
-                    output.autoTab(SimetriUtils.SetPascalCase(column.Name));
-                    output.autoTab("\"));");
+                    output.write(SimetriUtils.SetPascalCase(column.Name));
+                    output.write("\"));");
 
                 }
             }
             output.decTab();
             output.autoTabLn("");
             output.autoTabLn("}");
+            output.decTab();
         }
 
 
