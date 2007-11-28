@@ -93,11 +93,10 @@ namespace Simetri.Core.DataUtil
 
         public void SorguHariciKomutCalistir(SqlCommand cmd)
         {
-            SqlConnection conn = ConnectionSingleton.Instance.Connection;
-            cmd.Connection = conn;
+            cmd.Connection = Connection;
             try
             {
-                conn.Open();
+                Connection.Open();
                 cmd.ExecuteNonQuery();
             }
             catch (SqlException ex)
@@ -106,7 +105,7 @@ namespace Simetri.Core.DataUtil
             }
             finally
             {
-                conn.Close();
+                Connection.Close();
             }
         }
 
@@ -114,8 +113,7 @@ namespace Simetri.Core.DataUtil
 
         public void SorguHariciKomutCalistir(string sql, SqlParameter[] prmListesi)
         {
-            SqlConnection conn = ConnectionSingleton.Instance.Connection;
-            SqlCommand cmd = new SqlCommand(sql, conn);
+            SqlCommand cmd = new SqlCommand(sql, Connection);
             cmd.CommandType = CommandType.Text;
             foreach (SqlParameter p in prmListesi)
             {
@@ -126,7 +124,7 @@ namespace Simetri.Core.DataUtil
 
             try
             {
-                conn.Open();
+                Connection.Open();
                 cmd.ExecuteNonQuery();
             }
             catch (SqlException ex)
@@ -135,7 +133,7 @@ namespace Simetri.Core.DataUtil
             }
             finally
             {
-                conn.Close();
+                Connection.Close();
             }
 
 
