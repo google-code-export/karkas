@@ -16,9 +16,37 @@ namespace Simetri.Core.DataUtil
             set { connection = value; }
         }
 
-        private HelperFunctions helper = new HelperFunctions();
-        private PagingHelper pagingHelper = new PagingHelper();
+        public AdoTemplate()
+        {
 
+        }
+
+        private HelperFunctions _helper;
+        private HelperFunctions helper
+        {
+            get
+            {
+                if (_helper == null)
+                {
+                    _helper = new HelperFunctions(Connection);
+                }
+                return _helper;
+            }
+        }
+
+        private PagingHelper _pagingHelper;
+
+        private PagingHelper pagingHelper
+        {
+            get
+            {
+                if (_pagingHelper == null)
+                {
+                    _pagingHelper = new PagingHelper(Connection);
+                }
+                return _pagingHelper;
+            }
+        }
 
 
         public Object TekDegerGetir(string cmdText)

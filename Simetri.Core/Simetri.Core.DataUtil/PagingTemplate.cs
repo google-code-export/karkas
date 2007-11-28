@@ -12,7 +12,7 @@ namespace Simetri.Core.DataUtil
         private string selectSql;
         private string countSql;
         private SqlParameter[] parameters = null;
-        private PagingHelper pHelper = new PagingHelper();
+        private PagingHelper pHelper = new PagingHelper(ConnectionSingleton.Instance.Connection);
 
         public PagingTemplate(string pSql)
         {

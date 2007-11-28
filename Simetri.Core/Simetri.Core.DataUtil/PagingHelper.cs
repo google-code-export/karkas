@@ -10,8 +10,12 @@ namespace Simetri.Core.DataUtil
     internal class PagingHelper
     {
 
+        public PagingHelper(SqlConnection pConnection)
+        {
+            helper = new HelperFunctions(pConnection);
+        }
 
-        private HelperFunctions helper = new HelperFunctions();
+        private HelperFunctions helper;
 
         private const string PAGING_SQL = @"
                                 WITH temp AS 

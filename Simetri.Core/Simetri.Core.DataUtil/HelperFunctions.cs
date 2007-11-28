@@ -8,9 +8,15 @@ namespace Simetri.Core.DataUtil
 {
     internal class HelperFunctions
     {
-        public void SorguCalistir(DataTable dt, string sql, CommandType cmdType)
+
+        SqlConnection conn;
+        public HelperFunctions(SqlConnection pConnection)
         {
-            SqlConnection conn = ConnectionSingleton.Instance.Connection;
+            conn = pConnection;
+        }
+
+        internal void SorguCalistir(DataTable dt, string sql, CommandType cmdType)
+        {
             SqlCommand cmd = new SqlCommand(sql, conn);
             cmd.CommandType = cmdType;
 
@@ -30,9 +36,8 @@ namespace Simetri.Core.DataUtil
 
         }
 
-        public void SorguCalistir(DataTable dt, string sql, CommandType cmdType, SqlParameter[] parameters)
+        internal void SorguCalistir(DataTable dt, string sql, CommandType cmdType, SqlParameter[] parameters)
         {
-            SqlConnection conn = ConnectionSingleton.Instance.Connection;
             SqlCommand cmd = new SqlCommand(sql, conn);
             cmd.CommandType = cmdType;
             foreach (SqlParameter p in parameters)
