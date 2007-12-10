@@ -1,0 +1,293 @@
+﻿##|TYPE Template
+##|UNIQUEID a8c327da-e2f8-453e-aa30-d17898eb69f0
+##|TITLE Simetri Type Library Dal Master Detay
+##|NAMESPACE 
+##|SOURCE_TYPE Source
+##|OUTPUT_LANGUAGE C#
+##|GUI_ENGINE .Net Script
+##|GUI_LANGUAGE C#
+##|GUI_BEGIN
+
+public class GeneratedGui : DotNetScriptGui
+{
+	public GeneratedGui(ZeusContext context) : base(context) {}
+
+	string defaultOutputPath = "";
+
+	GuiListBox chooseTables = null;
+	GuiTextBox outputPath = null;
+	GuiTextBox classNamespace = null;
+	public override void Setup()
+	{
+		if ( !input.Contains( "chooseTables" ) || !input.Contains( "txtPath" ) ||
+				( !input.Contains( "chkClass" ) && !input.Contains( "chkNaming" ) ) )
+		{
+			ui.Title = "Simetri Type Library Code Gen";
+			ui.Width = 600;
+			ui.Height =600;
+	
+			// Grab default output path
+			string sOutputPath = defaultOutputPath;
+			
+
+			// Setup Folder selection input control.
+			GuiLabel label1 = ui.AddLabel( "label1", "Output path:", "Select the output path in the field below." );
+			label1.Width =75;
+			outputPath = ui.AddTextBox( "outputPath", sOutputPath, "Select the Output Path." );
+			outputPath.Width = 250;
+			
+			outputPath.Left = label1.Left + label1.Width;
+			outputPath.Top = label1.Top;
+			GuiFilePicker selectPath = ui.AddFilePicker( "selectPath", "Dizin Secin", "Cıktı Dizininini Şeçin.", "outputPath", true );
+			selectPath.Top = outputPath.Top;
+			selectPath.Width = 100;
+			selectPath.Left = outputPath.Left + outputPath.Width + 5;
+			
+			GuiLabel label2 = ui.AddLabel( "label2", "Namespace: ",  "Nesnelerinizin namespace'ini verin." );
+			label2.Width = 75;
+			classNamespace = ui.AddTextBox( "classNamespace", " ", "Nesnelerinizin namespace'ini verin." );				
+			classNamespace.Width = 150;
+			classNamespace.Top = label2.Top;
+			classNamespace.Left = outputPath.Left;//label2.Left + label2.Width + 5;
+			
+			
+			
+             
+			
+			// Setup Database selection combobox.
+			GuiLabel label4 = ui.AddLabel( "label4", "Select a DB:", "Select a database in the dropdown below." );
+			label4.Width = 75;
+//			label4.Top = lblUsing.Top;
+			GuiComboBox chooseDatabase = ui.AddComboBox( "chooseDatabase", "Select a database." );
+			chooseDatabase.Width = 200;
+			chooseDatabase.Top = label4.Top;
+			chooseDatabase.Left = outputPath.Left;
+			
+			
+			// Setup Database selection combobox.
+			GuiLabel labelDBPrefixSub = ui.AddLabel( "labelDBPrefixSub", " To :", "Select a database in the dropdown below." );
+			labelDBPrefixSub.Width = 75;
+
+			
+			
+			
+	
+	
+			// Setup Tables selection multi-select listbox.
+			GuiLabel label7 = ui.AddLabel( "label7", "Select tables:", "Select tables from the listbox below." );
+			chooseTables = ui.AddListBox( "chooseTables", "Select tables." );
+			chooseTables.Height = 150;
+	
+			// Setup Views selection multi-select listbox.
+			GuiLabel label8 = ui.AddLabel( "label8", "Schema Listesi", "Schema Listesini Asagidan Secin" );
+			GuiComboBox chooseViews = ui.AddComboBox( "chooseViews", "Select views." );
+			chooseViews.AttachEvent( "onchange", "chooseSchema_onchange" );
+
+
+			// Attach the onchange event to the cmbDatabases control.
+			setupDatabaseDropdown( chooseDatabase );
+			chooseDatabase.AttachEvent( "onchange", "chooseDatabase_onchange" );
+	
+			ui.ShowGui = true;
+		}
+		else 
+		{
+			ui.ShowGui = false;
+		}
+	}
+	
+	public void setupDatabaseDropdown( GuiComboBox Databases )
+	{
+		try 
+		{	
+			if( MyMeta.IsConnected )
+			{
+				Databases.BindData( MyMeta.Databases );
+				if( MyMeta.DefaultDatabase != null ) 
+				{
+					Databases.SelectedValue = MyMeta.DefaultDatabase.Alias;
+					bindTables( Databases.SelectedValue,"dbo" );
+					bindViews( Databases.SelectedValue );
+				}
+			}
+		}
+		catch
+		{
+		}
+	}
+	
+	public void bindTables( string sDatabase )
+	{
+	
+		GuiListBox lstTables = ui["chooseTables"] as GuiListBox;
+		
+		try 
+		{	
+			IDatabase db = MyMeta.Databases[sDatabase];
+			lstTables.BindData( db.Tables );
+		}
+		catch
+		{
+		}
+	}
+
+	public void bindTables( string sDatabase ,string pSchemaName)
+	{
+
+
+			GuiListBox lstTables = ui["chooseTables"] as GuiListBox;
+			IDatabase db = MyMeta.Databases[sDatabase];
+			ArrayList liste = new ArrayList();
+			
+			chooseTables.Clear();
+			foreach (ITable table in db.Tables)
+			{
+				if (table.Schema == pSchemaName)
+				{
+					chooseTables[table.Name] = table.Name;
+//					liste.Add(table.Name);
+				}
+			}
+
+//			lstTables.BindData( db.Tables );
+
+//			lstTables.BindData( liste );
+	}
+
+	public void bindViews( string sDatabase )
+	{
+	
+		GuiComboBox lstViews = ui["chooseViews"] as GuiComboBox;
+		
+		IDatabase db = MyMeta.Databases[sDatabase];
+		ArrayList liste = new ArrayList();
+		
+		foreach (ITable table in db.Tables)
+		{
+			if (!liste.Contains(table.Schema))
+			{
+				liste.Add(table.Schema);
+			}
+		}
+
+		lstViews.BindData( liste );
+	}
+	
+	public void chooseDatabase_onchange( GuiComboBox control )
+	{
+
+		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
+		string dbName = cmbDatabases.SelectedText;
+	
+		bindTables( dbName,"dbo" );
+		bindViews( dbName );
+		
+		outputPath.Text = SimetriUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
+		classNamespace.Text =SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
+	}
+
+	public void chooseSchema_onchange( GuiComboBox control )
+	{
+		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
+		GuiComboBox cmbSchema = ui["chooseViews"] as GuiComboBox;
+		bindTables( cmbDatabases.SelectedText,cmbSchema.SelectedText );
+	}
+
+}
+##|GUI_END
+##|BODY_MODE Markup
+##|BODY_ENGINE .Net Script
+##|BODY_LANGUAGE C#
+##|BODY_TAG_START <%
+##|BODY_TAG_END %>
+##|BODY_BEGIN
+<%#NAMESPACE System.IO, System.Text, System.Text.RegularExpressions, System.Globalization %><%
+public class GeneratedTemplate : DotNetScriptTemplate
+{
+	public GeneratedTemplate(ZeusContext context) : base(context) {}
+
+
+
+
+	public override void Render()
+	{
+		string classNameTypeLibrary = "";
+		string schemaName = "";
+		string classNameSpace = "";
+		string memberVariableName = "";
+		string propertyVariableName = "";
+		string baseNameSpace =input["classNamespace"].ToString();
+		string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
+		
+		string outputPath = input["outputPath"].ToString();
+		
+
+		string databaseName = input["chooseDatabase"].ToString();;
+		IDatabase database = MyMeta.Databases[databaseName];
+
+		ArrayList selectedTables = input["chooseTables"] as ArrayList;
+		
+
+		foreach (String tableName in selectedTables)
+		{
+			ITable table = database.Tables[tableName];
+
+			classNameTypeLibrary = SimetriUtils.SetPascalCase(table.Name);
+			schemaName = SimetriUtils.SetPascalCase(table.Schema);
+			classNameSpace = baseNameSpace + "." + schemaName;
+			bool identityVarmi;
+			string pkcumlesi = "";
+
+			string baseNameSpaceDal = baseNameSpace + ".Dal." +schemaName;
+			
+			string pkType = SimetriUtils.PrimaryKeyTipiniBul(table);
+			string pkAdi = SimetriUtils.PrimaryKeyAdiniBul(table);
+
+
+
+		foreach (IColumn column in table.Columns)
+		{
+			foreach (IForeignKey fkey in column.ForeignKeys)
+			{
+			
+				if (fkey.PrimaryTable.Name != column.Table.Name)
+				{
+				string fKeyShortClassName = SimetriUtils.SetPascalCase(fkey.ForeignTable.Name);
+				string fKeyTypeLibraryLongClassName = baseNameSpace
+					+ ".TypeLibrary"
+					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Schema) 
+					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Name);
+				string fKeyDalLongClassName = SimetriUtils.SetPascalCase(baseNameSpace)
+					+ ".Dal"
+					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Schema) 
+					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Name)
+					+ "Dal";
+				string fKeyPrimaryKeyTipi =SimetriUtils.PrimaryKeyTipiniBul(fkey.ForeignTable);
+				string fKeyPrimaryKeyAdi = SimetriUtils.PrimaryKeyAdiniBul(fkey.ForeignTable);
+				string whereName = "";
+				if (fkey.ForeignColumns.Count == 1)
+				{
+					whereName = fkey.ForeignColumns[0].Name;
+				}
+
+%>		
+		public List<<%=fKeyTypeLibraryLongClassName%>> sorgula<%=fKeyShortClassName%>Getir(<%= pkType %> p<%= whereName %>)
+		{
+			<%= fKeyDalLongClassName %> dal = new <%= fKeyDalLongClassName %>();
+			List<<%=fKeyTypeLibraryLongClassName%>> liste = new List<<%=fKeyTypeLibraryLongClassName%>>();
+			dal.SorguCalistir(liste," <%= whereName %> = " + String.Format("'{0}'",p<%= whereName %>));
+			return liste;
+		}
+		<%	}
+		}
+		
+	}
+//			output.writeln(className);
+//			output.save( Path.Combine( outputPath + "\\" + baseNameSpace + ".Dal\\" + schemaName   , classNameTypeLibrary + "Dal.generated.cs" ), false );
+//			output.clear();
+			}
+
+	}
+}
+%>
+##|BODY_END
