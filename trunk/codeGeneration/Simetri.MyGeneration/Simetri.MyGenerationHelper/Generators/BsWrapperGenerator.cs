@@ -74,6 +74,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.writeln("using System.ComponentModel;");
             output.writeln("using System.Web;");
             output.writeln("using System.Web.Caching;");
+            output.writeln("using Simetri.Web.Helpers.HelperClasses;");
             output.write("using ");
             output.write(baseNameSpaceTypeLibrary);
             output.writeln(";");
@@ -91,18 +92,8 @@ namespace Simetri.MyGenerationHelper.Generators
             output.write(baseNameSpaceBsWrapperWithSchema);
             output.writeln("");
             output.writeln("{");
-            output.writeln("    [DataObject]");
-            output.write("    public partial class ");
-            output.write(classNameBsWrapper);
-            output.writeln(" ");
-            output.writeln("    {");
-            output.write("        ");
-            output.write(classNameBs);
-            output.write(" bs = new ");
-            output.write(classNameBs);
-            output.writeln("();");
-            output.writeln("\t\t");
-            output.writeln("");
+            ClassBaslangicYaz(output, classNameBs, classNameBsWrapper);
+            ConstructorYaz(output, classNameBsWrapper);
             InsertYaz(output, classNameTypeLibrary);
             GuncelleYaz(output, classNameTypeLibrary);
             SilYaz(output, classNameTypeLibrary);
@@ -120,6 +111,35 @@ namespace Simetri.MyGenerationHelper.Generators
             //output.writeln(savePath);
             output.save(savePath, true);
             output.clear();
+        }
+        private static void ConstructorYaz(IZeusOutput output, string classNameBsWrapper)
+        {
+            output.write("\t\tpublic ");
+            output.write(classNameBsWrapper);
+            output.writeln("()");
+            output.writeln("\t\t{");
+            output.writeln("\t\t\tif (HttpContext.Current.Session[SessionEnumHelper.KISI_KEY] != null)");
+            output.writeln("\t\t\t{");
+            output.writeln("\t\t\t\tbs.KomutuCalistiranKullaniciKisiKey = (Guid)HttpContext.Current.Session[SessionEnumHelper.KISI_KEY];");
+            output.writeln("\t\t\t}");
+            output.writeln("\t\t}");
+        }
+
+
+        private static void ClassBaslangicYaz(IZeusOutput output, string classNameBs, string classNameBsWrapper)
+        {
+            output.writeln("    [DataObject]");
+            output.write("    public partial class ");
+            output.write(classNameBsWrapper);
+            output.writeln(" ");
+            output.writeln("    {");
+            output.write("        ");
+            output.write(classNameBs);
+            output.write(" bs = new ");
+            output.write(classNameBs);
+            output.writeln("();");
+            output.writeln("\t\t");
+            output.writeln("");
         }
         private static void KomutuCalistiranKullaniciyiYaz(IZeusOutput output)
         {
