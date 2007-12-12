@@ -103,46 +103,52 @@ namespace Simetri.MyGenerationHelper.Generators
             output.writeln("();");
             output.writeln("\t\t");
             output.writeln("");
+            InsertYaz(output, classNameTypeLibrary);
+            GuncelleYaz(output, classNameTypeLibrary);
+            SilYaz(output, classNameTypeLibrary);
+            DurumaGoreEkleGuncelleVeyaSil(output, classNameTypeLibrary);
+            SorgulaHepsiniGetirYaz(output, classNameTypeLibrary);
+            SorgulaPKAdiIleYaz(output, classNameTypeLibrary, pkType, pkAdi);
+            TopluEkleGuncelleVeyaSilYaz(output, classNameTypeLibrary);
+            KomutuCalistiranKullaniciyiYaz(output);
+            output.writeln("");
+            output.writeln("");
+            output.writeln("    }");
+            output.writeln("}");
+
+            string savePath = Path.Combine(SimetriUtils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.generated.cs");
+            //output.writeln(savePath);
+            output.save(savePath, true);
+            output.clear();
+        }
+        private static void KomutuCalistiranKullaniciyiYaz(IZeusOutput output)
+        {
+            output.writeln("        public Guid KomutuCalistiranKullaniciKisiKey");
+            output.writeln("        {");
+            output.writeln("\t\t\tget");
+            output.writeln("\t\t\t{");
+            output.writeln("\t\t\t\treturn bs.KomutuCalistiranKullaniciKisiKey;");
+            output.writeln("\t\t\t}");
+            output.writeln("\t\t\tset");
+            output.writeln("\t\t\t{");
+            output.writeln("\t\t\t\tbs.KomutuCalistiranKullaniciKisiKey = value;");
+            output.writeln("\t\t\t}");
+            output.writeln("        }");
+        }
+
+        private static void TopluEkleGuncelleVeyaSilYaz(IZeusOutput output, string classNameTypeLibrary)
+        {
             output.writeln("        [DataObjectMethod(DataObjectMethodType.Insert)]");
-            output.write("        public void Ekle(");
+            output.write("        public void TopluEkleGuncelleVeyaSil(List<");
             output.write(classNameTypeLibrary);
-            output.writeln(" p1)");
+            output.writeln("> liste)");
             output.writeln("        {");
-            output.writeln("            bs.Ekle(p1);");
+            output.writeln("            bs.TopluEkleGuncelleVeyaSil(liste);");
             output.writeln("        }");
-            output.writeln("");
-            output.writeln("");
-            output.writeln("        [DataObjectMethod(DataObjectMethodType.Update)]");
-            output.write("        public void Guncelle(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" k)");
-            output.writeln("        {");
-            output.writeln("            bs.Guncelle(k);");
-            output.writeln("        }");
-            output.writeln("        [DataObjectMethod(DataObjectMethodType.Delete)]");
-            output.write("        public void Sil(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" k)");
-            output.writeln("        {");
-            output.writeln("            bs.Sil(k);");
-            output.writeln("        }");
-            output.writeln("");
-            output.write("        public void DurumaGoreEkleGuncelleVeyaSil(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" k)");
-            output.writeln("        {");
-            output.writeln("            bs.DurumaGoreEkleGuncelleVeyaSil(k);");
-            output.writeln("        }");
-            output.writeln("");
-            output.writeln("");
-            output.writeln("        [DataObjectMethod(DataObjectMethodType.Select, true)]");
-            output.write("        public List<");
-            output.write(classNameTypeLibrary);
-            output.writeln("> SorgulaHepsiniGetir()");
-            output.writeln("        {");
-            output.writeln("            return bs.SorgulaHepsiniGetir();");
-            output.writeln("        }");
-            output.writeln("");
+        }
+
+        private static void SorgulaPKAdiIleYaz(IZeusOutput output, string classNameTypeLibrary, string pkType, string pkAdi)
+        {
             output.writeln("        [DataObjectMethod(DataObjectMethodType.Select)]");
             output.write("\t\tpublic ");
             output.write(classNameTypeLibrary);
@@ -157,22 +163,66 @@ namespace Simetri.MyGenerationHelper.Generators
             output.writeln("Ile(p1);");
             output.writeln("\t\t}");
             output.writeln("\t\t");
-            output.writeln("        [DataObjectMethod(DataObjectMethodType.Insert)]");
-            output.write("        public void TopluEkleGuncelleVeyaSil(List<");
+        }
+
+        private static void SorgulaHepsiniGetirYaz(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.writeln("        [DataObjectMethod(DataObjectMethodType.Select, true)]");
+            output.write("        public List<");
             output.write(classNameTypeLibrary);
-            output.writeln("> liste)");
+            output.writeln("> SorgulaHepsiniGetir()");
             output.writeln("        {");
-            output.writeln("            bs.TopluEkleGuncelleVeyaSil(liste);");
+            output.writeln("            return bs.SorgulaHepsiniGetir();");
+            output.writeln("        }");
+            output.writeln("");
+        }
+
+        private static void DurumaGoreEkleGuncelleVeyaSil(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.write("        public void DurumaGoreEkleGuncelleVeyaSil(");
+            output.write(classNameTypeLibrary);
+            output.writeln(" k)");
+            output.writeln("        {");
+            output.writeln("            bs.DurumaGoreEkleGuncelleVeyaSil(k);");
             output.writeln("        }");
             output.writeln("");
             output.writeln("");
-            output.writeln("    }");
-            output.writeln("}");
+        }
 
-            string savePath = Path.Combine(SimetriUtils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.generated.cs");
-            //output.writeln(savePath);
-            output.save(savePath, true);
-            output.clear();
+        private static void SilYaz(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.writeln("        [DataObjectMethod(DataObjectMethodType.Delete)]");
+            output.write("        public void Sil(");
+            output.write(classNameTypeLibrary);
+            output.writeln(" k)");
+            output.writeln("        {");
+            output.writeln("            bs.Sil(k);");
+            output.writeln("        }");
+            output.writeln("");
+        }
+
+        private static void GuncelleYaz(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.writeln("        [DataObjectMethod(DataObjectMethodType.Update)]");
+            output.write("        public void Guncelle(");
+            output.write(classNameTypeLibrary);
+            output.writeln(" k)");
+            output.writeln("        {");
+            output.writeln("            bs.Guncelle(k);");
+            output.writeln("        }");
+        }
+
+        private static void InsertYaz(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.writeln("        [DataObjectMethod(DataObjectMethodType.Insert)]");
+            output.write("        public void Ekle(");
+            output.write(classNameTypeLibrary);
+            output.writeln(" p1)");
+            output.writeln("        {");
+            output.writeln("            bs.Ekle(p1);");
+            output.writeln("        }");
+            output.writeln("");
+            output.writeln("");
         }
 
     }
