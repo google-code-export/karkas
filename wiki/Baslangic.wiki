@@ -1,0 +1,7 @@
+=Karkas=
+Türk Dil kurumuna göre  
+1 .     Demirli betonla yapılmış yapı.
+
+anlamına gelen fransızca'dan alınmış bir kelime. Bu ismin seçilmesinin nedeni ingilizcedeki Framework'a türkçede olan bir karşılık aranmasıdır.
+
+Projenin amacı *.NET* ve Asp.Net platformlarından türkçe destekli açık kaynak kodlu bir yapı sunmaktır. 
