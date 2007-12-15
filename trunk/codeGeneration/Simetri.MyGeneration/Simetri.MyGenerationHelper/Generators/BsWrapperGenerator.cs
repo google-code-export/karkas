@@ -118,7 +118,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.write(classNameBsWrapper);
             output.writeln("()");
             output.writeln("\t\t{");
-            output.writeln("\t\t\tif (HttpContext.Current.Session[SessionEnumHelper.KISI_KEY] != null)");
+            output.writeln("\t\t\tif ((HttpContext.Current != null) && (HttpContext.Current.Session[SessionEnumHelper.KISI_KEY] != null))");
             output.writeln("\t\t\t{");
             output.writeln("\t\t\t\tbs.KomutuCalistiranKullaniciKisiKey = (Guid)HttpContext.Current.Session[SessionEnumHelper.KISI_KEY];");
             output.writeln("\t\t\t}");
