@@ -4,12 +4,26 @@ using System.Text;
 using MyMeta;
 using System.Xml;
 using System.Xml.XPath;
+using System.Reflection;
 
 namespace Simetri.MyGenerationHelper
 {
     public class SimetriXmlParser
     {
-        string xmlFilePath = @"C:\Program Files\MyGeneration\Settings\simetri.xml";
+        string xmlDosyaninYeri = @"{0}\Settings\simetri.xml";
+
+        public SimetriXmlParser()
+        {
+            calistigiYereGoreDosyaYeriniDegistir();
+        }
+
+        private void calistigiYereGoreDosyaYeriniDegistir()
+        {
+            string location = Assembly.GetEntryAssembly().Location;
+            int sonSlashYeri = location.LastIndexOf('\\');
+            location = location.Substring(0, sonSlashYeri);
+            this.xmlDosyaninYeri = string.Format(xmlDosyaninYeri, location);
+        }
 
         public string ProjeNamespaceIsminiAl(IDatabase database)
         {
@@ -47,7 +61,7 @@ namespace Simetri.MyGenerationHelper
         private XmlNode getDatabaseNode(string dbName)
         {
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(xmlFilePath);
+            xmlDoc.Load(xmlDosyaninYeri);
 
             foreach (XmlNode node in xmlDoc.GetElementsByTagName("database"))
             {
@@ -78,7 +92,7 @@ namespace Simetri.MyGenerationHelper
         {
             string dbName = getDbName(database);
             string sonuc = "";
-            XPathDocument doc = new XPathDocument(xmlFilePath);
+            XPathDocument doc = new XPathDocument(xmlDosyaninYeri);
             XPathNavigator navigator = doc.CreateNavigator();
             navigator = navigator.SelectSingleNode(String.Format("//database[@name='{0}']/schema[@name='{1}']/SchemaFolder", dbName, schemaName));
             if (navigator == null)
@@ -97,7 +111,7 @@ namespace Simetri.MyGenerationHelper
             try
             {
                 string dbName = getDbName(database);
-                XPathDocument doc = new XPathDocument(xmlFilePath);
+                XPathDocument doc = new XPathDocument(xmlDosyaninYeri);
                 XPathNavigator navigator = doc.CreateNavigator();
                 navigator = navigator.SelectSingleNode(String.Format("//database[@name='{0}']/schema[@name='{1}']/SchemaNamespace", dbName, schemaName));
                 if (navigator == null)
