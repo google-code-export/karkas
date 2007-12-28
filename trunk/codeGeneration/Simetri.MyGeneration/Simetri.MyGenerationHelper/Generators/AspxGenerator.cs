@@ -109,11 +109,12 @@ namespace Simetri.MyGenerationHelper.Generators
 
             StringBuilder sb = new StringBuilder();
             cellIcerigiIsimEkle(sb, propertyVariableName);
-            if (column.LanguageType == "int")
-            {
-                cellIcerigiControlEkle(sb, propertyVariableName, "smt", "SayiTextBox");
-            }
-            else if (column.LanguageType == "byte")
+            bool tamSayi = (column.LanguageType == "int") 
+                || (column.LanguageType == "byte")
+                || (column.LanguageType == "short")
+                || (column.LanguageType == "long");
+
+            if (tamSayi)
             {
                 cellIcerigiControlEkle(sb, propertyVariableName, "smt", "SayiTextBox");
             }
@@ -135,14 +136,6 @@ namespace Simetri.MyGenerationHelper.Generators
                 {
                     cellIcerigiControlEkle(sb, propertyVariableName, "asp", "TextBox", "TextMode=\"MultiLine\" MaxLength=\"300\"");
                 }
-            }
-            else if (column.LanguageType == "short")
-            {
-                cellIcerigiControlEkle(sb, propertyVariableName, "smt", "SayiTextBox");
-            }
-            else if (column.LanguageType == "long")
-            {
-                cellIcerigiControlEkle(sb, propertyVariableName, "smt", "SayiTextBox");
             }
             else if (column.LanguageType == "decimal")
             {
