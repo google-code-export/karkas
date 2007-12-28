@@ -52,6 +52,11 @@ namespace Simetri.MyGenerationHelper
             BsWrapperGenerator gen = new BsWrapperGenerator();
             gen.Render(output, table);
         }
+        public void RenderAspxCode(IZeusOutput output, ITable table)
+        {
+            AspxGenerator gen = new AspxGenerator();
+            gen.Render(output, table);
+        }
 
 
 
@@ -99,12 +104,6 @@ namespace Simetri.MyGenerationHelper
         #endregion
 
 
-        public void deneme()
-        {
-            SqlDataReader reader;
-            //reader.GetInt16();
-            //reader.GetInt64
-        }
         public string IdentityColumnAdiniBul(ITable table)
         {
             string adi = "";

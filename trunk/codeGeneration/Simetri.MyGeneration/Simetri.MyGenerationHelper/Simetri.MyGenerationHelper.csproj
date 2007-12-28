@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="ConnectionHelper.cs" />
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="Generators\AspxGenerator.cs" />
     <Compile Include="Generators\BsGenerator.cs" />
     <Compile Include="Generators\BsWrapperGenerator.cs" />
     <Compile Include="Generators\DalGenerator.cs" />

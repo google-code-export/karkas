@@ -82,7 +82,7 @@ namespace Simetri.MyGenerationHelper
             }
             else
             {
-                dbName = "ITO_MTK";
+                dbName = "STB_MTK";
             }
             return dbName;
         }
