@@ -54,8 +54,10 @@ namespace Simetri.MyGenerationHelper
         }
         public void RenderAspxCode(IZeusOutput output, ITable table)
         {
-            AspxGenerator gen = new AspxGenerator();
-            gen.Render(output, table);
+            AspxGenerator genA = new AspxGenerator();
+            genA.Render(output, table);
+            AspxCsGenerator genCs = new AspxCsGenerator();
+            genCs.Render(output, table);
         }
 
 
