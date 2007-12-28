@@ -87,6 +87,18 @@ namespace Simetri.MyGenerationHelper.Generators
             {
                 return;
             }
+            bool tanimTablolariHaricindePrimaryKeyMi = ((column.IsInPrimaryKey) && !(column.Table.Schema.Contains("TT_")));
+            if (tanimTablolariHaricindePrimaryKeyMi)
+            {
+                return;
+            }
+            // isimlendirme konvansiyonuna gore Key olan kolonlar baska bir tabloya 
+            // referans veriyor. Onlarin farkli bir sekilde bulunmasi lazim.
+            if (column.Name.Contains("Key"))
+            {
+                return;
+            }
+
             output.writeln("\t<tr>");
             output.writeln(kolonYapisinaGoreControlYaz(column, propertyVariableName));
             output.writeln("\t</tr>");
@@ -99,11 +111,11 @@ namespace Simetri.MyGenerationHelper.Generators
             cellIcerigiIsimEkle(sb, propertyVariableName);
             if (column.LanguageType == "int")
             {
-                cellIcerigiControlEkle(sb, propertyVariableName, "asp", "TextBox");
+                cellIcerigiControlEkle(sb, propertyVariableName, "smt", "SayiTextBox");
             }
             else if (column.LanguageType == "byte")
             {
-                cellIcerigiControlEkle(sb, propertyVariableName, "asp", "TextBox");
+                cellIcerigiControlEkle(sb, propertyVariableName, "smt", "SayiTextBox");
             }
             else if (column.LanguageType == "bool")
             {
@@ -126,15 +138,15 @@ namespace Simetri.MyGenerationHelper.Generators
             }
             else if (column.LanguageType == "short")
             {
-                cellIcerigiControlEkle(sb, propertyVariableName, "asp", "TextBox");
+                cellIcerigiControlEkle(sb, propertyVariableName, "smt", "SayiTextBox");
             }
             else if (column.LanguageType == "long")
             {
-                cellIcerigiControlEkle(sb, propertyVariableName, "asp", "TextBox");
+                cellIcerigiControlEkle(sb, propertyVariableName, "smt", "SayiTextBox");
             }
             else if (column.LanguageType == "decimal")
             {
-                cellIcerigiControlEkle(sb, propertyVariableName, "asp", "TextBox");
+                cellIcerigiControlEkle(sb, propertyVariableName, "smt", "ParaTextBox");
             }
             else
             {
