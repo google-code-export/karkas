@@ -17,14 +17,14 @@ namespace Simetri.MyGenerationHelper.Generators
             IDatabase database = table.Database;
             string baseNamespace = parser.ProjeNamespaceIsminiAl(database);
             string baseNamespaceWeb = baseNamespace + ".WebApp";
-            string tableName = table.Name;
+            string tableName = SimetriUtils.SetPascalCase(table.Name);
             string formName = tableName + "Form";
 
 
             output.writeln(RenderAsString(table, baseNamespaceWeb, tableName, formName));
             writeTableRows(output, table);
             output.writeln("</asp:Content>");
-            string savePath = Path.Combine(SimetriUtils.ProjeDizininiAl(database), "WebApp\\" + table.Schema + "\\" + formName + ".aspx");
+            string savePath = Path.Combine(SimetriUtils.ProjeDizininiAl(database), "WebApp\\" + SimetriUtils.SetPascalCase(table.Schema) + "\\" + formName + ".aspx");
             output.save(savePath, true);
             output.clear();
 
@@ -57,9 +57,6 @@ namespace Simetri.MyGenerationHelper.Generators
             return sb.ToString();
         }
 
-        public void writeKaydetButton(IZeusOutput output)
-        {
-        }
 
         public void writeTableRows(IZeusOutput output, ITable table)
         {
@@ -136,6 +133,10 @@ namespace Simetri.MyGenerationHelper.Generators
                 cellIcerigiControlEkle(sb, propertyVariableName, "asp", "TextBox");
             }
             else if (column.LanguageType == "decimal")
+            {
+                cellIcerigiControlEkle(sb, propertyVariableName, "asp", "TextBox");
+            }
+            else
             {
                 cellIcerigiControlEkle(sb, propertyVariableName, "asp", "TextBox");
             }
