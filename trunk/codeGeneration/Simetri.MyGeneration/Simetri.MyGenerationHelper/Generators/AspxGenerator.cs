@@ -106,7 +106,7 @@ namespace Simetri.MyGenerationHelper.Generators
 
         private string kolonYapisinaGoreControlYaz(IColumn column, string propertyVariableName)
         {
-
+            bool tanimTablosunaReferansEdiyorMu = column.Name.EndsWith("No");
             StringBuilder sb = new StringBuilder();
             cellIcerigiIsimEkle(sb, propertyVariableName);
             bool tamSayi = (column.LanguageType == "int") 
@@ -114,9 +114,21 @@ namespace Simetri.MyGenerationHelper.Generators
                 || (column.LanguageType == "short")
                 || (column.LanguageType == "long");
 
-            if (tamSayi)
+            if (tamSayi && tanimTablosunaReferansEdiyorMu && (!column.IsComputed)&& (!column.IsInPrimaryKey))   
             {
-                cellIcerigiControlEkle(sb, propertyVariableName, "smt", "SayiTextBox");
+                  cellIcerigiControlEkle(sb, propertyVariableName, "asp", "DropDownList");
+            }
+
+            else if (tamSayi && (!column.IsComputed))
+            {
+                if (column.IsNullable)
+                {
+                    cellIcerigiControlEkle(sb, propertyVariableName, "smt", "SayiTextBox");
+                }
+                else
+                {
+                    cellIcerigiControlEkle(sb, propertyVariableName, "smt", "SayiTextBox","ZorunluMu=\"true\"" );
+                }
             }
             else if (column.LanguageType == "bool")
             {
@@ -124,7 +136,14 @@ namespace Simetri.MyGenerationHelper.Generators
             }
             else if (column.LanguageType == "DateTime")
             {
-                cellIcerigiControlEkle(sb, propertyVariableName, "smt", "TarihGiris");
+                if (column.IsNullable)
+                {
+                    cellIcerigiControlEkle(sb, propertyVariableName, "smt", "TarihTextBox");
+                }
+                else
+                {
+                    cellIcerigiControlEkle(sb, propertyVariableName, "smt", "TarihTextBox", "ZorunluMu=\"true\"");
+                }
             }
             else if (column.LanguageType == "string")
             {
