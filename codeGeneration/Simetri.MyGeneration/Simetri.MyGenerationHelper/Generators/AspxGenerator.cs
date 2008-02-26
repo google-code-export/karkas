@@ -73,7 +73,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.writeln(@"
         <tr>
             <td  colspan=""2"">
-                <asp:Button runat=""server"" ID=""GuncelleButton"" OnClick=""GuncelleButton_Click"" SkinId=""Guncelle_Yazisiz"" />
+                <asp:Button runat=""server"" ID=""KaydetButton"" OnClick=""KaydetButton_Click"" SkinId=""Guncelle_Yazisiz"" />
             </td>
         </tr>
         ");
