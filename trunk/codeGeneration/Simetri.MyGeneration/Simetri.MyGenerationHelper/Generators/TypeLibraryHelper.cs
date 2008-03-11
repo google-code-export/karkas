@@ -75,6 +75,25 @@ namespace Simetri.MyGenerationHelper.Generators
         }
 
 
+        public static void writeShallowCopy(IZeusOutput output, ITable table,string pTypeName)
+        {
+            output.incTab();
+            output.autoTabLn(string.Format("public {0} ShallowCopy()", pTypeName));
+            output.autoTabLn("{");
+            output.incTab();
+            output.autoTabLn(string.Format("{0} obj = new {0}();", pTypeName));
+            foreach (IColumn column in table.Columns)
+            {
+                output.autoTabLn(string.Format("obj.{0} = {0};", SimetriUtils.SetCamelCase(column.Name)));
+            }
+            output.autoTabLn("return obj;");
+            output.decTab();
+            output.autoTabLn("}");
+            output.decTab();
+            output.autoTabLn("");
+
+        }
+
 
         public static void writeMemberVariables(IZeusOutput output, ITable table)
         {
