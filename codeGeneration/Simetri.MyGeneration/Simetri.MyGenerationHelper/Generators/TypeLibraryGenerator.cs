@@ -40,6 +40,8 @@ namespace Simetri.MyGenerationHelper.Generators
 
             TypeLibraryHelper.writeProperties(output, table);
 
+            TypeLibraryHelper.writeShallowCopy(output, table, className);
+
             output.writeln("");
 
             writeValidationCode(output, table);
