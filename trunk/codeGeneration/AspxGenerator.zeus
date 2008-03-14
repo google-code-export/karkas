@@ -1,0 +1,456 @@
+﻿##|TYPE Template
+##|UNIQUEID 110e43e8-0883-4594-b169-ecec306ea4e8
+##|TITLE Simetri Type Library,Dal,Bs,BsWrapper
+##|NAMESPACE 
+##|SOURCE_TYPE Source
+##|OUTPUT_LANGUAGE None
+##|GUI_ENGINE .Net Script
+##|GUI_LANGUAGE C#
+##|GUI_BEGIN
+
+public class GeneratedGui : DotNetScriptGui
+{
+	public GeneratedGui(ZeusContext context) : base(context) {}
+
+
+	GuiListBox chooseTables = null;
+	GuiTextBox outputPath = null;
+	GuiTextBox classNamespace = null;
+	GuiListBox chooseViews = null;
+	
+	public override void Setup()
+	{
+		if ( !input.Contains( "chooseTables" ) || !input.Contains( "txtPath" ) ||
+				( !input.Contains( "chkClass" ) && !input.Contains( "chkNaming" ) ) )
+		{
+			ui.Title = "Simetri Type Library Kod Üreteci";
+			ui.Width = 980;
+			ui.Height =640;
+	
+			// Grab default output path
+			string sOutputPath = SimetriUtils.ProjeDizininiAl( MyMeta.DefaultDatabase);
+			string sNamespace = SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.DefaultDatabase);
+
+
+			// Çıkış Dizini TextBox
+			// Setup Folder selection input control.
+			GuiLabel label1 = ui.AddLabel( "label1", "Çıkış Dizini:", "Çıkış Dizinini Seçin." );
+			label1.Width =75;
+			outputPath = ui.AddTextBox( "outputPath", sOutputPath, "Çıkış Dizinini Seçin." );
+			outputPath.Width = 420;
+			
+			// Seç Butonu :)
+			outputPath.Left = label1.Left + label1.Width;
+			outputPath.Top = label1.Top;
+			GuiFilePicker selectPath = ui.AddFilePicker( "selectPath", "Seç", "Çıkış Dizinini Şeçin.", "outputPath", true );
+			selectPath.Top = outputPath.Top;
+			selectPath.Width = 50;
+			selectPath.Left = outputPath.Left + outputPath.Width + 5;
+			
+			// İsim alanı TextBox
+			GuiLabel label2 = ui.AddLabel( "label2", "İsim Alanı: ",  "Nesnelerinizin isim alanını verin." );
+			label2.Width = 75;
+			classNamespace = ui.AddTextBox( "classNamespace", sNamespace, "Nesnelerinizin isim alanını verin." );				
+			classNamespace.Width = 474;
+			classNamespace.Top = label2.Top;
+			classNamespace.Left = outputPath.Left;//label2.Left + label2.Width + 5;
+		
+		
+			// Setup Database selection combobox.
+			GuiLabel label4 = ui.AddLabel( "label4", "Veritabanı:", "Açılır Listeden Veritabanı Seçin." );
+			label4.Width = 75;
+//			label4.Top = lblUsing.Top;
+			GuiComboBox chooseDatabase = ui.AddComboBox( "chooseDatabase", "Veritabanı Seçin." );
+			chooseDatabase.Width = 475;
+			chooseDatabase.Top = label4.Top;
+			chooseDatabase.Left = outputPath.Left;
+			
+			
+			// Setup Database selection combobox.
+			// GuiLabel labelDBPrefixSub = ui.AddLabel( "labelDBPrefixSub", "", "" );
+			// labelDBPrefixSub.Width = 50;
+			
+			
+			// Setup Schema selection multi-select listbox.
+			GuiLabel label8 = ui.AddLabel( "label8", "Şema Seçin:", "Aşağıdaki Listeden Şema Seçin." );
+			label8.Width = 75;
+			GuiComboBox chooseSchemas = ui.AddComboBox( "chooseSchemas", "Şema Seçin." );
+			chooseSchemas.AttachEvent( "onchange", "chooseSchema_onchange" );
+			chooseSchemas.Width = 475;
+			chooseSchemas.Top = label8.Top;
+			chooseSchemas.Left = outputPath.Left;
+
+			//Tüm Tablolar CheckBox
+			GuiCheckBox chkAllTablesBox = ui.AddCheckBox("chkAllTablesBox", "Tüm Tabloları Generate Et", false, "Eğer bu seçeneği tıklarsanız, tablo seçiminiz dikkate alınmadan tüm veritabanından kod üretir."); 
+			chkAllTablesBox.Width = 250;
+			
+			
+			//Tüm Viewlar CheckBox
+			GuiCheckBox chkAllViewsBox = ui.AddCheckBox("chkAllViewsBox", "Tüm Viewları Generate Et",false, "Eğer bu seçeneği tıklarsanız, view seçiminiz dikkate alınmadan tüm veritabanından kod üretir.");
+			chkAllViewsBox.Width = 250;
+			chkAllViewsBox.Top = chkAllTablesBox.Top;
+			chkAllViewsBox.Left = chkAllTablesBox.Left + 300;
+
+			//dbo Ignore CheckBox
+			GuiCheckBox DboIgnoreCheckBox = ui.AddCheckBox("DboIgnoreCheckBox", "dbo ignore",true, "Eğer bu seçeneği tıklarsanız, dbo scheması dikkate alınmadan veritabanından kod üretir.");
+			DboIgnoreCheckBox.Width = 250;
+
+			//dbo Ignore CheckBox
+			GuiCheckBox isDebugCheckBox = ui.AddCheckBox("isDebugCheckBox", "Debug",false, "Eğer bu seçeneği tıklarsanız, debugger launch edilir.");
+			isDebugCheckBox.Width = 250;
+			isDebugCheckBox.Top = DboIgnoreCheckBox.Top;
+			isDebugCheckBox.Left = DboIgnoreCheckBox.Left + 300;
+			
+			GuiCheckBox chkDatabaseBox = ui.AddCheckBox("chkDatabaseBox", "Database tabloları Generate Et", false, "Eğer bu seçeneği tıklarsanız,Database Tabloları üretilir"); 
+			chkDatabaseBox.Width = 250;
+			
+			//Aspx  CheckBox
+			GuiCheckBox chkAspxBox = ui.AddCheckBox("chkAspxBox", "Aspx Generate Et",true, "Eğer bu seçeneği tıklarsanız, Aspx kodu üretilir.");
+			chkAspxBox.Width = 250;
+			chkAspxBox.Top = chkDatabaseBox.Top;
+			chkAspxBox.Left = chkDatabaseBox.Left + 300;
+			
+
+			//TypeLibrary CheckBox
+			GuiCheckBox chkTypeLibraryBox = ui.AddCheckBox("chkTypeLibraryBox", "Type Library Generate Et", false, "Eğer bu seçeneği tıklarsanız,Type Library Kodu üretilir"); 
+			chkTypeLibraryBox.Width = 250;
+
+			//Dal  CheckBox
+			GuiCheckBox chkDalBox = ui.AddCheckBox("chkDalBox", "Dal Generate Et",false, "Eğer bu seçeneği tıklarsanız, Dal kodu üretilir.");
+			chkDalBox.Width = 250;
+			chkDalBox.Top = chkTypeLibraryBox.Top;
+			chkDalBox.Left = chkTypeLibraryBox.Left + 300;
+
+			//Bs CheckBox
+			GuiCheckBox chkBsBox = ui.AddCheckBox("chkBsBox", "Bs Generate Et", false, "Eğer bu seçeneği tıklarsanız, Business Services kodu üretilir."); 
+			chkBsBox.Width = 250;
+
+			//BsWrapper  CheckBox
+			GuiCheckBox chkBsWrapperBox = ui.AddCheckBox("chkBsWrapperBox", "Bs Wrapper Generate Et",false, "Eğer bu seçeneği tıklarsanız, Business Services kodu üretilir.");
+			chkBsWrapperBox.Width = 250;
+			chkBsWrapperBox.Top = chkBsBox.Top;
+			chkBsWrapperBox.Left = chkBsBox.Left + 300;
+
+
+
+
+
+			// Setup Tables selection multi-select listbox.
+			GuiLabel label7 = ui.AddLabel( "label7", "Tablo Seçin:", "Listeden Tablo Seçin." );
+			label7.Width=150;
+			chooseTables = ui.AddListBox( "chooseTables", "Tablo Seçin." );
+			chooseTables.Height = 260;
+			chooseTables.Width = 250;
+			
+			
+			//View ListBox
+			GuiLabel label9 = ui.AddLabel("label9", "View Seçin:", "Listeden View Seçin.");
+			label9.Width = 150;
+			chooseViews = ui.AddListBox("chooseViews", "View Seçin.");
+			
+			//chooseViews.AttachEvent ("onchange", "chooseViews_onchange");
+			
+			chooseViews.Height = 260;
+			chooseViews.Width = 250;
+			chooseViews.Top = chooseTables.Top;
+			chooseViews.Left = chooseTables.Left + 300;
+			label9.Top = chooseViews.Top-25;
+			label9.Left = chooseViews.Left;
+	
+
+			// Attach the onchange event to the cmbDatabases control.
+			setupDatabaseDropdown( chooseDatabase );
+			chooseDatabase.AttachEvent( "onchange", "chooseDatabase_onchange" );
+			
+	
+			ui.ShowGui = true;
+		}
+		else 
+		{
+			ui.ShowGui = false;
+		}
+	}
+	
+	public void setupDatabaseDropdown( GuiComboBox Databases )
+	{
+		try 
+		{	
+			if( MyMeta.IsConnected )
+			{
+				Databases.BindData( MyMeta.Databases );
+				if( MyMeta.DefaultDatabase != null ) 
+				{
+					Databases.SelectedValue = MyMeta.DefaultDatabase.Alias;
+					bindTables( Databases.SelectedValue,"dbo" );
+					bindViews( Databases.SelectedValue,"dbo" );
+					bindSchemas( Databases.SelectedValue );
+				}
+			}
+		}
+		catch
+		{
+		}
+	}
+	
+	public void bindTables( string sDatabase ,string pSchemaName)
+	{
+			GuiListBox lstTables = ui["chooseTables"] as GuiListBox;
+			IDatabase db = MyMeta.Databases[sDatabase];
+			ArrayList liste = new ArrayList();
+			
+			chooseTables.Clear();
+			foreach (ITable table in db.Tables)
+			{
+				if (table.Schema == pSchemaName)
+				{
+					chooseTables[table.Name] = table.Name;
+				}
+			}
+	}
+	public void bindViews( string sDatabase ,string pSchemaName)
+	{
+			GuiListBox lst = ui["chooseTables"] as GuiListBox;
+			IDatabase db = MyMeta.Databases[sDatabase];
+			ArrayList liste = new ArrayList();
+			
+			chooseViews.Clear();
+			foreach (IView view in db.Views)
+			{
+				if (view.Schema == pSchemaName)
+				{
+					chooseViews[view.Name] = view.Name;
+				}
+			}
+	}
+
+
+	public void bindSchemas( string sDatabase )
+	{
+		GuiComboBox lstSchemas = ui["chooseSchemas"] as GuiComboBox;
+		IDatabase db = MyMeta.Databases[sDatabase];
+		ArrayList liste = new ArrayList();
+		foreach (ITable table in db.Tables)
+		{
+			if (!liste.Contains(table.Schema))
+			{
+				liste.Add(table.Schema);
+			}
+		}
+		lstSchemas.BindData( liste );
+	}
+	
+	public void chooseDatabase_onchange( GuiComboBox control )
+	{
+
+		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
+		string dbName = cmbDatabases.SelectedText;
+	
+		bindTables( dbName,"dbo" );
+		bindViews( dbName,"dbo" );
+		bindSchemas( dbName );
+		
+		outputPath.Text = SimetriUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
+		classNamespace.Text =SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
+	}
+	
+	public void chooseSchema_onchange( GuiComboBox control )
+	{
+		GuiComboBox cmbDatabases = ui["chooseDatabase"] as GuiComboBox;
+		GuiComboBox cmbSchema = ui["chooseSchemas"] as GuiComboBox;
+		bindTables( cmbDatabases.SelectedText,cmbSchema.SelectedText );
+		bindViews( cmbDatabases.SelectedText,cmbSchema.SelectedText );
+	}
+
+}
+##|GUI_END
+##|BODY_MODE Markup
+##|BODY_ENGINE .Net Script
+##|BODY_LANGUAGE C#
+##|BODY_TAG_START <%
+##|BODY_TAG_END %>
+##|BODY_BEGIN
+<%#DEBUG%><%#NAMESPACE System.IO, System.Text, System.Text.RegularExpressions, System.Globalization,System.Collections.Generic %><%
+public class GeneratedTemplate : DotNetScriptTemplate
+{
+	public GeneratedTemplate(ZeusContext context) : base(context) {}
+
+
+	private bool isDEBUG = false;
+	private bool generateAllTables = false;
+	private bool generateAllViews = false;
+	private bool generateDatabaseTables = false;
+	private bool generateTypeLibrary = false;
+	private bool generateDal = false;
+	private bool generateBs = false;
+	private bool generateBsWrapper = false;
+	private bool ignoreDbo = false;
+	private bool generateAspx = false;
+
+	public override void Render()
+	{
+		string className = "";
+		string schemaName = "";
+		string classNameSpace = "";
+		string memberVariableName = "";
+		string propertyVariableName = "";
+		string outputFullFileName = "";
+		string outputPath = input["outputPath"].ToString();
+
+		if (Convert.ToBoolean(input["isDebugCheckBox"]))
+		{
+			isDEBUG = true;
+		}
+
+		// debugger icin
+		if (isDEBUG)
+		{
+			System.Diagnostics.Debugger.Launch();
+		}
+		if (isDEBUG)
+		{
+			System.Diagnostics.Debugger.Break();
+		}
+		if (Convert.ToBoolean(input["chkAllTablesBox"]))
+		{
+			generateAllTables = true;
+		}
+		if (Convert.ToBoolean(input["chkAllViewsBox"]))
+		{
+			generateAllViews = true;
+		}
+		if (Convert.ToBoolean(input["chkDatabaseBox"]))
+		{
+			generateDatabaseTables = true;
+		}
+		if (Convert.ToBoolean(input["chkTypeLibraryBox"]))
+		{
+			generateTypeLibrary = true;
+		}
+		if (Convert.ToBoolean(input["chkDalBox"]))
+		{
+			generateDal = true;
+		}
+		if (Convert.ToBoolean(input["chkBsBox"]))
+		{
+			generateBs = true;
+		}
+		if (Convert.ToBoolean(input["chkBsWrapperBox"]))
+		{
+			generateBsWrapper = true;
+		}
+		if (Convert.ToBoolean(input["DboIgnoreCheckBox"]))
+		{
+			ignoreDbo = true;
+		}
+		if (Convert.ToBoolean(input["chkAspxBox"]))
+		{
+			generateAspx = true;
+		}
+
+		string databaseName = input["chooseDatabase"].ToString();;
+		IDatabase database = MyMeta.Databases[databaseName];
+
+		IList selectedTables = null;
+		if (generateAllTables)
+		{
+			if (ignoreDbo)
+			{
+				selectedTables = database.Tables as IList;
+				List<ITable> liste = new List<ITable>();
+				foreach (ITable t in selectedTables)
+				{
+					if (t.Schema != "dbo")
+					{
+						liste.Add(t);
+					}
+				}
+				selectedTables = liste;
+			
+			}
+			else
+			{
+				selectedTables = database.Tables as IList;
+			}
+		}
+		else
+		{
+			selectedTables = input["chooseTables"] as IList;
+		}
+		
+		
+		
+
+		for (int i =0; i<selectedTables.Count ;i++)
+		{
+			ITable table = null;
+			if (generateAllTables)
+			{
+				table = selectedTables[i] as ITable;
+			}
+			else
+			{
+				string tableName = selectedTables[i] as String;
+				table = database.Tables[tableName];
+			}
+			if (generateDatabaseTables)
+			{
+				SimetriUtils.RenderDatabaseTablesCode(output,table,MyMeta.ConnectionString);
+			}
+			if (generateTypeLibrary)
+			{
+				SimetriUtils.RenderTypeLibraryCode(output,table);
+			}
+			if (generateDal)
+			{
+				SimetriUtils.RenderDalCode(output,table);
+			}
+			if (generateBs)
+			{
+				SimetriUtils.RenderBsCode(output,table);
+			}
+			if (generateBsWrapper)
+			{
+				SimetriUtils.RenderBsWrapperCode(output,table);
+			}
+			if (generateAspx)
+			{
+				SimetriUtils.RenderAspxCode(output,table);
+			}
+		}
+		IList selectedViews = null;
+		if (generateAllViews)
+		{
+			selectedViews = database.Views as IList;
+		}
+		else
+		{
+			selectedViews = input["chooseViews"] as IList;
+		}
+
+		for (int i =0; i<selectedViews.Count ;i++)
+		{
+			IView view = null;
+			if (generateAllViews)
+			{
+				view = selectedViews[i] as IView;
+			}
+			else
+			{
+				string viewName = selectedViews[i] as String;
+				view = database.Views[viewName];
+			}
+			SimetriUtils.RenderTypeLibraryCode(output,view);
+		}
+
+
+		
+
+
+	}
+	
+	
+
+
+}
+%>
+##|BODY_END
