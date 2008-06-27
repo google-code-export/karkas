@@ -369,7 +369,7 @@ h4
 		<th nowrap="nowrap">Null mu?</th>
 		<th nowrap="nowrap">Hesaplanan Kolon?</th>
 		<th nowrap="nowrap">Otomatik Anahtar?</th>
-		<th nowrap="nowrap">Default</th>
+		<th nowrap="nowrap">Varsayılan</th>
 		<th nowrap="nowrap">Tanım</th>
 	</tr>
 <%
@@ -458,7 +458,7 @@ h4
 		<th nowrap="nowrap">Is Nullable?</th>
 		<th nowrap="nowrap">Is Computed?</th>
 		<th nowrap="nowrap">Is AutoKey?</th>
-		<th nowrap="nowrap">Default</th>
+		<th nowrap="nowrap">Varsayılan</th>
 		<th nowrap="nowrap">Description</th>
 	</tr>
 <%
@@ -498,7 +498,7 @@ h4
 		<th nowrap="nowrap">Data Type</th>
 		<th nowrap="nowrap">Direction?</th>
 		<th nowrap="nowrap">Is Nullable?</th>
-		<th nowrap="nowrap">Default</th>
+		<th nowrap="nowrap">Varsayılan</th>
 		<th nowrap="nowrap">Description</th>
 	</tr>
 <%
