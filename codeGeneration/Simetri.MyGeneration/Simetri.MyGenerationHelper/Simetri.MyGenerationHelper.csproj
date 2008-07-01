@@ -55,6 +55,7 @@
     <Compile Include="Generators\BsGenerator.cs" />
     <Compile Include="Generators\BsWrapperGenerator.cs" />
     <Compile Include="Generators\DalGenerator.cs" />
+    <Compile Include="Generators\NamespaceHelper.cs" />
     <Compile Include="Generators\TypeLibraryGenerator.cs" />
     <Compile Include="Generators\TypeLibraryHelper.cs" />
     <Compile Include="SimetriSmoHelper.cs" />
