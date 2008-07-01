@@ -35,7 +35,7 @@ namespace Simetri.MyGenerationHelper.Generators
             string baseNameSpaceDal = baseNameSpace + ".Dal";
             string baseNameSpaceBs = baseNameSpace + ".Bs";
 
-            string outputPath = "";
+
 
 
             IDatabase database = table.Database;
@@ -54,8 +54,7 @@ namespace Simetri.MyGenerationHelper.Generators
 
             schemaName = SimetriUtils.SetPascalCase(table.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
-            bool identityVarmi;
-            string pkcumlesi = "";
+
 
             string baseNameSpaceBsWithSchema = baseNameSpace + ".Bs." + schemaName;
             string baseNameSpaceBsWrapperWithSchema = baseNameSpace + ".BsWrapper." + schemaName;

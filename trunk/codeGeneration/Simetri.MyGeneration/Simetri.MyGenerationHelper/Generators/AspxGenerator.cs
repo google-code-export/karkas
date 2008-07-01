@@ -12,38 +12,43 @@ namespace Simetri.MyGenerationHelper.Generators
         Utils SimetriUtils = new Utils();
         SimetriXmlParser parser = new SimetriXmlParser();
 
-        public void Render(IZeusOutput output, ITable table)
+        string masterName = "Main";
+
+        public void Render(IZeusOutput output, ITable pTable,string pMasterName)
         {
-            IDatabase database = table.Database;
-            string baseNamespace = parser.ProjeNamespaceIsminiAl(database);
-            string baseNamespaceWeb = baseNamespace + ".WebApp";
-            string tableName = SimetriUtils.SetPascalCase(table.Name);
-            string formName = tableName + "Form";
+            IDatabase database = pTable.Database;
+            string baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database, pTable.Schema);
+            string baseNamespaceWeb = baseNameSpace + ".WebApp";
+
+            string className = SimetriUtils.SetPascalCase(pTable.Name);
+            string schemaName = SimetriUtils.SetPascalCase(pTable.Schema);
+            string classNameSpace = baseNamespaceWeb + "." + schemaName;
+            string formName = className + "Form";
 
 
-            output.writeln(RenderAsString(table, baseNamespaceWeb, tableName, formName));
-            writeTableRows(output, table);
+            output.writeln(RenderAsString(pTable, classNameSpace, className, formName));
+            writeTableRows(output, pTable);
             output.writeln("</asp:Content>");
-            string savePath = Path.Combine(SimetriUtils.ProjeDizininiAl(database), "WebApp\\" + SimetriUtils.SetPascalCase(table.Schema) + "\\" + formName + ".aspx");
+            string savePath = Path.Combine(SimetriUtils.ProjeDizininiAl(database), "WebApp\\" + SimetriUtils.SetPascalCase(pTable.Schema) + "\\" + formName + ".aspx");
             output.save(savePath, true);
             output.clear();
 
         }
 
 
-        public string RenderAsString(ITable table, string baseNamespaceWeb, string tableName, string formName)
+        public string RenderAsString(ITable table, string pClassNameSpace, string tableName, string formName)
         {
             IDatabase database = table.Database;
 
-            string codeFile = string.Format("{0}Form.aspx.cs", formName);
-            string inherits = baseNamespaceWeb + formName;
+            string codeFile = string.Format("{0}.aspx.cs", formName);
+            string inherits = pClassNameSpace + "." + formName;
             string title = tableName + "Bilgi Girisi";
 
-            string pageDirective = string.Format(@"<%@ Page Language=""C#"" MasterPageFile=""~/SimetriMain.Master"" AutoEventWireup=""true""
+            string pageDirective = string.Format(@"<%@ Page Language=""C#"" MasterPageFile=""~/{3}.Master"" AutoEventWireup=""true""
     UICulture=""tr-TR"" Culture=""tr-TR"" CodeFile=""{0}"" Inherits=""{1}""
-    Title=""{2}"" %>", codeFile, inherits, title);
+    Title=""{2}"" %>", codeFile, inherits, title,masterName);
 
-            string masterDirective = @"<%@ MasterType VirtualPath=""~/SimetriMain.Master"" %>";
+            string masterDirective = string.Format(@"<%@ MasterType VirtualPath=""~/{0}.Master"" %>",masterName);
             string contentPlaceHolder = "<asp:Content ID=\"Content1\" ContentPlaceHolderID=\"cph\" runat=\"server\">";
 
             StringBuilder sb = new StringBuilder();

@@ -52,10 +52,10 @@ namespace Simetri.MyGenerationHelper
             BsWrapperGenerator gen = new BsWrapperGenerator();
             gen.Render(output, table);
         }
-        public void RenderAspxCode(IZeusOutput output, ITable table)
+        public void RenderAspxCode(IZeusOutput output, ITable table,string pMasterName)
         {
             AspxGenerator genA = new AspxGenerator();
-            genA.Render(output, table);
+            genA.Render(output, table,pMasterName);
             AspxCsGenerator genCs = new AspxCsGenerator();
             genCs.Render(output, table);
         }

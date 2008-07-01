@@ -81,7 +81,7 @@ public class GeneratedGui : DotNetScriptGui
 			chooseSchemas.Left = outputPath.Left;
 
 			//Tüm Tablolar CheckBox
-			GuiCheckBox chkAllTablesBox = ui.AddCheckBox("chkAllTablesBox", "Tüm Tabloları Generate Et", false, "Eğer bu seçeneği tıklarsanız, tablo seçiminiz dikkate alınmadan tüm veritabanından kod üretir."); 
+			GuiCheckBox chkAllTablesBox = ui.AddCheckBox("chkAllTablesBox", "Tüm Tabloları Generate Et", true, "Eğer bu seçeneği tıklarsanız, tablo seçiminiz dikkate alınmadan tüm veritabanından kod üretir."); 
 			chkAllTablesBox.Width = 250;
 			
 			
@@ -101,32 +101,32 @@ public class GeneratedGui : DotNetScriptGui
 			isDebugCheckBox.Top = DboIgnoreCheckBox.Top;
 			isDebugCheckBox.Left = DboIgnoreCheckBox.Left + 300;
 			
-			GuiCheckBox chkDatabaseBox = ui.AddCheckBox("chkDatabaseBox", "Database tabloları Generate Et", false, "Eğer bu seçeneği tıklarsanız,Database Tabloları üretilir"); 
+			GuiCheckBox chkDatabaseBox = ui.AddCheckBox("chkDatabaseBox", "Database tabloları Generate Et", true, "Eğer bu seçeneği tıklarsanız,Database Tabloları üretilir"); 
 			chkDatabaseBox.Width = 250;
 			
 			//Aspx  CheckBox
-			GuiCheckBox chkAspxBox = ui.AddCheckBox("chkAspxBox", "Aspx Generate Et",true, "Eğer bu seçeneği tıklarsanız, Aspx kodu üretilir.");
+			GuiCheckBox chkAspxBox = ui.AddCheckBox("chkAspxBox", "Aspx Generate Et",false, "Eğer bu seçeneği tıklarsanız, Aspx kodu üretilir.");
 			chkAspxBox.Width = 250;
 			chkAspxBox.Top = chkDatabaseBox.Top;
 			chkAspxBox.Left = chkDatabaseBox.Left + 300;
 			
 
 			//TypeLibrary CheckBox
-			GuiCheckBox chkTypeLibraryBox = ui.AddCheckBox("chkTypeLibraryBox", "Type Library Generate Et", false, "Eğer bu seçeneği tıklarsanız,Type Library Kodu üretilir"); 
+			GuiCheckBox chkTypeLibraryBox = ui.AddCheckBox("chkTypeLibraryBox", "Type Library Generate Et", true, "Eğer bu seçeneği tıklarsanız,Type Library Kodu üretilir"); 
 			chkTypeLibraryBox.Width = 250;
 
 			//Dal  CheckBox
-			GuiCheckBox chkDalBox = ui.AddCheckBox("chkDalBox", "Dal Generate Et",false, "Eğer bu seçeneği tıklarsanız, Dal kodu üretilir.");
+			GuiCheckBox chkDalBox = ui.AddCheckBox("chkDalBox", "Dal Generate Et",true, "Eğer bu seçeneği tıklarsanız, Dal kodu üretilir.");
 			chkDalBox.Width = 250;
 			chkDalBox.Top = chkTypeLibraryBox.Top;
 			chkDalBox.Left = chkTypeLibraryBox.Left + 300;
 
 			//Bs CheckBox
-			GuiCheckBox chkBsBox = ui.AddCheckBox("chkBsBox", "Bs Generate Et", false, "Eğer bu seçeneği tıklarsanız, Business Services kodu üretilir."); 
+			GuiCheckBox chkBsBox = ui.AddCheckBox("chkBsBox", "Bs Generate Et", true, "Eğer bu seçeneği tıklarsanız, Business Services kodu üretilir."); 
 			chkBsBox.Width = 250;
 
 			//BsWrapper  CheckBox
-			GuiCheckBox chkBsWrapperBox = ui.AddCheckBox("chkBsWrapperBox", "Bs Wrapper Generate Et",false, "Eğer bu seçeneği tıklarsanız, Business Services kodu üretilir.");
+			GuiCheckBox chkBsWrapperBox = ui.AddCheckBox("chkBsWrapperBox", "Bs Wrapper Generate Et",true, "Eğer bu seçeneği tıklarsanız, Business Services kodu üretilir.");
 			chkBsWrapperBox.Width = 250;
 			chkBsWrapperBox.Top = chkBsBox.Top;
 			chkBsWrapperBox.Left = chkBsBox.Left + 300;
@@ -412,10 +412,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			{
 				SimetriUtils.RenderBsWrapperCode(output,table);
 			}
-			if (generateAspx)
-			{
-				SimetriUtils.RenderAspxCode(output,table);
-			}
+//			if (generateAspx)
+//			{
+//				SimetriUtils.RenderAspxCode(output,table);
+//			}
 		}
 		IList selectedViews = null;
 		if (generateAllViews)
