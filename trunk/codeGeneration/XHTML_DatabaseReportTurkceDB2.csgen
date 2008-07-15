@@ -20,13 +20,17 @@ public class GeneratedGui : DotNetScriptGui
 {
 	public GeneratedGui(ZeusGuiContext context) : base(context) {}
 
+	GuiListBox chooseTables = null;
+	GuiTextBox outputPath = null;
+	GuiListBox chooseViews = null;
+
 	public override void Setup()
 	{
-		if ( !input.Contains("lstTables") || !input.Contains("txtPath") )
+		if ( !input.Contains("chooseTables") || !input.Contains("txtPath") )
 		{
 			ui.Title = "HTML Database Report";
-			ui.Width = 340;
-			ui.Height = 600;
+			ui.Width = 400;
+			ui.Height = 900;
 	
 			// Grab default output path
 			string sOutputPath = "";
@@ -41,31 +45,38 @@ public class GeneratedGui : DotNetScriptGui
 	
 			// Setup Folder selection input control.
 			GuiLabel lblPath = ui.AddLabel("lblPath", "Select the output path:", "Select the output path in the field below.");
-			GuiTextBox outpath = ui.AddTextBox("txtPath", sOutputPath, "Select the Output Path.");
+			outputPath = ui.AddTextBox("txtPath", sOutputPath, "Select the Output Path.");
 			GuiFilePicker btnSelectPath = ui.AddFilePicker("btnPath", "Select Path", "Select the Output Path.", "txtPath", true);
 	
 			// Setup Database selection combobox.
 			GuiLabel label_d = ui.AddLabel("lblDatabases", "Select a database:", "Select a database in the dropdown below.");
-			GuiComboBox cmbDatabases = ui.AddComboBox("cmbDatabase", "Select a database.");
+			GuiComboBox chooseDatabase = ui.AddComboBox("chooseDatabase", "Select a database.");
+	
+	
+			// Setup Schema selection multi-select listbox.
+			GuiLabel label8 = ui.AddLabel( "label8", "Şema Seçin:", "Aşağıdaki Listeden Şema Seçin." );
+			GuiComboBox chooseSchemas = ui.AddComboBox( "chooseSchemas", "Şema Seçin." );
+			chooseSchemas.AttachEvent( "onchange", "chooseSchema_onchange" );
+	
 	
 			// Setup Tables selection multi-select listbox.
 			GuiLabel label_t = ui.AddLabel("lblTables", "Select tables:", "Select tables from the listbox below.");
-			GuiListBox lstTables = ui.AddListBox("lstTables", "Select tables.");
-			lstTables.Height = 80;
+			GuiListBox chooseTables = ui.AddListBox("chooseTables", "Select tables.");
+			chooseTables.Height = 80;
 	
 			// Setup Views selection multi-select listbox.
 			GuiLabel label_v = ui.AddLabel("lblViews", "Select views:", "Select views from the listbox below.");
-			GuiListBox lstViews = ui.AddListBox("lstViews", "Select views.");
-			lstViews.Height = 80;
+			GuiListBox chooseViews = ui.AddListBox("chooseViews", "Select views.");
+			chooseViews.Height = 80;
 	
 			// Setup Procedures selection multi-select listbox.
 			GuiLabel label_p = ui.AddLabel("lblProcs", "Select procedures:", "Select procedures from the listbox below.");
-			GuiListBox lstProcs = ui.AddListBox("lstProcs", "Select procedures.");
-			lstProcs.Height = 80;
+			GuiListBox chooseProcs = ui.AddListBox("chooseProcs", "Select procedures.");
+			chooseProcs.Height = 80;
 	
-			// Attach the onchange event to the cmbDatabases control.
-			setupDatabaseDropdown(cmbDatabases, lblError);
-			cmbDatabases.AttachEvent("onchange", "cmbDatabases_onchange");
+			// Attach the onchange event to the chooseDatabases control.
+			setupDatabaseDropdown(chooseDatabase, lblError);
+			chooseDatabase.AttachEvent("onchange", "chooseDatabases_onchange");
 	
 			ui.ShowGui = true;
 		}
@@ -74,20 +85,78 @@ public class GeneratedGui : DotNetScriptGui
 			ui.ShowGui = false;
 		}
 	}
+
+	public void bindTables( string sDatabase ,string pSchemaName)
+	{
+		GuiListBox chooseTables = ui["chooseTables"] as GuiListBox;
+		IDatabase db = MyMeta.Databases[sDatabase];
+		ArrayList liste = new ArrayList();
+		
+		chooseTables.Clear();
+		foreach (ITable table in db.Tables)
+		{
+			if (table.Schema == pSchemaName)
+			{
+				chooseTables[table.Name] = table.Name;
+			}
+		}
+	}
+	public void bindViews( string sDatabase ,string pSchemaName)
+	{
+			GuiListBox chooseViews = ui["chooseViews"] as GuiListBox;
+			IDatabase db = MyMeta.Databases[sDatabase];
+			ArrayList liste = new ArrayList();
+			
+			chooseViews.Clear();
+			foreach (IView view in db.Views)
+			{
+				if (view.Schema == pSchemaName)
+				{
+					chooseViews[view.Name] = view.Name;
+				}
+			}
+	}
+
 	
-	public void setupDatabaseDropdown(GuiComboBox cmbDatabases, GuiLabel lblError)
+
+	public void bindSchemas( string sDatabase )
+	{
+		GuiComboBox lstSchemas = ui["chooseSchemas"] as GuiComboBox;
+		IDatabase db = MyMeta.Databases[sDatabase];
+		ArrayList liste = new ArrayList();
+		foreach (ITable table in db.Tables)
+		{
+			if (!liste.Contains(table.Schema))
+			{
+				liste.Add(table.Schema);
+			}
+		}
+		lstSchemas.BindData( liste );
+	}
+	
+	public void chooseSchema_onchange( GuiComboBox control )
+	{
+		GuiComboBox chooseDatabases = ui["chooseDatabase"] as GuiComboBox;
+		GuiComboBox cmbSchema = ui["chooseSchemas"] as GuiComboBox;
+		bindTables( chooseDatabases.SelectedText,cmbSchema.SelectedText );
+		bindViews( chooseDatabases.SelectedText,cmbSchema.SelectedText );
+	}
+	
+	
+	public void setupDatabaseDropdown(GuiComboBox chooseDatabases, GuiLabel lblError)
 	{
 		try 
 		{	
 			if (MyMeta.IsConnected) 
 			{
-				cmbDatabases.BindData(MyMeta.Databases);
+				chooseDatabases.BindData(MyMeta.Databases);
 				if (MyMeta.DefaultDatabase != null) 
 				{
-					cmbDatabases.SelectedValue = MyMeta.DefaultDatabase.Name;
-					bindTables(cmbDatabases.SelectedValue);
-					bindViews(cmbDatabases.SelectedValue);
-					bindProcedures(cmbDatabases.SelectedValue);
+					chooseDatabases.SelectedValue = MyMeta.DefaultDatabase.Name;
+					bindSchemas(chooseDatabases.SelectedValue);
+					bindTables(chooseDatabases.SelectedValue);
+					bindViews(chooseDatabases.SelectedValue);
+					bindProcedures(chooseDatabases.SelectedValue);
 				}
 	
 				lblError.Text = "";
@@ -108,12 +177,12 @@ public class GeneratedGui : DotNetScriptGui
 		GuiLabel lblError = ui["lblError"] as GuiLabel;
 		int count = 0;
 	
-		GuiListBox lstTables = ui["lstTables"] as GuiListBox;
+		GuiListBox chooseTables = ui["chooseTables"] as GuiListBox;
 		
 		try 
 		{	
 			IDatabase db = MyMeta.Databases[sDatabase];
-			lstTables.BindData(db.Tables);
+			chooseTables.BindData(db.Tables);
 	
 			lblError.Text = "";
 		}
@@ -129,12 +198,12 @@ public class GeneratedGui : DotNetScriptGui
 		GuiLabel lblError = ui["lblError"] as GuiLabel;
 		int count = 0;
 	
-		GuiListBox lstViews = ui["lstViews"] as GuiListBox;
+		GuiListBox chooseViews = ui["chooseViews"] as GuiListBox;
 		
 		try 
 		{	
 			IDatabase db = MyMeta.Databases[sDatabase];
-			lstViews.BindData(db.Views);
+			chooseViews.BindData(db.Views);
 	
 			lblError.Text = "";
 		}
@@ -149,12 +218,12 @@ public class GeneratedGui : DotNetScriptGui
 		GuiLabel lblError = ui["lblError"] as GuiLabel;
 		int count = 0;
 	
-		GuiListBox lstProcs = ui["lstProcs"] as GuiListBox;
+		GuiListBox chooseProcs = ui["chooseProcs"] as GuiListBox;
 		
 		try 
 		{	
 			IDatabase db = MyMeta.Databases[sDatabase];
-			lstProcs.BindData(db.Procedures);
+			chooseProcs.BindData(db.Procedures);
 	
 			lblError.Text = "";
 		}
@@ -164,16 +233,16 @@ public class GeneratedGui : DotNetScriptGui
 		}
 	}
 	
-	public void cmbDatabases_onchange(GuiComboBox control)
+	public void chooseDatabases_onchange(GuiComboBox control)
 	{
 		GuiLabel lblError = ui["lblError"] as GuiLabel;
 		int count = 0;
 	
-		GuiComboBox cmbDatabases = ui["cmbDatabase"] as GuiComboBox;
+		GuiComboBox chooseDatabases = ui["chooseDatabase"] as GuiComboBox;
 	
-		bindTables(cmbDatabases.SelectedText);
-		bindViews(cmbDatabases.SelectedText);
-		bindProcedures(cmbDatabases.SelectedText);
+		bindTables(chooseDatabases.SelectedText);
+		bindViews(chooseDatabases.SelectedText);
+		bindProcedures(chooseDatabases.SelectedText);
 	}
 	
 }
@@ -215,10 +284,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 	public override void Render()
 	{
 	
-		string databaseName = input["cmbDatabase"].ToString(); 		
-		ArrayList tables = input["lstTables"] as ArrayList;	
-		ArrayList views = input["lstViews"] as ArrayList;	
-		ArrayList procs = input["lstProcs"] as ArrayList;	
+		string databaseName = input["chooseDatabase"].ToString(); 		
+		ArrayList tables = input["chooseTables"] as ArrayList;	
+		ArrayList views = input["chooseViews"] as ArrayList;	
+		ArrayList procs = input["chooseProcs"] as ArrayList;	
 		IDatabase database = MyMeta.Databases[databaseName];
 
 		// Filename info
@@ -321,6 +390,7 @@ h4
 		foreach (string tableName in tables)
 		{
 			ITable table = database.Tables[tableName];
+			
 %>
 			<li><a href="#<%= tableName.Replace(" ", String.Empty) %>"><%=table.Schema%>.<%= tableName %></a></li>
 <%
@@ -354,6 +424,7 @@ h4
 <%
 		foreach (string tableName in tables)
 		{
+
 			ITable table = database.Tables[tableName];
 %>
 <hr width="100%" style="color: blue" />
@@ -376,10 +447,18 @@ h4
 <%
 		foreach (IColumn column in table.Columns)
 		{
+		if (column.DataTypeName == "")
+		{
+			continue;
+		}
 %>
 	<tr>
 		<td nowrap="nowrap" valign="top"><%= column.Name %></td>
-		<td nowrap="nowrap" valign="top"><%= column.DataTypeName  %></td>
+		<td nowrap="nowrap" valign="top"><%= column.DataTypeName  %>
+		<%= (column.NumericScale > 0) ? "(" + column.NumericScale + ")" : "" %>
+		<%= (column.CharacterMaxLength > 0) ? "(" + column.CharacterMaxLength + ")" : "" %>
+		
+		</td>
 		<td nowrap="nowrap" valign="top"><%= column.IsInPrimaryKey ? "Evet" : "&nbsp;" %></td>
 		<td nowrap="nowrap" valign="top"><%= column.IsNullable ? "Evet" : "&nbsp;" %></td>
 		<td nowrap="nowrap" valign="top"><%= column.IsComputed ? "Evet" : "&nbsp;" %></td>
