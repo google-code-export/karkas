@@ -24,16 +24,19 @@ namespace Simetri.MyGenerationHelper.Generators
                 output.autoTabLn("{");
                 output.autoTabLn(string.Format("\treturn {0};", memberVariableName));
                 output.autoTabLn("}");
-                output.autoTabLn("set");
-                output.autoTabLn("{");
-                output.incTab();
-                output.autoTabLn(string.Format("if ((this.RowState == DataRowState.Unchanged) && ({0}!= value))", memberVariableName));
-                output.autoTabLn("{");
-                output.autoTabLn("\tthis.RowState = DataRowState.Modified;");
-                output.autoTabLn("}");
-                output.autoTabLn(string.Format("{0} = value;", memberVariableName));
-                output.decTab();
-                output.autoTabLn("}");
+                if (!column.IsComputed)
+                {
+                    output.autoTabLn("set");
+                    output.autoTabLn("{");
+                    output.incTab();
+                    output.autoTabLn(string.Format("if ((this.RowState == DataRowState.Unchanged) && ({0}!= value))", memberVariableName));
+                    output.autoTabLn("{");
+                    output.autoTabLn("\tthis.RowState = DataRowState.Modified;");
+                    output.autoTabLn("}");
+                    output.autoTabLn(string.Format("{0} = value;", memberVariableName));
+                    output.decTab();
+                    output.autoTabLn("}");
+                }
                 output.decTab();
                 output.autoTabLn("}");
                 output.writeln("");
@@ -75,7 +78,7 @@ namespace Simetri.MyGenerationHelper.Generators
         }
 
 
-        public static void writeShallowCopy(IZeusOutput output, ITable table,string pTypeName)
+        public static void writeShallowCopy(IZeusOutput output, ITable table, string pTypeName)
         {
             output.incTab();
             output.autoTabLn(string.Format("public {0} ShallowCopy()", pTypeName));
