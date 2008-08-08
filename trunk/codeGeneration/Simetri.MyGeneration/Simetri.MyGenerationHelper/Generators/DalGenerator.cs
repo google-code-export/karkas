@@ -153,6 +153,10 @@ namespace Simetri.MyGenerationHelper.Generators
 
             foreach (IColumn column in table.Columns)
             {
+                if (column.IsComputed)
+                {
+                    continue;
+                }
                 if (column.CharacterMaxLength == 0)
                 {
                     output.writeln("");
@@ -198,6 +202,10 @@ namespace Simetri.MyGenerationHelper.Generators
             {
                 if (!column.IsAutoKey)
                 {
+                    if (column.IsComputed)
+                    {
+                        continue;
+                    }
                     if (column.CharacterMaxLength == 0)
                     {
                         output.writeln("");
@@ -519,6 +527,10 @@ namespace Simetri.MyGenerationHelper.Generators
             identityVarmi = false;
             foreach (IColumn column in table.Columns)
             {
+                if (column.IsComputed)
+                {
+                    continue;
+                }
                 if (!column.IsAutoKey)
                 {
                     cumle += column.Name + ",";
@@ -537,6 +549,10 @@ namespace Simetri.MyGenerationHelper.Generators
 
             foreach (IColumn column in table.Columns)
             {
+                if (column.IsComputed)
+                {
+                    continue;
+                }
                 if (!column.IsAutoKey)
                 {
                     cumle += "@" + column.Name + ",";
@@ -570,6 +586,10 @@ namespace Simetri.MyGenerationHelper.Generators
 
             foreach (IColumn column in table.Columns)
             {
+                if (column.IsComputed)
+                {
+                    continue;
+                }
                 if (column.IsInPrimaryKey)
                 {
                     pkcumlesi += column.Name + " = @" + column.Name + " AND";
