@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Simetri.MyGenerationConsoleTest")]
+[assembly: AssemblyTitle("Karkas.MyGenerationConsoleTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Simetri")]
-[assembly: AssemblyProduct("Simetri.MyGenerationConsoleTest")]
-[assembly: AssemblyCopyright("Copyright © Simetri 2007")]
+[assembly: AssemblyCompany("Karkas")]
+[assembly: AssemblyProduct("Karkas.MyGenerationConsoleTest")]
+[assembly: AssemblyCopyright("Copyright © Karkas 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

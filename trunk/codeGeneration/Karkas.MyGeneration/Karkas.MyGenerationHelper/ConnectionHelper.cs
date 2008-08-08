@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Simetri.MyGenerationHelper
+namespace Karkas.MyGenerationHelper
 {
     public class ConnectionHelper
     {

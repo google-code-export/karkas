@@ -4,19 +4,19 @@ using Zeus;
 using Zeus.Data;
 using Zeus.UserInterface;
 using MyMeta;
-using Simetri.MyGenerationHelper;
+using Karkas.MyGenerationHelper;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Globalization;
 
-namespace Simetri.MyGenerationHelper.Generators
+namespace Karkas.MyGenerationHelper.Generators
 {
     public class BsGenerator
     {
 
 
-        private static Utils SimetriUtils = new Utils();
+        private static Utils utils = new Utils();
         public void Render(IZeusOutput output, ITable table)
         {
             string classNameTypeLibrary = "";
@@ -41,17 +41,17 @@ namespace Simetri.MyGenerationHelper.Generators
 
 
 
-            baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database, table.Schema);
+            baseNameSpace = utils.NamespaceIniAlSchemaIle(database, table.Schema);
             baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
             baseNameSpaceDal = baseNameSpace + ".Dal";
             baseNameSpaceBs = baseNameSpace + ".Bs";
 
 
-            classNameTypeLibrary = SimetriUtils.SetPascalCase(table.Name);
-            classNameDal = SimetriUtils.SetPascalCase(table.Name) + "Dal";
-            classNameBs = SimetriUtils.SetPascalCase(table.Name) + "Bs";
+            classNameTypeLibrary = utils.SetPascalCase(table.Name);
+            classNameDal = utils.SetPascalCase(table.Name) + "Dal";
+            classNameBs = utils.SetPascalCase(table.Name) + "Bs";
 
-            schemaName = SimetriUtils.SetPascalCase(table.Schema);
+            schemaName = utils.SetPascalCase(table.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
             bool identityVarmi;
             string pkcumlesi = "";
@@ -59,8 +59,8 @@ namespace Simetri.MyGenerationHelper.Generators
             string baseNameSpaceBsWithSchema = baseNameSpace + ".Bs." + schemaName;
             string baseNameSpaceDalWithSchema = baseNameSpace + ".Dal." + schemaName;
 
-            string pkType = SimetriUtils.PrimaryKeyTipiniBul(table);
-            string pkAdi = SimetriUtils.PrimaryKeyAdiniBul(table);
+            string pkType = utils.PrimaryKeyTipiniBul(table);
+            string pkAdi = utils.PrimaryKeyAdiniBul(table);
 
 
             output.writeln("");
@@ -155,7 +155,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.writeln("    }");
             output.writeln("}");
 
-            string savePath = Path.Combine(SimetriUtils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.generated.cs");
+            string savePath = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.generated.cs");
             //output.writeln(savePath);
             output.save(savePath, true);
             output.clear();

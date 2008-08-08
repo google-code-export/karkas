@@ -4,20 +4,20 @@ using System.Text;
 using Zeus;
 using MyMeta;
 
-namespace Simetri.MyGenerationHelper.Generators
+namespace Karkas.MyGenerationHelper.Generators
 {
     public class TypeLibraryHelper
     {
-        private static Utils SimetriUtils = new Utils();
+        private static Utils utils = new Utils();
         public static void writeProperties(IZeusOutput output, ITable table)
         {
             output.incTab();
             foreach (IColumn column in table.Columns)
             {
-                string memberVariableName = SimetriUtils.SetCamelCase(column.Name);
-                string propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
+                string memberVariableName = utils.SetCamelCase(column.Name);
+                string propertyVariableName = utils.SetPascalCase(column.Name);
 
-                output.autoTabLn(string.Format("public {0} {1}", SimetriUtils.GetLanguageType(column), propertyVariableName));
+                output.autoTabLn(string.Format("public {0} {1}", utils.GetLanguageType(column), propertyVariableName));
                 output.autoTabLn("{");
                 output.incTab();
                 output.autoTabLn("get");
@@ -47,10 +47,10 @@ namespace Simetri.MyGenerationHelper.Generators
             output.incTab();
             foreach (IColumn column in view.Columns)
             {
-                string memberVariableName = SimetriUtils.SetCamelCase(column.Name);
-                string propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
+                string memberVariableName = utils.SetCamelCase(column.Name);
+                string propertyVariableName = utils.SetPascalCase(column.Name);
 
-                output.autoTabLn(string.Format("public {0} {1}", SimetriUtils.GetLanguageType(column), propertyVariableName));
+                output.autoTabLn(string.Format("public {0} {1}", utils.GetLanguageType(column), propertyVariableName));
                 output.autoTabLn("{");
                 output.incTab();
                 output.autoTabLn("get");
@@ -84,7 +84,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.autoTabLn(string.Format("{0} obj = new {0}();", pTypeName));
             foreach (IColumn column in table.Columns)
             {
-                output.autoTabLn(string.Format("obj.{0} = {0};", SimetriUtils.SetCamelCase(column.Name)));
+                output.autoTabLn(string.Format("obj.{0} = {0};", utils.SetCamelCase(column.Name)));
             }
             output.autoTabLn("return obj;");
             output.decTab();
@@ -100,7 +100,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.incTab();
             foreach (IColumn column in table.Columns)
             {
-                output.autoTabLn(String.Format("private {0} {1};", SimetriUtils.GetLanguageType(column), SimetriUtils.SetCamelCase(column.Name)));
+                output.autoTabLn(String.Format("private {0} {1};", utils.GetLanguageType(column), utils.SetCamelCase(column.Name)));
             }
             output.decTab();
             output.writeln("");
@@ -110,7 +110,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.incTab();
             foreach (IColumn column in view.Columns)
             {
-                output.autoTabLn(String.Format("private {0} {1};", SimetriUtils.GetLanguageType(column), SimetriUtils.SetCamelCase(column.Name)));
+                output.autoTabLn(String.Format("private {0} {1};", utils.GetLanguageType(column), utils.SetCamelCase(column.Name)));
             }
             output.decTab();
             output.writeln("");

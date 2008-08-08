@@ -7,9 +7,9 @@ using System.Collections.Specialized;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Simetri.MyGenerationHelper
+namespace Karkas.MyGenerationHelper
 {
-    public class SimetriSmoHelper
+    public class SmoHelper
     {
 
         public string GetTableDescription(string pDatabaseName, string pSchemaName, string pTableName, string connectionString)

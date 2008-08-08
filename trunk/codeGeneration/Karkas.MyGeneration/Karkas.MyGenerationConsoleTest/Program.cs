@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Simetri.MyGenerationHelper;
-using Simetri.MyGenerationHelper.Generators;
+using Karkas.MyGenerationHelper;
+using Karkas.MyGenerationHelper.Generators;
 using System.Configuration;
 
-namespace Simetri.MyGenerationConsoleTest
+namespace Karkas.MyGenerationConsoleTest
 {
     public class Program
     {

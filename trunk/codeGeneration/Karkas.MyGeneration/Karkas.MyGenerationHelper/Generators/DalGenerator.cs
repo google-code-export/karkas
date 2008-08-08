@@ -5,16 +5,16 @@ using Zeus;
 using Zeus.Data;
 using Zeus.UserInterface;
 using MyMeta;
-using Simetri.MyGenerationHelper;
+using Karkas.MyGenerationHelper;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Globalization;
 
-namespace Simetri.MyGenerationHelper.Generators
+namespace Karkas.MyGenerationHelper.Generators
 {
     public class DalGenerator
     {
-        private static Utils SimetriUtils = new Utils();
+        private static Utils utils = new Utils();
         public void Render(IZeusOutput output, ITable table)
         {
             string classNameTypeLibrary = "";
@@ -27,11 +27,11 @@ namespace Simetri.MyGenerationHelper.Generators
 
             IDatabase database = table.Database;
 
-            baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database, table.Schema);
+            baseNameSpace = utils.NamespaceIniAlSchemaIle(database, table.Schema);
             baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
-            string pkAdi = SimetriUtils.PrimaryKeyAdiniBul(table);
-            string identityColumnAdi = SimetriUtils.IdentityColumnAdiniBul(table);
+            string pkAdi = utils.PrimaryKeyAdiniBul(table);
+            string identityColumnAdi = utils.IdentityColumnAdiniBul(table);
             if (pkAdi == "")
             {
                 output.writeln("Sectiginiz tablolardan birinde Primary Key yoktur. Code Generation sadace primaryKey'i olan tablolarda duzgun calisir.");
@@ -39,17 +39,17 @@ namespace Simetri.MyGenerationHelper.Generators
             }
 
 
-            classNameTypeLibrary = SimetriUtils.SetPascalCase(table.Name);
-            schemaName = SimetriUtils.SetPascalCase(table.Schema);
+            classNameTypeLibrary = utils.SetPascalCase(table.Name);
+            schemaName = utils.SetPascalCase(table.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
-            bool identityVarmi = SimetriUtils.IdentityVarMi(table);
-            bool pkGuidMi = SimetriUtils.PkGuidMi(table);
+            bool identityVarmi = utils.IdentityVarMi(table);
+            bool pkGuidMi = utils.PkGuidMi(table);
             string pkcumlesi = "";
 
             string baseNameSpaceDal = baseNameSpace + ".Dal." + schemaName;
 
-            string pkType = SimetriUtils.PrimaryKeyTipiniBul(table);
-            string identityType = SimetriUtils.IdentityTipiniBul(table);
+            string pkType = utils.PrimaryKeyTipiniBul(table);
+            string identityType = utils.IdentityTipiniBul(table);
 
 
             UsingleriYaz(output, schemaName, baseNameSpaceTypeLibrary);
@@ -92,7 +92,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.writeln("}");
 
             //			output.writeln(className);
-            output.save(Path.Combine(SimetriUtils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName, classNameTypeLibrary + "Dal.generated.cs"), false);
+            output.save(Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName, classNameTypeLibrary + "Dal.generated.cs"), false);
             output.clear();
 
 
@@ -118,7 +118,7 @@ namespace Simetri.MyGenerationHelper.Generators
                         output.write("\",");
                         output.write(column.DbTargetType);
                         output.write(", row.");
-                        output.write(SimetriUtils.SetPascalCase(column.Name));
+                        output.write(utils.SetPascalCase(column.Name));
                         output.write(");");
 
                     }
@@ -130,7 +130,7 @@ namespace Simetri.MyGenerationHelper.Generators
                         output.write("\",");
                         output.write(column.DbTargetType);
                         output.write(", row.");
-                        output.write(SimetriUtils.SetPascalCase(column.Name));
+                        output.write(utils.SetPascalCase(column.Name));
                         output.write(",");
                         output.write(Convert.ToString(column.CharacterMaxLength));
                         output.write(");");
@@ -165,7 +165,7 @@ namespace Simetri.MyGenerationHelper.Generators
                     output.write("\",");
                     output.write(column.DbTargetType);
                     output.write(", row.");
-                    output.write(SimetriUtils.SetPascalCase(column.Name));
+                    output.write(utils.SetPascalCase(column.Name));
                     output.write(");");
 
                 }
@@ -177,7 +177,7 @@ namespace Simetri.MyGenerationHelper.Generators
                     output.write("\",");
                     output.write(column.DbTargetType);
                     output.write(", row.");
-                    output.write(SimetriUtils.SetPascalCase(column.Name));
+                    output.write(utils.SetPascalCase(column.Name));
                     output.write(",");
                     output.write(Convert.ToString(column.CharacterMaxLength));
                     output.write(");");
@@ -214,7 +214,7 @@ namespace Simetri.MyGenerationHelper.Generators
                         output.write("\",");
                         output.write(column.DbTargetType);
                         output.write(", row.");
-                        output.write(SimetriUtils.SetPascalCase(column.Name));
+                        output.write(utils.SetPascalCase(column.Name));
                         output.write(");");
 
                     }
@@ -226,7 +226,7 @@ namespace Simetri.MyGenerationHelper.Generators
                         output.write("\",");
                         output.write(column.DbTargetType);
                         output.write(", row.");
-                        output.write(SimetriUtils.SetPascalCase(column.Name));
+                        output.write(utils.SetPascalCase(column.Name));
                         output.write(",");
                         output.write(Convert.ToString(column.CharacterMaxLength));
                         output.write(");");
@@ -252,7 +252,7 @@ namespace Simetri.MyGenerationHelper.Generators
             for (int i = 0; i < table.Columns.Count; i++)
             {
                 IColumn column = table.Columns[i];
-                propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
+                propertyVariableName = utils.SetPascalCase(column.Name);
                 if (column.IsNullable)
                 {
                     output.writeln("");
@@ -263,7 +263,7 @@ namespace Simetri.MyGenerationHelper.Generators
                     output.write("\t\t\t\t\t\trow.");
                     output.write(propertyVariableName);
                     output.write(" = ");
-                    output.write(SimetriUtils.GetDataReaderSyntax(column));
+                    output.write(utils.GetDataReaderSyntax(column));
                     output.write("(");
                     output.write(i.ToString());
                     output.writeln(");");
@@ -277,7 +277,7 @@ namespace Simetri.MyGenerationHelper.Generators
                     output.write("\t\t\t\t\trow.");
                     output.write(propertyVariableName);
                     output.write(" = ");
-                    output.write(SimetriUtils.GetDataReaderSyntax(column));
+                    output.write(utils.GetDataReaderSyntax(column));
                     output.write("(");
                     output.write(i.ToString());
                     output.write(");");
@@ -293,7 +293,7 @@ namespace Simetri.MyGenerationHelper.Generators
         private static void PkGuidMiYaz(IZeusOutput output, ITable table)
         {
             string pkGuidMiSonuc = "";
-            if (SimetriUtils.PkGuidMi(table))
+            if (utils.PkGuidMi(table))
             {
                 pkGuidMiSonuc = "true";
             }
@@ -496,7 +496,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.writeln("using System.Data;");
             output.writeln("using System.Data.SqlClient;");
             output.writeln("using System.Text;");
-            output.writeln("using Simetri.Core.DataUtil;");
+            output.writeln("using Karkas.Core.DataUtil;");
             output.write("using ");
             output.write(baseNameSpaceTypeLibrary);
             output.writeln(";");

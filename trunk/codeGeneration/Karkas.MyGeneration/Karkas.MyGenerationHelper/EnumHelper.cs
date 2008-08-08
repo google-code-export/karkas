@@ -4,7 +4,7 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace Simetri.MyGenerationHelper
+namespace Karkas.MyGenerationHelper
 {
     public class EnumHelper
     {

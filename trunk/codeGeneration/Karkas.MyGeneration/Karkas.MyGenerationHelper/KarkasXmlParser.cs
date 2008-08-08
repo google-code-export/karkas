@@ -6,13 +6,13 @@ using System.Xml;
 using System.Xml.XPath;
 using System.Reflection;
 
-namespace Simetri.MyGenerationHelper
+namespace Karkas.MyGenerationHelper
 {
-    public class SimetriXmlParser
+    public class KarkasXmlParser
     {
-        string xmlDosyaninYeri = @"{0}\Settings\simetri.xml";
+        string xmlDosyaninYeri = @"{0}\Settings\karkas.xml";
 
-        public SimetriXmlParser()
+        public KarkasXmlParser()
         {
             calistigiYereGoreDosyaYeriniDegistir();
         }
