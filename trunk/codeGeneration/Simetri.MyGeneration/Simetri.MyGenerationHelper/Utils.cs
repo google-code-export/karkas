@@ -247,6 +247,18 @@ namespace Simetri.MyGenerationHelper
             {
                 return "(Byte[])dr.GetValue";
             }
+            else if (column.LanguageType == "double")
+            {
+                return "dr.GetDouble";
+            }
+            else if (column.LanguageType == "float")
+            {
+                return "dr.GetFloat";
+            }
+            else if (column.LanguageType == "object")
+            {
+                return "dr.GetValue";
+            }
 
 
 
