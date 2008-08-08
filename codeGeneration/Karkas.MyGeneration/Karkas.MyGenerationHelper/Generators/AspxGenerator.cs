@@ -5,23 +5,23 @@ using Zeus;
 using MyMeta;
 using System.IO;
 
-namespace Simetri.MyGenerationHelper.Generators
+namespace Karkas.MyGenerationHelper.Generators
 {
     public class AspxGenerator
     {
-        Utils SimetriUtils = new Utils();
-        SimetriXmlParser parser = new SimetriXmlParser();
+        Utils utils = new Utils();
+        KarkasXmlParser parser = new KarkasXmlParser();
 
         string masterName = "Main";
 
         public void Render(IZeusOutput output, ITable pTable,string pMasterName)
         {
             IDatabase database = pTable.Database;
-            string baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database, pTable.Schema);
+            string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, pTable.Schema);
             string baseNamespaceWeb = baseNameSpace + ".WebApp";
 
-            string className = SimetriUtils.SetPascalCase(pTable.Name);
-            string schemaName = SimetriUtils.SetPascalCase(pTable.Schema);
+            string className = utils.SetPascalCase(pTable.Name);
+            string schemaName = utils.SetPascalCase(pTable.Schema);
             string classNameSpace = baseNamespaceWeb + "." + schemaName;
             string formName = className + "Form";
 
@@ -29,7 +29,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.writeln(RenderAsString(pTable, classNameSpace, className, formName));
             writeTableRows(output, pTable);
             output.writeln("</asp:Content>");
-            string savePath = Path.Combine(SimetriUtils.ProjeDizininiAl(database), "WebApp\\" + SimetriUtils.SetPascalCase(pTable.Schema) + "\\" + formName + ".aspx");
+            string savePath = Path.Combine(utils.ProjeDizininiAl(database), "WebApp\\" + utils.SetPascalCase(pTable.Schema) + "\\" + formName + ".aspx");
             output.save(savePath, true);
             output.clear();
 
@@ -69,7 +69,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.incTab();
             foreach (IColumn column in table.Columns)
             {
-                string propertyVariableName = SimetriUtils.SetPascalCase(column.Name);
+                string propertyVariableName = utils.SetPascalCase(column.Name);
 
                 cellYazisiniGetir(output, column, propertyVariableName);
 

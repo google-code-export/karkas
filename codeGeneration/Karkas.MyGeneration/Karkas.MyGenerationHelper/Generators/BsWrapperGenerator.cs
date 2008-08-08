@@ -4,20 +4,20 @@ using Zeus;
 using Zeus.Data;
 using Zeus.UserInterface;
 using MyMeta;
-using Simetri.MyGenerationHelper;
+using Karkas.MyGenerationHelper;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Globalization;
 
-namespace Simetri.MyGenerationHelper.Generators
+namespace Karkas.MyGenerationHelper.Generators
 {
 
     public class BsWrapperGenerator
     {
 
 
-        private static Utils SimetriUtils = new Utils();
+        private static Utils utils = new Utils();
         public void Render(IZeusOutput output, ITable table)
         {
             string classNameTypeLibrary = "";
@@ -42,17 +42,17 @@ namespace Simetri.MyGenerationHelper.Generators
 
 
 
-            baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database, table.Schema);
+            baseNameSpace = utils.NamespaceIniAlSchemaIle(database, table.Schema);
             baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
             baseNameSpaceDal = baseNameSpace + ".Dal";
             baseNameSpaceBs = baseNameSpace + ".Bs";
 
-            classNameTypeLibrary = SimetriUtils.SetPascalCase(table.Name);
-            classNameDal = SimetriUtils.SetPascalCase(table.Name) + "Dal";
-            classNameBs = SimetriUtils.SetPascalCase(table.Name) + "Bs";
-            classNameBsWrapper = SimetriUtils.SetPascalCase(table.Name) + "BsWrapper";
+            classNameTypeLibrary = utils.SetPascalCase(table.Name);
+            classNameDal = utils.SetPascalCase(table.Name) + "Dal";
+            classNameBs = utils.SetPascalCase(table.Name) + "Bs";
+            classNameBsWrapper = utils.SetPascalCase(table.Name) + "BsWrapper";
 
-            schemaName = SimetriUtils.SetPascalCase(table.Schema);
+            schemaName = utils.SetPascalCase(table.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
 
 
@@ -60,8 +60,8 @@ namespace Simetri.MyGenerationHelper.Generators
             string baseNameSpaceBsWrapperWithSchema = baseNameSpace + ".BsWrapper." + schemaName;
             string baseNameSpaceDalWithSchema = baseNameSpace + ".Dal." + schemaName;
 
-            string pkType = SimetriUtils.PrimaryKeyTipiniBul(table);
-            string pkAdi = SimetriUtils.PrimaryKeyAdiniBul(table);
+            string pkType = utils.PrimaryKeyTipiniBul(table);
+            string pkAdi = utils.PrimaryKeyAdiniBul(table);
 
 
             output.writeln("");
@@ -73,7 +73,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.writeln("using System.ComponentModel;");
             output.writeln("using System.Web;");
             output.writeln("using System.Web.Caching;");
-            output.writeln("using Simetri.Web.Helpers.HelperClasses;");
+            output.writeln("using Karkas.Web.Helpers.HelperClasses;");
             output.write("using ");
             output.write(baseNameSpaceTypeLibrary);
             output.writeln(";");
@@ -106,7 +106,7 @@ namespace Simetri.MyGenerationHelper.Generators
             output.writeln("    }");
             output.writeln("}");
 
-            string savePath = Path.Combine(SimetriUtils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.generated.cs");
+            string savePath = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.generated.cs");
             //output.writeln(savePath);
             output.save(savePath, true);
             output.clear();

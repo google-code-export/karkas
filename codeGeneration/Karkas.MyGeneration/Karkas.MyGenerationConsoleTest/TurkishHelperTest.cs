@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 
 using MbUnit.Framework;
-using Simetri.MyGenerationHelper;
+using Karkas.MyGenerationHelper;
 
-namespace Simetri.MyGenerationTest
+namespace Karkas.MyGenerationTest
 {
     [TestFixture]
-    [Author("Atilla Özgür", "aozgur@simetri.com")]
+    [Author("Atilla Özgür", "ati.ozgur@gmail.com")]
     public class TurkishHelperTest
     {
-        string hataMesaji = "Turce yardýmcý duzgun calýþmýyor";
+        string hataMesaji = "Turkçe yardýmcý düzgün calýþmýyor";
         [Test]
         public void TestTurkceKarakterler()
         {

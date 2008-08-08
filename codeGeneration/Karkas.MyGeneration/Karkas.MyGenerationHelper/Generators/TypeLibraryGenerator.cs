@@ -2,31 +2,31 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MyMeta;
-using Simetri.MyGenerationHelper;
+using Karkas.MyGenerationHelper;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using Zeus;
 
-namespace Simetri.MyGenerationHelper.Generators
+namespace Karkas.MyGenerationHelper.Generators
 {
     class TypeLibraryGenerator
     {
 
-        Utils SimetriUtils = new Utils();
+        Utils utils = new Utils();
 
         public void Render(IZeusOutput output, ITable table)
         {
             IDatabase database = table.Database;
             output.tabLevel = 0;
 
-            string baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database, table.Schema);
+            string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, table.Schema);
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
-            string className = SimetriUtils.SetPascalCase(table.Name);
-            string schemaName = SimetriUtils.SetPascalCase(table.Schema);
+            string className = utils.SetPascalCase(table.Name);
+            string schemaName = utils.SetPascalCase(table.Schema);
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
-            string outputFullFileName = Path.Combine(SimetriUtils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
+            string outputFullFileName = Path.Combine(utils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
             output.setPreserveSource(outputFullFileName, "//::", ":://");
 
 
@@ -60,13 +60,13 @@ namespace Simetri.MyGenerationHelper.Generators
             IDatabase database = view.Database;
             output.tabLevel = 0;
 
-            string baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database, view.Schema);
+            string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, view.Schema);
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
-            string className = SimetriUtils.SetPascalCase(view.Name);
-            string schemaName = SimetriUtils.SetPascalCase(view.Schema);
+            string className = utils.SetPascalCase(view.Name);
+            string schemaName = utils.SetPascalCase(view.Schema);
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
-            string outputFullFileName = Path.Combine(SimetriUtils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
+            string outputFullFileName = Path.Combine(utils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
             output.setPreserveSource(outputFullFileName, "//::", ":://");
 
 
@@ -99,8 +99,8 @@ namespace Simetri.MyGenerationHelper.Generators
             output.autoTabLn("using System;");
             output.autoTabLn("using System.Collections.Generic;");
             output.autoTabLn("using System.Text;");
-            output.autoTabLn("using Simetri.Core.TypeLibrary;");
-            output.autoTabLn("using Simetri.Core.Validation.ForPonos;");
+            output.autoTabLn("using Karkas.Core.TypeLibrary;");
+            output.autoTabLn("using Karkas.Core.Validation.ForPonos;");
             output.autoTabLn("using System.Data;");
             output.autoTabLn("");
             output.autoTab("namespace ");
@@ -153,7 +153,7 @@ namespace Simetri.MyGenerationHelper.Generators
                 {
                     output.autoTabLn("");
                     output.autoTab("this.Validator.ValidatorList.Add(new RequiredFieldValidator(this, \"");
-                    output.write(SimetriUtils.SetPascalCase(column.Name));
+                    output.write(utils.SetPascalCase(column.Name));
                     output.write("\"));");
 
                 }

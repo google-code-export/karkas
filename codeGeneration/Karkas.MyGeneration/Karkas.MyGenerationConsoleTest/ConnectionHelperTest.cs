@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MbUnit.Framework;
-using Simetri.MyGenerationHelper;
+using Karkas.MyGenerationHelper;
 
-namespace Simetri.MyGenerationTest
+namespace Karkas.MyGenerationTest
 {
     [TestFixture]
-    [Author("Atilla Özgür","aozgur@simetri.com")]
+    [Author("Atilla Özgür","ati.ozgur@gmail.com")]
     public class ConnectionHelperTest
     {
         public static string connectionStringWithProvider = @"Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=False;User ID=sa;Initial Catalog=ITO;Data Source=ATILAPTOP\SQLEXPRESS";

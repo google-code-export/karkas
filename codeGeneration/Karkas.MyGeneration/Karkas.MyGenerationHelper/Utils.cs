@@ -6,11 +6,11 @@ using MyMeta;
 using System.Data;
 using System.Data.SqlClient;
 using System.Xml;
-using Simetri.MyGenerationHelper.Generators;
+using Karkas.MyGenerationHelper.Generators;
 using Zeus;
 using System.IO;
 
-namespace Simetri.MyGenerationHelper
+namespace Karkas.MyGenerationHelper
 {
     public class Utils
     {
@@ -66,7 +66,7 @@ namespace Simetri.MyGenerationHelper
 
 
         #region "Parser Helper Fonksiyonlari"
-        SimetriXmlParser parser = new SimetriXmlParser();
+        KarkasXmlParser parser = new KarkasXmlParser();
 
         public string ProjeNamespaceIsminiAl(IDatabase database)
         {
@@ -93,7 +93,7 @@ namespace Simetri.MyGenerationHelper
 
 
         #region "SMO Helper Fonksiyonlari"
-        SimetriSmoHelper smoHelper = new SimetriSmoHelper();
+        SmoHelper smoHelper = new SmoHelper();
         public string GetTableRelationDescriptions(string pDatabaseName, string pSchemaName, string pTableName,string pConnectionString)
         {
             return smoHelper.GetTableRelationDescriptions(pDatabaseName, pSchemaName, pTableName, pConnectionString);
