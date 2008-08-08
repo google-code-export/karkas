@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.MyGenerationHelper", "Simetri.MyGenerationHelper\Simetri.MyGenerationHelper.csproj", "{100A5B2E-8244-4331-A069-AC9FA98954A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karkas.MyGenerationHelper", "Karkas.MyGenerationHelper\Karkas.MyGenerationHelper.csproj", "{100A5B2E-8244-4331-A069-AC9FA98954A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simetri.MyGenerationConsoleTest", "Simetri.MyGenerationConsoleTest\Simetri.MyGenerationConsoleTest.csproj", "{BAB01BD3-050F-4553-A3FD-9E6231E5BD55}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karkas.MyGenerationConsoleTest", "Karkas.MyGenerationConsoleTest\Karkas.MyGenerationConsoleTest.csproj", "{BAB01BD3-050F-4553-A3FD-9E6231E5BD55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
