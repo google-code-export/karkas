@@ -7,8 +7,8 @@
     <ProjectGuid>{100A5B2E-8244-4331-A069-AC9FA98954A7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Simetri.MyGenerationHelper</RootNamespace>
-    <AssemblyName>Simetri.MyGenerationHelper</AssemblyName>
+    <RootNamespace>Karkas.MyGenerationHelper</RootNamespace>
+    <AssemblyName>Karkas.MyGenerationHelper</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,8 +58,8 @@
     <Compile Include="Generators\NamespaceHelper.cs" />
     <Compile Include="Generators\TypeLibraryGenerator.cs" />
     <Compile Include="Generators\TypeLibraryHelper.cs" />
-    <Compile Include="SimetriSmoHelper.cs" />
-    <Compile Include="SimetriXmlParser.cs" />
+    <Compile Include="KarkasXmlParser.cs" />
+    <Compile Include="SmoHelper.cs" />
     <Compile Include="TurkishHelper.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

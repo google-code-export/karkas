@@ -59,9 +59,9 @@
     <Compile Include="TurkishHelperTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Simetri.MyGenerationHelper\Simetri.MyGenerationHelper.csproj">
+    <ProjectReference Include="..\Karkas.MyGenerationHelper\Karkas.MyGenerationHelper.csproj">
       <Project>{100A5B2E-8244-4331-A069-AC9FA98954A7}</Project>
-      <Name>Simetri.MyGenerationHelper</Name>
+      <Name>Karkas.MyGenerationHelper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
