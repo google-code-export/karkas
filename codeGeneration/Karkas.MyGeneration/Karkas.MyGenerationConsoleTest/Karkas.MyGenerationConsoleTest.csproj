@@ -7,8 +7,8 @@
     <ProjectGuid>{BAB01BD3-050F-4553-A3FD-9E6231E5BD55}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Simetri.MyGenerationConsoleTest</RootNamespace>
-    <AssemblyName>Simetri.MyGenerationConsoleTest</AssemblyName>
+    <RootNamespace>Karkas.MyGenerationConsoleTest</RootNamespace>
+    <AssemblyName>Karkas.MyGenerationConsoleTest</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
