@@ -23,13 +23,13 @@ public class GeneratedGui : DotNetScriptGui
 		if ( !input.Contains( "chooseTables" ) || !input.Contains( "txtPath" ) ||
 				( !input.Contains( "chkClass" ) && !input.Contains( "chkNaming" ) ) )
 		{
-			ui.Title = "Simetri Type Library Kod Üreteci";
+			ui.Title = "Karkas Type Library Kod Üreteci";
 			ui.Width = 980;
 			ui.Height =640;
 	
 			// Grab default output path
-			string sOutputPath = SimetriUtils.ProjeDizininiAl( MyMeta.DefaultDatabase);
-			string sNamespace = SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.DefaultDatabase);
+			string sOutputPath = KarkasUtils.ProjeDizininiAl( MyMeta.DefaultDatabase);
+			string sNamespace = KarkasUtils.ProjeNamespaceIsminiAl( MyMeta.DefaultDatabase);
 
 
 			// Çıkış Dizini TextBox
@@ -219,8 +219,8 @@ public class GeneratedGui : DotNetScriptGui
 		bindViews( dbName,"dbo" );
 		bindSchemas( dbName );
 		
-		outputPath.Text = SimetriUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
-		classNamespace.Text =SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
+		outputPath.Text = KarkasUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
+		classNamespace.Text =KarkasUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
 	}
 	
 	public void chooseSchema_onchange( GuiComboBox control )
@@ -342,7 +342,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			}
 			if (generateAspx)
 			{
-				SimetriUtils.RenderAspxCode(output,table,masterName);
+				KarkasUtils.RenderAspxCode(output,table,masterName);
 			}
 		}
 		IList selectedViews = null;

@@ -1,6 +1,6 @@
 ﻿##|TYPE Template
 ##|UNIQUEID a8c327da-e2f8-453e-aa30-d17898eb69f0
-##|TITLE Simetri Type Library Dal Master Detay
+##|TITLE Karkas Type Library Dal Master Detay
 ##|NAMESPACE 
 ##|SOURCE_TYPE Source
 ##|OUTPUT_LANGUAGE C#
@@ -22,7 +22,7 @@ public class GeneratedGui : DotNetScriptGui
 		if ( !input.Contains( "chooseTables" ) || !input.Contains( "txtPath" ) ||
 				( !input.Contains( "chkClass" ) && !input.Contains( "chkNaming" ) ) )
 		{
-			ui.Title = "Simetri Type Library Code Gen";
+			ui.Title = "Karkas Type Library Code Gen";
 			ui.Width = 600;
 			ui.Height =600;
 	
@@ -182,8 +182,8 @@ public class GeneratedGui : DotNetScriptGui
 		bindTables( dbName,"dbo" );
 		bindViews( dbName );
 		
-		outputPath.Text = SimetriUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
-		classNamespace.Text =SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
+		outputPath.Text = KarkasUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
+		classNamespace.Text =KarkasUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
 	}
 
 	public void chooseSchema_onchange( GuiComboBox control )
@@ -232,16 +232,16 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		{
 			ITable table = database.Tables[tableName];
 
-			classNameTypeLibrary = SimetriUtils.SetPascalCase(table.Name);
-			schemaName = SimetriUtils.SetPascalCase(table.Schema);
+			classNameTypeLibrary = KarkasUtils.SetPascalCase(table.Name);
+			schemaName = KarkasUtils.SetPascalCase(table.Schema);
 			classNameSpace = baseNameSpace + "." + schemaName;
 			bool identityVarmi;
 			string pkcumlesi = "";
 
 			string baseNameSpaceDal = baseNameSpace + ".Dal." +schemaName;
 			
-			string pkType = SimetriUtils.PrimaryKeyTipiniBul(table);
-			string pkAdi = SimetriUtils.PrimaryKeyAdiniBul(table);
+			string pkType = KarkasUtils.PrimaryKeyTipiniBul(table);
+			string pkAdi = KarkasUtils.PrimaryKeyAdiniBul(table);
 
 
 
@@ -252,18 +252,18 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			
 				if (fkey.PrimaryTable.Name != column.Table.Name)
 				{
-				string fKeyShortClassName = SimetriUtils.SetPascalCase(fkey.ForeignTable.Name);
+				string fKeyShortClassName = KarkasUtils.SetPascalCase(fkey.ForeignTable.Name);
 				string fKeyTypeLibraryLongClassName = baseNameSpace
 					+ ".TypeLibrary"
-					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Schema) 
-					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Name);
-				string fKeyDalLongClassName = SimetriUtils.SetPascalCase(baseNameSpace)
+					+ "." + KarkasUtils.SetPascalCase(fkey.ForeignTable.Schema) 
+					+ "." + KarkasUtils.SetPascalCase(fkey.ForeignTable.Name);
+				string fKeyDalLongClassName = KarkasUtils.SetPascalCase(baseNameSpace)
 					+ ".Dal"
-					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Schema) 
-					+ "." + SimetriUtils.SetPascalCase(fkey.ForeignTable.Name)
+					+ "." + KarkasUtils.SetPascalCase(fkey.ForeignTable.Schema) 
+					+ "." + KarkasUtils.SetPascalCase(fkey.ForeignTable.Name)
 					+ "Dal";
-				string fKeyPrimaryKeyTipi =SimetriUtils.PrimaryKeyTipiniBul(fkey.ForeignTable);
-				string fKeyPrimaryKeyAdi = SimetriUtils.PrimaryKeyAdiniBul(fkey.ForeignTable);
+				string fKeyPrimaryKeyTipi =KarkasUtils.PrimaryKeyTipiniBul(fkey.ForeignTable);
+				string fKeyPrimaryKeyAdi = KarkasUtils.PrimaryKeyAdiniBul(fkey.ForeignTable);
 				string whereName = "";
 				if (fkey.ForeignColumns.Count == 1)
 				{

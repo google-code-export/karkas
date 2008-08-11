@@ -1,6 +1,6 @@
 ﻿##|TYPE Template
 ##|UNIQUEID 275d2c0f-018f-499f-9f5f-f259e7c5a9f3
-##|TITLE Simetri Enum
+##|TITLE Karkas Enum
 ##|NAMESPACE 
 ##|SOURCE_TYPE Source
 ##|OUTPUT_LANGUAGE None
@@ -21,14 +21,14 @@ public class GeneratedGui : DotNetScriptGui
 		if ( !input.Contains( "chooseTables" ) || !input.Contains( "txtPath" ) ||
 				( !input.Contains( "chkClass" ) && !input.Contains( "chkNaming" ) ) )
 		{
-			ui.Title = "Simetri Type Library Code Gen";
+			ui.Title = "Karkas Type Library Code Gen";
 			ui.Width = 600;
 			ui.Height =600;
 	
 			// Grab default output path
 			
-			string sOutputPath = SimetriUtils.ProjeDizininiAl( MyMeta.DefaultDatabase);
-			string sNamespace = SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.DefaultDatabase);
+			string sOutputPath = KarkasUtils.ProjeDizininiAl( MyMeta.DefaultDatabase);
+			string sNamespace = KarkasUtils.ProjeNamespaceIsminiAl( MyMeta.DefaultDatabase);
 
 			
 
@@ -185,8 +185,8 @@ public class GeneratedGui : DotNetScriptGui
 		bindTables( dbName,"dbo" );
 		bindViews( dbName );
 		
-		outputPath.Text = SimetriUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
-		classNamespace.Text =SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
+		outputPath.Text = KarkasUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
+		classNamespace.Text =KarkasUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
 	}
 	public void chooseSchema_onchange( GuiComboBox control )
 	{
@@ -230,11 +230,11 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		foreach (String tableName in selectedTables)
 		{
 			ITable table = database.Tables[tableName];
-			string baseNameSpace = SimetriUtils.NamespaceIniAlSchemaIle(database,table.Schema);
+			string baseNameSpace = KarkasUtils.NamespaceIniAlSchemaIle(database,table.Schema);
 			string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
-			className = SimetriUtils.SetPascalCase(table.Name);
-			schemaName = SimetriUtils.SetPascalCase(table.Schema);
+			className = KarkasUtils.SetPascalCase(table.Name);
+			schemaName = KarkasUtils.SetPascalCase(table.Schema);
 			classNameSpace = baseNameSpaceTypeLibrary + ".Enums." + schemaName;
 			
 %>using System;
@@ -244,14 +244,14 @@ using System.Text;
 namespace <%=classNameSpace%>
 {
 	<%
-	output.writeln(SimetriUtils.GetEnumDescription(databaseName,table.Schema,tableName,MyMeta.ConnectionString));
+	output.writeln(KarkasUtils.GetEnumDescription(databaseName,table.Schema,tableName,MyMeta.ConnectionString));
 	%>
 
 }
 <%
 //			output.writeln(className);
 
-			string outputFile =Path.Combine( SimetriUtils.DizininiAlDatabaseVeSchemaIle(database,table.Schema) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\Enums\\" + schemaName , className + ".cs");
+			string outputFile =Path.Combine( KarkasUtils.DizininiAlDatabaseVeSchemaIle(database,table.Schema) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\Enums\\" + schemaName , className + ".cs");
 			output.save( outputFile, false );
 			output.clear();
 			}
