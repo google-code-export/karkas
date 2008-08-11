@@ -1,6 +1,6 @@
 ﻿##|TYPE Template
 ##|UNIQUEID 110e43e8-0883-4594-b169-ecec306ea4e8
-##|TITLE Simetri Type Library,Dal,Bs,BsWrapper
+##|TITLE Karkas Type Library,Dal,Bs,BsWrapper
 ##|NAMESPACE 
 ##|SOURCE_TYPE Source
 ##|OUTPUT_LANGUAGE None
@@ -23,13 +23,13 @@ public class GeneratedGui : DotNetScriptGui
 		if ( !input.Contains( "chooseTables" ) || !input.Contains( "txtPath" ) ||
 				( !input.Contains( "chkClass" ) && !input.Contains( "chkNaming" ) ) )
 		{
-			ui.Title = "Simetri Type Library Kod Üreteci";
+			ui.Title = "Karkas Type Library Kod Üreteci";
 			ui.Width = 980;
 			ui.Height =640;
 	
 			// Grab default output path
-			string sOutputPath = SimetriUtils.ProjeDizininiAl( MyMeta.DefaultDatabase);
-			string sNamespace = SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.DefaultDatabase);
+			string sOutputPath = KarkasUtils.ProjeDizininiAl( MyMeta.DefaultDatabase);
+			string sNamespace = KarkasUtils.ProjeNamespaceIsminiAl( MyMeta.DefaultDatabase);
 
 
 			// Çıkış Dizini TextBox
@@ -249,8 +249,8 @@ public class GeneratedGui : DotNetScriptGui
 		bindViews( dbName,"dbo" );
 		bindSchemas( dbName );
 		
-		outputPath.Text = SimetriUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
-		classNamespace.Text =SimetriUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
+		outputPath.Text = KarkasUtils.ProjeDizininiAl( MyMeta.Databases[dbName]); 
+		classNamespace.Text =KarkasUtils.ProjeNamespaceIsminiAl( MyMeta.Databases[dbName]);
 	}
 	
 	public void chooseSchema_onchange( GuiComboBox control )
@@ -394,27 +394,27 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			}
 			if (generateDatabaseTables)
 			{
-				SimetriUtils.RenderDatabaseTablesCode(output,table,MyMeta.ConnectionString);
+				KarkasUtils.RenderDatabaseTablesCode(output,table,MyMeta.ConnectionString);
 			}
 			if (generateTypeLibrary)
 			{
-				SimetriUtils.RenderTypeLibraryCode(output,table);
+				KarkasUtils.RenderTypeLibraryCode(output,table);
 			}
 			if (generateDal)
 			{
-				SimetriUtils.RenderDalCode(output,table);
+				KarkasUtils.RenderDalCode(output,table);
 			}
 			if (generateBs)
 			{
-				SimetriUtils.RenderBsCode(output,table);
+				KarkasUtils.RenderBsCode(output,table);
 			}
 			if (generateBsWrapper)
 			{
-				SimetriUtils.RenderBsWrapperCode(output,table);
+				KarkasUtils.RenderBsWrapperCode(output,table);
 			}
 //			if (generateAspx)
 //			{
-//				SimetriUtils.RenderAspxCode(output,table);
+//				KarkasUtils.RenderAspxCode(output,table);
 //			}
 		}
 		IList selectedViews = null;
@@ -439,7 +439,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 				string viewName = selectedViews[i] as String;
 				view = database.Views[viewName];
 			}
-			SimetriUtils.RenderTypeLibraryCode(output,view);
+			KarkasUtils.RenderTypeLibraryCode(output,view);
 		}
 
 
