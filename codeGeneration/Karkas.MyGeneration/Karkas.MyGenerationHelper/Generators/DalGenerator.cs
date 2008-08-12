@@ -15,26 +15,30 @@ namespace Karkas.MyGenerationHelper.Generators
     public class DalGenerator
     {
         private static Utils utils = new Utils();
+
+        string classNameTypeLibrary = "";
+        string schemaName = "";
+        string classNameSpace = "";
+        string memberVariableName = "";
+        string propertyVariableName = "";
+        string baseNameSpace = "";
+        string baseNameSpaceTypeLibrary = "";
+        string pkAdi = "";
+        string identityColumnAdi = "";
+
+        string listeType = "";
+
         public void Render(IZeusOutput output, ITable table)
         {
-            string classNameTypeLibrary = "";
-            string schemaName = "";
-            string classNameSpace = "";
-            string memberVariableName = "";
-            string propertyVariableName = "";
-            string baseNameSpace = "";
-            string baseNameSpaceTypeLibrary = "";
-
             IDatabase database = table.Database;
-
             baseNameSpace = utils.NamespaceIniAlSchemaIle(database, table.Schema);
             baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
-            string pkAdi = utils.PrimaryKeyAdiniBul(table);
-            string identityColumnAdi = utils.IdentityColumnAdiniBul(table);
+            pkAdi = utils.PrimaryKeyAdiniBul(table);
+            identityColumnAdi = utils.IdentityColumnAdiniBul(table);
             if (pkAdi == "")
             {
-                output.writeln("Sectiginiz tablolardan birinde Primary Key yoktur. Code Generation sadace primaryKey'i olan tablolarda duzgun calisir.");
+                output.autoTabLn("Sectiginiz tablolardan birinde Primary Key yoktur. Code Generation sadace primaryKey'i olan tablolarda duzgun calisir.");
                 return;
             }
 
@@ -51,12 +55,15 @@ namespace Karkas.MyGenerationHelper.Generators
             string pkType = utils.PrimaryKeyTipiniBul(table);
             string identityType = utils.IdentityTipiniBul(table);
 
+            listeType = "List<" + classNameTypeLibrary + ">";
+
+            
 
             UsingleriYaz(output, schemaName, baseNameSpaceTypeLibrary);
 
             ClassYaz(output, classNameTypeLibrary, identityVarmi, baseNameSpaceDal, identityType);
 
-            output.writeln("");
+            output.autoTabLn("");
 
             SelectCountYaz(output, table);
 
@@ -85,392 +92,42 @@ namespace Karkas.MyGenerationHelper.Generators
             UpdateCommandParametersAddYaz(output, table, classNameTypeLibrary);
             DeleteCommandParametersAddYaz(output, table, classNameTypeLibrary);
 
-            output.writeln("");
-            output.writeln("");
-            output.writeln("");
-            output.writeln("    }");
-            output.writeln("}");
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentezVeTabAzalt(output);
 
-            //			output.writeln(className);
             output.save(Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName, classNameTypeLibrary + "Dal.generated.cs"), false);
             output.clear();
 
 
         }
 
-        private static void DeleteCommandParametersAddYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
+        private void UsingleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary)
         {
-            output.write("        protected override void DeleteCommandParametersAdd(SqlCommand cmd, ");
-            output.write(classNameTypeLibrary);
-            output.writeln(" row)");
-            output.writeln("        {");
-            output.write("\t\t\tParameterBuilder builder = new ParameterBuilder(cmd);");
-
-            foreach (IColumn column in table.Columns)
-            {
-                if (column.IsInPrimaryKey)
-                {
-                    if (column.CharacterMaxLength == 0)
-                    {
-                        output.writeln("");
-                        output.write("\t\t\tbuilder.parameterEkle(\"@");
-                        output.write(column.Name);
-                        output.write("\",");
-                        output.write(column.DbTargetType);
-                        output.write(", row.");
-                        output.write(utils.SetPascalCase(column.Name));
-                        output.write(");");
-
-                    }
-                    else
-                    {
-                        output.writeln("");
-                        output.write("\t\t\tbuilder.parameterEkle(\"@");
-                        output.write(column.Name);
-                        output.write("\",");
-                        output.write(column.DbTargetType);
-                        output.write(", row.");
-                        output.write(utils.SetPascalCase(column.Name));
-                        output.write(",");
-                        output.write(Convert.ToString(column.CharacterMaxLength));
-                        output.write(");");
-
-                    }
-                }
-            }
-
-            output.writeln("");
-            output.writeln("        }");
+            output.autoTabLn("using System;");
+            output.autoTabLn("using System.Collections.Generic;");
+            output.autoTabLn("using System.Data;");
+            output.autoTabLn("using System.Data.SqlClient;");
+            output.autoTabLn("using System.Text;");
+            output.autoTabLn("using Karkas.Core.DataUtil;");
+            output.autoTab("using ");
+            output.autoTab(baseNameSpaceTypeLibrary);
+            output.autoTabLn(";");
+            output.autoTab("using ");
+            output.autoTab(baseNameSpaceTypeLibrary);
+            output.autoTab(".");
+            output.autoTab(schemaName);
+            output.autoTabLn(";");
+            output.autoTabLn("");
+            output.autoTabLn("");
         }
 
-        private static void UpdateCommandParametersAddYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
+        private void ClassYaz(IZeusOutput output, string classNameTypeLibrary, bool identityVarmi, string baseNameSpaceDal, string identityType)
         {
-            output.write("        protected override void UpdateCommandParametersAdd(SqlCommand cmd, ");
-            output.write(classNameTypeLibrary);
-            output.writeln(" row)");
-            output.writeln("        {");
-            output.write("\t\t\tParameterBuilder builder = new ParameterBuilder(cmd);");
-
-            foreach (IColumn column in table.Columns)
-            {
-                if (column.IsComputed)
-                {
-                    continue;
-                }
-                if (column.CharacterMaxLength == 0)
-                {
-                    output.writeln("");
-                    output.write("\t\t\tbuilder.parameterEkle(\"@");
-                    output.write(column.Name);
-                    output.write("\",");
-                    output.write(column.DbTargetType);
-                    output.write(", row.");
-                    output.write(utils.SetPascalCase(column.Name));
-                    output.write(");");
-
-                }
-                else
-                {
-                    output.writeln("");
-                    output.write("\t\t\tbuilder.parameterEkle(\"@");
-                    output.write(column.Name);
-                    output.write("\",");
-                    output.write(column.DbTargetType);
-                    output.write(", row.");
-                    output.write(utils.SetPascalCase(column.Name));
-                    output.write(",");
-                    output.write(Convert.ToString(column.CharacterMaxLength));
-                    output.write(");");
-
-                }
-            }
-
-            output.writeln("");
-            output.writeln("        }");
-        }
-
-        private static void InsertCommandParametersAddYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
-        {
-            output.write("        protected override void InsertCommandParametersAdd(SqlCommand cmd, ");
-            output.write(classNameTypeLibrary);
-            output.writeln(" row)");
-            output.writeln("        {");
-            output.writeln("\t\t\tParameterBuilder builder = new ParameterBuilder(cmd);");
-
-            string paramName = "";
-            foreach (IColumn column in table.Columns)
-            {
-                if (!column.IsAutoKey)
-                {
-                    if (column.IsComputed)
-                    {
-                        continue;
-                    }
-                    if (column.CharacterMaxLength == 0)
-                    {
-                        output.writeln("");
-                        output.write("\t\t\tbuilder.parameterEkle(\"@");
-                        output.write(column.Name);
-                        output.write("\",");
-                        output.write(column.DbTargetType);
-                        output.write(", row.");
-                        output.write(utils.SetPascalCase(column.Name));
-                        output.write(");");
-
-                    }
-                    else
-                    {
-                        output.writeln("");
-                        output.write("\t\t\tbuilder.parameterEkle(\"@");
-                        output.write(column.Name);
-                        output.write("\",");
-                        output.write(column.DbTargetType);
-                        output.write(", row.");
-                        output.write(utils.SetPascalCase(column.Name));
-                        output.write(",");
-                        output.write(Convert.ToString(column.CharacterMaxLength));
-                        output.write(");");
-
-                    }
-                }
-            }
-
-            output.writeln("");
-            output.writeln("        }");
-        }
-
-        private static string ProcessRowYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
-        {
-            string propertyVariableName = "";
-            output.write("        protected override void ProcessRow(System.Data.IDataReader dr, ");
-            output.write(classNameTypeLibrary);
-            output.writeln(" row)");
-            output.writeln("        {");
-            output.write("\t\t");
-
-
-            for (int i = 0; i < table.Columns.Count; i++)
-            {
-                IColumn column = table.Columns[i];
-                propertyVariableName = utils.SetPascalCase(column.Name);
-                if (column.IsNullable)
-                {
-                    output.writeln("");
-                    output.write("\t\t\t\t\tif (!dr.IsDBNull(");
-                    output.write("" + i);
-                    output.writeln("))");
-                    output.writeln("\t\t\t\t\t{");
-                    output.write("\t\t\t\t\t\trow.");
-                    output.write(propertyVariableName);
-                    output.write(" = ");
-                    output.write(utils.GetDataReaderSyntax(column));
-                    output.write("(");
-                    output.write(i.ToString());
-                    output.writeln(");");
-                    output.writeln("\t\t\t\t\t}");
-                    output.write("\t\t\t\t\t");
-                }
-                else
-                {
-
-                    output.writeln("");
-                    output.write("\t\t\t\t\trow.");
-                    output.write(propertyVariableName);
-                    output.write(" = ");
-                    output.write(utils.GetDataReaderSyntax(column));
-                    output.write("(");
-                    output.write(i.ToString());
-                    output.write(");");
-
-                }
-            }
-
-            output.writeln("\t\t");
-            output.writeln("        }");
-            return propertyVariableName;
-        }
-
-        private static void PkGuidMiYaz(IZeusOutput output, ITable table)
-        {
-            string pkGuidMiSonuc = "";
-            if (utils.PkGuidMi(table))
-            {
-                pkGuidMiSonuc = "true";
-            }
-            else
-            {
-                pkGuidMiSonuc = "false";
-            }
-
-
-            output.writeln(" ");
-            output.writeln("        protected override bool PkGuidMi");
-            output.writeln("        {");
-            output.writeln("            get");
-            output.writeln("            {");
-            output.write("                return ");
-            output.write(pkGuidMiSonuc);
-            output.writeln(";");
-            output.writeln("            }");
-            output.writeln("        }");
-            output.writeln("");
-            output.writeln("\t\t");
-        }
-
-        private static void IdentityVarMiYaz(IZeusOutput output, bool identityVarmi)
-        {
-            string identitySonuc = "";
-            if (identityVarmi)
-            {
-                identitySonuc = "true";
-            }
-            else
-            {
-                identitySonuc = "false";
-            }
-
-            output.writeln(" ");
-            output.writeln("        protected override bool IdentityVarMi");
-            output.writeln("        {");
-            output.writeln("            get");
-            output.writeln("            {");
-            output.write("                return ");
-            output.write(identitySonuc);
-            output.writeln(";");
-            output.writeln("            }");
-            output.writeln("        }");
-            output.writeln("");
-            output.writeln("\t\t");
-        }
-
-        private static void SorgulaPkIleGetirYaz(IZeusOutput output, string classNameTypeLibrary, string pkAdi, string pkType)
-        {
-            output.write("\t\tpublic ");
-            output.write(classNameTypeLibrary);
-            output.write(" Sorgula");
-            output.write(pkAdi);
-            output.write("Ile(");
-            output.write(pkType);
-            output.writeln(" p1)");
-            output.writeln("\t\t{");
-            output.write("\t\t\tList<");
-            output.write(classNameTypeLibrary);
-            output.write("> liste = new List<");
-            output.write(classNameTypeLibrary);
-            output.writeln(">();");
-            output.write("\t\t\tSorguCalistir(liste,String.Format(\" ");
-            output.write(pkAdi);
-            output.writeln(" = '{0}'\", p1));");
-            output.writeln("");
-            output.writeln("            if (liste.Count > 0)");
-            output.writeln("            {");
-            output.writeln("                return liste[0];");
-            output.writeln("            }");
-            output.writeln("            else");
-            output.writeln("            {");
-            output.writeln("                return null;");
-            output.writeln("            }");
-            output.writeln("\t\t}");
-        }
-
-        private static void SorgulaHepsiniGetirYaz(IZeusOutput output, string classNameTypeLibrary)
-        {
-            output.write("\t\tpublic List<");
-            output.write(classNameTypeLibrary);
-            output.writeln("> SorgulaHepsiniGetir()");
-            output.writeln("\t\t{");
-            output.write("\t\t\tList<");
-            output.write(classNameTypeLibrary);
-            output.write("> liste = new List<");
-            output.write(classNameTypeLibrary);
-            output.writeln(">();");
-            output.writeln("\t\t\tSorguCalistir(liste);");
-            output.writeln("            return liste;");
-            output.writeln("\t\t}");
-        }
-
-        private static string DeleteStringYaz(IZeusOutput output, ITable table)
-        {
-            string cumle = "";
-            output.writeln("        protected override string DeleteString");
-            output.writeln("        {");
-            output.writeln("            get ");
-            output.writeln("\t\t\t{ ");
-            output.write("\t\t\t\treturn @\"DELETE ");
-
-            foreach (IColumn column in table.Columns)
-            {
-                if (column.IsInPrimaryKey)
-                {
-                    cumle += column.Name + " = @" + column.Name + " AND";
-                }
-            }
-            cumle = cumle.Remove(cumle.Length - 4);
-
-
-            output.write("  FROM ");
-            output.write(table.Schema);
-            output.write(".");
-            output.write(table.Name);
-            output.write(" WHERE ");
-            output.write(cumle);
-            output.writeln("\";");
-            output.writeln("\t\t\t}");
-            output.writeln("        }");
-            return cumle;
-        }
-
-        private static void SelectStringYaz(IZeusOutput output, ITable table)
-        {
-            output.writeln("        protected override string SelectString");
-            output.writeln("        {");
-            output.writeln("            get ");
-            output.writeln("\t\t\t{ ");
-            output.write("\t\t\t\treturn @\"SELECT ");
-
-            string cumle = "";
-            foreach (IColumn column in table.Columns)
-            {
-                cumle += column.Name + ",";
-            }
-            cumle = cumle.Remove(cumle.Length - 1);
-
-
-            output.write(" ");
-            output.write(cumle);
-            output.write(" FROM ");
-            output.write(table.Schema);
-            output.write(".");
-            output.write(table.Name);
-            output.writeln("\";");
-            output.writeln("\t\t\t}");
-            output.writeln("        }");
-            output.writeln("");
-        }
-
-        private static void SelectCountYaz(IZeusOutput output, ITable table)
-        {
-            output.writeln("        protected override string SelectCountString");
-            output.writeln("        {");
-            output.writeln("            get ");
-            output.writeln("\t\t\t{ ");
-            output.write("\t\t\t\treturn @\"SELECT COUNT(*) FROM ");
-            output.write(table.Schema);
-            output.write(".");
-            output.write(table.Name);
-            output.writeln("\";");
-            output.writeln("\t\t\t}");
-            output.writeln("\t\t}");
-            output.writeln("");
-        }
-
-        private static void ClassYaz(IZeusOutput output, string classNameTypeLibrary, bool identityVarmi, string baseNameSpaceDal, string identityType)
-        {
-            output.write("namespace ");
-            output.write(baseNameSpaceDal);
-            output.writeln("");
-            output.writeln("{");
-            output.write("    public partial class ");
+            output.autoTab("namespace ");
+            output.autoTab(baseNameSpaceDal);
+            output.autoTabLn("");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTab("public partial class ");
             output.write(classNameTypeLibrary);
             if (identityVarmi)
             {
@@ -486,104 +143,78 @@ namespace Karkas.MyGenerationHelper.Generators
                 output.write(classNameTypeLibrary);
                 output.writeln(">");
             }
-            output.writeln("    {");
+            BaslangicSusluParentezVeTabArtir(output);
         }
 
-        private static void UsingleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary)
+
+        private void SelectCountYaz(IZeusOutput output, ITable table)
         {
-            output.writeln("using System;");
-            output.writeln("using System.Collections.Generic;");
-            output.writeln("using System.Data;");
-            output.writeln("using System.Data.SqlClient;");
-            output.writeln("using System.Text;");
-            output.writeln("using Karkas.Core.DataUtil;");
-            output.write("using ");
-            output.write(baseNameSpaceTypeLibrary);
-            output.writeln(";");
-            output.write("using ");
-            output.write(baseNameSpaceTypeLibrary);
-            output.write(".");
-            output.write(schemaName);
-            output.writeln(";");
-            output.writeln("");
-            output.writeln("");
+            output.autoTabLn("protected override string SelectCountString");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("get");
+            BaslangicSusluParentezVeTabArtir(output);
+            string cumle = "return @\"SELECT COUNT(*) FROM " + table.Schema + "." + table.Name + "\";";
+            output.autoTabLn(cumle);
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentezVeTabAzalt(output);
         }
 
-        private static void InsertStringYaz(IZeusOutput output, ITable table, ref bool identityVarmi)
+
+        private  void SelectStringYaz(IZeusOutput output, ITable table)
         {
-            string cumle = "";
-
-            output.writeln("       protected override string InsertString");
-            output.writeln("        {");
-            output.writeln("            get ");
-            output.writeln("\t\t\t{ ");
-            output.write("\t\t\t\treturn @\"INSERT INTO ");
-            output.write(table.Schema);
-            output.write(".");
-            output.write(table.Name);
-            output.write(" ");
-
-            cumle += " (";
-            identityVarmi = false;
+            output.autoTabLn("protected override string SelectString");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("get ");
+            BaslangicSusluParentezVeTabArtir(output);
+            string cumle = "return @\"SELECT ";
             foreach (IColumn column in table.Columns)
             {
-                if (column.IsComputed)
-                {
-                    continue;
-                }
-                if (!column.IsAutoKey)
-                {
-                    cumle += column.Name + ",";
-                }
-                else
-                {
-                    identityVarmi = true;
-                }
-
+                cumle += column.Name + ",";
             }
             cumle = cumle.Remove(cumle.Length - 1);
-            cumle += ") VALUES (";
-
-            output.writeln("");
-            output.write("\t\t\t\t");
-
-            foreach (IColumn column in table.Columns)
-            {
-                if (column.IsComputed)
-                {
-                    continue;
-                }
-                if (!column.IsAutoKey)
-                {
-                    cumle += "@" + column.Name + ",";
-                }
-            }
-            cumle = cumle.Remove(cumle.Length - 1);
-            cumle += ")";
-            if (identityVarmi)
-            {
-                cumle += ";SELECT scope_identity();";
-            }
-
-            output.write("  ");
-            output.write(cumle);
-            output.writeln("\";");
-            output.writeln("\t\t\t}");
-            output.writeln("        }");
+            cumle += " FROM ";
+            cumle += table.Schema + "." + table.Name + "\";";
+            output.autoTabLn(cumle);
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentezVeTabAzalt(output);
         }
 
-        private static void UpdateStringYaz(IZeusOutput output, ITable table, ref string pkcumlesi)
+        private void DeleteStringYaz(IZeusOutput output, ITable table)
         {
             string cumle = "";
-            output.writeln("        protected override string UpdateString");
-            output.writeln("        {");
-            output.writeln("            get ");
-            output.writeln("\t\t\t{ ");
-            output.write("\t\t\t\treturn @\"UPDATE ");
-            output.write(table.Schema);
-            output.write(".");
-            output.write(table.Name);
+            output.autoTabLn("protected override string DeleteString");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("get ");
+            BaslangicSusluParentezVeTabArtir(output);
+            cumle += "return @\"DELETE ";
 
+            string whereClause = "";
+            foreach (IColumn column in table.Columns)
+            {
+                if (column.IsInPrimaryKey)
+                {
+                    whereClause += column.Name + " = @" + column.Name + " AND";
+                }
+            }
+            whereClause = whereClause.Remove(cumle.Length - 4);
+
+
+            cumle += "  FROM " + table.Schema + "." + table.Name + " WHERE ";
+            output.autoTabLn(cumle + whereClause + "\";");
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentezVeTabAzalt(output);
+        }
+
+
+        private void UpdateStringYaz(IZeusOutput output, ITable table, ref string pkcumlesi)
+        {
+            string cumle = "";
+            output.autoTabLn("protected override string UpdateString");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("get ");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("return @\"UPDATE " + table.Schema + "." + table.Name);
+            output.autoTabLn(" SET ");
             foreach (IColumn column in table.Columns)
             {
                 if (column.IsComputed)
@@ -609,22 +240,302 @@ namespace Karkas.MyGenerationHelper.Generators
             }
 
 
-            output.writeln(" SET ");
-            output.write("\t\t\t\t");
-            output.write(cumle);
-            output.writeln("");
-            output.write("\t\t\t\tWHERE ");
-            output.write(pkcumlesi);
-            output.writeln("\";");
-            output.writeln("\t\t\t}");
-            output.writeln("        }");
-            output.writeln("");
+            output.autoTab(cumle);
+            output.autoTabLn("");
+            output.autoTabLn("WHERE ");
+            output.autoTabLn(pkcumlesi + "\";");
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentezVeTabAzalt(output);
+        }
+
+
+
+        private void InsertStringYaz(IZeusOutput output, ITable table, ref bool identityVarmi)
+        {
+            string cumle = "";
+
+            output.autoTabLn("protected override string InsertString");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("get ");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("return @\"INSERT INTO " + table.Schema + "." + table.Name + " ");
+            cumle += " (";
+            identityVarmi = false;
+            foreach (IColumn column in table.Columns)
+            {
+                if (column.IsComputed)
+                {
+                    continue;
+                }
+                if (!column.IsAutoKey)
+                {
+                    cumle += column.Name + ",";
+                }
+                else
+                {
+                    identityVarmi = true;
+                }
+
+            }
+            cumle = cumle.Remove(cumle.Length - 1);
+            cumle += ") ";
+            output.autoTabLn(cumle);
+            output.autoTabLn(" VALUES ");
+            cumle = "(";
+            output.autoTab("");
+            foreach (IColumn column in table.Columns)
+            {
+                if (column.IsComputed)
+                {
+                    continue;
+                }
+                if (!column.IsAutoKey)
+                {
+                    cumle += "@" + column.Name + ",";
+                }
+            }
+            cumle = cumle.Remove(cumle.Length - 1);
+            cumle += ")";
+            if (identityVarmi)
+            {
+                cumle += ";SELECT scope_identity();";
+            }
+            output.autoTabLn(cumle + "\";");
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentezVeTabAzalt(output);
+        }
+
+
+        private  void SorgulaHepsiniGetirYaz(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.autoTabLn("public " +  listeType + "SorgulaHepsiniGetir()");
+            BaslangicSusluParentezVeTabArtir(output);
+            listeTanimla(output);
+            output.autoTabLn("SorguCalistir(liste);");
+            output.autoTabLn("return liste;");
+            BitisSusluParentezVeTabAzalt(output);
+        }
+
+        private void listeTanimla(IZeusOutput output)
+        {
+            output.autoTabLn(listeType + " liste = new " + listeType + "();");
+        }
+
+        private void SorgulaPkIleGetirYaz(IZeusOutput output, string classNameTypeLibrary, string pkAdi, string pkType)
+        {
+            string classSatiri = "public " + classNameTypeLibrary + " Sorgula"
+                            + pkAdi + "Ile(" + pkType
+                            + " p1)";
+            output.autoTabLn(classSatiri);
+            BaslangicSusluParentezVeTabArtir(output);
+            listeTanimla(output);
+            output.autoTab("SorguCalistir(liste,String.Format(\" " + pkAdi + " = '{0}'\", p1));");
+            output.autoTabLn("");
+            output.autoTabLn("if (liste.Count > 0)");
+            output.autoTabLn("{");
+            output.autoTabLn("\treturn liste[0];");
+            output.autoTabLn("}");
+            output.autoTabLn("else");
+            output.autoTabLn("{");
+            output.autoTabLn("\treturn null;");
+            output.autoTabLn("}");
+            BitisSusluParentezVeTabAzalt(output);
+        }
+
+        private static void IdentityVarMiYaz(IZeusOutput output, bool identityVarmi)
+        {
+            string identitySonuc = "";
+            if (identityVarmi)
+            {
+                identitySonuc = "true";
+            }
+            else
+            {
+                identitySonuc = "false";
+            }
+
+            output.autoTabLn("");
+            output.autoTabLn("protected override bool IdentityVarMi");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("get");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("return " + identitySonuc + ";");
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentezVeTabAzalt(output);
+        }
+        private static void PkGuidMiYaz(IZeusOutput output, ITable table)
+        {
+            string pkGuidMiSonuc = "";
+            if (utils.PkGuidMi(table))
+            {
+                pkGuidMiSonuc = "true";
+            }
+            else
+            {
+                pkGuidMiSonuc = "false";
+            }
+
+
+            output.autoTabLn("");
+            output.autoTabLn("protected override bool PkGuidMi");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("get");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("return " + pkGuidMiSonuc + ";");
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentezVeTabAzalt(output);
+            output.autoTabLn("");
+        }
+
+        private static void ProcessRowYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
+        {
+            string propertyVariableName = "";
+            output.autoTab("protected override void ProcessRow(System.Data.IDataReader dr, ");
+            output.write(classNameTypeLibrary);
+            output.writeln(" row)");
+            BaslangicSusluParentezVeTabArtir(output);
+            for (int i = 0; i < table.Columns.Count; i++)
+            {
+                IColumn column = table.Columns[i];
+                propertyVariableName = utils.SetPascalCase(column.Name);
+                string yazi = "row." + propertyVariableName + " = " +
+                                utils.GetDataReaderSyntax(column)
+                                + "(" + i + ");";
+                if (column.IsNullable)
+                {
+                    output.autoTabLn("if (!dr.IsDBNull("  + i + "))");
+                    BaslangicSusluParentezVeTabArtir(output);
+                    output.autoTabLn(yazi);
+                    BitisSusluParentezVeTabAzalt(output);
+                }
+                else
+                {
+                    output.autoTabLn(yazi);
+                }
+            }
+            BitisSusluParentezVeTabAzalt(output);
+        }
+
+        private static void BaslangicSusluParentezVeTabArtir(IZeusOutput output)
+        {
+            output.autoTabLn("{");
+            output.incTab();
+        }
+        private static void BitisSusluParentezVeTabAzalt(IZeusOutput output)
+        {
+            output.decTab();
+            output.autoTabLn("}");
+        }
+
+        private static void InsertCommandParametersAddYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
+        {
+            output.autoTab("protected override void InsertCommandParametersAdd(SqlCommand cmd, ");
+            output.write(classNameTypeLibrary);
+            output.writeln(" row)");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("ParameterBuilder builder = new ParameterBuilder(cmd);");
+
+            string paramName = "";
+            foreach (IColumn column in table.Columns)
+            {
+                if (!column.IsAutoKey)
+                {
+                    builderParameterEkle(output, column);
+                }
+            }
+
+            BitisSusluParentezVeTabAzalt(output);
+        }
+
+        private static void builderParameterEkle(IZeusOutput output, IColumn column)
+        {
+            if (column.CharacterMaxLength == 0)
+            {
+                builderParameterEkleNormal(output, column);
+
+            }
+            else
+            {
+                builderParameterEkleString(output, column);
+            }
+        }
+
+        private static void builderParameterEkleString(IZeusOutput output, IColumn column)
+        {
+            string s = "builder.parameterEkle(\"@"
+                        + column.Name
+                        + "\","
+                        + column.DbTargetType
+                        + ", row."
+                        + utils.SetPascalCase(column.Name)
+                        + ","
+                        + Convert.ToString(column.CharacterMaxLength)
+                        + ");";
+            output.autoTabLn(s);
+        }
+
+        private static void builderParameterEkleNormal(IZeusOutput output, IColumn column)
+        {
+            string s = "builder.parameterEkle(\"@"
+                        + column.Name
+                        + "\","
+                        + column.DbTargetType
+                        + ", row."
+                        + utils.SetPascalCase(column.Name)
+                        + ");";
+            output.autoTabLn(s);
+        }
+
+        private static void DeleteCommandParametersAddYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
+        {
+            output.autoTab("protected override void DeleteCommandParametersAdd(SqlCommand cmd, ");
+            output.autoTab(classNameTypeLibrary);
+            output.autoTabLn(" row)");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("ParameterBuilder builder = new ParameterBuilder(cmd);");
+
+            foreach (IColumn column in table.Columns)
+            {
+                if (column.IsInPrimaryKey)
+                {
+                    builderParameterEkle(output, column);
+                }
+            }
+
+            BitisSusluParentezVeTabAzalt(output);
+        }
+
+        private static void UpdateCommandParametersAddYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
+        {
+            output.autoTab("protected override void UpdateCommandParametersAdd(SqlCommand cmd, ");
+            output.autoTab(classNameTypeLibrary);
+            output.autoTabLn(" row)");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("ParameterBuilder builder = new ParameterBuilder(cmd);");
+            foreach (IColumn column in table.Columns)
+            {
+                if (column.IsComputed)
+                {
+                    continue;
+                }
+                builderParameterEkle(output, column);
+            }
+            BitisSusluParentezVeTabAzalt(output);
         }
 
 
 
 
-    }
 
-    //-- Class DotNetScriptTemplate Generated by Zeus
+
+
+
+
+
+
+
+
+
+
+    }
 }
