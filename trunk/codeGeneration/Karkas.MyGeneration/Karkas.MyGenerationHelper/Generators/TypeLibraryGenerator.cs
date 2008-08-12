@@ -159,7 +159,7 @@ namespace Karkas.MyGenerationHelper.Generators
                 }
             }
             output.decTab();
-            output.autoTabLn("");
+            output.write("");
             output.autoTabLn("}");
             output.decTab();
         }
