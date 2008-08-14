@@ -103,13 +103,6 @@ namespace Karkas.MyGenerationHelper.Generators
 
         }
 
-        //public override string DatabaseName
-        //{
-        //    get
-        //    {
-        //        return base.DatabaseName;
-        //    }
-        //}
 
         private void OverrideDatabaseNameYaz(IZeusOutput output, ITable table)
         {
