@@ -65,6 +65,8 @@ namespace Karkas.MyGenerationHelper.Generators
 
             output.autoTabLn("");
 
+            OverrideDatabaseNameYaz(output, table);
+
             SelectCountYaz(output, table);
 
             SelectStringYaz(output, table);
@@ -100,6 +102,26 @@ namespace Karkas.MyGenerationHelper.Generators
 
 
         }
+
+        //public override string DatabaseName
+        //{
+        //    get
+        //    {
+        //        return base.DatabaseName;
+        //    }
+        //}
+
+        private void OverrideDatabaseNameYaz(IZeusOutput output, ITable table)
+        {
+            output.autoTabLn("public override string DatabaseName");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("get");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn(string.Format("return \"{0}\";" , table.Database.Name));
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentezVeTabAzalt(output);
+        }
+
 
         private void UsingleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary)
         {
