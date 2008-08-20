@@ -42,7 +42,7 @@ namespace Karkas.MyGenerationHelper.Generators
         }
 
 
-        public static void writeProperties(IZeusOutput output, IView view)
+        public static void PropertiesYaz(IZeusOutput output, IView view)
         {
             output.incTab();
             foreach (IColumn column in view.Columns)
@@ -105,7 +105,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.decTab();
             output.writeln("");
         }
-        public static void writeMemberVariablesView(IZeusOutput output, IView view)
+        public static void MemberVariablesViewYaz(IZeusOutput output, IView view)
         {
             output.incTab();
             foreach (IColumn column in view.Columns)
