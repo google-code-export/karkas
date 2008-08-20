@@ -30,9 +30,9 @@ namespace Karkas.MyGenerationHelper.Generators
             output.setPreserveSource(outputFullFileName, "//::", ":://");
 
 
-            writeNamespaces(output, classNameSpace);
+            NamespaceleriYaz(output, classNameSpace);
 
-            writeClassName(output, className);
+            ClassIsmiYaz(output, className);
 
             output.autoTabLn("{");
 
@@ -44,7 +44,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
             output.writeln("");
 
-            writeValidationCode(output, table);
+            OnaylamaKoduYaz(output, table);
             output.autoTabLn("}");
             output.decTab();
             output.autoTabLn("}");
@@ -70,20 +70,20 @@ namespace Karkas.MyGenerationHelper.Generators
             output.setPreserveSource(outputFullFileName, "//::", ":://");
 
 
-            writeNamespaces(output, classNameSpace);
+            NamespaceleriYaz(output, classNameSpace);
 
 
-            writeClassName(output, className);
+            ClassIsmiYaz(output, className);
 
             output.autoTabLn("{");
 
-            TypeLibraryHelper.writeMemberVariablesView(output, view);
+            TypeLibraryHelper.MemberVariablesViewYaz(output, view);
 
-            TypeLibraryHelper.writeProperties(output, view);
+            TypeLibraryHelper.PropertiesYaz(output, view);
 
             output.writeln("");
 
-            writeValidationCode(output, view);
+            OnaylamaKoduYaz(output, view);
             output.autoTabLn("}");
             output.decTab();
             output.autoTabLn("}");
@@ -94,7 +94,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.clear();
         }
 
-        private static void writeNamespaces(IZeusOutput output, string classNameSpace)
+        private static void NamespaceleriYaz(IZeusOutput output, string classNameSpace)
         {
             output.autoTabLn("using System;");
             output.autoTabLn("using System.Collections.Generic;");
@@ -109,7 +109,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn("{");
         }
 
-        private static void writeClassName(IZeusOutput output, string className)
+        private static void ClassIsmiYaz(IZeusOutput output, string className)
         {
             output.incTab();
             output.autoTabLn("[Serializable]");
@@ -135,13 +135,13 @@ namespace Karkas.MyGenerationHelper.Generators
             output.writeln("");
         }
 
-        private void writeValidationCode(IZeusOutput output, IView view)
+        private void OnaylamaKoduYaz(IZeusOutput output, IView view)
         {
             output.autoTabLn("protected override void ValidationListesiniOlusturCodeGeneration(){}");
         }
         
 
-        private void writeValidationCode(IZeusOutput output, ITable table)
+        private void OnaylamaKoduYaz(IZeusOutput output, ITable table)
         {
             output.autoTabLn("protected override void ValidationListesiniOlusturCodeGeneration()");
             output.autoTab("{");
