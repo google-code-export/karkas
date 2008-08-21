@@ -52,6 +52,7 @@
     <Compile Include="EnumHelper.cs" />
     <Compile Include="Generators\AspxCsGenerator.cs" />
     <Compile Include="Generators\AspxGenerator.cs" />
+    <Compile Include="Generators\BaseGenerator.cs" />
     <Compile Include="Generators\BsGenerator.cs" />
     <Compile Include="Generators\BsWrapperGenerator.cs" />
     <Compile Include="Generators\DalGenerator.cs" />

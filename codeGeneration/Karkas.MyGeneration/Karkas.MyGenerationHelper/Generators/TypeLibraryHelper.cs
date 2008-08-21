@@ -6,10 +6,10 @@ using MyMeta;
 
 namespace Karkas.MyGenerationHelper.Generators
 {
-    public class TypeLibraryHelper
+    public class TypeLibraryHelper : BaseGenerator
     {
         private static Utils utils = new Utils();
-        public static void writeProperties(IZeusOutput output, ITable table)
+        public static void PropertiesYaz(IZeusOutput output, ITable table)
         {
             output.incTab();
             foreach (IColumn column in table.Columns)
@@ -75,7 +75,7 @@ namespace Karkas.MyGenerationHelper.Generators
         }
 
 
-        public static void writeShallowCopy(IZeusOutput output, ITable table, string pTypeName)
+        public static void ShallowCopyYaz(IZeusOutput output, ITable table, string pTypeName)
         {
             output.incTab();
             output.autoTabLn(string.Format("public {0} ShallowCopy()", pTypeName));
@@ -95,7 +95,7 @@ namespace Karkas.MyGenerationHelper.Generators
         }
 
 
-        public static void writeMemberVariables(IZeusOutput output, ITable table)
+        public static void MemberVariablesYaz(IZeusOutput output, ITable table)
         {
             output.incTab();
             foreach (IColumn column in table.Columns)
