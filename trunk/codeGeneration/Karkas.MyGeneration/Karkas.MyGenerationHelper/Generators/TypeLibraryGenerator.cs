@@ -10,7 +10,7 @@ using Zeus;
 
 namespace Karkas.MyGenerationHelper.Generators
 {
-    class TypeLibraryGenerator
+    public class TypeLibraryGenerator : BaseGenerator
     {
 
         Utils utils = new Utils();
@@ -36,11 +36,11 @@ namespace Karkas.MyGenerationHelper.Generators
 
             output.autoTabLn("{");
 
-            TypeLibraryHelper.writeMemberVariables(output, table);
+            TypeLibraryHelper.MemberVariablesYaz(output, table);
 
-            TypeLibraryHelper.writeProperties(output, table);
+            TypeLibraryHelper.PropertiesYaz(output, table);
 
-            TypeLibraryHelper.writeShallowCopy(output, table, className);
+            TypeLibraryHelper.ShallowCopyYaz(output, table, className);
 
             output.writeln("");
 
@@ -97,11 +97,12 @@ namespace Karkas.MyGenerationHelper.Generators
         private static void NamespaceleriYaz(IZeusOutput output, string classNameSpace)
         {
             output.autoTabLn("using System;");
-            output.autoTabLn("using System.Collections.Generic;");
-            output.autoTabLn("using System.Text;");
-            output.autoTabLn("using Karkas.Core.TypeLibrary;");
-            output.autoTabLn("using Karkas.Core.Validation.ForPonos;");
             output.autoTabLn("using System.Data;");
+            output.autoTabLn("using System.Text;");
+            output.autoTabLn("using System.Collections.Generic;");
+            output.autoTabLn("using Karkas.Core.TypeLibrary;");
+            output.autoTabLn("using Karkas.Core.Onaylama;");
+            output.autoTabLn("using Karkas.Core.Onaylama.ForPonos;");
             output.autoTabLn("");
             output.autoTab("namespace ");
             output.autoTab(classNameSpace);
@@ -137,31 +138,26 @@ namespace Karkas.MyGenerationHelper.Generators
 
         private void OnaylamaKoduYaz(IZeusOutput output, IView view)
         {
-            output.autoTabLn("protected override void ValidationListesiniOlusturCodeGeneration(){}");
+            output.autoTabLn("protected override void OnaylamaListesiniOlusturCodeGeneration(){}");
         }
         
 
         private void OnaylamaKoduYaz(IZeusOutput output, ITable table)
         {
-            output.autoTabLn("protected override void ValidationListesiniOlusturCodeGeneration()");
-            output.autoTab("{");
-            output.incTab();
-            output.incTab();
+            output.autoTabLn("protected override void OnaylamaListesiniOlusturCodeGeneration()");
+            BaslangicSusluParentezVeTabArtir(output);
             foreach (IColumn column in table.Columns)
             {
                 if ((!column.IsNullable) && (!column.IsInPrimaryKey))
                 {
                     output.autoTabLn("");
-                    output.autoTab("this.Validator.ValidatorList.Add(new RequiredFieldValidator(this, \"");
+                    output.autoTab("this.Onaylayici.OnaylayiciListesi.Add(new GerekliAlanOnaylayici(this, \"");
                     output.write(utils.SetPascalCase(column.Name));
                     output.write("\"));");
 
                 }
             }
-            output.decTab();
-            output.write("");
-            output.autoTabLn("}");
-            output.decTab();
+            BitisSusluParentezVeTabAzalt(output);
         }
 
 

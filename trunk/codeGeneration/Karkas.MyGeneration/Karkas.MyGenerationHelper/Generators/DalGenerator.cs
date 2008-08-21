@@ -12,7 +12,7 @@ using System.Globalization;
 
 namespace Karkas.MyGenerationHelper.Generators
 {
-    public class DalGenerator
+    public class DalGenerator : BaseGenerator
     {
         private static Utils utils = new Utils();
 
@@ -357,7 +357,7 @@ namespace Karkas.MyGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
         }
 
-        private static void IdentityVarMiYaz(IZeusOutput output, bool identityVarmi)
+        private void IdentityVarMiYaz(IZeusOutput output, bool identityVarmi)
         {
             string identitySonuc = "";
             if (identityVarmi)
@@ -378,7 +378,7 @@ namespace Karkas.MyGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
         }
-        private static void PkGuidMiYaz(IZeusOutput output, ITable table)
+        private void PkGuidMiYaz(IZeusOutput output, ITable table)
         {
             string pkGuidMiSonuc = "";
             if (utils.PkGuidMi(table))
@@ -402,7 +402,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn("");
         }
 
-        private static void ProcessRowYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
+        private void ProcessRowYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
         {
             string propertyVariableName = "";
             output.autoTab("protected override void ProcessRow(System.Data.IDataReader dr, ");
@@ -431,18 +431,8 @@ namespace Karkas.MyGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
         }
 
-        private static void BaslangicSusluParentezVeTabArtir(IZeusOutput output)
-        {
-            output.autoTabLn("{");
-            output.incTab();
-        }
-        private static void BitisSusluParentezVeTabAzalt(IZeusOutput output)
-        {
-            output.decTab();
-            output.autoTabLn("}");
-        }
 
-        private static void InsertCommandParametersAddYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
+        private void InsertCommandParametersAddYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
         {
             output.autoTab("protected override void InsertCommandParametersAdd(SqlCommand cmd, ");
             output.write(classNameTypeLibrary);
@@ -462,7 +452,7 @@ namespace Karkas.MyGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
         }
 
-        private static void builderParameterEkle(IZeusOutput output, IColumn column)
+        private void builderParameterEkle(IZeusOutput output, IColumn column)
         {
             if (column.CharacterMaxLength == 0)
             {
@@ -475,7 +465,7 @@ namespace Karkas.MyGenerationHelper.Generators
             }
         }
 
-        private static void builderParameterEkleString(IZeusOutput output, IColumn column)
+        private void builderParameterEkleString(IZeusOutput output, IColumn column)
         {
             string s = "builder.parameterEkle(\"@"
                         + column.Name
@@ -489,7 +479,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn(s);
         }
 
-        private static void builderParameterEkleNormal(IZeusOutput output, IColumn column)
+        private void builderParameterEkleNormal(IZeusOutput output, IColumn column)
         {
             string s = "builder.parameterEkle(\"@"
                         + column.Name
@@ -501,7 +491,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn(s);
         }
 
-        private static void DeleteCommandParametersAddYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
+        private void DeleteCommandParametersAddYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
         {
             output.autoTab("protected override void DeleteCommandParametersAdd(SqlCommand cmd, ");
             output.autoTab(classNameTypeLibrary);
@@ -520,7 +510,7 @@ namespace Karkas.MyGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
         }
 
-        private static void UpdateCommandParametersAddYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
+        private void UpdateCommandParametersAddYaz(IZeusOutput output, ITable table, string classNameTypeLibrary)
         {
             output.autoTab("protected override void UpdateCommandParametersAdd(SqlCommand cmd, ");
             output.autoTab(classNameTypeLibrary);
