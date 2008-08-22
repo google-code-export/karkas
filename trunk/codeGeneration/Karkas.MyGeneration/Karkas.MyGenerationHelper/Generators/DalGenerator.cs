@@ -211,7 +211,7 @@ namespace Karkas.MyGenerationHelper.Generators
                     whereClause += column.Name + " = @" + column.Name + " AND";
                 }
             }
-            whereClause = whereClause.Remove(cumle.Length - 4);
+            whereClause = whereClause.Remove(whereClause.Length - 4);
 
 
             cumle += "  FROM " + table.Schema + "." + table.Name + " WHERE ";
