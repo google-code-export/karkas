@@ -1,0 +1,5 @@
+uretilen kodların olusturulacağı namespace ismi ornek
+
+namespace Karkas.Ornek.TypeLibrary.Ornekler
+{
+}
