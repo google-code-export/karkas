@@ -42,6 +42,9 @@ namespace Karkas.MyGenerationHelper.Generators
 
             TypeLibraryHelper.ShallowCopyYaz(output, table, className);
 
+            PropertyIsimleriYaz(output, table, className);
+
+
             output.writeln("");
 
             OnaylamaKoduYaz(output, table);
@@ -159,6 +162,22 @@ namespace Karkas.MyGenerationHelper.Generators
             }
             BitisSusluParentezVeTabAzalt(output);
         }
+
+        public void PropertyIsimleriYaz(IZeusOutput output, ITable table, string className)
+        {
+            output.autoTabLn("public class PropertyIsimleri");
+            BaslangicSusluParentezVeTabArtir(output);
+            string propertyName = "";
+            foreach (IColumn column in table.Columns)
+            {
+                propertyName = utils.SetPascalCase(column.Name);
+                string yazi = string.Format("public const string {0} = \"{0}\";",propertyName);
+                output.autoTabLn(yazi);
+            }
+            BitisSusluParentezVeTabAzalt(output);
+
+        }
+
 
 
     }
