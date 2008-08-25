@@ -25,8 +25,9 @@ namespace Karkas.MyGenerationHelper.Generators
         string baseNameSpaceTypeLibrary = "";
         string pkAdi = "";
         string identityColumnAdi = "";
-
+        bool identityVarmi = false;
         string listeType = "";
+        string identityType = "";
 
         public void Render(IZeusOutput output, ITable table)
         {
@@ -46,14 +47,14 @@ namespace Karkas.MyGenerationHelper.Generators
             classNameTypeLibrary = utils.SetPascalCase(table.Name);
             schemaName = utils.SetPascalCase(table.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
-            bool identityVarmi = utils.IdentityVarMi(table);
+           identityVarmi = utils.IdentityVarMi(table);
             bool pkGuidMi = utils.PkGuidMi(table);
             string pkcumlesi = "";
 
             string baseNameSpaceDal = baseNameSpace + ".Dal." + schemaName;
 
             string pkType = utils.PrimaryKeyTipiniBul(table);
-            string identityType = utils.IdentityTipiniBul(table);
+            identityType = utils.IdentityTipiniBul(table);
 
             listeType = "List<" + classNameTypeLibrary + ">";
 
@@ -66,6 +67,8 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn("");
 
             OverrideDatabaseNameYaz(output, table);
+
+            identityKolonDegeriniSetleYaz(output, table);
 
             SelectCountYaz(output, table);
 
@@ -101,6 +104,20 @@ namespace Karkas.MyGenerationHelper.Generators
             output.clear();
 
 
+        }
+
+        private void identityKolonDegeriniSetleYaz(IZeusOutput output, ITable table)
+        {
+            if (identityVarmi)
+            {
+                string methodYazisi = string.Format("protected override void identityKolonDegeriniSetle({0} pTypeLibrary,{1} pIdentityKolonValue)", classNameTypeLibrary, identityType);
+                output.autoTabLn(methodYazisi);
+                BaslangicSusluParentezVeTabArtir(output);
+                string propertySetleYazisi = string.Format("pTypeLibrary.{0} = pIdentityKolonValue;", utils.SetPascalCase(identityColumnAdi));
+                output.autoTabLn(propertySetleYazisi);
+                BitisSusluParentezVeTabAzalt(output);
+                
+            }
         }
 
 
