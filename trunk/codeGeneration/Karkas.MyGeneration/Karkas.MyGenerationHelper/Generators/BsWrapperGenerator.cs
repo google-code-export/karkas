@@ -76,6 +76,7 @@ namespace Karkas.MyGenerationHelper.Generators
             SilYaz(output, classNameTypeLibrary);
             DurumaGoreEkleGuncelleVeyaSil(output, classNameTypeLibrary);
             SorgulaHepsiniGetirYaz(output, classNameTypeLibrary);
+            SorgulaHepsiniGetirSiraliYaz(output, classNameTypeLibrary);
             SorgulaPKAdiIleYaz(output, classNameTypeLibrary, pkType, pkAdi);
             TopluEkleGuncelleVeyaSilYaz(output, classNameTypeLibrary);
             KomutuCalistiranKullaniciyiYaz(output);
