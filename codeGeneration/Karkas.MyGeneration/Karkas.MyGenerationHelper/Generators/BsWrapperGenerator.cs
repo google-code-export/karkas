@@ -64,29 +64,7 @@ namespace Karkas.MyGenerationHelper.Generators
             string pkAdi = utils.PrimaryKeyAdiniBul(table);
 
 
-            output.writeln("");
-            output.writeln("using System;");
-            output.writeln("using System.Collections.Generic;");
-            output.writeln("using System.Data;");
-            output.writeln("using System.Data.SqlClient;");
-            output.writeln("using System.Text;");
-            output.writeln("using System.ComponentModel;");
-            output.writeln("using System.Web;");
-            output.writeln("using System.Web.Caching;");
-            output.writeln("using Karkas.Web.Helpers.HelperClasses;");
-            output.write("using ");
-            output.write(baseNameSpaceTypeLibrary);
-            output.writeln(";");
-            output.write("using ");
-            output.write(baseNameSpaceTypeLibrary);
-            output.write(".");
-            output.write(schemaName);
-            output.writeln(";");
-            output.write("using ");
-            output.write(baseNameSpaceBsWithSchema);
-            output.writeln(";");
-            output.writeln("");
-            output.writeln("");
+            usingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema);
             output.write("namespace ");
             output.write(baseNameSpaceBsWrapperWithSchema);
             output.writeln("");
@@ -110,6 +88,33 @@ namespace Karkas.MyGenerationHelper.Generators
             //output.writeln(savePath);
             output.save(savePath, true);
             output.clear();
+        }
+
+        private static void usingleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceBsWithSchema)
+        {
+            output.writeln("");
+            output.writeln("using System;");
+            output.writeln("using System.Collections.Generic;");
+            output.writeln("using System.Data;");
+            output.writeln("using System.Data.SqlClient;");
+            output.writeln("using System.Text;");
+            output.writeln("using System.ComponentModel;");
+            output.writeln("using System.Web;");
+            output.writeln("using System.Web.Caching;");
+            output.writeln("using Karkas.Web.Helpers.HelperClasses;");
+            output.write("using ");
+            output.write(baseNameSpaceTypeLibrary);
+            output.writeln(";");
+            output.write("using ");
+            output.write(baseNameSpaceTypeLibrary);
+            output.write(".");
+            output.write(schemaName);
+            output.writeln(";");
+            output.write("using ");
+            output.write(baseNameSpaceBsWithSchema);
+            output.writeln(";");
+            output.writeln("");
+            output.writeln("");
         }
         private static void ConstructorYaz(IZeusOutput output, string classNameBsWrapper)
         {
@@ -186,12 +191,23 @@ namespace Karkas.MyGenerationHelper.Generators
 
         private static void SorgulaHepsiniGetirYaz(IZeusOutput output, string classNameTypeLibrary)
         {
-            output.writeln("        [DataObjectMethod(DataObjectMethodType.Select, true)]");
+            output.writeln("      [DataObjectMethod(DataObjectMethodType.Select, true)]");
             output.write("        public List<");
             output.write(classNameTypeLibrary);
             output.writeln("> SorgulaHepsiniGetir()");
             output.writeln("        {");
             output.writeln("            return bs.SorgulaHepsiniGetir();");
+            output.writeln("        }");
+            output.writeln("");
+        }
+        private static void SorgulaHepsiniGetirSiraliYaz(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.writeln("      [DataObjectMethod(DataObjectMethodType.Select, false)]");
+            output.write("        public List<");
+            output.write(classNameTypeLibrary);
+            output.writeln("> SorgulaHepsiniGetirSirali(params string[] pSiraListesi)");
+            output.writeln("        {");
+            output.writeln("            return bs.SorgulaHepsiniGetirSirali(pSiraListesi);");
             output.writeln("        }");
             output.writeln("");
         }

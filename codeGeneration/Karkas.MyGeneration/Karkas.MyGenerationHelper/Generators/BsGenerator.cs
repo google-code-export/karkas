@@ -12,7 +12,7 @@ using System.Globalization;
 
 namespace Karkas.MyGenerationHelper.Generators
 {
-    public class BsGenerator
+    public class BsGenerator : BaseGenerator
     {
 
 
@@ -63,6 +63,141 @@ namespace Karkas.MyGenerationHelper.Generators
             string pkAdi = utils.PrimaryKeyAdiniBul(table);
 
 
+            usingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema, baseNameSpaceDalWithSchema);
+            classYaz(output, classNameBs);
+            dalDegiskeniYaz(output, classNameDal);
+            EkleYaz(output, classNameTypeLibrary);
+            GuncelleYaz(output, classNameTypeLibrary);
+            SilYaz(output, classNameTypeLibrary);
+            DurumaGoreEkleGuncelleVeyaSilYaz(output, classNameTypeLibrary);
+            SorgulaHepsiniGetirYaz(output, classNameTypeLibrary);
+            SorgulaHepsiniGetirSiraliYaz(output, classNameTypeLibrary);
+
+            sorgulaPkAdiIleYaz(output, classNameTypeLibrary, pkType, pkAdi);
+            TopluEkleGuncelleVeyaSilYaz(output, classNameTypeLibrary);
+            tablodakiSatirSayisiniYaz(output);
+            KomutuCalistiranKullaniciyiYaz(output);
+            output.writeln("");
+            output.writeln("    }");
+            output.writeln("}");
+
+            string savePath = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.generated.cs");
+            //output.writeln(savePath);
+            output.save(savePath, true);
+            output.clear();
+        }
+
+        private static void dalDegiskeniYaz(IZeusOutput output, string classNameDal)
+        {
+            output.writeln(" ");
+            output.writeln("    {");
+            output.write("        ");
+            output.write(classNameDal);
+            output.write(" dal = new ");
+            output.write(classNameDal);
+            output.writeln("();");
+        }
+
+        private static void TopluEkleGuncelleVeyaSilYaz(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.write("        public void TopluEkleGuncelleVeyaSil(List<");
+            output.write(classNameTypeLibrary);
+            output.writeln("> liste)");
+            output.writeln("        {");
+            output.writeln("            dal.TopluEkleGuncelleVeyaSil(liste);");
+            output.writeln("        }");
+            output.writeln("\t\t");
+        }
+
+        private static void sorgulaPkAdiIleYaz(IZeusOutput output, string classNameTypeLibrary, string pkType, string pkAdi)
+        {
+            output.write("\t\tpublic ");
+            output.write(classNameTypeLibrary);
+            output.write(" Sorgula");
+            output.write(pkAdi);
+            output.write("Ile(");
+            output.write(pkType);
+            output.writeln(" p1)");
+            output.writeln("\t\t{");
+            output.write("\t\t\treturn dal.Sorgula");
+            output.write(pkAdi);
+            output.writeln("Ile(p1);");
+            output.writeln("\t\t}");
+            output.writeln("");
+        }
+
+        private static void SorgulaHepsiniGetirYaz(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.write("        public List<");
+            output.write(classNameTypeLibrary);
+            output.writeln("> SorgulaHepsiniGetir()");
+            output.writeln("        {");
+            output.writeln("            return dal.SorgulaHepsiniGetir();");
+            output.writeln("        }");
+            output.writeln("");
+        }
+        private static void SorgulaHepsiniGetirSiraliYaz(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.write("        public List<");
+            output.write(classNameTypeLibrary);
+            output.writeln("> SorgulaHepsiniGetirSirali(params string[] pSiraListesi)");
+            output.writeln("        {");
+            output.writeln("            return dal.SorgulaHepsiniGetirSirali(pSiraListesi);");
+            output.writeln("        }");
+            output.writeln("");
+        }
+
+        private static void DurumaGoreEkleGuncelleVeyaSilYaz(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.write("        public void DurumaGoreEkleGuncelleVeyaSil(");
+            output.write(classNameTypeLibrary);
+            output.writeln(" k)");
+            output.writeln("        {");
+            output.writeln("            dal.DurumaGoreEkleGuncelleVeyaSil(k);");
+            output.writeln("        }");
+            output.writeln("");
+        }
+
+        private static void SilYaz(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.write("        public void Sil(");
+            output.write(classNameTypeLibrary);
+            output.writeln(" k)");
+            output.writeln("        {");
+            output.writeln("            dal.Sil(k);");
+            output.writeln("        }");
+            output.writeln("");
+        }
+
+        private static void GuncelleYaz(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.write("        public void Guncelle(");
+            output.write(classNameTypeLibrary);
+            output.writeln(" k)");
+            output.writeln("        {");
+            output.writeln("            dal.Guncelle(k);");
+            output.writeln("        }");
+        }
+
+        private static void EkleYaz(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.write("        public void Ekle(");
+            output.write(classNameTypeLibrary);
+            output.writeln(" k)");
+            output.writeln("        {");
+            output.writeln("            dal.Ekle(k);");
+            output.writeln("        }");
+            output.writeln("");
+        }
+
+        private static void classYaz(IZeusOutput output, string classNameBs)
+        {
+            output.write("public partial class ");
+            output.write(classNameBs);
+        }
+
+        private static void usingleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceBsWithSchema, string baseNameSpaceDalWithSchema)
+        {
             output.writeln("");
             output.writeln("using System;");
             output.writeln("using System.Collections.Generic;");
@@ -86,79 +221,6 @@ namespace Karkas.MyGenerationHelper.Generators
             output.write(baseNameSpaceBsWithSchema);
             output.writeln("");
             output.writeln("{");
-            output.write("    public partial class ");
-            output.write(classNameBs);
-            output.writeln(" ");
-            output.writeln("    {");
-            output.write("        ");
-            output.write(classNameDal);
-            output.write(" dal = new ");
-            output.write(classNameDal);
-            output.writeln("();");
-            output.write("        public void Ekle(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" k)");
-            output.writeln("        {");
-            output.writeln("            dal.Ekle(k);");
-            output.writeln("        }");
-            output.writeln("");
-            output.write("        public void Guncelle(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" k)");
-            output.writeln("        {");
-            output.writeln("            dal.Guncelle(k);");
-            output.writeln("        }");
-            output.write("        public void Sil(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" k)");
-            output.writeln("        {");
-            output.writeln("            dal.Sil(k);");
-            output.writeln("        }");
-            output.writeln("");
-            output.write("        public void DurumaGoreEkleGuncelleVeyaSil(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" k)");
-            output.writeln("        {");
-            output.writeln("            dal.DurumaGoreEkleGuncelleVeyaSil(k);");
-            output.writeln("        }");
-            output.writeln("");
-            output.write("        public List<");
-            output.write(classNameTypeLibrary);
-            output.writeln("> SorgulaHepsiniGetir()");
-            output.writeln("        {");
-            output.writeln("            return dal.SorgulaHepsiniGetir();");
-            output.writeln("        }");
-            output.writeln("");
-            output.write("\t\tpublic ");
-            output.write(classNameTypeLibrary);
-            output.write(" Sorgula");
-            output.write(pkAdi);
-            output.write("Ile(");
-            output.write(pkType);
-            output.writeln(" p1)");
-            output.writeln("\t\t{");
-            output.write("\t\t\treturn dal.Sorgula");
-            output.write(pkAdi);
-            output.writeln("Ile(p1);");
-            output.writeln("\t\t}");
-            output.writeln("");
-            output.write("        public void TopluEkleGuncelleVeyaSil(List<");
-            output.write(classNameTypeLibrary);
-            output.writeln("> liste)");
-            output.writeln("        {");
-            output.writeln("            dal.TopluEkleGuncelleVeyaSil(liste);");
-            output.writeln("        }");
-            output.writeln("\t\t");
-            tablodakiSatirSayisiniYaz(output);
-            KomutuCalistiranKullaniciyiYaz(output);
-            output.writeln("");
-            output.writeln("    }");
-            output.writeln("}");
-
-            string savePath = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.generated.cs");
-            //output.writeln(savePath);
-            output.save(savePath, true);
-            output.clear();
         }
 
         private static void tablodakiSatirSayisiniYaz(IZeusOutput output)
