@@ -81,7 +81,6 @@ namespace Karkas.MyGenerationHelper.Generators
             InsertStringYaz(output, table, ref identityVarmi);
 
 
-            SorgulaHepsiniGetirYaz(output, classNameTypeLibrary);
 
             SorgulaPkIleGetirYaz(output, classNameTypeLibrary, pkAdi, pkType);
 
@@ -337,16 +336,6 @@ namespace Karkas.MyGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
         }
 
-
-        private  void SorgulaHepsiniGetirYaz(IZeusOutput output, string classNameTypeLibrary)
-        {
-            output.autoTabLn("public " +  listeType + "SorgulaHepsiniGetir()");
-            BaslangicSusluParentezVeTabArtir(output);
-            listeTanimla(output);
-            output.autoTabLn("SorguCalistir(liste);");
-            output.autoTabLn("return liste;");
-            BitisSusluParentezVeTabAzalt(output);
-        }
 
         private void listeTanimla(IZeusOutput output)
         {
