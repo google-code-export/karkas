@@ -47,7 +47,7 @@ namespace Karkas.MyGenerationHelper.Generators
             classNameTypeLibrary = utils.SetPascalCase(table.Name);
             schemaName = utils.SetPascalCase(table.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
-           identityVarmi = utils.IdentityVarMi(table);
+            identityVarmi = utils.IdentityVarMi(table);
             bool pkGuidMi = utils.PkGuidMi(table);
             string pkcumlesi = "";
 
@@ -81,7 +81,6 @@ namespace Karkas.MyGenerationHelper.Generators
             InsertStringYaz(output, table, ref identityVarmi);
 
 
-
             SorgulaPkIleGetirYaz(output, classNameTypeLibrary, pkAdi, pkType);
 
             IdentityVarMiYaz(output, identityVarmi);
@@ -104,6 +103,9 @@ namespace Karkas.MyGenerationHelper.Generators
 
 
         }
+
+
+
 
         private void identityKolonDegeriniSetleYaz(IZeusOutput output, ITable table)
         {
