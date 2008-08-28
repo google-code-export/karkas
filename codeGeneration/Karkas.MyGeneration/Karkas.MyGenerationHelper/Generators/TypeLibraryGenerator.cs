@@ -14,6 +14,7 @@ namespace Karkas.MyGenerationHelper.Generators
     {
 
         Utils utils = new Utils();
+        TypeLibraryHelper tHelper = new TypeLibraryHelper();
 
         public void Render(IZeusOutput output, ITable table)
         {
@@ -30,29 +31,28 @@ namespace Karkas.MyGenerationHelper.Generators
             output.setPreserveSource(outputFullFileName, "//::", ":://");
 
 
-            NamespaceleriYaz(output, classNameSpace);
+            usingNamespaceleriYaz(output, classNameSpace);
 
             ClassIsmiYaz(output, className);
 
             output.autoTabLn("{");
 
-            TypeLibraryHelper.MemberVariablesYaz(output, table);
+            tHelper.MemberVariablesYaz(output, table);
 
-            TypeLibraryHelper.PropertiesYaz(output, table);
+            tHelper.PropertiesYaz(output, table);
 
-            TypeLibraryHelper.ShallowCopyYaz(output, table, className);
+            tHelper.PropertiesAsStringYaz(output, table);
 
             PropertyIsimleriYaz(output, table, className);
+            tHelper.ShallowCopyYaz(output, table, className);
 
 
             output.writeln("");
 
             OnaylamaKoduYaz(output, table);
-            output.autoTabLn("}");
-            output.decTab();
-            output.autoTabLn("}");
-
-            //			output.autoTabLn(className);
+            tHelper.EtiketIsimleriYaz(output, table, classNameSpace);
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentezVeTabAzalt(output);
 
             output.save(outputFullFileName, false);
             output.clear();
@@ -73,16 +73,16 @@ namespace Karkas.MyGenerationHelper.Generators
             output.setPreserveSource(outputFullFileName, "//::", ":://");
 
 
-            NamespaceleriYaz(output, classNameSpace);
+            usingNamespaceleriYaz(output, classNameSpace);
 
 
             ClassIsmiYaz(output, className);
 
             output.autoTabLn("{");
 
-            TypeLibraryHelper.MemberVariablesViewYaz(output, view);
+            tHelper.MemberVariablesViewYaz(output, view);
 
-            TypeLibraryHelper.PropertiesYaz(output, view);
+            tHelper.PropertiesYaz(output, view);
 
             output.writeln("");
 
@@ -97,7 +97,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.clear();
         }
 
-        private static void NamespaceleriYaz(IZeusOutput output, string classNameSpace)
+        private static void usingNamespaceleriYaz(IZeusOutput output, string classNameSpace)
         {
             output.autoTabLn("using System;");
             output.autoTabLn("using System.Data;");
@@ -106,6 +106,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn("using Karkas.Core.TypeLibrary;");
             output.autoTabLn("using Karkas.Core.Onaylama;");
             output.autoTabLn("using Karkas.Core.Onaylama.ForPonos;");
+            output.autoTabLn("using System.Configuration;");
             output.autoTabLn("");
             output.autoTab("namespace ");
             output.autoTab(classNameSpace);

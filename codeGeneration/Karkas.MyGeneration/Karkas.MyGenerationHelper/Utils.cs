@@ -9,6 +9,7 @@ using System.Xml;
 using Karkas.MyGenerationHelper.Generators;
 using Zeus;
 using System.IO;
+using System.Globalization;
 
 namespace Karkas.MyGenerationHelper
 {
@@ -203,6 +204,178 @@ namespace Karkas.MyGenerationHelper
             }
             return sonuc;
         }
+
+        public string[] GetConvertToSyntax(IColumn column,string propertyName)
+        {
+            //            return column.LanguageType;
+            string degerDegiskenAdi = "value";
+            string araDegiskenAdi = "_a";
+            int araDegiskenYeri = 2; 
+            string[] sonucListesi = new string[]{
+                    "try"
+                    ,"{"
+                    ,""
+                    ,string.Format("{0} = {1};", propertyName,araDegiskenAdi)
+                    ,"}"
+                    ,"catch(Exception ex)"
+                    ,"{"
+                    ,string.Format("\tthis.Onaylayici.OnaylayiciListesi.Add(new DaimaBasarisiz(this,\"{0}\",\"Ceviri islemi Baþarýsýz oldu\"));",propertyName)
+                    ,"}"
+                    };
+            if (column.LanguageType == "Guid")
+            {
+                sonucListesi[araDegiskenYeri] = string.Format("\tGuid {0} = new Guid({1});",araDegiskenAdi,degerDegiskenAdi);;
+                return sonucListesi;
+            }
+            else if (column.LanguageType == "int")
+            {
+                sonucListesi[araDegiskenYeri] = string.Format("\tint {0} = Convert.ToInt32({1});", araDegiskenAdi, degerDegiskenAdi);
+                return sonucListesi;
+            }
+            else if (column.LanguageType == "byte")
+            {
+                sonucListesi[araDegiskenYeri] = string.Format("\tbyte {0} = Convert.ToByte({1});", araDegiskenAdi, degerDegiskenAdi);
+                return sonucListesi;
+            }
+            else if (column.LanguageType == "bool")
+            {
+                sonucListesi[araDegiskenYeri] = string.Format("\tbool {0} = Convert.ToBoolean({1});", araDegiskenAdi, degerDegiskenAdi);
+                return sonucListesi;
+            }
+            else if (column.LanguageType == "DateTime")
+            {
+                sonucListesi[araDegiskenYeri] = string.Format("\tDateTime {0} = Convert.ToDateTime({1});", araDegiskenAdi, degerDegiskenAdi);
+                return sonucListesi;
+            }
+            else if (column.LanguageType == "string")
+            {
+                return new string[] { String.Format("{0} = {1};", propertyName, degerDegiskenAdi) };
+            }
+            else if (column.LanguageType == "short")
+            {
+                sonucListesi[araDegiskenYeri] = string.Format("\tshort {0} = Convert.ToInt16({1});", araDegiskenAdi, degerDegiskenAdi);
+                return sonucListesi;
+            }
+            else if (column.LanguageType == "long")
+            {
+                sonucListesi[araDegiskenYeri] = string.Format("\tlong {0} = Convert.ToInt64({1});", araDegiskenAdi, degerDegiskenAdi);
+                return sonucListesi;
+            }
+            else if (column.LanguageType == "decimal")
+            {
+                sonucListesi[araDegiskenYeri] = string.Format("\tdecimal {0} = Convert.ToDecimal({1});", araDegiskenAdi, degerDegiskenAdi);
+                return sonucListesi;
+            }
+            else if (column.LanguageType == "byte[]")
+            {
+                return new string[] { "throw new ArgumentException(\"String'ten byte[] array'e cevirim desteklenmemektedir\");" };
+            }
+            else if (column.LanguageType == "double")
+            {
+
+                sonucListesi[araDegiskenYeri] = string.Format("\tdouble {0} = Convert.ToDouble({1});", araDegiskenAdi, degerDegiskenAdi);
+                return sonucListesi;
+            }
+            else if (column.LanguageType == "float")
+            {
+                sonucListesi[araDegiskenYeri] = string.Format("\tfloat {0} = Convert.ToSingle({1});", araDegiskenAdi, degerDegiskenAdi);
+                return sonucListesi;
+            }
+            else if (column.LanguageType == "object")
+            {
+                sonucListesi[araDegiskenYeri] = string.Format("object {0} =(object) {1};", araDegiskenAdi, degerDegiskenAdi);
+                return sonucListesi;
+            }
+            return new string[] { "throw new ArgumentException(\"string'ten degisken tipine cevirim desteklenmemektedir\");" };
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public string GetDataReaderSyntax(IColumn column)
         {
