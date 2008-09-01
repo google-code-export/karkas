@@ -17,6 +17,17 @@ namespace Karkas.MyGenerationHelper.Generators
             output.decTab();
             output.autoTabLn("}");
         }
+        public void BaslangicSusluParentez(IZeusOutput output)
+        {
+            output.autoTabLn("{");
+            output.incTab();
+        }
+        public void BitisSusluParentez(IZeusOutput output)
+        {
+            output.decTab();
+            output.autoTabLn("}");
+        }
+
 
     }
 }

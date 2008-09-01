@@ -58,11 +58,12 @@ namespace Karkas.MyGenerationHelper.Generators
 
             listeType = "List<" + classNameTypeLibrary + ">";
 
-            
+            string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName, classNameTypeLibrary + "Dal.generated.cs");
+            string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName, classNameTypeLibrary + "Dal.cs");
 
-            UsingleriYaz(output, schemaName, baseNameSpaceTypeLibrary);
+            UsingleriYaz(output, schemaName, baseNameSpaceTypeLibrary,baseNameSpaceDal);
 
-            ClassYaz(output, classNameTypeLibrary, identityVarmi, baseNameSpaceDal, identityType);
+            ClassYaz(output, classNameTypeLibrary, identityVarmi,  identityType);
 
             output.autoTabLn("");
 
@@ -98,8 +99,21 @@ namespace Karkas.MyGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
 
-            output.save(Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName, classNameTypeLibrary + "Dal.generated.cs"), false);
+            output.saveEnc(outputFullFileNameGenerated, "o", "utf8");
             output.clear();
+            if (!File.Exists(outputFullFileName))
+            {
+                UsingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceDal);
+                output.autoTab("public partial class ");
+                output.writeln(classNameTypeLibrary + "Dal"); 
+
+                BaslangicSusluParentezVeTabArtir(output);
+                BitisSusluParentezVeTabAzalt(output);
+                BitisSusluParentezVeTabAzalt(output);
+                output.saveEnc(outputFullFileName, "o", "utf8");
+                output.clear();
+
+            }
 
 
         }
@@ -134,7 +148,7 @@ namespace Karkas.MyGenerationHelper.Generators
         }
 
 
-        private void UsingleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary)
+        private void UsingleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceDal)
         {
             output.autoTabLn("using System;");
             output.autoTabLn("using System.Collections.Generic;");
@@ -152,14 +166,15 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn(";");
             output.autoTabLn("");
             output.autoTabLn("");
-        }
-
-        private void ClassYaz(IZeusOutput output, string classNameTypeLibrary, bool identityVarmi, string baseNameSpaceDal, string identityType)
-        {
             output.autoTab("namespace ");
             output.autoTab(baseNameSpaceDal);
             output.autoTabLn("");
             BaslangicSusluParentezVeTabArtir(output);
+
+        }
+
+        private void ClassYaz(IZeusOutput output, string classNameTypeLibrary, bool identityVarmi, string identityType)
+        {
             output.autoTab("public partial class ");
             output.write(classNameTypeLibrary);
             if (identityVarmi)
