@@ -13,7 +13,7 @@ using System.Globalization;
 namespace Karkas.MyGenerationHelper.Generators
 {
 
-    public class BsWrapperGenerator
+    public class BsWrapperGenerator : BaseGenerator
     {
 
 
@@ -85,10 +85,27 @@ namespace Karkas.MyGenerationHelper.Generators
             output.writeln("    }");
             output.writeln("}");
 
-            string savePath = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.generated.cs");
-            //output.writeln(savePath);
-            output.save(savePath, true);
+            string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.generated.cs");
+            string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.cs");
+            output.saveEnc(outputFullFileNameGenerated, "o", "utf8");
             output.clear();
+
+            if (!File.Exists(outputFullFileName))
+            {
+                usingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema);
+                output.write("namespace ");
+                output.write(baseNameSpaceBsWrapperWithSchema);
+                BaslangicSusluParentezVeTabArtir(output);
+                output.autoTab("    public partial class ");
+                output.autoTabLn(classNameBsWrapper);
+                BaslangicSusluParentezVeTabArtir(output);
+                BitisSusluParentezVeTabAzalt(output);
+                BitisSusluParentezVeTabAzalt(output);
+                output.save(outputFullFileName, false);
+                output.clear();
+            }
+
+
         }
 
         private static void usingleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceBsWithSchema)

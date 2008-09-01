@@ -27,8 +27,9 @@ namespace Karkas.MyGenerationHelper.Generators
             string className = utils.SetPascalCase(table.Name);
             string schemaName = utils.SetPascalCase(table.Schema);
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
-            string outputFullFileName = Path.Combine(utils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
-            output.setPreserveSource(outputFullFileName, "//::", ":://");
+            string outputFullFileName = Path.Combine(utils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".cs");
+            string outputFullFileNameGenerated = Path.Combine(utils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
+            output.setPreserveSource(outputFullFileNameGenerated, "//::", ":://");
 
 
             usingNamespaceleriYaz(output, classNameSpace);
@@ -54,8 +55,25 @@ namespace Karkas.MyGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
 
-            output.save(outputFullFileName, false);
+            output.saveEnc(outputFullFileNameGenerated, "o","utf8");
             output.clear();
+
+
+
+
+            if (!File.Exists(outputFullFileName))
+            {
+                usingNamespaceleriYaz(output, classNameSpace);
+                output.autoTab("public partial class ");
+                output.autoTabLn(className);
+                BaslangicSusluParentezVeTabArtir(output);
+                BitisSusluParentezVeTabAzalt(output);
+                BitisSusluParentezVeTabAzalt(output);
+                output.save(outputFullFileName, false);
+                output.clear();
+            }
+
+
         }
 
         public void RenderTypeLibraryCode(IZeusOutput output, IView view)
@@ -69,8 +87,8 @@ namespace Karkas.MyGenerationHelper.Generators
             string className = utils.SetPascalCase(view.Name);
             string schemaName = utils.SetPascalCase(view.Schema);
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
-            string outputFullFileName = Path.Combine(utils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
-            output.setPreserveSource(outputFullFileName, "//::", ":://");
+            string outputFullFileNameGenerated = Path.Combine(utils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
+            output.setPreserveSource(outputFullFileNameGenerated, "//::", ":://");
 
 
             usingNamespaceleriYaz(output, classNameSpace);
@@ -93,11 +111,11 @@ namespace Karkas.MyGenerationHelper.Generators
 
             //			output.autoTabLn(className);
 
-            output.save(outputFullFileName, false);
+            output.saveEnc(outputFullFileNameGenerated, "o", "utf8");
             output.clear();
         }
 
-        private static void usingNamespaceleriYaz(IZeusOutput output, string classNameSpace)
+        public void usingNamespaceleriYaz(IZeusOutput output, string classNameSpace)
         {
             output.autoTabLn("using System;");
             output.autoTabLn("using System.Data;");
@@ -109,9 +127,9 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn("using System.Configuration;");
             output.autoTabLn("");
             output.autoTab("namespace ");
-            output.autoTab(classNameSpace);
-            output.autoTabLn("");
-            output.autoTabLn("{");
+            output.autoTabLn(classNameSpace);
+            output.writeln("");
+            BaslangicSusluParentezVeTabArtir(output);
         }
 
         private static void ClassIsmiYaz(IZeusOutput output, string className)

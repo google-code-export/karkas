@@ -63,7 +63,8 @@ namespace Karkas.MyGenerationHelper.Generators
             string pkAdi = utils.PrimaryKeyAdiniBul(table);
 
 
-            usingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema, baseNameSpaceDalWithSchema);
+            usingNamespaceleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema, baseNameSpaceDalWithSchema);
+            BaslangicSusluParentez(output);
             classYaz(output, classNameBs);
             dalDegiskeniYaz(output, classNameDal);
             EkleYaz(output, classNameTypeLibrary);
@@ -77,14 +78,25 @@ namespace Karkas.MyGenerationHelper.Generators
             TopluEkleGuncelleVeyaSilYaz(output, classNameTypeLibrary);
             tablodakiSatirSayisiniYaz(output);
             KomutuCalistiranKullaniciyiYaz(output);
-            output.writeln("");
-            output.writeln("    }");
-            output.writeln("}");
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentez(output);
 
-            string savePath = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.generated.cs");
-            //output.writeln(savePath);
-            output.save(savePath, true);
+            string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.generated.cs");
+            string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.cs");
+            output.saveEnc(outputFullFileNameGenerated, "o", "utf8");
             output.clear();
+
+            if (!File.Exists(outputFullFileName))
+            {
+                usingNamespaceleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema, baseNameSpaceDalWithSchema);
+                BaslangicSusluParentezVeTabArtir(output);
+                classYaz(output, classNameBs);
+                BaslangicSusluParentezVeTabArtir(output);
+                BitisSusluParentezVeTabAzalt(output);
+                BitisSusluParentezVeTabAzalt(output);
+                output.saveEnc(outputFullFileName, "o", "utf8");
+                output.clear();
+            }
         }
 
         private static void dalDegiskeniYaz(IZeusOutput output, string classNameDal)
@@ -192,11 +204,11 @@ namespace Karkas.MyGenerationHelper.Generators
 
         private static void classYaz(IZeusOutput output, string classNameBs)
         {
-            output.write("public partial class ");
-            output.write(classNameBs);
+            output.autoTab("public partial class ");
+            output.autoTabLn(classNameBs);
         }
 
-        private static void usingleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceBsWithSchema, string baseNameSpaceDalWithSchema)
+        public void usingNamespaceleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceBsWithSchema, string baseNameSpaceDalWithSchema)
         {
             output.writeln("");
             output.writeln("using System;");
@@ -220,7 +232,6 @@ namespace Karkas.MyGenerationHelper.Generators
             output.write("namespace ");
             output.write(baseNameSpaceBsWithSchema);
             output.writeln("");
-            output.writeln("{");
         }
 
         private static void tablodakiSatirSayisiniYaz(IZeusOutput output)
