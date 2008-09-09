@@ -8,13 +8,14 @@
 <IntrinsicObject assembly="%ZEUSHOME%\Karkas.MyGenerationHelper.dll" classpath="Karkas.MyGenerationHelper.Utils" varname="KarkasUtils" />
   * C:\Program Files\MyGeneration13\Settings dizininde karkas.xml isminde bir xml dosyası oluşturun.
   * karkas.xml dosyasına 
- {{{ <Karkas>
+{{{ 
+<Karkas>
     <database name="KARKAS_ORNEK">
 	<ProjectNamespace>Karkas.Ornek</ProjectNamespace>
 	<ProjectFolder>D:\atilla\projects\DotNetProjects\Karkas.Ornek</ProjectFolder>
    </database>
   </Karkas>
- }}}
+}}}
 
 database name (veritabanı ismini belirtmektedir.)
 ProjectNamespace proje icinde kullanılan ana isim uzayı (namespace tir)
