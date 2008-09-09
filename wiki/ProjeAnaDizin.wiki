@@ -1,0 +1,5 @@
+Projenin svn'den trunk dizinin cekilerek olusturuldugu ana dizindir. 
+ornek:
+C:\atilla\Projects\DotNetProjects\karkas
+
+bu dizinde. 
