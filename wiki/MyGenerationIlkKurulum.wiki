@@ -5,8 +5,8 @@
   * ProjeAnaDizin\codeGeneration\Karkas.MyGeneration dizinindeki Karkas.MyGeneration.sln projesini açıp derleyin (Compile).
   * ProjeAnaDizin\codeGeneration\Karkas.MyGeneration\Karkas.MyGenerationHelper\bin\Debug dizinindeki Karkas.MyGenerationHelper.dll ve Karkas.MyGenerationHelper.pdb dosyalarını C:\Program Files\MyGeneration13 dizinine kopyalayın.
 {{{
-  copy ProjeAnaDizin\trunk\codeGeneration\Karkas.MyGeneration\Karkas.MyGenerationHelper\bin\debug\Karkas.MyGenerationHelper.dll C:\Program Files\MyGeneration13
-  copy ProjeAnaDizin\trunk\codeGeneration\Karkas.MyGeneration\Karkas.MyGenerationHelper\bin\debug\Karkas.MyGenerationHelper.pdb C:\Program Files\MyGeneration13
+  copy ProjeAnaDizin\codeGeneration\Karkas.MyGeneration\Karkas.MyGenerationHelper\bin\debug\Karkas.MyGenerationHelper.dll C:\Program Files\MyGeneration13
+  copy ProjeAnaDizin\codeGeneration\Karkas.MyGeneration\Karkas.MyGenerationHelper\bin\debug\Karkas.MyGenerationHelper.pdb C:\Program Files\MyGeneration13
 }}}
   * C:\Program Files\MyGeneration13\Settings dizinindeki ZeusConfig.xml dosyasına aşağıdaki satırı ekleyin.
 {{{
