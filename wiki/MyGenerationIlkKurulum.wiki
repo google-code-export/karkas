@@ -5,7 +5,10 @@
   * trunk\codeGeneration\Karkas.MyGeneration dizinindeki Karkas.MyGeneration.sln projesini açıp derleyin (Compile).
   * codeGeneration\Karkas.MyGeneration\Karkas.MyGenerationHelper\bin\Debug dizinindeki Karkas.MyGenerationHelper.dll ve Karkas.MyGenerationHelper.pdb dosyalarını C:\Program Files\MyGeneration13 dizinine kopyalayın.
   * C:\Program Files\MyGeneration13\Settings dizinindeki ZeusConfig.xml dosyasına aşağıdaki satırı ekleyin.
+{{{ 
+
 <IntrinsicObject assembly="%ZEUSHOME%\Karkas.MyGenerationHelper.dll" classpath="Karkas.MyGenerationHelper.Utils" varname="KarkasUtils" />
+}}}
   * C:\Program Files\MyGeneration13\Settings dizininde karkas.xml isminde bir xml dosyası oluşturun.
   * karkas.xml dosyasına 
 {{{ 
