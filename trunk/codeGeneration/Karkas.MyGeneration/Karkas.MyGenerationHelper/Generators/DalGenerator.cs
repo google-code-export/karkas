@@ -61,9 +61,9 @@ namespace Karkas.MyGenerationHelper.Generators
             string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName, classNameTypeLibrary + "Dal.generated.cs");
             string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName, classNameTypeLibrary + "Dal.cs");
 
-            UsingleriYaz(output, schemaName, baseNameSpaceTypeLibrary,baseNameSpaceDal);
+            UsingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceDal);
 
-            ClassYaz(output, classNameTypeLibrary, identityVarmi,  identityType);
+            ClassYaz(output, classNameTypeLibrary, identityVarmi, identityType);
 
             output.autoTabLn("");
 
@@ -105,7 +105,7 @@ namespace Karkas.MyGenerationHelper.Generators
             {
                 UsingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceDal);
                 output.autoTab("public partial class ");
-                output.writeln(classNameTypeLibrary + "Dal"); 
+                output.writeln(classNameTypeLibrary + "Dal");
 
                 BaslangicSusluParentezVeTabArtir(output);
                 BitisSusluParentezVeTabAzalt(output);
@@ -131,7 +131,7 @@ namespace Karkas.MyGenerationHelper.Generators
                 string propertySetleYazisi = string.Format("pTypeLibrary.{0} = pIdentityKolonValue;", utils.SetPascalCase(identityColumnAdi));
                 output.autoTabLn(propertySetleYazisi);
                 BitisSusluParentezVeTabAzalt(output);
-                
+
             }
         }
 
@@ -142,7 +142,7 @@ namespace Karkas.MyGenerationHelper.Generators
             BaslangicSusluParentezVeTabArtir(output);
             output.autoTabLn("get");
             BaslangicSusluParentezVeTabArtir(output);
-            output.autoTabLn(string.Format("return \"{0}\";" , table.Database.Name));
+            output.autoTabLn(string.Format("return \"{0}\";", table.Database.Name));
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
         }
@@ -208,7 +208,7 @@ namespace Karkas.MyGenerationHelper.Generators
         }
 
 
-        private  void SelectStringYaz(IZeusOutput output, ITable table)
+        private void SelectStringYaz(IZeusOutput output, ITable table)
         {
             output.autoTabLn("protected override string SelectString");
             BaslangicSusluParentezVeTabArtir(output);
@@ -265,17 +265,16 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn(" SET ");
             foreach (IColumn column in table.Columns)
             {
-                if (column.IsComputed)
+                if (!columnParametreOlmaliMi(column))
                 {
-                    continue;
-                }
-                if (column.IsInPrimaryKey)
-                {
-                    pkcumlesi += column.Name + " = @" + column.Name + " AND";
-                }
-                else
-                {
-                    cumle += column.Name + " = @" + column.Name + ",";
+                    if (column.IsInPrimaryKey)
+                    {
+                        pkcumlesi += column.Name + " = @" + column.Name + " AND";
+                    }
+                    else
+                    {
+                        cumle += column.Name + " = @" + column.Name + ",";
+                    }
                 }
             }
             if (cumle.Length > 0)
@@ -441,7 +440,7 @@ namespace Karkas.MyGenerationHelper.Generators
                                 + "(" + i + ");";
                 if (column.IsNullable)
                 {
-                    output.autoTabLn("if (!dr.IsDBNull("  + i + "))");
+                    output.autoTabLn("if (!dr.IsDBNull(" + i + "))");
                     BaslangicSusluParentezVeTabArtir(output);
                     output.autoTabLn(yazi);
                     BitisSusluParentezVeTabAzalt(output);
@@ -466,13 +465,18 @@ namespace Karkas.MyGenerationHelper.Generators
             string paramName = "";
             foreach (IColumn column in table.Columns)
             {
-                if (!column.IsAutoKey)
+                if (!columnParametreOlmaliMi(column))
                 {
                     builderParameterEkle(output, column);
                 }
             }
 
             BitisSusluParentezVeTabAzalt(output);
+        }
+
+        private static bool columnParametreOlmaliMi(IColumn column)
+        {
+            return ((column.IsAutoKey) || (column.IsComputed));
         }
 
         private void builderParameterEkle(IZeusOutput output, IColumn column)
@@ -542,11 +546,10 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn("ParameterBuilder builder = new ParameterBuilder(cmd);");
             foreach (IColumn column in table.Columns)
             {
-                if (column.IsComputed)
+                if (!columnParametreOlmaliMi(column))
                 {
-                    continue;
+                    builderParameterEkle(output, column);
                 }
-                builderParameterEkle(output, column);
             }
             BitisSusluParentezVeTabAzalt(output);
         }
