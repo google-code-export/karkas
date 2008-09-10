@@ -1,7 +1,9 @@
 #labels Featured
-
-* Tam bir ORM (Object Relational Mapping- Nesne İlişkisel Haritalama) aracı olmaktansa , SQL bilgisini one alan bir yapı oluşturmak.
-* Her seyi karşılayan bir Framework yerine , ihtiyaç duyulan yardımcı sınıflar ile beraber kolay kullanılan bir yapı olması.
-* 3-tier yapının desteklenmesi. Bu yapı yuzunden kodun yazılması (code-behind, aspx.cs) içine yazımdan daha yavaş olmakta.
-* Turkiyeye uygun yardımcı sınıfların eklenmesi (TCKimklikNo, KPS Web Service ..)
-* Kod yazımına örnek olması için , kullanım yapısının code snippetlar ile desteklenmesi.
+  * Tam bir ORM (Object Relational Mapping- Nesne İlişkisel Haritalama) aracı olmaktansa , SQL bilgisini öne alan bir yapı oluşturmak.
+  * Code Generation (Kod Üretiminden) mümkün olduğunca çok yararlanmak.
+  * Microsoft Teknolojilerinden olduğu kadar, açık kaynak kodlu  (Open Source) yazılımlardan yararlanmak.
+  * Her seyi karşılayan bir Framework yerine , ihtiyaç duyulan yardımcı sınıflar ile beraber kolay kullanılan bir yapı olması.
+  * 3-tier yapının desteklenmesi. Bu yapı yuzunden kodun yazılması (code-behind, aspx.cs) içine yazımdan daha yavaş olmakta.
+  * Turkiyeye uygun yardımcı sınıfların eklenmesi (TCKimklikNo, KPS Web Service ..)
+  * Kod yazımına örnek olması için , kullanım yapısının code snippetlar ile desteklenmesi.
+  * 
