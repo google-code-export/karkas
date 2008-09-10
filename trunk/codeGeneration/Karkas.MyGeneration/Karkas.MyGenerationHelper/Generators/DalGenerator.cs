@@ -263,15 +263,16 @@ namespace Karkas.MyGenerationHelper.Generators
             BaslangicSusluParentezVeTabArtir(output);
             output.autoTabLn("return @\"UPDATE " + table.Schema + "." + table.Name);
             output.autoTabLn(" SET ");
+
             foreach (IColumn column in table.Columns)
             {
+                if (column.IsInPrimaryKey)
+                {
+                    pkcumlesi += column.Name + " = @" + column.Name + " AND";
+                }
                 if (!columnParametreOlmaliMi(column))
                 {
-                    if (column.IsInPrimaryKey)
-                    {
-                        pkcumlesi += column.Name + " = @" + column.Name + " AND";
-                    }
-                    else
+                    if (!column.IsInPrimaryKey)
                     {
                         cumle += column.Name + " = @" + column.Name + ",";
                     }
@@ -546,7 +547,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn("ParameterBuilder builder = new ParameterBuilder(cmd);");
             foreach (IColumn column in table.Columns)
             {
-                if (!columnParametreOlmaliMi(column))
+                if (column.IsInPrimaryKey || !columnParametreOlmaliMi(column))
                 {
                     builderParameterEkle(output, column);
                 }
