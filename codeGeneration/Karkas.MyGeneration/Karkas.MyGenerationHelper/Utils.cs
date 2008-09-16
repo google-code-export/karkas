@@ -205,6 +205,48 @@ namespace Karkas.MyGenerationHelper
             return sonuc;
         }
 
+        public bool ColumnNullDegeriAlabilirMi(IColumn pColumn)
+        {
+            if (pColumn.IsNullable)
+            {
+                return true;
+            }
+            else if (ColumnValueTypeMi(pColumn))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+                
+        }
+
+
+        public bool ColumnValueTypeMi(IColumn column)
+        {
+            if (
+                column.LanguageType == "Guid"
+                || column.LanguageType == "int"
+                || column.LanguageType == "byte"
+                || column.LanguageType == "bool"
+                || column.LanguageType == "DateTime"
+                || column.LanguageType == "short"
+                || column.LanguageType == "long"
+                || column.LanguageType == "decimal"
+                || column.LanguageType == "double"
+                || column.LanguageType == "float"
+                )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
         public string[] GetConvertToSyntax(IColumn column,string propertyName)
         {
             //            return column.LanguageType;
@@ -217,7 +259,7 @@ namespace Karkas.MyGenerationHelper
                     ,""
                     ,string.Format("{0} = {1};", propertyName,araDegiskenAdi)
                     ,"}"
-                    ,"catch(Exception ex)"
+                    ,"catch(Exception)"
                     ,"{"
                     ,string.Format("\tthis.Onaylayici.OnaylayiciListesi.Add(new DaimaBasarisiz(this,\"{0}\",\"Ceviri islemi Baþarýsýz oldu\"));",propertyName)
                     ,"}"

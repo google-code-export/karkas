@@ -120,11 +120,12 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn("using System;");
             output.autoTabLn("using System.Data;");
             output.autoTabLn("using System.Text;");
+            output.autoTabLn("using System.Configuration;");
+            output.autoTabLn("using System.Diagnostics;");
             output.autoTabLn("using System.Collections.Generic;");
             output.autoTabLn("using Karkas.Core.TypeLibrary;");
             output.autoTabLn("using Karkas.Core.Onaylama;");
             output.autoTabLn("using Karkas.Core.Onaylama.ForPonos;");
-            output.autoTabLn("using System.Configuration;");
             output.autoTabLn("");
             output.autoTab("namespace ");
             output.autoTabLn(classNameSpace);
