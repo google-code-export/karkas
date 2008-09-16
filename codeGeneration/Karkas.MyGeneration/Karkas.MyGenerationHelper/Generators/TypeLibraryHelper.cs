@@ -53,6 +53,7 @@ namespace Karkas.MyGenerationHelper.Generators
             {
                 string memberVariableName = utils.SetCamelCase(column.Name);
                 string propertyVariableName = utils.SetPascalCase(column.Name);
+                output.autoTabLn("[XmlIgnore]");
                 output.autoTabLn(string.Format("public string {0}AsString", propertyVariableName));
                 output.autoTabLn("{");
                 output.incTab();
