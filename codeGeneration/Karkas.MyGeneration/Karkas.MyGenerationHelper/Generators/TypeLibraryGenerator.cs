@@ -34,7 +34,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
             usingNamespaceleriYaz(output, classNameSpace);
 
-            ClassIsmiYaz(output, className);
+            ClassIsmiYaz(output, className,table);
 
             output.autoTabLn("{");
 
@@ -134,6 +134,46 @@ namespace Karkas.MyGenerationHelper.Generators
             BaslangicSusluParentezVeTabArtir(output);
         }
 
+        private static void ClassIsmiYaz(IZeusOutput output, string className, ITable table)
+        {
+            output.incTab();
+            output.autoTabLn("[Serializable]");
+            DebuggerDisplayYaz(output, table);
+            output.autoTab("public partial class ");
+            output.autoTab(className);
+            output.autoTabLn("");
+
+            try
+            {
+                output.getPreservedData("inheritance");
+                output.preserve("inheritance");
+            }
+            catch (NullReferenceException)
+            {
+                string preservedBlock = output.getPreserveBlock("inheritance");
+                string newBlock = preservedBlock.Replace("////",
+                "// " + Environment.NewLine
+                + ": BaseTypeLibrary " + Environment.NewLine + "//");
+                output.writeln("");
+                output.autoTab(newBlock);
+            }
+
+            output.writeln("");
+        }
+
+        private static void DebuggerDisplayYaz(IZeusOutput output, ITable table)
+        {
+            string yazi = "";
+            foreach (IColumn  column in table.Columns)
+            {
+                if (column.IsInPrimaryKey || column.IsAutoKey || column.IsInForeignKey)
+                {
+                    yazi +=  column.Name + " = {" + column.Name + "}";
+                }
+
+            }
+            output.autoTabLn(string.Format("[DebuggerDisplay(\"{0}\")]", yazi));
+        }
         private static void ClassIsmiYaz(IZeusOutput output, string className)
         {
             output.incTab();
