@@ -23,10 +23,12 @@ namespace Karkas.MyGenerationHelper.Generators
                 output.autoTabLn(string.Format("public {0} {1}", utils.GetLanguageType(column), propertyVariableName));
                 output.autoTabLn("{");
                 output.incTab();
+                output.autoTabLn("[DebuggerStepThrough]");
                 output.autoTabLn("get");
                 output.autoTabLn("{");
                 output.autoTabLn(string.Format("\treturn {0};", memberVariableName));
                 output.autoTabLn("}");
+                output.autoTabLn("[DebuggerStepThrough]");
                 output.autoTabLn("set");
                 output.autoTabLn("{");
                 output.incTab();
@@ -54,10 +56,12 @@ namespace Karkas.MyGenerationHelper.Generators
                 output.autoTabLn(string.Format("public string {0}AsString", propertyVariableName));
                 output.autoTabLn("{");
                 output.incTab();
+                output.autoTabLn("[DebuggerStepThrough]");
                 output.autoTabLn("get");
                 output.autoTabLn("{");
                 ToStringDegeriDondur(column,output, memberVariableName);
                 output.autoTabLn("}");
+                output.autoTabLn("[DebuggerStepThrough]");
                 output.autoTabLn("set");
                 output.autoTabLn("{");
                 output.incTab();
