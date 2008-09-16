@@ -6,6 +6,8 @@ using MyMeta;
 
 namespace Karkas.MyGenerationHelper.Generators
 {
+
+
     public class TypeLibraryHelper : BaseGenerator
     {
         private Utils utils = new Utils();
@@ -49,13 +51,12 @@ namespace Karkas.MyGenerationHelper.Generators
             {
                 string memberVariableName = utils.SetCamelCase(column.Name);
                 string propertyVariableName = utils.SetPascalCase(column.Name);
-
                 output.autoTabLn(string.Format("public string {0}AsString", propertyVariableName));
                 output.autoTabLn("{");
                 output.incTab();
                 output.autoTabLn("get");
                 output.autoTabLn("{");
-                output.autoTabLn(string.Format("\treturn {0}.ToString();", memberVariableName));
+                ToStringDegeriDondur(column,output, memberVariableName);
                 output.autoTabLn("}");
                 output.autoTabLn("set");
                 output.autoTabLn("{");
@@ -72,6 +73,18 @@ namespace Karkas.MyGenerationHelper.Generators
                 output.writeln("");
             }
             output.decTab();
+        }
+
+        private void ToStringDegeriDondur(IColumn column,IZeusOutput output, string memberVariableName)
+        {
+            if (utils.ColumnNullDegeriAlabilirMi(column))
+            {
+                output.autoTabLn(string.Format("\t return {0} != null ? {0}.ToString() : \"\"; ", memberVariableName));
+            }
+            else
+            {
+                output.autoTabLn(string.Format("\t return {0}.ToString(); ", memberVariableName));
+            }
         }
 
         public void PropertiesYaz(IZeusOutput output, IView view)
