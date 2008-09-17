@@ -14,31 +14,31 @@ namespace Karkas.MyGenerationHelper.Generators
 {
     public class BsGenerator : BaseGenerator
     {
+        string classNameTypeLibrary = "";
+        string classNameDal = "";
+        string classNameBs = "";
+        string schemaName = "";
+        string classNameSpace = "";
+        string memberVariableName = "";
+        string propertyVariableName = "";
+        string pkAdi = "";
+        string pkType = "";
+
+
+
+        string baseNameSpace = "";
+        string baseNameSpaceTypeLibrary = "";
+        string baseNameSpaceDal = "";
+        string baseNameSpaceBs = "";
 
 
         private static Utils utils = new Utils();
         public void Render(IZeusOutput output, ITable table)
         {
-            string classNameTypeLibrary = "";
-            string classNameDal = "";
-            string classNameBs = "";
-            string schemaName = "";
-            string classNameSpace = "";
-            string memberVariableName = "";
-            string propertyVariableName = "";
+
 
 
             IDatabase database = table.Database;
-
-
-            string baseNameSpace = "";
-            string baseNameSpaceTypeLibrary = "";
-            string baseNameSpaceDal = "";
-            string baseNameSpaceBs = "";
-
-
-
-
 
 
             baseNameSpace = utils.NamespaceIniAlSchemaIle(database, table.Schema);
@@ -59,8 +59,8 @@ namespace Karkas.MyGenerationHelper.Generators
             string baseNameSpaceBsWithSchema = baseNameSpace + ".Bs." + schemaName;
             string baseNameSpaceDalWithSchema = baseNameSpace + ".Dal." + schemaName;
 
-            string pkType = utils.PrimaryKeyTipiniBul(table);
-            string pkAdi = utils.PrimaryKeyAdiniBul(table);
+            pkType = utils.PrimaryKeyTipiniBul(table);
+            pkAdi = utils.PrimaryKeyAdiniBul(table);
 
 
             usingNamespaceleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema, baseNameSpaceDalWithSchema);
@@ -69,7 +69,8 @@ namespace Karkas.MyGenerationHelper.Generators
             dalDegiskeniYaz(output, classNameDal);
             EkleYaz(output, classNameTypeLibrary);
             GuncelleYaz(output, classNameTypeLibrary);
-            SilYaz(output, classNameTypeLibrary);
+            SilKomutuYaz(output, classNameTypeLibrary);
+            SilKomutuYazPkIle(output);
             DurumaGoreEkleGuncelleVeyaSilYaz(output, classNameTypeLibrary);
             SorgulaHepsiniGetirYaz(output, classNameTypeLibrary);
             SorgulaHepsiniGetirSiraliYaz(output, classNameTypeLibrary);
@@ -170,7 +171,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.writeln("");
         }
 
-        private static void SilYaz(IZeusOutput output, string classNameTypeLibrary)
+        private static void SilKomutuYaz(IZeusOutput output, string classNameTypeLibrary)
         {
             output.write("        public void Sil(");
             output.write(classNameTypeLibrary);
@@ -179,6 +180,15 @@ namespace Karkas.MyGenerationHelper.Generators
             output.writeln("            dal.Sil(k);");
             output.writeln("        }");
             output.writeln("");
+        }
+
+        private void SilKomutuYazPkIle(IZeusOutput output)
+        {
+            output.incTab();
+            output.autoTabLn(string.Format("public void Sil({0} {1})", pkType, pkAdi));
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("dal.Sil(" + pkAdi +");");
+            BitisSusluParentezVeTabAzalt(output);
         }
 
         private static void GuncelleYaz(IZeusOutput output, string classNameTypeLibrary)
