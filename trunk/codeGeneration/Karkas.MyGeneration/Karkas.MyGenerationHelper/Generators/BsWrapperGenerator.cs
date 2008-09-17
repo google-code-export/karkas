@@ -15,28 +15,31 @@ namespace Karkas.MyGenerationHelper.Generators
 
     public class BsWrapperGenerator : BaseGenerator
     {
+        string classNameTypeLibrary = "";
+        string classNameDal = "";
+        string classNameBs = "";
+        string classNameBsWrapper = "";
+        string schemaName = "";
+        string classNameSpace = "";
+        string memberVariableName = "";
+        string propertyVariableName = "";
 
+        string baseNameSpace = "";
+
+
+
+        string pkAdi = "";
+        string pkType = "";
 
         private static Utils utils = new Utils();
         public void Render(IZeusOutput output, ITable table)
         {
-            string classNameTypeLibrary = "";
-            string classNameDal = "";
-            string classNameBs = "";
-            string classNameBsWrapper = "";
-            string schemaName = "";
-            string classNameSpace = "";
-            string memberVariableName = "";
-            string propertyVariableName = "";
 
-            string baseNameSpace = "";
+
 
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
             string baseNameSpaceDal = baseNameSpace + ".Dal";
             string baseNameSpaceBs = baseNameSpace + ".Bs";
-
-
-
 
             IDatabase database = table.Database;
 
@@ -60,8 +63,8 @@ namespace Karkas.MyGenerationHelper.Generators
             string baseNameSpaceBsWrapperWithSchema = baseNameSpace + ".BsWrapper." + schemaName;
             string baseNameSpaceDalWithSchema = baseNameSpace + ".Dal." + schemaName;
 
-            string pkType = utils.PrimaryKeyTipiniBul(table);
-            string pkAdi = utils.PrimaryKeyAdiniBul(table);
+            pkType = utils.PrimaryKeyTipiniBul(table);
+            pkAdi = utils.PrimaryKeyAdiniBul(table);
 
 
             usingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema);
@@ -73,7 +76,8 @@ namespace Karkas.MyGenerationHelper.Generators
             ConstructorYaz(output, classNameBsWrapper);
             InsertYaz(output, classNameTypeLibrary);
             GuncelleYaz(output, classNameTypeLibrary);
-            SilYaz(output, classNameTypeLibrary);
+            SilKomutuYaz(output, classNameTypeLibrary);
+            SilKomutuYazPkIle(output);
             DurumaGoreEkleGuncelleVeyaSil(output, classNameTypeLibrary);
             SorgulaHepsiniGetirYaz(output, classNameTypeLibrary);
             SorgulaHepsiniGetirSiraliYaz(output, classNameTypeLibrary);
@@ -242,7 +246,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.writeln("");
         }
 
-        private static void SilYaz(IZeusOutput output, string classNameTypeLibrary)
+        private static void SilKomutuYaz(IZeusOutput output, string classNameTypeLibrary)
         {
             output.writeln("        [DataObjectMethod(DataObjectMethodType.Delete)]");
             output.write("        public void Sil(");
@@ -252,6 +256,15 @@ namespace Karkas.MyGenerationHelper.Generators
             output.writeln("            bs.Sil(k);");
             output.writeln("        }");
             output.writeln("");
+        }
+        private void SilKomutuYazPkIle(IZeusOutput output)
+        {
+            output.incTab();
+            output.incTab();
+            output.autoTabLn(string.Format("public void Sil({0} {1})", pkType, pkAdi));
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("bs.Sil(" + pkAdi + ");");
+            BitisSusluParentezVeTabAzalt(output);
         }
 
         private static void GuncelleYaz(IZeusOutput output, string classNameTypeLibrary)

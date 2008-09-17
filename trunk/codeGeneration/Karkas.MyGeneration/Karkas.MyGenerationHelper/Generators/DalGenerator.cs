@@ -24,6 +24,7 @@ namespace Karkas.MyGenerationHelper.Generators
         string baseNameSpace = "";
         string baseNameSpaceTypeLibrary = "";
         string pkAdi = "";
+        string pkType = "";
         string identityColumnAdi = "";
         bool identityVarmi = false;
         string listeType = "";
@@ -53,7 +54,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
             string baseNameSpaceDal = baseNameSpace + ".Dal." + schemaName;
 
-            string pkType = utils.PrimaryKeyTipiniBul(table);
+            pkType = utils.PrimaryKeyTipiniBul(table);
             identityType = utils.IdentityTipiniBul(table);
 
             listeType = "List<" + classNameTypeLibrary + ">";
@@ -89,6 +90,7 @@ namespace Karkas.MyGenerationHelper.Generators
             PkGuidMiYaz(output, table);
 
 
+            SilKomutuYazPkIle(output, classNameTypeLibrary);
 
             ProcessRowYaz(output, table, classNameTypeLibrary);
 
@@ -116,6 +118,16 @@ namespace Karkas.MyGenerationHelper.Generators
             }
 
 
+        }
+
+        private void SilKomutuYazPkIle(IZeusOutput output, string classNameTypeLibrary)
+        {
+            output.autoTabLn(string.Format("public virtual void Sil({0} {1})",pkType,pkAdi));
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn(string.Format("{0} row = new {0}();",classNameTypeLibrary));
+            output.autoTabLn(string.Format("row.{0} = {0};",pkAdi));
+            output.autoTabLn("base.Sil(row);");
+            BitisSusluParentezVeTabAzalt(output);
         }
 
 
