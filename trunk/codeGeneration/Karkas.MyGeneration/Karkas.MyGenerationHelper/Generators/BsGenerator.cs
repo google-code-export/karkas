@@ -35,17 +35,11 @@ namespace Karkas.MyGenerationHelper.Generators
         private static Utils utils = new Utils();
         public void Render(IZeusOutput output, ITable table)
         {
-
-
-
             IDatabase database = table.Database;
-
-
             baseNameSpace = utils.NamespaceIniAlSchemaIle(database, table.Schema);
             baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
             baseNameSpaceDal = baseNameSpace + ".Dal";
             baseNameSpaceBs = baseNameSpace + ".Bs";
-
 
             classNameTypeLibrary = utils.SetPascalCase(table.Name);
             classNameDal = utils.SetPascalCase(table.Name) + "Dal";
@@ -102,172 +96,180 @@ namespace Karkas.MyGenerationHelper.Generators
 
         private static void dalDegiskeniYaz(IZeusOutput output, string classNameDal)
         {
-            output.writeln(" ");
-            output.writeln("    {");
-            output.write("        ");
-            output.write(classNameDal);
-            output.write(" dal = new ");
-            output.write(classNameDal);
-            output.writeln("();");
+            output.incTab();
+            output.autoTab(classNameDal + " dal = new " + classNameDal + "();");
+            output.autoTabLn("");
         }
 
         private static void TopluEkleGuncelleVeyaSilYaz(IZeusOutput output, string classNameTypeLibrary)
         {
-            output.write("        public void TopluEkleGuncelleVeyaSil(List<");
-            output.write(classNameTypeLibrary);
-            output.writeln("> liste)");
-            output.writeln("        {");
-            output.writeln("            dal.TopluEkleGuncelleVeyaSil(liste);");
-            output.writeln("        }");
-            output.writeln("\t\t");
+            string classSatiri = "public void TopluEkleGuncelleVeyaSil(List<" + classNameTypeLibrary + "<liste)";
+            output.autoTabLn(classSatiri);
+            output.autoTabLn("{");
+            output.incTab();
+            output.autoTabLn("dal.TopluEkleGuncelleVeyaSil(liste);");
+            output.decTab();
+            output.autoTabLn("}");
+
         }
 
         private static void sorgulaPkAdiIleYaz(IZeusOutput output, string classNameTypeLibrary, string pkType, string pkAdi)
         {
-            output.write("\t\tpublic ");
-            output.write(classNameTypeLibrary);
-            output.write(" Sorgula");
-            output.write(pkAdi);
-            output.write("Ile(");
-            output.write(pkType);
-            output.writeln(" p1)");
-            output.writeln("\t\t{");
-            output.write("\t\t\treturn dal.Sorgula");
-            output.write(pkAdi);
-            output.writeln("Ile(p1);");
-            output.writeln("\t\t}");
-            output.writeln("");
+            string classSatiri = "public " + classNameTypeLibrary + " Sorgula"
+                            + pkAdi + "Ile(" + pkType
+                            + " p1)";
+            output.autoTabLn(classSatiri);
+            output.autoTabLn("{");
+            output.incTab();
+            output.autoTabLn("return dal.Sorgula" + pkAdi + "Ile(p1);");
+            output.decTab();
+            output.autoTabLn("}");
+
         }
 
         private static void SorgulaHepsiniGetirYaz(IZeusOutput output, string classNameTypeLibrary)
         {
-            output.write("        public List<");
-            output.write(classNameTypeLibrary);
-            output.writeln("> SorgulaHepsiniGetir()");
-            output.writeln("        {");
-            output.writeln("            return dal.SorgulaHepsiniGetir();");
-            output.writeln("        }");
-            output.writeln("");
+            string classSatiri = "public List< " + classNameTypeLibrary + " > SorgulaHepsiniGetir()";
+            output.autoTabLn(classSatiri);
+            output.autoTabLn("{");
+            output.incTab();
+            output.autoTabLn("return dal.SorgulaHepsiniGetir();");
+            output.decTab();
+            output.autoTabLn("}");
+
         }
         private static void SorgulaHepsiniGetirSiraliYaz(IZeusOutput output, string classNameTypeLibrary)
         {
-            output.write("        public List<");
-            output.write(classNameTypeLibrary);
-            output.writeln("> SorgulaHepsiniGetirSirali(params string[] pSiraListesi)");
-            output.writeln("        {");
-            output.writeln("            return dal.SorgulaHepsiniGetirSirali(pSiraListesi);");
-            output.writeln("        }");
-            output.writeln("");
+            string classSatiri = "public List< " + classNameTypeLibrary + " > SorgulaHepsiniGetirSirali(params string[] pSiraListesi)";
+            output.autoTabLn(classSatiri);
+            output.autoTabLn("{");
+            output.incTab();
+            output.autoTabLn("return dal.SorgulaHepsiniGetirSirali(pSiraListesi);");
+            output.decTab();
+            output.autoTabLn("}");
         }
 
         private static void DurumaGoreEkleGuncelleVeyaSilYaz(IZeusOutput output, string classNameTypeLibrary)
         {
-            output.write("        public void DurumaGoreEkleGuncelleVeyaSil(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" k)");
-            output.writeln("        {");
-            output.writeln("            dal.DurumaGoreEkleGuncelleVeyaSil(k);");
-            output.writeln("        }");
-            output.writeln("");
+            string classSatiri = "public void DurumaGoreEkleGuncelleVeyaSil(" + classNameTypeLibrary + " k)";
+            output.autoTabLn(classSatiri);
+            output.autoTabLn("{");
+            output.incTab();
+            output.autoTabLn("dal.DurumaGoreEkleGuncelleVeyaSil(k);");
+            output.decTab();
+            output.autoTabLn("}");
         }
 
         private static void SilKomutuYaz(IZeusOutput output, string classNameTypeLibrary)
         {
-            output.write("        public void Sil(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" k)");
-            output.writeln("        {");
-            output.writeln("            dal.Sil(k);");
-            output.writeln("        }");
-            output.writeln("");
+
+            output.autoTabLn("public void Sil(" + classNameTypeLibrary + " k)");
+            output.autoTabLn("{");
+            output.incTab();
+            output.autoTabLn("dal.Sil(k);");
+            output.decTab();
+            output.autoTabLn("}");
+
         }
 
         private void SilKomutuYazPkIle(IZeusOutput output)
         {
-            output.incTab();
             output.autoTabLn(string.Format("public void Sil({0} {1})", pkType, pkAdi));
             BaslangicSusluParentezVeTabArtir(output);
-            output.autoTabLn("dal.Sil(" + pkAdi +");");
+            output.autoTabLn("dal.Sil(" + pkAdi + ");");
             BitisSusluParentezVeTabAzalt(output);
+
         }
 
         private static void GuncelleYaz(IZeusOutput output, string classNameTypeLibrary)
         {
-            output.write("        public void Guncelle(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" k)");
-            output.writeln("        {");
-            output.writeln("            dal.Guncelle(k);");
-            output.writeln("        }");
+            output.autoTabLn("public void Guncelle(" + classNameTypeLibrary + " k)");
+            output.autoTabLn("{");
+            output.incTab();
+            output.autoTabLn("dal.Guncelle(k);");
+            output.decTab();
+            output.autoTabLn("}");
         }
 
         private static void EkleYaz(IZeusOutput output, string classNameTypeLibrary)
         {
-            output.write("        public void Ekle(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" k)");
-            output.writeln("        {");
-            output.writeln("            dal.Ekle(k);");
-            output.writeln("        }");
-            output.writeln("");
+            output.autoTabLn("public void Ekle(" + classNameTypeLibrary + " k)");
+            output.autoTabLn("{");
+            output.incTab();
+            output.autoTabLn("dal.Ekle(k);");
+            output.decTab();
+            output.autoTabLn("}");
+
         }
 
         private static void classYaz(IZeusOutput output, string classNameBs)
         {
             output.autoTab("public partial class ");
             output.autoTabLn(classNameBs);
+            output.incTab();
+            output.autoTabLn("{");
         }
 
         public void usingNamespaceleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceBsWithSchema, string baseNameSpaceDalWithSchema)
         {
-            output.writeln("");
-            output.writeln("using System;");
-            output.writeln("using System.Collections.Generic;");
-            output.writeln("using System.Data;");
-            output.writeln("using System.Data.SqlClient;");
-            output.writeln("using System.Text;");
-            output.write("using ");
-            output.write(baseNameSpaceTypeLibrary);
-            output.writeln(";");
-            output.write("using ");
-            output.write(baseNameSpaceTypeLibrary);
-            output.write(".");
-            output.write(schemaName);
-            output.writeln(";");
-            output.write("using ");
-            output.write(baseNameSpaceDalWithSchema);
-            output.writeln(";");
-            output.writeln("");
-            output.writeln("");
-            output.write("namespace ");
-            output.write(baseNameSpaceBsWithSchema);
-            output.writeln("");
+            output.autoTabLn("");
+            output.autoTabLn("using System;");
+            output.autoTabLn("using System.Collections.Generic;");
+            output.autoTabLn("using System.Data;");
+            output.autoTabLn("using System.Data.SqlClient;");
+            output.autoTabLn("using System.Text;");
+            output.autoTab("using ");
+            output.autoTab(baseNameSpaceTypeLibrary);
+            output.autoTabLn(";");
+            output.autoTab("using ");
+            output.autoTab(baseNameSpaceTypeLibrary);
+            output.autoTab(".");
+            output.autoTab(schemaName);
+            output.autoTabLn(";");
+            output.autoTab("using ");
+            output.autoTab(baseNameSpaceDalWithSchema);
+            output.autoTabLn(";");
+            output.autoTabLn("");
+            output.autoTabLn("");
+            output.autoTab("namespace ");
+            output.autoTab(baseNameSpaceBsWithSchema);
+            output.autoTabLn("");
         }
 
         private static void tablodakiSatirSayisiniYaz(IZeusOutput output)
         {
-            output.writeln("        public int TablodakiSatirSayisi");
-            output.writeln("        {");
-            output.writeln("\t\t\tget");
-            output.writeln("\t\t\t{");
-            output.writeln("\t\t\t\treturn dal.TablodakiSatirSayisi;");
-            output.writeln("\t\t\t}");
-            output.writeln("        }");
+            output.autoTabLn("public int TablodakiSatirSayisi");
+            output.autoTabLn("{");
+            output.incTab();
+            output.autoTabLn("get");
+            output.autoTabLn("{");
+            output.incTab();
+            output.autoTabLn("return dal.TablodakiSatirSayisi;");
+            output.decTab();
+            output.autoTabLn("}");
+            output.decTab();
+            output.autoTabLn("}");
         }
 
         private static void KomutuCalistiranKullaniciyiYaz(IZeusOutput output)
         {
-            output.writeln("        public Guid KomutuCalistiranKullaniciKisiKey");
-            output.writeln("        {");
-            output.writeln("\t\t\tget");
-            output.writeln("\t\t\t{");
-            output.writeln("\t\t\t\treturn dal.KomutuCalistiranKullaniciKisiKey;");
-            output.writeln("\t\t\t}");
-            output.writeln("\t\t\tset");
-            output.writeln("\t\t\t{");
-            output.writeln("\t\t\t\tdal.KomutuCalistiranKullaniciKisiKey = value;");
-            output.writeln("\t\t\t}");
-            output.writeln("        }");
+            output.autoTabLn("public Guid KomutuCalistiranKullaniciKisiKey");
+            output.autoTabLn("{");
+            output.incTab();
+            output.autoTabLn("get");
+            output.autoTabLn("{");
+            output.incTab();
+            output.autoTabLn("return dal.KomutuCalistiranKullaniciKisiKey;");
+            output.decTab();
+            output.autoTabLn("}");
+            output.autoTabLn("set");
+            output.autoTabLn("{");
+            output.incTab();
+            output.autoTabLn("dal.KomutuCalistiranKullaniciKisiKey = value;");
+            output.decTab();
+            output.autoTabLn("}");
+            output.decTab();
+            output.autoTabLn("}");
         }
 
     }
