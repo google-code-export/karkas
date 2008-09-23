@@ -103,7 +103,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
         private static void TopluEkleGuncelleVeyaSilYaz(IZeusOutput output, string classNameTypeLibrary)
         {
-            string classSatiri = "public void TopluEkleGuncelleVeyaSil(List<" + classNameTypeLibrary + "<liste)";
+            string classSatiri = "public void TopluEkleGuncelleVeyaSil(List<" + classNameTypeLibrary + "> liste)";
             output.autoTabLn(classSatiri);
             output.autoTabLn("{");
             output.incTab();
