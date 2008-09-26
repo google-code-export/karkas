@@ -36,6 +36,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
         public void Render(IZeusOutput output, IProcedure proc)
         {
+            output.tabLevel = 0;
             if (proc.Schema == "sys")
             {
                 return;
