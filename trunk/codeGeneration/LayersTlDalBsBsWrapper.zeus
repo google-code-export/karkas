@@ -17,6 +17,7 @@ public class GeneratedGui : DotNetScriptGui
 	GuiTextBox outputPath = null;
 	GuiTextBox classNamespace = null;
 	GuiListBox chooseViews = null;
+	GuiListBox chooseStoredProcedures = null;
 	
 	public override void Setup()
 	{
@@ -91,14 +92,22 @@ public class GeneratedGui : DotNetScriptGui
 			chkAllViewsBox.Top = chkAllTablesBox.Top;
 			chkAllViewsBox.Left = chkAllTablesBox.Left + 300;
 
-			GuiCheckBox ignoreSomeSchemasCheckBox = ui.AddCheckBox("ignoreSomeSchemasCheckBox", "ignore some schemas",true, "Eğer bu seçeneği tıklarsanız, asagidaki schemalar dikkate alınmadan veritabanından kod üretir.");
-			ignoreSomeSchemasCheckBox.Width = 250;
+			//Tüm Stored Procedurelar CheckBox
+			GuiCheckBox chkAllStoredProcedureBox = ui.AddCheckBox("chkAllStoredProcedureBox", "Tüm Stored Procedureları Generate Et",false, "Eğer bu seçeneği tıklarsanız, Stored Procedure seçiminiz dikkate alınmadan tüm veritabanından kod üretir.");
+			chkAllStoredProcedureBox.Width = 250;
+			chkAllStoredProcedureBox.Top = chkAllViewsBox.Top;
+			chkAllStoredProcedureBox.Left = chkAllViewsBox.Left + 300;
+
+
+			//dbo Ignore CheckBox
+			GuiCheckBox DboIgnoreCheckBox = ui.AddCheckBox("DboIgnoreCheckBox", "dbo ignore",true, "Eğer bu seçeneği tıklarsanız, dbo scheması dikkate alınmadan veritabanından kod üretir.");
+			DboIgnoreCheckBox.Width = 250;
 
 			//dbo Ignore CheckBox
 			GuiCheckBox isDebugCheckBox = ui.AddCheckBox("isDebugCheckBox", "Debug",false, "Eğer bu seçeneği tıklarsanız, debugger launch edilir.");
 			isDebugCheckBox.Width = 250;
-			isDebugCheckBox.Top = ignoreSomeSchemasCheckBox.Top;
-			isDebugCheckBox.Left = ignoreSomeSchemasCheckBox.Left + 300;
+			isDebugCheckBox.Top = DboIgnoreCheckBox.Top;
+			isDebugCheckBox.Left = DboIgnoreCheckBox.Left + 300;
 			
 			GuiCheckBox chkDatabaseBox = ui.AddCheckBox("chkDatabaseBox", "Database tabloları Generate Et", true, "Eğer bu seçeneği tıklarsanız,Database Tabloları üretilir"); 
 			chkDatabaseBox.Width = 250;
@@ -145,17 +154,28 @@ public class GeneratedGui : DotNetScriptGui
 			//View ListBox
 			GuiLabel label9 = ui.AddLabel("label9", "View Seçin:", "Listeden View Seçin.");
 			label9.Width = 150;
+
 			chooseViews = ui.AddListBox("chooseViews", "View Seçin.");
-			
-			//chooseViews.AttachEvent ("onchange", "chooseViews_onchange");
-			
 			chooseViews.Height = 260;
 			chooseViews.Width = 250;
 			chooseViews.Top = chooseTables.Top;
 			chooseViews.Left = chooseTables.Left + 300;
+	
 			label9.Top = chooseViews.Top-25;
 			label9.Left = chooseViews.Left;
-	
+
+			GuiLabel label10 = ui.AddLabel("label10", "Stored Procedure Seçin:", "Listeden Stored Procedure Seçin.");
+			label10.Width = 150;
+
+			chooseStoredProcedures = ui.AddListBox("chooseStoredProcedures", "Stored Procedure Seçin.");
+			chooseStoredProcedures.Height = 260;
+			chooseStoredProcedures.Width = 250;
+			chooseStoredProcedures.Top = chooseViews.Top;
+			chooseStoredProcedures.Left = chooseViews.Left + 300;
+
+			label10.Top = chooseStoredProcedures.Top-25;
+			label10.Left = chooseStoredProcedures.Left;
+
 
 			// Attach the onchange event to the cmbDatabases control.
 			setupDatabaseDropdown( chooseDatabase );
@@ -182,6 +202,7 @@ public class GeneratedGui : DotNetScriptGui
 					Databases.SelectedValue = MyMeta.DefaultDatabase.Alias;
 					bindTables( Databases.SelectedValue,"dbo" );
 					bindViews( Databases.SelectedValue,"dbo" );
+					bindStoredProcedures( Databases.SelectedValue,"dbo" );
 					bindSchemas( Databases.SelectedValue );
 				}
 			}
@@ -218,6 +239,22 @@ public class GeneratedGui : DotNetScriptGui
 				if (view.Schema == pSchemaName)
 				{
 					chooseViews[view.Name] = view.Name;
+				}
+			}
+	}
+
+	public void bindStoredProcedures( string sDatabase ,string pSchemaName)
+	{
+			GuiListBox lstStoredProcedures = ui["chooseStoredProcedures"] as GuiListBox;
+			IDatabase db = MyMeta.Databases[sDatabase];
+			ArrayList liste = new ArrayList();
+			
+			chooseStoredProcedures.Clear();
+			foreach (IProcedure proc in db.Procedures)
+			{
+				if (proc.Schema == pSchemaName)
+				{
+					chooseStoredProcedures[proc.Name] = proc.Name;
 				}
 			}
 	}
@@ -277,6 +314,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 	private bool isDEBUG = false;
 	private bool generateAllTables = false;
 	private bool generateAllViews = false;
+	private bool generateAllStoredProcedures = false;
 	private bool generateDatabaseTables = false;
 	private bool generateTypeLibrary = false;
 	private bool generateDal = false;
@@ -345,6 +383,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		if (Convert.ToBoolean(input["chkAspxBox"]))
 		{
 			generateAspx = true;
+		}
+		if (Convert.ToBoolean(input["chkAllStoredProcedureBox"]))
+		{
+			generateAllStoredProcedures = true;
 		}
 
 		string databaseName = input["chooseDatabase"].ToString();;
@@ -443,7 +485,30 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			KarkasUtils.RenderTypeLibraryCode(output,view);
 		}
 
+		IList selectedStoredProcedures = null;
 
+		if (generateAllStoredProcedures)
+		{
+			selectedStoredProcedures = database.Procedures as IList;
+		}
+		else
+		{
+			selectedStoredProcedures = input["chooseStoredProcedures"] as IList;
+		}
+		for (int i =0; i<selectedStoredProcedures.Count ;i++)
+		{
+			IProcedure proc = null;
+			if (generateAllStoredProcedures)
+			{
+				proc = selectedStoredProcedures[i] as IProcedure;
+			}
+			else
+			{
+				string name = selectedStoredProcedures[i] as String;
+				proc = database.Procedures[name];
+			}
+			KarkasUtils.RenderStoredProcedureCode(output,proc);
+		}
 		
 
 
