@@ -31,6 +31,9 @@ namespace Karkas.MyGenerationHelper.Generators
         string donusParamAdi = "";
         IDatabase database = null;
 
+
+        bool sorguKomutuMu = false;
+
         public void Render(IZeusOutput output, IProcedure proc)
         {
             if (proc.Schema == "sys")
@@ -42,6 +45,11 @@ namespace Karkas.MyGenerationHelper.Generators
             if (diagramRutiniMi)
             {
                 return;
+            }
+
+            if (proc.ResultColumns.Count > 0)
+            {
+                sorguKomutuMu = true;
             }
 
             database = proc.Database;
@@ -65,14 +73,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
 
 
-            if (proc.ResultColumns.Count > 0)
-            {
-                RenderWithDataTable(output, proc);
-            }
-            else
-            {
-                RenderNormal(output, proc);
-            }
+            RenderNormal(output, proc);
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
         }
@@ -157,21 +158,29 @@ namespace Karkas.MyGenerationHelper.Generators
             generateParametersParameterBuilder(output, proc);
 
             output.autoTabLn("AdoTemplate template = new AdoTemplate();");
-            output.autoTabLn(string.Format("template.Connection = new SqlConnection(ConnectionSingleton.Instance.getConnectionString(\"{0}\"));",database.Name));
+            output.autoTabLn(string.Format("template.Connection = new SqlConnection(ConnectionSingleton.Instance.getConnectionString(\"{0}\"));", database.Name));
 
             output.autoTabLn("SqlCommand cmd = new SqlCommand();");
-            output.autoTabLn(string.Format("cmd.CommandText = \"{0}.{1}\";",proc.Schema,proc.Name));
+            output.autoTabLn(string.Format("cmd.CommandText = \"{0}.{1}\";", proc.Schema, proc.Name));
             output.autoTabLn("cmd.CommandType = CommandType.StoredProcedure;");
             output.autoTabLn("cmd.Parameters.AddRange(builder.GetParameterArray());");
-            output.autoTabLn("template.SorguHariciKomutCalistir(cmd);");
-
-            if (donusParamVarMi)
+            if (sorguKomutuMu)
             {
-                output.autoTabLn(string.Format("return ({0}) cmd.Parameters[\"{1}\"].Value;", donucParamTipi, donusParamAdi));
+                output.autoTabLn("return template.DataTableOlustur(cmd);");
             }
             else
             {
-                output.autoTabLn("return;");
+                output.autoTabLn("template.SorguHariciKomutCalistir(cmd);");
+                if (donusParamVarMi)
+                {
+                    output.autoTabLn(string.Format("return ({0}) cmd.Parameters[\"{1}\"].Value;", donucParamTipi, donusParamAdi));
+                }
+                else
+                {
+                    output.autoTabLn("return;");
+                }
+
+
             }
 
             BitisSusluParentezVeTabAzalt(output);
@@ -189,6 +198,10 @@ namespace Karkas.MyGenerationHelper.Generators
                     donusParamAdi = param.Name;
                     donucParamTipi = param.LanguageType;
                 }
+            }
+            if (sorguKomutuMu)
+            {
+                donusDegeri = "DataTable";
             }
             return donusDegeri;
         }
