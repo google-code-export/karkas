@@ -1,6 +1,6 @@
 ﻿##|TYPE Template
-##|UNIQUEID 110e43e8-0883-4594-b169-ecec306ea4e8
-##|TITLE Karkas Type Library,Dal,Bs,BsWrapper
+##|UNIQUEID 69ad77f9-8f37-414a-be4e-3c32e0f162bd
+##|TITLE Untitled
 ##|NAMESPACE 
 ##|SOURCE_TYPE Source
 ##|OUTPUT_LANGUAGE None
@@ -17,6 +17,7 @@ public class GeneratedGui : DotNetScriptGui
 	GuiTextBox outputPath = null;
 	GuiTextBox classNamespace = null;
 	GuiListBox chooseViews = null;
+	GuiListBox chooseStoredProcedures = null;
 	
 	public override void Setup()
 	{
@@ -91,14 +92,22 @@ public class GeneratedGui : DotNetScriptGui
 			chkAllViewsBox.Top = chkAllTablesBox.Top;
 			chkAllViewsBox.Left = chkAllTablesBox.Left + 300;
 
-			GuiCheckBox ignoreSomeSchemasCheckBox = ui.AddCheckBox("ignoreSomeSchemasCheckBox", "ignore some schemas",true, "Eğer bu seçeneği tıklarsanız, asagidaki schemalar dikkate alınmadan veritabanından kod üretir.");
-			ignoreSomeSchemasCheckBox.Width = 250;
+			//Tüm Stored Procedurelar CheckBox
+			GuiCheckBox chkAllStoredProcedureBox = ui.AddCheckBox("chkAllStoredProcedureBox", "Tüm Stored Procedureları Generate Et",false, "Eğer bu seçeneği tıklarsanız, Stored Procedure seçiminiz dikkate alınmadan tüm veritabanından kod üretir.");
+			chkAllStoredProcedureBox.Width = 250;
+			chkAllStoredProcedureBox.Top = chkAllViewsBox.Top;
+			chkAllStoredProcedureBox.Left = chkAllViewsBox.Left + 300;
+
+
+			//dbo Ignore CheckBox
+			GuiCheckBox DboIgnoreCheckBox = ui.AddCheckBox("DboIgnoreCheckBox", "dbo ignore",true, "Eğer bu seçeneği tıklarsanız, dbo scheması dikkate alınmadan veritabanından kod üretir.");
+			DboIgnoreCheckBox.Width = 250;
 
 			//dbo Ignore CheckBox
 			GuiCheckBox isDebugCheckBox = ui.AddCheckBox("isDebugCheckBox", "Debug",false, "Eğer bu seçeneği tıklarsanız, debugger launch edilir.");
 			isDebugCheckBox.Width = 250;
-			isDebugCheckBox.Top = ignoreSomeSchemasCheckBox.Top;
-			isDebugCheckBox.Left = ignoreSomeSchemasCheckBox.Left + 300;
+			isDebugCheckBox.Top = DboIgnoreCheckBox.Top;
+			isDebugCheckBox.Left = DboIgnoreCheckBox.Left + 300;
 			
 			GuiCheckBox chkDatabaseBox = ui.AddCheckBox("chkDatabaseBox", "Database tabloları Generate Et", true, "Eğer bu seçeneği tıklarsanız,Database Tabloları üretilir"); 
 			chkDatabaseBox.Width = 250;
@@ -145,17 +154,28 @@ public class GeneratedGui : DotNetScriptGui
 			//View ListBox
 			GuiLabel label9 = ui.AddLabel("label9", "View Seçin:", "Listeden View Seçin.");
 			label9.Width = 150;
+
 			chooseViews = ui.AddListBox("chooseViews", "View Seçin.");
-			
-			//chooseViews.AttachEvent ("onchange", "chooseViews_onchange");
-			
 			chooseViews.Height = 260;
 			chooseViews.Width = 250;
 			chooseViews.Top = chooseTables.Top;
 			chooseViews.Left = chooseTables.Left + 300;
+	
 			label9.Top = chooseViews.Top-25;
 			label9.Left = chooseViews.Left;
-	
+
+			GuiLabel label10 = ui.AddLabel("label10", "Stored Procedure Seçin:", "Listeden Stored Procedure Seçin.");
+			label10.Width = 150;
+
+			chooseStoredProcedures = ui.AddListBox("chooseStoredProcedures", "Stored Procedure Seçin.");
+			chooseStoredProcedures.Height = 260;
+			chooseStoredProcedures.Width = 250;
+			chooseStoredProcedures.Top = chooseViews.Top;
+			chooseStoredProcedures.Left = chooseViews.Left + 300;
+
+			label10.Top = chooseStoredProcedures.Top-25;
+			label10.Left = chooseStoredProcedures.Left;
+
 
 			// Attach the onchange event to the cmbDatabases control.
 			setupDatabaseDropdown( chooseDatabase );
@@ -182,6 +202,7 @@ public class GeneratedGui : DotNetScriptGui
 					Databases.SelectedValue = MyMeta.DefaultDatabase.Alias;
 					bindTables( Databases.SelectedValue,"dbo" );
 					bindViews( Databases.SelectedValue,"dbo" );
+					bindStoredProcedures( Databases.SelectedValue,"dbo" );
 					bindSchemas( Databases.SelectedValue );
 				}
 			}
@@ -218,6 +239,22 @@ public class GeneratedGui : DotNetScriptGui
 				if (view.Schema == pSchemaName)
 				{
 					chooseViews[view.Name] = view.Name;
+				}
+			}
+	}
+
+	public void bindStoredProcedures( string sDatabase ,string pSchemaName)
+	{
+			GuiListBox lstStoredProcedures = ui["chooseStoredProcedures"] as GuiListBox;
+			IDatabase db = MyMeta.Databases[sDatabase];
+			ArrayList liste = new ArrayList();
+			
+			chooseStoredProcedures.Clear();
+			foreach (IProcedure proc in db.Procedures)
+			{
+				if (proc.Schema == pSchemaName)
+				{
+					chooseStoredProcedures[proc.Name] = proc.Name;
 				}
 			}
 	}
@@ -268,189 +305,21 @@ public class GeneratedGui : DotNetScriptGui
 ##|BODY_TAG_START <%
 ##|BODY_TAG_END %>
 ##|BODY_BEGIN
-<%#DEBUG%><%#NAMESPACE System.IO, System.Text, System.Text.RegularExpressions, System.Globalization,System.Collections.Generic %><%
+<%
 public class GeneratedTemplate : DotNetScriptTemplate
 {
 	public GeneratedTemplate(ZeusContext context) : base(context) {}
 
-
-	private bool isDEBUG = false;
-	private bool generateAllTables = false;
-	private bool generateAllViews = false;
-	private bool generateDatabaseTables = false;
-	private bool generateTypeLibrary = false;
-	private bool generateDal = false;
-	private bool generateBs = false;
-	private bool generateBsWrapper = false;
-	private bool ignoreSomeSchemas = false;
-	private bool generateAspx = false;
-	private string[] ignoredSchemas = {"GECICI"};
-
+	//---------------------------------------------------
+	// Render() is where you want to write your logic    
+	//---------------------------------------------------
 	public override void Render()
 	{
-		string className = "";
-		string schemaName = "";
-		string classNameSpace = "";
-		string memberVariableName = "";
-		string propertyVariableName = "";
-		string outputFullFileName = "";
-		string outputPath = input["outputPath"].ToString();
-
-		if (Convert.ToBoolean(input["isDebugCheckBox"]))
-		{
-			isDEBUG = true;
-		}
-
-		// debugger icin
-		if (isDEBUG)
-		{
-			System.Diagnostics.Debugger.Launch();
-		}
-		if (isDEBUG)
-		{
-			System.Diagnostics.Debugger.Break();
-		}
-		if (Convert.ToBoolean(input["chkAllTablesBox"]))
-		{
-			generateAllTables = true;
-		}
-		if (Convert.ToBoolean(input["chkAllViewsBox"]))
-		{
-			generateAllViews = true;
-		}
-		if (Convert.ToBoolean(input["chkDatabaseBox"]))
-		{
-			generateDatabaseTables = true;
-		}
-		if (Convert.ToBoolean(input["chkTypeLibraryBox"]))
-		{
-			generateTypeLibrary = true;
-		}
-		if (Convert.ToBoolean(input["chkDalBox"]))
-		{
-			generateDal = true;
-		}
-		if (Convert.ToBoolean(input["chkBsBox"]))
-		{
-			generateBs = true;
-		}
-		if (Convert.ToBoolean(input["chkBsWrapperBox"]))
-		{
-			generateBsWrapper = true;
-		}
-		if (Convert.ToBoolean(input["ignoreSomeSchemasCheckBox"]))
-		{
-			ignoreSomeSchemas = true;
-		}
-		if (Convert.ToBoolean(input["chkAspxBox"]))
-		{
-			generateAspx = true;
-		}
-
-		string databaseName = input["chooseDatabase"].ToString();;
-		IDatabase database = MyMeta.Databases[databaseName];
-
-		IList selectedTables = null;
-		if (generateAllTables)
-		{
-				selectedTables = database.Tables as IList;
-				List<ITable> liste = new List<ITable>();
-				bool ekle = true;
-				foreach (ITable t in selectedTables)
-				{
-					foreach(string s in ignoredSchemas)
-					{
-						if (t.Schema == s)
-						{
-							ekle = false;
-						}
-					}
-					if (ekle)
-					{
-						liste.Add(t);
-					}
-				}
-				selectedTables = liste;
-			
-		}
-		else
-		{
-			selectedTables = input["chooseTables"] as IList;
-		}
-		
-		
-		
-
-		for (int i =0; i<selectedTables.Count ;i++)
-		{
-			ITable table = null;
-			if (generateAllTables)
-			{
-				table = selectedTables[i] as ITable;
-			}
-			else
-			{
-				string tableName = selectedTables[i] as String;
-				table = database.Tables[tableName];
-			}
-			if (generateDatabaseTables)
-			{
-				KarkasUtils.RenderDatabaseTablesCode(output,table,MyMeta.ConnectionString);
-			}
-			if (generateTypeLibrary)
-			{
-				KarkasUtils.RenderTypeLibraryCode(output,table);
-			}
-			if (generateDal)
-			{
-				KarkasUtils.RenderDalCode(output,table);
-			}
-			if (generateBs)
-			{
-				KarkasUtils.RenderBsCode(output,table);
-			}
-			if (generateBsWrapper)
-			{
-				KarkasUtils.RenderBsWrapperCode(output,table);
-			}
-//			if (generateAspx)
-//			{
-//				KarkasUtils.RenderAspxCode(output,table);
-//			}
-		}
-		IList selectedViews = null;
-		if (generateAllViews)
-		{
-			selectedViews = database.Views as IList;
-		}
-		else
-		{
-			selectedViews = input["chooseViews"] as IList;
-		}
-
-		for (int i =0; i<selectedViews.Count ;i++)
-		{
-			IView view = null;
-			if (generateAllViews)
-			{
-				view = selectedViews[i] as IView;
-			}
-			else
-			{
-				string viewName = selectedViews[i] as String;
-				view = database.Views[viewName];
-			}
-			KarkasUtils.RenderTypeLibraryCode(output,view);
-		}
-
-
-		
-
-
+		%>
+		You can toggle in out of script like this
+		<%
+		output.writeln("Hello world.");
 	}
-	
-	
-
 
 }
 %>
