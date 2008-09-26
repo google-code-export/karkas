@@ -57,9 +57,10 @@ namespace Karkas.MyGenerationHelper.Generators
             schemaName = utils.SetPascalCase(proc.Schema);
 
 
-            string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, proc.Schema) + ".Dal";
-            string classNameSpace = baseNameSpace + "." + schemaName;
-            string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, proc.Schema) + "\\Dal\\StoredProcedures", "usp_" + methodName + ".generated.cs");
+            string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, proc.Schema) ;
+            string baseNameSpaceDal = baseNameSpace + ".Dal";
+            string classNameSpace = baseNameSpaceDal + "." + schemaName;
+            string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, proc.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName + "\\StoredProcedures", "usp_" + methodName + ".generated.cs");
 
             UsingleriYaz(output);
 
@@ -76,6 +77,9 @@ namespace Karkas.MyGenerationHelper.Generators
             RenderNormal(output, proc);
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
+            output.saveEnc(outputFullFileName, "o", "utf8");
+            output.clear();
+
         }
 
         private bool DiagramRutiniMi(IProcedure proc)
@@ -119,20 +123,20 @@ namespace Karkas.MyGenerationHelper.Generators
 
             foreach (IParameter param in proc.Parameters)
             {
+                string yazi = "";
                 if (param.Direction == ParamDirection.ReturnValue)
                 {
-                    continue;
+                    yazi = string.Format(" builder.parameterEkleReturnValue( \"{0}\",{1});", param.Name, param.DbTargetType);
                 }
                 if (param.Direction == ParamDirection.Input)
                 {
-                    string yazi = string.Format(" builder.parameterEkle( \"{0}\",{1},{0});", param.Name, param.DbTargetType);
-                    output.autoTabLn(yazi);
+                    yazi = string.Format(" builder.parameterEkle( \"{0}\",{1},{0});", param.Name, param.DbTargetType);
                 }
                 if (param.Direction == ParamDirection.Output)
                 {
-                    string yazi = string.Format(" builder.parameterEkle( \"{0}\",{1},{0},ParameterDirection.Output);", param.Name, param.DbTargetType);
-                    output.autoTabLn(yazi);
+                    yazi = string.Format(" builder.parameterEkleOutput( \"{0}\",{1});", param.Name, param.DbTargetType);
                 }
+                output.autoTabLn(yazi);
             }
 
         }
@@ -152,7 +156,7 @@ namespace Karkas.MyGenerationHelper.Generators
         private void RenderNormal(IZeusOutput output, IProcedure proc)
         {
             string sonucDegeri = donusDegeriVarsaSetle(proc);
-            output.autoTabLn(string.Format("public {0} {1}", sonucDegeri, methodName));
+            output.autoTabLn(string.Format("public static {0} {1}", sonucDegeri, methodName));
             generateParametersMethodSignature(output, proc);
             BaslangicSusluParentezVeTabArtir(output);
             generateParametersParameterBuilder(output, proc);
