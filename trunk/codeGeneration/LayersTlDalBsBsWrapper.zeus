@@ -295,6 +295,7 @@ public class GeneratedGui : DotNetScriptGui
 		GuiComboBox cmbSchema = ui["chooseSchemas"] as GuiComboBox;
 		bindTables( cmbDatabases.SelectedText,cmbSchema.SelectedText );
 		bindViews( cmbDatabases.SelectedText,cmbSchema.SelectedText );
+		bindStoredProcedures( cmbDatabases.SelectedText,cmbSchema.SelectedText );
 	}
 
 }
