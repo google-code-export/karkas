@@ -35,6 +35,7 @@ namespace Karkas.MyGenerationHelper.Generators
         public void Render(IZeusOutput output, ITable table)
         {
 
+            output.tabLevel = 0;
 
 
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
