@@ -38,6 +38,12 @@ namespace Karkas.MyGenerationHelper
             TypeLibraryGenerator gen = new TypeLibraryGenerator();
             gen.RenderTypeLibraryCode(output, view);
         }
+        public void RenderStoredProcedureCode(IZeusOutput output, IProcedure proc)
+        {
+            SpGenerator gen = new SpGenerator();
+            gen.Render(output, proc);
+        }
+
         public void RenderDalCode(IZeusOutput output, ITable table)
         {
             DalGenerator gen = new DalGenerator();
