@@ -506,126 +506,12 @@ namespace Karkas.MyGenerationHelper
 
         public string SetCamelCase(string name)
         {
-            string text = "";
-            bool flag = false;
-            bool flag2 = true;
-            bool flag3 = true;
-            foreach (char ch in name)
-            {
-                if (char.IsLower(ch))
-                {
-                    flag3 = false;
-                    break;
-                }
-            }
-            foreach (char ch2 in name)
-            {
-                switch (ch2)
-                {
-                    case ' ':
-                        if (!flag2)
-                        {
-                            flag = true;
-                        }
-                        break;
-
-                    case '.':
-                        if (!flag2)
-                        {
-                            flag = true;
-                        }
-                        break;
-
-                    case '_':
-                        if (!flag2)
-                        {
-                            flag = true;
-                        }
-                        break;
-
-                    default:
-                        if (flag)
-                        {
-                            text = text + ch2.ToString().ToUpperInvariant();
-                            flag = false;
-                        }
-                        else if (flag2)
-                        {
-                            text = text + ch2.ToString().ToLowerInvariant();
-                            flag2 = false;
-                        }
-                        else if (flag3)
-                        {
-                            text = text + ch2.ToString().ToLowerInvariant();
-                        }
-                        else
-                        {
-                            text = text + ch2.ToString();
-                        }
-                        break;
-                }
-            }
-            return text;
-        }
-
-        public const char degisicekChar = '_';
-        private string kotuKarakterlerdenAyir(string name)
-        {
-            name = name.Replace('-',degisicekChar );
-            name = name.Replace('(', degisicekChar);
-            name = name.Replace(')', degisicekChar);
-            name = name.Replace('/',degisicekChar);
-            return name;
+            return new NameChecker().SetCamelCase(name);
         }
 
         public string SetPascalCase(string name)
         {
-            name = kotuKarakterlerdenAyir(name);
-            string text = "";
-            bool flag = true;
-            bool flag2 = true;
-            foreach (char ch in name)
-            {
-                if (char.IsLower(ch))
-                {
-                    flag2 = false;
-                    break;
-                }
-            }
-            foreach (char ch2 in name)
-            {
-                switch (ch2)
-                {
-                    case ' ':
-                        flag = true;
-                        break;
-
-                    case '.':
-                        flag = true;
-                        break;
-
-                    case '_':
-                        flag = true;
-                        break;
-
-                    default:
-                        if (flag)
-                        {
-                            text = text + ch2.ToString().ToUpperInvariant();
-                            flag = false;
-                        }
-                        else if (flag2)
-                        {
-                            text = text + ch2.ToString().ToLowerInvariant();
-                        }
-                        else
-                        {
-                            text = text + ch2.ToString();
-                        }
-                        break;
-                }
-            }
-            return text;
+            return new NameChecker().SetPascalCase(name);
         }
 
         public string GetLanguageType(IColumn column)
