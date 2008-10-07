@@ -20,6 +20,23 @@ namespace Karkas.MyGenerationTest
         }
 
         [Test]
+        public void VariablePascalCaseCalisiyorMu()
+        {
+            string variableName = "BASIT_TABLO";
+            string variableNameNew = nameChecker.SetPascalCase(variableName);
+            string variableNameExpected = "BasitTablo";
+            Assert.AreEqual(variableNameNew, variableNameExpected);
+        }
+        [Test]
+        public void VariableCamelCaseCalisiyorMu()
+        {
+            string variableName = "BASIT_TABLO";
+            string variableNameNew = nameChecker.SetCamelCase(variableName);
+            string variableNameExpected = "basitTablo";
+            Assert.AreEqual(variableNameNew, variableNameExpected);
+        }
+
+        [Test]
         public void VariableHasNonStandardCharsInTheMiddleTest()
         {
             string variableName = "a-/#1b";

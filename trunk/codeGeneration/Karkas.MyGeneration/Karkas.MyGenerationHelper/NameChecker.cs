@@ -8,6 +8,7 @@ namespace Karkas.MyGenerationHelper
     public class NameChecker : INameChecker
     {
         private Dictionary<char, string> nonStandardChars = new Dictionary<char, string>();
+        private CaseHelper caseHelper = new CaseHelper();
 
         public NameChecker()
         {
@@ -28,15 +29,18 @@ namespace Karkas.MyGenerationHelper
 
         public string SetPascalCase(string name)
         {
-            return cleanNonStandardChars(name, true);
+            string araSonuc =  cleanNonStandardChars(name);
+            return caseHelper.SetPascalCase(araSonuc);
+            
         }
 
         public string SetCamelCase(string name)
         {
-            return cleanNonStandardChars(name, false);
+            string araSonuc = cleanNonStandardChars(name);
+            return caseHelper.SetCamelCase(araSonuc);
         }
 
-        private string cleanNonStandardChars(string name, bool isPascalCase)
+        private string cleanNonStandardChars(string name)
         {
             bool isCapitalFlag = false;
             StringBuilder cleanName = new StringBuilder();
@@ -61,8 +65,7 @@ namespace Karkas.MyGenerationHelper
                 }
             }
 
-            lowerOrUpperInitialLetter(cleanName, isPascalCase);
-            addInitialLetterForNumericInitialLetteredVariables(cleanName, isPascalCase);
+            addInitialLetterForNumericInitialLetteredVariables(cleanName);
 
             return cleanName.ToString();
         }
@@ -72,32 +75,143 @@ namespace Karkas.MyGenerationHelper
         /// </summary>
         /// <param name="cleanName">Cleaned name from non standard chars.</param>
         /// <param name="isPascalCase">PascalCase or camelCase</param>
-        private void addInitialLetterForNumericInitialLetteredVariables(StringBuilder cleanName, bool isPascalCase)
+        private void addInitialLetterForNumericInitialLetteredVariables(StringBuilder cleanName)
         {
             if (Char.IsNumber(cleanName[0]))
             {
-                if (isPascalCase)
-                    cleanName.Insert(0, 'D');
-                else
-                    cleanName.Insert(0, 'd');
+                cleanName.Insert(0, "D_");
             }
         }
 
-        /// <summary>
-        /// Lower the first letter of the variable for camelCase.
-        /// </summary>
-        private void lowerOrUpperInitialLetter(StringBuilder cleanName, bool isPascalCase)
+
+
+        private class CaseHelper
         {
-            if (!isPascalCase)
-            {   // camelCase
-                if (Char.IsUpper(cleanName[0]))
-                    cleanName[0] = Char.ToLowerInvariant(cleanName[0]);
+            public string SetCamelCase(string name)
+            {
+                string text = "";
+                bool flag = false;
+                bool flag2 = true;
+                bool flag3 = true;
+                foreach (char ch in name)
+                {
+                    if (char.IsLower(ch))
+                    {
+                        flag3 = false;
+                        break;
+                    }
+                }
+                foreach (char ch2 in name)
+                {
+                    switch (ch2)
+                    {
+                        case ' ':
+                            if (!flag2)
+                            {
+                                flag = true;
+                            }
+                            break;
+
+                        case '.':
+                            if (!flag2)
+                            {
+                                flag = true;
+                            }
+                            break;
+
+                        case '_':
+                            if (!flag2)
+                            {
+                                flag = true;
+                            }
+                            break;
+
+                        default:
+                            if (flag)
+                            {
+                                text = text + ch2.ToString().ToUpperInvariant();
+                                flag = false;
+                            }
+                            else if (flag2)
+                            {
+                                text = text + ch2.ToString().ToLowerInvariant();
+                                flag2 = false;
+                            }
+                            else if (flag3)
+                            {
+                                text = text + ch2.ToString().ToLowerInvariant();
+                            }
+                            else
+                            {
+                                text = text + ch2.ToString();
+                            }
+                            break;
+                    }
+                }
+                return text;
             }
-            else
-            {   // PascalCase
-                if (Char.IsLower(cleanName[0]))
-                    cleanName[0] = Char.ToUpperInvariant(cleanName[0]);
+
+            public const char degisicekChar = '_';
+            private string kotuKarakterlerdenAyir(string name)
+            {
+                name = name.Replace('-', degisicekChar);
+                name = name.Replace('(', degisicekChar);
+                name = name.Replace(')', degisicekChar);
+                name = name.Replace('/', degisicekChar);
+                return name;
             }
+
+            public string SetPascalCase(string name)
+            {
+                name = kotuKarakterlerdenAyir(name);
+                string text = "";
+                bool flag = true;
+                bool flag2 = true;
+                foreach (char ch in name)
+                {
+                    if (char.IsLower(ch))
+                    {
+                        flag2 = false;
+                        break;
+                    }
+                }
+                foreach (char ch2 in name)
+                {
+                    switch (ch2)
+                    {
+                        case ' ':
+                            flag = true;
+                            break;
+
+                        case '.':
+                            flag = true;
+                            break;
+
+                        case '_':
+                            flag = true;
+                            break;
+
+                        default:
+                            if (flag)
+                            {
+                                text = text + ch2.ToString().ToUpperInvariant();
+                                flag = false;
+                            }
+                            else if (flag2)
+                            {
+                                text = text + ch2.ToString().ToLowerInvariant();
+                            }
+                            else
+                            {
+                                text = text + ch2.ToString();
+                            }
+                            break;
+                    }
+                }
+                return text;
+            }
+
+
         }
     }
 }
