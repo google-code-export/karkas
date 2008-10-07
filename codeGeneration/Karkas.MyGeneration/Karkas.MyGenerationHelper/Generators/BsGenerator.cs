@@ -61,6 +61,7 @@ namespace Karkas.MyGenerationHelper.Generators
             usingNamespaceleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema, baseNameSpaceDalWithSchema);
             BaslangicSusluParentez(output);
             classYaz(output, classNameBs);
+            BaslangicSusluParentezVeTabArtir(output);
             dalDegiskeniYaz(output, classNameDal);
             EkleYaz(output, classNameTypeLibrary);
             GuncelleYaz(output, classNameTypeLibrary);
@@ -208,7 +209,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTab("public partial class ");
             output.autoTabLn(classNameBs);
             output.incTab();
-            output.autoTabLn("{");
+            //output.autoTabLn("{");
         }
 
         public void usingNamespaceleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceBsWithSchema, string baseNameSpaceDalWithSchema)
