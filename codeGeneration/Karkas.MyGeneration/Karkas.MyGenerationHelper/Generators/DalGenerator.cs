@@ -266,6 +266,10 @@ namespace Karkas.MyGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
         }
 
+        private static bool updateWhereSatirindaOlmaliMi(IColumn column)
+        {
+            return ((column.IsInPrimaryKey) || columnVersiyonZamaniMi(column)); 
+        }
 
         private void UpdateStringYaz(IZeusOutput output, ITable table, ref string pkcumlesi)
         {
@@ -279,13 +283,13 @@ namespace Karkas.MyGenerationHelper.Generators
 
             foreach (IColumn column in table.Columns)
             {
-                if (column.IsInPrimaryKey)
+                if (updateWhereSatirindaOlmaliMi(column))
                 {
-                    pkcumlesi += column.Name + " = @" + column.Name + " AND";
+                    pkcumlesi += " " + column.Name + " = @" + column.Name + " AND";
                 }
                 if (!columnParametreOlmaliMi(column))
                 {
-                    if (!column.IsInPrimaryKey)
+                    if (!updateWhereSatirindaOlmaliMi(column) )
                     {
                         cumle += column.Name + " = @" + column.Name + ",";
                     }
@@ -488,9 +492,15 @@ namespace Karkas.MyGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
         }
 
+
         private static bool columnParametreOlmaliMi(IColumn column)
         {
-            return ((column.IsAutoKey) || (column.IsComputed));
+            return ((column.IsAutoKey) || (column.IsComputed) );
+        }
+
+        private static bool columnVersiyonZamaniMi(IColumn column)
+        {
+            return (column.Name == "VersiyonZamani");
         }
 
         private void builderParameterEkle(IZeusOutput output, IColumn column)
@@ -561,6 +571,10 @@ namespace Karkas.MyGenerationHelper.Generators
             foreach (IColumn column in table.Columns)
             {
                 if (column.IsInPrimaryKey || !columnParametreOlmaliMi(column))
+                {
+                    builderParameterEkle(output, column);
+                }
+                if (columnVersiyonZamaniMi(column))
                 {
                     builderParameterEkle(output, column);
                 }
