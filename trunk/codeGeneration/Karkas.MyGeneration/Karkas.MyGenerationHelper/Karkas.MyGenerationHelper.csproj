@@ -57,9 +57,12 @@
     <Compile Include="Generators\BsWrapperGenerator.cs" />
     <Compile Include="Generators\DalGenerator.cs" />
     <Compile Include="Generators\NamespaceHelper.cs" />
+    <Compile Include="Generators\SpGenerator.cs" />
     <Compile Include="Generators\TypeLibraryGenerator.cs" />
     <Compile Include="Generators\TypeLibraryHelper.cs" />
+    <Compile Include="Interfaces\INameChecker.cs" />
     <Compile Include="KarkasXmlParser.cs" />
+    <Compile Include="NameChecker.cs" />
     <Compile Include="SmoHelper.cs" />
     <Compile Include="SmoHelpers\StoredProcedureHelper.cs" />
     <Compile Include="SmoHelpers\UserDefinedFunctionHelper.cs" />
