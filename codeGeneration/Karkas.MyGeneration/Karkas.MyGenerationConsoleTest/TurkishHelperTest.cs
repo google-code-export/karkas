@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using MbUnit.Framework;
+using NUnit.Framework;
 using Karkas.MyGenerationHelper;
 
 namespace Karkas.MyGenerationTest
 {
     [TestFixture]
-    [Author("Atilla Özgür", "ati.ozgur@gmail.com")]
     public class TurkishHelperTest
     {
         string hataMesaji = "Turkçe yardýmcý düzgün calýþmýyor";

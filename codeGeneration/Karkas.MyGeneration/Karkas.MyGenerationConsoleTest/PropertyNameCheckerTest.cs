@@ -5,7 +5,7 @@ using System.Text;
 namespace Karkas.MyGenerationTest
 {
     using System;
-    using MbUnit.Framework;
+    using NUnit.Framework;
     using Karkas.MyGenerationHelper.Interfaces;
     using Karkas.MyGenerationHelper;
 
