@@ -5,7 +5,7 @@ using System.Text;
 namespace Karkas.MyGenerationTest
 {
     using System;
-    using MbUnit.Framework;
+    using NUnit.Framework;
     using Karkas.MyGenerationHelper;
 
     [TestFixture]
@@ -90,6 +90,38 @@ namespace Karkas.MyGenerationTest
             string variableName = "12+Days";
             string variableNameNew = nameChecker.SetCamelCase(variableName);
             Assert.IsTrue(String.Equals("d12PlusDays", variableNameNew, StringComparison.InvariantCulture));
+        }
+
+        [Test]
+        public void VariableConsistsOfReservedWordRefTest()
+        {
+            string variableName = "ref";
+            string variableNameNew = nameChecker.SetCamelCase(variableName);
+            Assert.IsTrue(String.Equals("refReservedWord", variableNameNew, StringComparison.InvariantCulture));
+        }
+
+        [Test]
+        public void VariableContainsReservedWordRefTest()
+        {            
+            string variableName = "refreeName";
+            string variableNameNew = nameChecker.SetCamelCase(variableName);
+            Assert.IsTrue(String.Equals("refreeName", variableNameNew, StringComparison.InvariantCulture));
+        }
+
+        [Test]
+        public void VariableContainsReservedWordRefInDifferentCasesTest()
+        {
+            string variableName = "rEf";
+            string variableNameNew = nameChecker.SetCamelCase(variableName);
+            Assert.IsTrue(String.Equals("rEf", variableNameNew, StringComparison.InvariantCulture));
+        }
+
+        [Test]
+        public void VariableContainsReservedWordRefUpperCaseInitialLetterTest()
+        {
+            string variableName = "Ref";
+            string variableNameNew = nameChecker.SetCamelCase(variableName);
+            Assert.IsTrue(String.Equals("refReservedWord", variableNameNew, StringComparison.InvariantCulture));
         }
     }
 }
