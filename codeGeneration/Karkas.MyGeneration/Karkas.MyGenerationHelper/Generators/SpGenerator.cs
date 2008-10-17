@@ -31,6 +31,8 @@ namespace Karkas.MyGenerationHelper.Generators
         string donusParamAdi = "";
         IDatabase database = null;
 
+        List<IParameter> inputOutputParams = new List<IParameter>();
+
 
         bool sorguKomutuMu = false;
 
@@ -129,13 +131,17 @@ namespace Karkas.MyGenerationHelper.Generators
                 {
                     yazi = string.Format(" builder.parameterEkleReturnValue( \"{0}\",{1});", param.Name, param.DbTargetType);
                 }
-                if (param.Direction == ParamDirection.Input)
+                else if (param.Direction == ParamDirection.Input)
                 {
                     yazi = string.Format(" builder.parameterEkle( \"{0}\",{1},{0});", param.Name, param.DbTargetType);
                 }
-                if (param.Direction == ParamDirection.Output)
+                else if (param.Direction == ParamDirection.Output)
                 {
                     yazi = string.Format(" builder.parameterEkleOutput( \"{0}\",{1});", param.Name, param.DbTargetType);
+                }
+                else if (param.Direction == ParamDirection.InputOutput)
+                {
+                    yazi = string.Format(" builder.parameterEkleInputOutput( \"{0}\",{1});", param.Name, param.DbTargetType);
                 }
                 output.autoTabLn(yazi);
             }
@@ -151,6 +157,10 @@ namespace Karkas.MyGenerationHelper.Generators
             else if (param.Direction == ParamDirection.Output)
             {
                 output.autoTab(param.LanguageType + " " + param.Name);
+            }
+            else if (param.Direction == ParamDirection.InputOutput)
+            {
+                output.autoTab(param.LanguageType + " out " + param.Name);
             }
         }
 
@@ -176,6 +186,13 @@ namespace Karkas.MyGenerationHelper.Generators
             else
             {
                 output.autoTabLn("template.SorguHariciKomutCalistir(cmd);");
+                
+                // Write variable assignment code for input/output parameters in the list.
+                foreach (IParameter inputOutputParam in inputOutputParams)
+                {
+                    output.autoTabLn(String.Format("{0} = ({1})cmd.Parameters[\"{0}\"].Value;", inputOutputParam.Name, inputOutputParam.TypeName));
+                }
+
                 if (donusParamVarMi)
                 {
                     output.autoTabLn(string.Format("return ({0}) cmd.Parameters[\"{1}\"].Value;", donucParamTipi, donusParamAdi));
@@ -184,8 +201,6 @@ namespace Karkas.MyGenerationHelper.Generators
                 {
                     output.autoTabLn("return;");
                 }
-
-
             }
 
             BitisSusluParentezVeTabAzalt(output);
@@ -202,6 +217,10 @@ namespace Karkas.MyGenerationHelper.Generators
                     donusParamVarMi = true;
                     donusParamAdi = param.Name;
                     donucParamTipi = param.LanguageType;
+                }
+                else if (param.Direction == ParamDirection.InputOutput)
+                {   
+                    inputOutputParams.Add(param);
                 }
             }
             if (sorguKomutuMu)
