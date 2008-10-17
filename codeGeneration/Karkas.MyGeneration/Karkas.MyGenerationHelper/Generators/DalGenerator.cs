@@ -452,7 +452,7 @@ namespace Karkas.MyGenerationHelper.Generators
             for (int i = 0; i < table.Columns.Count; i++)
             {
                 IColumn column = table.Columns[i];
-                propertyVariableName = utils.SetPascalCase(column.Name);
+                propertyVariableName = utils.getPropertyVariableName(column);
                 string yazi = "row." + propertyVariableName + " = " +
                                 utils.GetDataReaderSyntax(column)
                                 + "(" + i + ");";
@@ -523,7 +523,7 @@ namespace Karkas.MyGenerationHelper.Generators
                         + "\","
                         + column.DbTargetType
                         + ", row."
-                        + utils.SetPascalCase(column.Name)
+                        + utils.getPropertyVariableName(column)
                         + ","
                         + Convert.ToString(column.CharacterMaxLength)
                         + ");";
@@ -537,7 +537,7 @@ namespace Karkas.MyGenerationHelper.Generators
                         + "\","
                         + column.DbTargetType
                         + ", row."
-                        + utils.SetPascalCase(column.Name)
+                        + utils.getPropertyVariableName(column)
                         + ");";
             output.autoTabLn(s);
         }

@@ -514,6 +514,24 @@ namespace Karkas.MyGenerationHelper
             return new NameChecker().SetPascalCase(name);
         }
 
+        public string getPropertyVariableName(IColumn pColumn)
+        {
+            if (
+                (pColumn.Name.Equals(pColumn.Table.Name,StringComparison.CurrentCultureIgnoreCase))
+            || 
+                (pColumn.Name.Equals(pColumn.Table.Name,StringComparison.InvariantCultureIgnoreCase))
+            || 
+                (pColumn.Name.Equals(pColumn.Table.Name,StringComparison.OrdinalIgnoreCase))
+                )
+            {
+                return SetPascalCase(pColumn.Name) + "Property";
+            }
+            else
+            {
+                return SetPascalCase(pColumn.Name);
+            }
+        }
+
         public string GetLanguageType(IColumn column)
         {
             if (IsValueType(column) && column.IsNullable)
