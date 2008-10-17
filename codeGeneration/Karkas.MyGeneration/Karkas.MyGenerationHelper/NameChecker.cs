@@ -26,6 +26,7 @@ namespace Karkas.MyGenerationHelper
         private void fillReservedWords()
         {
             #region reserved word list
+            reservedWordsForCSharp.Add("value");
             reservedWordsForCSharp.Add("abstract");
             reservedWordsForCSharp.Add("event");
             reservedWordsForCSharp.Add("new");
