@@ -216,7 +216,7 @@ namespace Karkas.MyGenerationHelper.Generators
                 {
                     output.autoTabLn("");
                     output.autoTab("this.Onaylayici.OnaylayiciListesi.Add(new GerekliAlanOnaylayici(this, \"");
-                    output.write(utils.SetPascalCase(column.Name));
+                    output.write(utils.getPropertyVariableName(column));
                     output.write("\"));");
 
                 }
@@ -231,8 +231,8 @@ namespace Karkas.MyGenerationHelper.Generators
             string propertyName = "";
             foreach (IColumn column in table.Columns)
             {
-                propertyName = utils.SetPascalCase(column.Name);
-                string yazi = string.Format("public const string {0} = \"{0}\";",propertyName);
+                propertyName = utils.getPropertyVariableName(column);
+                string yazi = string.Format("public const string {0} = \"{1}\";",propertyName,column.Name);
                 output.autoTabLn(yazi);
             }
             BitisSusluParentezVeTabAzalt(output);

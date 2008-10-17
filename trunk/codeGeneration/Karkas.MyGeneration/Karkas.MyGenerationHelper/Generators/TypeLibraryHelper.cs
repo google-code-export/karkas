@@ -10,6 +10,9 @@ namespace Karkas.MyGenerationHelper.Generators
 
     public class TypeLibraryHelper : BaseGenerator
     {
+
+
+
         private Utils utils = new Utils();
 
         public void PropertiesYaz(IZeusOutput output, ITable table)
@@ -18,7 +21,7 @@ namespace Karkas.MyGenerationHelper.Generators
             foreach (IColumn column in table.Columns)
             {
                 string memberVariableName = utils.SetCamelCase(column.Name);
-                string propertyVariableName = utils.SetPascalCase(column.Name);
+                string propertyVariableName = utils.getPropertyVariableName(column);
 
                 output.autoTabLn("[DebuggerBrowsable(DebuggerBrowsableState.Never)]");
                 output.autoTabLn(string.Format("public {0} {1}", utils.GetLanguageType(column), propertyVariableName));
@@ -53,7 +56,7 @@ namespace Karkas.MyGenerationHelper.Generators
             foreach (IColumn column in table.Columns)
             {
                 string memberVariableName = utils.SetCamelCase(column.Name);
-                string propertyVariableName = utils.SetPascalCase(column.Name);
+                string propertyVariableName = utils.getPropertyVariableName(column);
                 output.autoTabLn("[DebuggerBrowsable(DebuggerBrowsableState.Never)]");
                 output.autoTabLn("[XmlIgnore, SoapIgnore]");
                 output.autoTabLn(string.Format("public string {0}AsString", propertyVariableName));
