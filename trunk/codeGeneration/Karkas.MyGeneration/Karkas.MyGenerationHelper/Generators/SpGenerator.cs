@@ -160,7 +160,7 @@ namespace Karkas.MyGenerationHelper.Generators
             }
             else if (param.Direction == ParamDirection.InputOutput)
             {
-                output.autoTab(param.LanguageType + " out " + param.Name);
+                output.autoTab("out " + param.LanguageType + " " + param.Name);
             }
         }
 
@@ -181,17 +181,15 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn("cmd.Parameters.AddRange(builder.GetParameterArray());");
             if (sorguKomutuMu)
             {
-                output.autoTabLn("return template.DataTableOlustur(cmd);");
+                output.autoTabLn("DataTable _tmpDataTable = template.DataTableOlustur(cmd);");
+                assignInputOutputParameters(output);
+                output.autoTabLn("return _tmpDataTable;");
             }
             else
             {
                 output.autoTabLn("template.SorguHariciKomutCalistir(cmd);");
-                
-                // Write variable assignment code for input/output parameters in the list.
-                foreach (IParameter inputOutputParam in inputOutputParams)
-                {
-                    output.autoTabLn(String.Format("{0} = ({1})cmd.Parameters[\"{0}\"].Value;", inputOutputParam.Name, inputOutputParam.TypeName));
-                }
+
+                assignInputOutputParameters(output);
 
                 if (donusParamVarMi)
                 {
@@ -204,6 +202,18 @@ namespace Karkas.MyGenerationHelper.Generators
             }
 
             BitisSusluParentezVeTabAzalt(output);
+        }
+
+        /// <summary>
+        /// Write variable assignment code for input/output parameters in the list.
+        /// </summary>
+        /// <param name="output">Standard zeus output.</param>
+        private void assignInputOutputParameters(IZeusOutput output)
+        {            
+            foreach (IParameter inputOutputParam in inputOutputParams)
+            {
+                output.autoTabLn(String.Format("{0} = ({1})cmd.Parameters[\"{0}\"].Value;", inputOutputParam.Name, inputOutputParam.LanguageType));
+            }
         }
 
         private string donusDegeriVarsaSetle(IProcedure proc)
