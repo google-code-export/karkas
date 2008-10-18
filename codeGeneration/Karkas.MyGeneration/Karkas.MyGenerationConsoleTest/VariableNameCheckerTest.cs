@@ -123,5 +123,6 @@ namespace Karkas.MyGenerationTest
             string variableNameNew = nameChecker.SetCamelCase(variableName);
             Assert.IsTrue(String.Equals("refReservedWord", variableNameNew, StringComparison.InvariantCulture));
         }
+
     }
 }
