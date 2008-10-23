@@ -252,6 +252,26 @@ namespace Karkas.MyGenerationHelper
             }
         }
 
+        public string GetConvertToSyntax(string tipi,string degiskenDegeri)
+        {
+            string sonuc = string.Format("({0}) {1}", tipi, degiskenDegeri);
+            switch (tipi)
+            {
+                case "byte":
+                    sonuc = string.Format("Convert.ToByte({0});", degiskenDegeri);
+                    break;
+                case "int":
+                    sonuc = string.Format("Convert.ToInt32({0});", degiskenDegeri);
+                    break;
+                case "long":
+                    sonuc = string.Format("Convert.ToInt64({0});", degiskenDegeri);
+                    break;
+                case "decimal":
+                    sonuc = string.Format("Convert.ToDecimal({0});", degiskenDegeri);
+                    break;
+            }
+            return sonuc;
+        }
 
         public string[] GetConvertToSyntax(IColumn column,string propertyName)
         {
