@@ -35,6 +35,8 @@ namespace Karkas.MyGenerationHelper.Generators
 
 
         bool sorguKomutuMu = false;
+        bool sorguSonucSetiTekElemanli = false;
+        string sorguSonucuTekElemanTipi = "";
 
         public void Render(IZeusOutput output, IProcedure proc)
         {
@@ -54,6 +56,12 @@ namespace Karkas.MyGenerationHelper.Generators
             {
                 sorguKomutuMu = true;
             }
+            if (proc.ResultColumns.Count == 1)
+            {
+                sorguSonucSetiTekElemanli = true;
+                sorguSonucuTekElemanTipi = proc.ResultColumns[0].LanguageType;
+            }
+
 
             database = proc.Database;
             methodName = utils.SetPascalCase(proc.Name);
@@ -127,7 +135,7 @@ namespace Karkas.MyGenerationHelper.Generators
             foreach (IParameter param in proc.Parameters)
             {
                 string yazi = "";
-                if (param.Direction == ParamDirection.ReturnValue)
+                if ((param.Direction == ParamDirection.ReturnValue) && (!sorguKomutuMu))
                 {
                     yazi = string.Format(" builder.parameterEkleReturnValue( \"{0}\",{1});", param.Name, param.DbTargetType);
                 }
@@ -179,11 +187,17 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn(string.Format("cmd.CommandText = \"{0}.{1}\";", proc.Schema, proc.Name));
             output.autoTabLn("cmd.CommandType = CommandType.StoredProcedure;");
             output.autoTabLn("cmd.Parameters.AddRange(builder.GetParameterArray());");
-            if (sorguKomutuMu)
+            if ((sorguKomutuMu) && (!sorguSonucSetiTekElemanli))
             {
                 output.autoTabLn("DataTable _tmpDataTable = template.DataTableOlustur(cmd);");
                 assignInputOutputParameters(output);
                 output.autoTabLn("return _tmpDataTable;");
+            }else if ((sorguKomutuMu) && (sorguSonucSetiTekElemanli))
+            {
+                string degisim = utils.GetConvertToSyntax(sorguSonucuTekElemanTipi, "template.TekDegerGetir(cmd)");
+                output.autoTabLn(sorguSonucuTekElemanTipi + " tmp = " + degisim + ";");
+                assignInputOutputParameters(output);
+                output.autoTabLn("return tmp;");
             }
             else
             {
@@ -233,14 +247,17 @@ namespace Karkas.MyGenerationHelper.Generators
                     inputOutputParams.Add(param);
                 }
             }
-            if (sorguKomutuMu)
+            if (sorguKomutuMu && sorguSonucSetiTekElemanli)
+            {
+                donusDegeri = sorguSonucuTekElemanTipi;
+            }
+            else if (sorguKomutuMu && !sorguSonucSetiTekElemanli)
             {
                 donusDegeri = "DataTable";
             }
+
+            
             return donusDegeri;
-        }
-        private void RenderWithDataTable(IZeusOutput output, IProcedure proc)
-        {
         }
 
         private void UsingleriYaz(IZeusOutput output)
