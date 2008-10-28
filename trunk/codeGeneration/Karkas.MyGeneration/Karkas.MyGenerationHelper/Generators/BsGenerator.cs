@@ -60,21 +60,11 @@ namespace Karkas.MyGenerationHelper.Generators
 
             usingNamespaceleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema, baseNameSpaceDalWithSchema);
             BaslangicSusluParentez(output);
-            classYaz(output, classNameBs);
+            classYaz(output, classNameBs,classNameDal,classNameTypeLibrary);
             BaslangicSusluParentezVeTabArtir(output);
-            dalDegiskeniYaz(output, classNameDal);
-            EkleYaz(output, classNameTypeLibrary);
-            GuncelleYaz(output, classNameTypeLibrary);
-            SilKomutuYaz(output, classNameTypeLibrary);
             SilKomutuYazPkIle(output);
-            DurumaGoreEkleGuncelleVeyaSilYaz(output, classNameTypeLibrary);
-            SorgulaHepsiniGetirYaz(output, classNameTypeLibrary);
-            SorgulaHepsiniGetirSiraliYaz(output, classNameTypeLibrary);
 
             sorgulaPkAdiIleYaz(output, classNameTypeLibrary, pkType, pkAdi);
-            TopluEkleGuncelleVeyaSilYaz(output, classNameTypeLibrary);
-            tablodakiSatirSayisiniYaz(output);
-            KomutuCalistiranKullaniciyiYaz(output);
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentez(output);
 
@@ -87,7 +77,7 @@ namespace Karkas.MyGenerationHelper.Generators
             {
                 usingNamespaceleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema, baseNameSpaceDalWithSchema);
                 BaslangicSusluParentezVeTabArtir(output);
-                classYaz(output, classNameBs);
+                classYaz(output, classNameBs,classNameDal,classNameTypeLibrary);
                 BaslangicSusluParentezVeTabArtir(output);
                 BitisSusluParentezVeTabAzalt(output);
                 BitisSusluParentezVeTabAzalt(output);
@@ -96,24 +86,7 @@ namespace Karkas.MyGenerationHelper.Generators
             }
         }
 
-        private static void dalDegiskeniYaz(IZeusOutput output, string classNameDal)
-        {
-            output.incTab();
-            output.autoTab(classNameDal + " dal = new " + classNameDal + "();");
-            output.autoTabLn("");
-        }
 
-        private static void TopluEkleGuncelleVeyaSilYaz(IZeusOutput output, string classNameTypeLibrary)
-        {
-            string classSatiri = "public void TopluEkleGuncelleVeyaSil(List<" + classNameTypeLibrary + "> liste)";
-            output.autoTabLn(classSatiri);
-            output.autoTabLn("{");
-            output.incTab();
-            output.autoTabLn("dal.TopluEkleGuncelleVeyaSil(liste);");
-            output.decTab();
-            output.autoTabLn("}");
-
-        }
 
         private static void sorgulaPkAdiIleYaz(IZeusOutput output, string classNameTypeLibrary, string pkType, string pkAdi)
         {
@@ -129,50 +102,11 @@ namespace Karkas.MyGenerationHelper.Generators
 
         }
 
-        private static void SorgulaHepsiniGetirYaz(IZeusOutput output, string classNameTypeLibrary)
-        {
-            string classSatiri = "public List< " + classNameTypeLibrary + " > SorgulaHepsiniGetir()";
-            output.autoTabLn(classSatiri);
-            output.autoTabLn("{");
-            output.incTab();
-            output.autoTabLn("return dal.SorgulaHepsiniGetir();");
-            output.decTab();
-            output.autoTabLn("}");
 
-        }
-        private static void SorgulaHepsiniGetirSiraliYaz(IZeusOutput output, string classNameTypeLibrary)
-        {
-            string classSatiri = "public List< " + classNameTypeLibrary + " > SorgulaHepsiniGetirSirali(params string[] pSiraListesi)";
-            output.autoTabLn(classSatiri);
-            output.autoTabLn("{");
-            output.incTab();
-            output.autoTabLn("return dal.SorgulaHepsiniGetirSirali(pSiraListesi);");
-            output.decTab();
-            output.autoTabLn("}");
-        }
 
-        private static void DurumaGoreEkleGuncelleVeyaSilYaz(IZeusOutput output, string classNameTypeLibrary)
-        {
-            string classSatiri = "public void DurumaGoreEkleGuncelleVeyaSil(" + classNameTypeLibrary + " k)";
-            output.autoTabLn(classSatiri);
-            output.autoTabLn("{");
-            output.incTab();
-            output.autoTabLn("dal.DurumaGoreEkleGuncelleVeyaSil(k);");
-            output.decTab();
-            output.autoTabLn("}");
-        }
 
-        private static void SilKomutuYaz(IZeusOutput output, string classNameTypeLibrary)
-        {
 
-            output.autoTabLn("public void Sil(" + classNameTypeLibrary + " k)");
-            output.autoTabLn("{");
-            output.incTab();
-            output.autoTabLn("dal.Sil(k);");
-            output.decTab();
-            output.autoTabLn("}");
 
-        }
 
         private void SilKomutuYazPkIle(IZeusOutput output)
         {
@@ -183,31 +117,13 @@ namespace Karkas.MyGenerationHelper.Generators
 
         }
 
-        private static void GuncelleYaz(IZeusOutput output, string classNameTypeLibrary)
-        {
-            output.autoTabLn("public void Guncelle(" + classNameTypeLibrary + " k)");
-            output.autoTabLn("{");
-            output.incTab();
-            output.autoTabLn("dal.Guncelle(k);");
-            output.decTab();
-            output.autoTabLn("}");
-        }
 
-        private static void EkleYaz(IZeusOutput output, string classNameTypeLibrary)
-        {
-            output.autoTabLn("public void Ekle(" + classNameTypeLibrary + " k)");
-            output.autoTabLn("{");
-            output.incTab();
-            output.autoTabLn("dal.Ekle(k);");
-            output.decTab();
-            output.autoTabLn("}");
 
-        }
 
-        private static void classYaz(IZeusOutput output, string classNameBs)
+        private static void classYaz(IZeusOutput output, string classNameBs,string classNameDal,string classNameTypeLibrary)
         {
             output.autoTab("public partial class ");
-            output.autoTabLn(classNameBs);
+            output.autoTabLn(string.Format("{0} : BaseBs<{1}, {2}>", classNameBs, classNameTypeLibrary, classNameDal));
             output.incTab();
             //output.autoTabLn("{");
         }
@@ -220,6 +136,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn("using System.Data;");
             output.autoTabLn("using System.Data.SqlClient;");
             output.autoTabLn("using System.Text;");
+            output.autoTabLn("using Karkas.Core.DataUtil;");
             output.autoTab("using ");
             output.autoTab(baseNameSpaceTypeLibrary);
             output.autoTabLn(";");
@@ -238,41 +155,8 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn("");
         }
 
-        private static void tablodakiSatirSayisiniYaz(IZeusOutput output)
-        {
-            output.autoTabLn("public int TablodakiSatirSayisi");
-            output.autoTabLn("{");
-            output.incTab();
-            output.autoTabLn("get");
-            output.autoTabLn("{");
-            output.incTab();
-            output.autoTabLn("return dal.TablodakiSatirSayisi;");
-            output.decTab();
-            output.autoTabLn("}");
-            output.decTab();
-            output.autoTabLn("}");
-        }
 
-        private static void KomutuCalistiranKullaniciyiYaz(IZeusOutput output)
-        {
-            output.autoTabLn("public Guid KomutuCalistiranKullaniciKisiKey");
-            output.autoTabLn("{");
-            output.incTab();
-            output.autoTabLn("get");
-            output.autoTabLn("{");
-            output.incTab();
-            output.autoTabLn("return dal.KomutuCalistiranKullaniciKisiKey;");
-            output.decTab();
-            output.autoTabLn("}");
-            output.autoTabLn("set");
-            output.autoTabLn("{");
-            output.incTab();
-            output.autoTabLn("dal.KomutuCalistiranKullaniciKisiKey = value;");
-            output.decTab();
-            output.autoTabLn("}");
-            output.decTab();
-            output.autoTabLn("}");
-        }
+
 
     }
 
