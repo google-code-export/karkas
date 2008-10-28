@@ -143,13 +143,9 @@ namespace Karkas.MyGenerationHelper.Generators
                 {
                     yazi = string.Format(" builder.parameterEkle( \"{0}\",{1},{0});", param.Name, param.DbTargetType);
                 }
-                else if (param.Direction == ParamDirection.Output)
+                else if (param.Direction == ParamDirection.Output || param.Direction == ParamDirection.InputOutput)
                 {
                     yazi = string.Format(" builder.parameterEkleOutput( \"{0}\",{1});", param.Name, param.DbTargetType);
-                }
-                else if (param.Direction == ParamDirection.InputOutput)
-                {
-                    yazi = string.Format(" builder.parameterEkleInputOutput( \"{0}\",{1});", param.Name, param.DbTargetType);
                 }
                 output.autoTabLn(yazi);
             }
