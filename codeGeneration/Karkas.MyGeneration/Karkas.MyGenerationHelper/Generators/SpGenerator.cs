@@ -27,6 +27,7 @@ namespace Karkas.MyGenerationHelper.Generators
         string schemaName = "";
 
         bool donusParamVarMi = false;
+        bool parametresizMi = false;
         string donucParamTipi = "";
         string donusParamAdi = "";
         IDatabase database = null;
@@ -50,6 +51,22 @@ namespace Karkas.MyGenerationHelper.Generators
             if (diagramRutiniMi)
             {
                 return;
+            }
+            if (proc.Parameters.Count == 0)
+            {
+                parametresizMi = true;
+            }
+            else
+            {
+                bool hepsiReturnMi = true;
+                foreach (Parameter param in proc.Parameters)
+                {
+                    if (param.Direction != ParamDirection.ReturnValue)
+                    {
+                        hepsiReturnMi = false;
+                    }
+                }
+                parametresizMi = hepsiReturnMi;
             }
 
             if (proc.ResultColumns.Count > 0)
@@ -82,10 +99,10 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn("public partial class StoredProcedures");
             BaslangicSusluParentezVeTabArtir(output);
 
-
-
-
+            RenderNormalWithAdoTemplate(output, proc);
             RenderNormal(output, proc);
+
+
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
             output.saveEnc(outputFullFileName, "o", "utf8");
@@ -104,6 +121,40 @@ namespace Karkas.MyGenerationHelper.Generators
             }
             return false;
         }
+        private void generateParametersMethodSignatureWithAdoTemplate(IZeusOutput output, IProcedure proc)
+        {
+            output.autoTabLn("(");
+            output.incTab();
+            for (int i = 0; i < proc.Parameters.Count; i++)
+            {
+                IParameter param = proc.Parameters[i];
+                if ((param.Direction != ParamDirection.ReturnValue) && (i <= 1))
+                {
+                    output.autoTab("");
+                    typeGoreDegerYaz(output, param);
+                }
+                else
+                {
+                    if (param.Direction != ParamDirection.ReturnValue)
+                    {
+                        output.autoTab(",");
+                    }
+                    typeGoreDegerYaz(output, param);
+                }
+                output.writeln("");
+            }
+            if (parametresizMi)
+            {
+                output.autoTabLn("AdoTemplate template");
+            }
+            else
+            {
+                output.autoTabLn(", AdoTemplate template");
+            }
+
+            output.autoTabLn(")");
+        }
+
         private void generateParametersMethodSignature(IZeusOutput output, IProcedure proc)
         {
             output.autoTabLn("(");
@@ -167,6 +218,49 @@ namespace Karkas.MyGenerationHelper.Generators
             {
                 output.write("out " + param.LanguageType + " " + param.Name);
             }
+        }
+        private void RenderNormalWithAdoTemplate(IZeusOutput output, IProcedure proc)
+        {
+            string sonucDegeri = donusDegeriVarsaSetle(proc);
+            output.autoTabLn(string.Format("public static {0} {1}", sonucDegeri, methodName));
+            generateParametersMethodSignatureWithAdoTemplate(output, proc);
+            BaslangicSusluParentezVeTabArtir(output);
+            generateParametersParameterBuilder(output, proc);
+
+            output.autoTabLn("SqlCommand cmd = new SqlCommand();");
+            output.autoTabLn(string.Format("cmd.CommandText = \"{0}.{1}\";", proc.Schema, proc.Name));
+            output.autoTabLn("cmd.CommandType = CommandType.StoredProcedure;");
+            output.autoTabLn("cmd.Parameters.AddRange(builder.GetParameterArray());");
+            if ((sorguKomutuMu) && (!sorguSonucSetiTekElemanli))
+            {
+                output.autoTabLn("DataTable _tmpDataTable = template.DataTableOlustur(cmd);");
+                assignInputOutputParameters(output);
+                output.autoTabLn("return _tmpDataTable;");
+            }
+            else if ((sorguKomutuMu) && (sorguSonucSetiTekElemanli))
+            {
+                string degisim = utils.GetConvertToSyntax(sorguSonucuTekElemanTipi, "template.TekDegerGetir(cmd)");
+                output.autoTabLn(sorguSonucuTekElemanTipi + " tmp = " + degisim + ";");
+                assignInputOutputParameters(output);
+                output.autoTabLn("return tmp;");
+            }
+            else
+            {
+                output.autoTabLn("template.SorguHariciKomutCalistir(cmd);");
+
+                assignInputOutputParameters(output);
+
+                if (donusParamVarMi)
+                {
+                    output.autoTabLn(string.Format("return ({0}) cmd.Parameters[\"{1}\"].Value;", donucParamTipi, donusParamAdi));
+                }
+                else
+                {
+                    output.autoTabLn("return;");
+                }
+            }
+
+            BitisSusluParentezVeTabAzalt(output);
         }
 
         private void RenderNormal(IZeusOutput output, IProcedure proc)
