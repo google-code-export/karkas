@@ -111,19 +111,20 @@ namespace Karkas.MyGenerationHelper.Generators
             for (int i = 0; i < proc.Parameters.Count; i++)
             {
                 IParameter param = proc.Parameters[i];
-                if (i == proc.Parameters.Count - 1)
+                if ( (param.Direction != ParamDirection.ReturnValue) && (i <= 1))
                 {
+                    output.autoTab("");
                     typeGoreDegerYaz(output, param);
-                    output.autoTabLn("");
                 }
                 else
                 {
-                    typeGoreDegerYaz(output, param);
                     if (param.Direction != ParamDirection.ReturnValue)
                     {
-                        output.autoTabLn(",");
+                        output.autoTab(",");
                     }
+                    typeGoreDegerYaz(output, param);
                 }
+                output.writeln("");
             }
             output.autoTabLn(")");
         }
@@ -156,15 +157,15 @@ namespace Karkas.MyGenerationHelper.Generators
         {
             if (param.Direction == ParamDirection.Input)
             {
-                output.autoTab(param.LanguageType + " " + param.Name);
+                output.write(param.LanguageType + " " + param.Name);
             }
             else if (param.Direction == ParamDirection.Output)
             {
-                output.autoTab(param.LanguageType + " " + param.Name);
+                output.write(param.LanguageType + " " + param.Name);
             }
             else if (param.Direction == ParamDirection.InputOutput)
             {
-                output.autoTab("out " + param.LanguageType + " " + param.Name);
+                output.write("out " + param.LanguageType + " " + param.Name);
             }
         }
 
