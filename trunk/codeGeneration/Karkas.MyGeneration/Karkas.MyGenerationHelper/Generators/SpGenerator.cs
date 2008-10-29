@@ -85,7 +85,7 @@ namespace Karkas.MyGenerationHelper.Generators
             schemaName = utils.SetPascalCase(proc.Schema);
 
 
-            string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, proc.Schema) ;
+            string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, proc.Schema);
             string baseNameSpaceDal = baseNameSpace + ".Dal";
             string classNameSpace = baseNameSpaceDal + "." + schemaName;
             string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, proc.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName + "\\StoredProcedures", "usp_" + methodName + ".generated.cs");
@@ -154,6 +154,54 @@ namespace Karkas.MyGenerationHelper.Generators
 
             output.autoTabLn(")");
         }
+        private void generateParametersOverloadCagir(IZeusOutput output, IProcedure proc)
+        {
+            output.autoTabLn("return " + methodName + "(");
+            output.incTab();
+            bool ilkVirgulsuzYazilmadi = true;
+            for (int i = 0; i < proc.Parameters.Count; i++)
+            {
+
+                IParameter param = proc.Parameters[i];
+                if (param.Direction == ParamDirection.ReturnValue)
+                {
+                    continue;
+                }
+                if (ilkVirgulsuzYazilmadi)
+                {
+                    output.autoTabLn("" + paramDirectionVeNameAl(param));
+                    ilkVirgulsuzYazilmadi = false;
+                }
+                else
+                {
+                    output.autoTabLn("," + paramDirectionVeNameAl(param));
+                }
+            }
+            if (parametresizMi)
+            {
+                output.autoTabLn("template");
+                output.autoTabLn(");");
+            }
+            else
+            {
+                output.autoTabLn(",template");
+                output.autoTabLn(");");
+                
+            }
+        }
+        private string paramDirectionVeNameAl(IParameter param)
+        {
+            if (param.Direction == ParamDirection.Output ||
+                param.Direction == ParamDirection.InputOutput)
+            {
+                return "out " + param.Name;
+            }
+            else
+            {
+                return param.Name;
+            }
+        }
+
 
         private void generateParametersMethodSignature(IZeusOutput output, IProcedure proc)
         {
@@ -162,7 +210,7 @@ namespace Karkas.MyGenerationHelper.Generators
             for (int i = 0; i < proc.Parameters.Count; i++)
             {
                 IParameter param = proc.Parameters[i];
-                if ( (param.Direction != ParamDirection.ReturnValue) && (i <= 1))
+                if ((param.Direction != ParamDirection.ReturnValue) && (i <= 1))
                 {
                     output.autoTab("");
                     typeGoreDegerYaz(output, param);
@@ -269,43 +317,12 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn(string.Format("public static {0} {1}", sonucDegeri, methodName));
             generateParametersMethodSignature(output, proc);
             BaslangicSusluParentezVeTabArtir(output);
-            generateParametersParameterBuilder(output, proc);
+
 
             output.autoTabLn("AdoTemplate template = new AdoTemplate();");
             output.autoTabLn(string.Format("template.Connection = new SqlConnection(ConnectionSingleton.Instance.getConnectionString(\"{0}\"));", database.Name));
 
-            output.autoTabLn("SqlCommand cmd = new SqlCommand();");
-            output.autoTabLn(string.Format("cmd.CommandText = \"{0}.{1}\";", proc.Schema, proc.Name));
-            output.autoTabLn("cmd.CommandType = CommandType.StoredProcedure;");
-            output.autoTabLn("cmd.Parameters.AddRange(builder.GetParameterArray());");
-            if ((sorguKomutuMu) && (!sorguSonucSetiTekElemanli))
-            {
-                output.autoTabLn("DataTable _tmpDataTable = template.DataTableOlustur(cmd);");
-                assignInputOutputParameters(output);
-                output.autoTabLn("return _tmpDataTable;");
-            }else if ((sorguKomutuMu) && (sorguSonucSetiTekElemanli))
-            {
-                string degisim = utils.GetConvertToSyntax(sorguSonucuTekElemanTipi, "template.TekDegerGetir(cmd)");
-                output.autoTabLn(sorguSonucuTekElemanTipi + " tmp = " + degisim + ";");
-                assignInputOutputParameters(output);
-                output.autoTabLn("return tmp;");
-            }
-            else
-            {
-                output.autoTabLn("template.SorguHariciKomutCalistir(cmd);");
-
-                assignInputOutputParameters(output);
-
-                if (donusParamVarMi)
-                {
-                    output.autoTabLn(string.Format("return ({0}) cmd.Parameters[\"{1}\"].Value;", donucParamTipi, donusParamAdi));
-                }
-                else
-                {
-                    output.autoTabLn("return;");
-                }
-            }
-
+            generateParametersOverloadCagir(output, proc);
             BitisSusluParentezVeTabAzalt(output);
         }
 
@@ -314,7 +331,7 @@ namespace Karkas.MyGenerationHelper.Generators
         /// </summary>
         /// <param name="output">Standard zeus output.</param>
         private void assignInputOutputParameters(IZeusOutput output)
-        {            
+        {
             foreach (IParameter inputOutputParam in inputOutputParams)
             {
                 output.autoTabLn(String.Format("{0} = ({1})cmd.Parameters[\"{0}\"].Value;", inputOutputParam.Name, inputOutputParam.LanguageType));
@@ -334,7 +351,7 @@ namespace Karkas.MyGenerationHelper.Generators
                     donucParamTipi = param.LanguageType;
                 }
                 else if (param.Direction == ParamDirection.InputOutput)
-                {   
+                {
                     inputOutputParams.Add(param);
                 }
             }
@@ -347,7 +364,7 @@ namespace Karkas.MyGenerationHelper.Generators
                 donusDegeri = "DataTable";
             }
 
-            
+
             return donusDegeri;
         }
 
