@@ -50,8 +50,7 @@ namespace Karkas.MyGenerationHelper
                     sb.Append(String.Format("\t\tpublic const {0} {1} = {2};"
                 , charpDataTypeOfEnum
                 , u.SetPascalCase(tHelper.ReplaceTurkishChars((reader.GetString(enumAdiOrdinal))))
-                , u.SetPascalCase((reader.GetValue(0).ToString()))
-            ));
+                , reader.GetValue(0).ToString()));
 
                 }
                 catch
