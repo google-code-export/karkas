@@ -91,7 +91,7 @@ namespace Karkas.MyGenerationHelper.Generators
             PkGuidMiYaz(output, table);
 
 
-            SilKomutuYazPkIle(output, classNameTypeLibrary);
+            SilKomutuYazPkIle(output, classNameTypeLibrary,table);
 
             ProcessRowYaz(output, table, classNameTypeLibrary);
 
@@ -121,12 +121,13 @@ namespace Karkas.MyGenerationHelper.Generators
 
         }
 
-        private void SilKomutuYazPkIle(IZeusOutput output, string classNameTypeLibrary)
+        private void SilKomutuYazPkIle(IZeusOutput output, string classNameTypeLibrary,ITable table)
         {
-            output.autoTabLn(string.Format("public virtual void Sil({0} {1})",pkType,pkAdi));
+            string pkPropertyName = utils.getPropertyVariableName(table.Columns[pkAdi]);
+            output.autoTabLn(string.Format("public virtual void Sil({0} {1})",pkType,  pkPropertyName));
             BaslangicSusluParentezVeTabArtir(output);
             output.autoTabLn(string.Format("{0} row = new {0}();",classNameTypeLibrary));
-            output.autoTabLn(string.Format("row.{0} = {0};",pkAdi));
+            output.autoTabLn(string.Format("row.{0} = {0};", pkPropertyName));
             output.autoTabLn("base.Sil(row);");
             BitisSusluParentezVeTabAzalt(output);
         }
