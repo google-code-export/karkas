@@ -118,19 +118,24 @@ namespace Karkas.MyGenerationHelper
             nonStandardChars.Add(')', "RightPar");
         }
 
-        public string SetPascalCase(string name)
+        public string SetPascalCase(string degistirilecekString)
         {
-            return solveLanguageSpecificProblems(name, false);
+            return solveLanguageSpecificProblems(degistirilecekString, false);
         }
 
-        public string SetCamelCase(string name)
+        public string SetCamelCase(string degistirilecekString)
         {
-            return solveLanguageSpecificProblems(name, true);
+            return solveLanguageSpecificProblems(degistirilecekString, true);
         }
 
-        private string solveLanguageSpecificProblems(string name, bool isCamelCase)
+        private string solveLanguageSpecificProblems(string degistirilecekString, bool isCamelCase)
         {
-            string result = cleanNonStandardChars(name);
+            string result = cleanNonStandardChars(degistirilecekString);
+            char[] arr = result.ToCharArray();
+            arr[0] = char.ToUpperInvariant(arr[0]);
+            result = new string(arr);
+            
+
 
             if (isCamelCase)
                 result = caseHelper.SetCamelCase(result);
@@ -140,39 +145,40 @@ namespace Karkas.MyGenerationHelper
             return solveReservedWordIssues(result);
         }
 
-        private string cleanNonStandardChars(string name)
+
+        private string cleanNonStandardChars(string degistirilecekString)
         {
             bool isCapitalFlag = false;
-            StringBuilder cleanName = new StringBuilder();
-            foreach (char c in name)
+            StringBuilder temizlenmisHali = new StringBuilder();
+            foreach (char c in degistirilecekString)
             {
                 if (nonStandardChars.ContainsKey(c))
                 {   // Non standard char seen
-                    cleanName.Append(nonStandardChars[c]);
+                    temizlenmisHali.Append(nonStandardChars[c]);
                     isCapitalFlag = true;
                 }
                 else
                 {
                     if (isCapitalFlag)
                     {
-                        cleanName.Append(Char.ToUpperInvariant(c));
+                        temizlenmisHali.Append(Char.ToUpperInvariant(c));
                         isCapitalFlag = false;
                     }
                     else
                     {
-                        cleanName.Append(c);
+                        temizlenmisHali.Append(c);
                     }
                 }
             }
 
-            addInitialLetterForNumericInitialLetteredVariables(cleanName);
+            addInitialLetterForNumericInitialLetteredVariables(temizlenmisHali);
 
-            return cleanName.ToString();
+            return temizlenmisHali.ToString();
         }
 
-        private string solveReservedWordIssues(string name)
+        private string solveReservedWordIssues(string degistirilecekString)
         {
-            return (reservedWordsForCSharp.Contains(name)) ? name + RESERVED_WORD_KEYWORD : name;
+            return (reservedWordsForCSharp.Contains(degistirilecekString)) ? degistirilecekString + RESERVED_WORD_KEYWORD : degistirilecekString;
         }
 
         /// <summary>
@@ -192,13 +198,13 @@ namespace Karkas.MyGenerationHelper
 
         private class CaseHelper
         {
-            public string SetCamelCase(string name)
+            public string SetCamelCase(string degistirilecekString)
             {
                 string text = "";
                 bool flag = false;
                 bool flag2 = true;
                 bool flag3 = true;
-                foreach (char ch in name)
+                foreach (char ch in degistirilecekString)
                 {
                     if (char.IsLower(ch))
                     {
@@ -206,7 +212,7 @@ namespace Karkas.MyGenerationHelper
                         break;
                     }
                 }
-                foreach (char ch2 in name)
+                foreach (char ch2 in degistirilecekString)
                 {
                     switch (ch2)
                     {
@@ -257,22 +263,24 @@ namespace Karkas.MyGenerationHelper
             }
 
             public const char degisicekChar = '_';
-            private string kotuKarakterlerdenAyir(string name)
+            private string kotuKarakterlerdenAyir(string degistirilecekString)
             {
-                name = name.Replace('-', degisicekChar);
-                name = name.Replace('(', degisicekChar);
-                name = name.Replace(')', degisicekChar);
-                name = name.Replace('/', degisicekChar);
-                return name;
+                degistirilecekString = degistirilecekString.Replace('-', degisicekChar);
+                degistirilecekString = degistirilecekString.Replace('(', degisicekChar);
+                degistirilecekString = degistirilecekString.Replace(')', degisicekChar);
+                degistirilecekString = degistirilecekString.Replace('/', degisicekChar);
+                return degistirilecekString;
             }
 
-            public string SetPascalCase(string name)
+            public string SetPascalCase(string degistirilecekString)
             {
-                name = kotuKarakterlerdenAyir(name);
+                degistirilecekString = kotuKarakterlerdenAyir(degistirilecekString);
+                //name = name.ToUpperInvariant();
+
                 string text = "";
                 bool flag = true;
                 bool flag2 = true;
-                foreach (char ch in name)
+                foreach (char ch in degistirilecekString)
                 {
                     if (char.IsLower(ch))
                     {
@@ -280,9 +288,9 @@ namespace Karkas.MyGenerationHelper
                         break;
                     }
                 }
-                foreach (char ch2 in name)
+                foreach (char ch in degistirilecekString)
                 {
-                    switch (ch2)
+                    switch (ch)
                     {
                         case ' ':
                             flag = true;
@@ -299,16 +307,16 @@ namespace Karkas.MyGenerationHelper
                         default:
                             if (flag)
                             {
-                                text = text + ch2.ToString().ToUpperInvariant();
+                                text = text + ch.ToString().ToUpperInvariant();
                                 flag = false;
                             }
                             else if (flag2)
                             {
-                                text = text + ch2.ToString().ToLowerInvariant();
+                                text = text + ch.ToString().ToLowerInvariant();
                             }
                             else
                             {
-                                text = text + ch2.ToString();
+                                text = text + ch.ToString();
                             }
                             break;
                     }
