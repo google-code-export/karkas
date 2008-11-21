@@ -131,10 +131,7 @@ namespace Karkas.MyGenerationHelper
         private string solveLanguageSpecificProblems(string degistirilecekString, bool isCamelCase)
         {
             string result = cleanNonStandardChars(degistirilecekString);
-            char[] arr = result.ToCharArray();
-            arr[0] = char.ToUpperInvariant(arr[0]);
-            result = new string(arr);
-            
+
 
 
             if (isCamelCase)
@@ -154,7 +151,7 @@ namespace Karkas.MyGenerationHelper
             {
                 if (nonStandardChars.ContainsKey(c))
                 {   // Non standard char seen
-                    temizlenmisHali.Append(nonStandardChars[c]);
+                    temizlenmisHali.Append(nonStandardChars[c] + "_");
                     isCapitalFlag = true;
                 }
                 else
@@ -200,66 +197,10 @@ namespace Karkas.MyGenerationHelper
         {
             public string SetCamelCase(string degistirilecekString)
             {
-                string text = "";
-                bool flag = false;
-                bool flag2 = true;
-                bool flag3 = true;
-                foreach (char ch in degistirilecekString)
-                {
-                    if (char.IsLower(ch))
-                    {
-                        flag3 = false;
-                        break;
-                    }
-                }
-                foreach (char ch2 in degistirilecekString)
-                {
-                    switch (ch2)
-                    {
-                        case ' ':
-                            if (!flag2)
-                            {
-                                flag = true;
-                            }
-                            break;
-
-                        case '.':
-                            if (!flag2)
-                            {
-                                flag = true;
-                            }
-                            break;
-
-                        case '_':
-                            if (!flag2)
-                            {
-                                flag = true;
-                            }
-                            break;
-
-                        default:
-                            if (flag)
-                            {
-                                text = text + ch2.ToString().ToUpperInvariant();
-                                flag = false;
-                            }
-                            else if (flag2)
-                            {
-                                text = text + ch2.ToString().ToLowerInvariant();
-                                flag2 = false;
-                            }
-                            else if (flag3)
-                            {
-                                text = text + ch2.ToString().ToLowerInvariant();
-                            }
-                            else
-                            {
-                                text = text + ch2.ToString();
-                            }
-                            break;
-                    }
-                }
-                return text;
+                string text = SetPascalCase(degistirilecekString);
+                char[] arr = text.ToCharArray();
+                arr[0] = char.ToLowerInvariant(arr[0]);
+                return new string(arr);
             }
 
             public const char degisicekChar = '_';
@@ -275,7 +216,7 @@ namespace Karkas.MyGenerationHelper
             public string SetPascalCase(string degistirilecekString)
             {
                 degistirilecekString = kotuKarakterlerdenAyir(degistirilecekString);
-                //name = name.ToUpperInvariant();
+                degistirilecekString = kelimelereAyir(degistirilecekString);
 
                 string text = "";
                 bool kelimeAyrimi = true;
@@ -322,6 +263,58 @@ namespace Karkas.MyGenerationHelper
                     }
                 }
                 return text;
+            }
+
+            private string kelimelereAyir(string degistirilecekString)
+            {
+                List<int> kelimelerinYerleri = new List<int>();
+
+                for (int i = 0; i < degistirilecekString.Length; i++)
+                {
+                    if (degistirilecekString[i] == '_')
+                    {
+                        kelimelerinYerleri.Add(i);
+                    }
+                    if (char.IsNumber(degistirilecekString[i]))
+                    {
+                        kelimelerinYerleri.Add(i);
+                    }
+                    if ((i != 0) && (i != degistirilecekString.Length - 1) &&
+                        (
+                        char.IsUpper(degistirilecekString[i + 1])
+                        &&
+                        char.IsLower(degistirilecekString[i]))
+                        )
+                    {
+                        kelimelerinYerleri.Add(i+1);
+                    }
+                }
+
+                kelimelerinYerleri.Add(degistirilecekString.Length);
+                int kesmeBaslangic = 0;
+                List<String> parcalanmisKelimeler = new List<string>();
+                for (int i = 0; i < kelimelerinYerleri.Count; i++)
+                {
+                    parcalanmisKelimeler.Add(degistirilecekString.Substring(kesmeBaslangic, kelimelerinYerleri[i] -kesmeBaslangic ));
+                    kesmeBaslangic = kelimelerinYerleri[i];
+                }
+
+                string sonuc = "";
+
+                foreach (string s in parcalanmisKelimeler)
+                {
+                    if (sonuc == "")
+                    {
+                        sonuc = s.ToUpperInvariant();
+                    }
+                    else
+                    {
+                        sonuc = sonuc + "_" + s.Replace("_", "").ToUpperInvariant();
+                    }
+                }
+
+                return sonuc;
+
             }
 
 

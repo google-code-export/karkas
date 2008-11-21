@@ -12,7 +12,7 @@ namespace Karkas.MyGenerationTest
     [TestFixture]
     public class PropertyNameCheckerTest
     {
-        INameChecker nameChecker;
+        INameChecker nameChecker = new NameChecker();
 
         [SetUp]
         public void Init()
@@ -25,7 +25,7 @@ namespace Karkas.MyGenerationTest
         {
             string propertyName = "a-/#1b";
             string propertyNameNew = nameChecker.SetPascalCase(propertyName);
-            Assert.IsTrue(String.Equals("ADashSlashSharp1b", propertyNameNew, StringComparison.InvariantCulture)); 
+            Assert.IsTrue(String.Equals("AdashSlashSharp1b", propertyNameNew, StringComparison.InvariantCulture)); 
         }
         
         [Test]
@@ -49,7 +49,7 @@ namespace Karkas.MyGenerationTest
         {
             string propertyName = "-/#b-/a";
             string propertyNameNew = nameChecker.SetPascalCase(propertyName);
-            Assert.IsTrue(String.Equals("DashSlashSharpBDashSlashA", propertyNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("DashSlashSharpBdashSlashA", propertyNameNew, StringComparison.InvariantCulture));
         }
 
         [Test]

@@ -5,6 +5,7 @@ using Karkas.MyGenerationHelper;
 using Karkas.MyGenerationHelper.Generators;
 using System.Configuration;
 using MyMeta;
+using Karkas.MyGenerationTest;
 
 namespace Karkas.MyGenerationConsoleTest
 {
@@ -12,7 +13,17 @@ namespace Karkas.MyGenerationConsoleTest
     {
         public static void Main(string[] args)
         {
+            VariableNameCheckerTest test = new VariableNameCheckerTest();
+            test.DegiskenBuyukKucukHarfSorunu2();
 
+
+            PropertyNameCheckerTest test2 = new PropertyNameCheckerTest();
+            test2.PropertyHasNonStandardCharsAtTheBeginningTest();
+            test2.PropertyHasNonStandardCharsAtTheBeginningAndInTheMiddleTest();
+            test2.PropertyHasNonStandardCharsInTheMiddleTest();
+            test2.PropertyHasNonStandardCharsLeftAndRightParanthesisDotAndSpaceInTheMiddleTest();
+            test2.PropertyHasNumericCharsAtTheBeginningAndInTheMiddleTest();
+            test2.PropertyHasNumericCharsAtTheBeginningTest();
 
 
         }
