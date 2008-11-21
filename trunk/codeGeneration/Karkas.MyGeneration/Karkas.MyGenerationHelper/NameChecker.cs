@@ -278,13 +278,13 @@ namespace Karkas.MyGenerationHelper
                 //name = name.ToUpperInvariant();
 
                 string text = "";
-                bool flag = true;
-                bool flag2 = true;
+                bool kelimeAyrimi = true;
+                bool SadaceBuyukHarfMi = true;
                 foreach (char ch in degistirilecekString)
                 {
                     if (char.IsLower(ch))
                     {
-                        flag2 = false;
+                        SadaceBuyukHarfMi = false;
                         break;
                     }
                 }
@@ -293,24 +293,24 @@ namespace Karkas.MyGenerationHelper
                     switch (ch)
                     {
                         case ' ':
-                            flag = true;
+                            kelimeAyrimi = true;
                             break;
 
                         case '.':
-                            flag = true;
+                            kelimeAyrimi = true;
                             break;
 
                         case '_':
-                            flag = true;
+                            kelimeAyrimi = true;
                             break;
 
                         default:
-                            if (flag)
+                            if (kelimeAyrimi)
                             {
                                 text = text + ch.ToString().ToUpperInvariant();
-                                flag = false;
+                                kelimeAyrimi = false;
                             }
-                            else if (flag2)
+                            else if (SadaceBuyukHarfMi)
                             {
                                 text = text + ch.ToString().ToLowerInvariant();
                             }
