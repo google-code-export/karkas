@@ -82,7 +82,7 @@ public class GeneratedGui : DotNetScriptGui
 			chooseSchemas.Left = outputPath.Left;
 
 			//Tüm Tablolar CheckBox
-			GuiCheckBox chkAllTablesBox = ui.AddCheckBox("chkAllTablesBox", "Tüm Tabloları Generate Et", true, "Eğer bu seçeneği tıklarsanız, tablo seçiminiz dikkate alınmadan tüm veritabanından kod üretir."); 
+			GuiCheckBox chkAllTablesBox = ui.AddCheckBox("chkAllTablesBox", "Tüm Tabloları Generate Et", false, "Eğer bu seçeneği tıklarsanız, tablo seçiminiz dikkate alınmadan tüm veritabanından kod üretir."); 
 			chkAllTablesBox.Width = 250;
 			
 			
