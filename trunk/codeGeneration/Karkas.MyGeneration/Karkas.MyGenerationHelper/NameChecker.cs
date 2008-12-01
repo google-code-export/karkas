@@ -108,14 +108,14 @@ namespace Karkas.MyGenerationHelper
 
         private void fillNonStandardChars()
         {
-            nonStandardChars.Add(' ', "Space");
-            nonStandardChars.Add('.', "Dot");
-            nonStandardChars.Add('#', "Sharp");
-            nonStandardChars.Add('-', "Dash");
-            nonStandardChars.Add('+', "Plus");
-            nonStandardChars.Add('/', "Slash");
-            nonStandardChars.Add('(', "LeftPar");
-            nonStandardChars.Add(')', "RightPar");
+            nonStandardChars.Add(' ', "");
+            nonStandardChars.Add('.', "");
+            nonStandardChars.Add('#', "");
+            nonStandardChars.Add('-', "");
+            nonStandardChars.Add('+', "");
+            nonStandardChars.Add('/', "");
+            nonStandardChars.Add('(', "");
+            nonStandardChars.Add(')', "");
         }
 
         public string SetPascalCase(string degistirilecekString)
