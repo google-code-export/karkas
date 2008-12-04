@@ -20,7 +20,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.incTab();
             foreach (IColumn column in table.Columns)
             {
-                string memberVariableName = utils.SetCamelCase(column.Name);
+                string memberVariableName = utils.GetCamelCase(column.Name);
                 string propertyVariableName = utils.getPropertyVariableName(column);
 
                 output.autoTabLn("[DebuggerBrowsable(DebuggerBrowsableState.Never)]");
@@ -55,7 +55,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.incTab();
             foreach (IColumn column in table.Columns)
             {
-                string memberVariableName = utils.SetCamelCase(column.Name);
+                string memberVariableName = utils.GetCamelCase(column.Name);
                 string propertyVariableName = utils.getPropertyVariableName(column);
                 output.autoTabLn("[DebuggerBrowsable(DebuggerBrowsableState.Never)]");
                 output.autoTabLn("[XmlIgnore, SoapIgnore]");
@@ -102,7 +102,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.incTab();
             foreach (IColumn column in view.Columns)
             {
-                string memberVariableName = utils.SetCamelCase(column.Name);
+                string memberVariableName = utils.GetCamelCase(column.Name);
                 string propertyVariableName = utils.GetPascalCase(column.Name);
                 output.autoTabLn("[DebuggerBrowsable(DebuggerBrowsableState.Never)]");
                 output.autoTabLn(string.Format("public {0} {1}", utils.GetLanguageType(column), propertyVariableName));
@@ -139,7 +139,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn(string.Format("{0} obj = new {0}();", pTypeName));
             foreach (IColumn column in table.Columns)
             {
-                output.autoTabLn(string.Format("obj.{0} = {0};", utils.SetCamelCase(column.Name)));
+                output.autoTabLn(string.Format("obj.{0} = {0};", utils.GetCamelCase(column.Name)));
             }
             output.autoTabLn("return obj;");
             output.decTab();
@@ -155,7 +155,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.incTab();
             foreach (IColumn column in table.Columns)
             {
-                output.autoTabLn(String.Format("private {0} {1};", utils.GetLanguageType(column), utils.SetCamelCase(column.Name)));
+                output.autoTabLn(String.Format("private {0} {1};", utils.GetLanguageType(column), utils.GetCamelCase(column.Name)));
             }
             output.decTab();
             output.writeln("");
@@ -165,7 +165,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.incTab();
             foreach (IColumn column in view.Columns)
             {
-                output.autoTabLn(String.Format("private {0} {1};", utils.GetLanguageType(column), utils.SetCamelCase(column.Name)));
+                output.autoTabLn(String.Format("private {0} {1};", utils.GetLanguageType(column), utils.GetCamelCase(column.Name)));
             }
             output.decTab();
             output.writeln("");
@@ -180,7 +180,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn(string.Format("const string namespaceVeClass = \"{0}\";", pNamespace));
             foreach (IColumn column in pTable.Columns)
             {
-                string memberVariableName = utils.SetCamelCase(column.Name);
+                string memberVariableName = utils.GetCamelCase(column.Name);
                 string propertyVariableName = utils.GetPascalCase(column.Name);
                 output.autoTabLn("public static string " + propertyVariableName);
                 BaslangicSusluParentezVeTabArtir(output);

@@ -524,7 +524,7 @@ namespace Karkas.MyGenerationHelper
 
         }
 
-        public string SetCamelCase(string name)
+        public string GetCamelCase(string name)
         {
             return new NameChecker().SetCamelCase(name);
         }
