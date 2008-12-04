@@ -13,7 +13,7 @@ namespace Karkas.MyGenerationHelper.Generators
     public class TypeLibraryGenerator : BaseGenerator
     {
 
-        Utils utils = new Utils();
+        static readonly Utils utils = new Utils();
         TypeLibraryHelper tHelper = new TypeLibraryHelper();
 
         public void Render(IZeusOutput output, ITable table)
@@ -168,7 +168,7 @@ namespace Karkas.MyGenerationHelper.Generators
             {
                 if (column.IsInPrimaryKey || column.IsAutoKey || column.IsInForeignKey)
                 {
-                    yazi +=  column.Name + " = {" + column.Name + "}";
+                    yazi += utils.getPropertyVariableName(column) + " = {" + utils.getPropertyVariableName(column)  + "}";
                 }
 
             }
