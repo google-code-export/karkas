@@ -81,8 +81,8 @@ namespace Karkas.MyGenerationHelper.Generators
 
 
             database = proc.Database;
-            methodName = utils.SetPascalCase(proc.Name);
-            schemaName = utils.SetPascalCase(proc.Schema);
+            methodName = utils.GetPascalCase(proc.Name);
+            schemaName = utils.GetPascalCase(proc.Schema);
 
 
             string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, proc.Schema);

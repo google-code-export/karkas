@@ -24,8 +24,8 @@ namespace Karkas.MyGenerationHelper.Generators
             string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, table.Schema);
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
-            string className = utils.SetPascalCase(table.Name);
-            string schemaName = utils.SetPascalCase(table.Schema);
+            string className = utils.GetPascalCase(table.Name);
+            string schemaName = utils.GetPascalCase(table.Schema);
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
             string outputFullFileName = Path.Combine(utils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".cs");
             string outputFullFileNameGenerated = Path.Combine(utils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
@@ -84,8 +84,8 @@ namespace Karkas.MyGenerationHelper.Generators
             string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, view.Schema);
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
-            string className = utils.SetPascalCase(view.Name);
-            string schemaName = utils.SetPascalCase(view.Schema);
+            string className = utils.GetPascalCase(view.Name);
+            string schemaName = utils.GetPascalCase(view.Schema);
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
             string outputFullFileNameGenerated = Path.Combine(utils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
             output.setPreserveSource(outputFullFileNameGenerated, "//::", ":://");

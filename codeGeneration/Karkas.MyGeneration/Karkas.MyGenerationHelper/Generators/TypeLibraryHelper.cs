@@ -103,7 +103,7 @@ namespace Karkas.MyGenerationHelper.Generators
             foreach (IColumn column in view.Columns)
             {
                 string memberVariableName = utils.SetCamelCase(column.Name);
-                string propertyVariableName = utils.SetPascalCase(column.Name);
+                string propertyVariableName = utils.GetPascalCase(column.Name);
                 output.autoTabLn("[DebuggerBrowsable(DebuggerBrowsableState.Never)]");
                 output.autoTabLn(string.Format("public {0} {1}", utils.GetLanguageType(column), propertyVariableName));
                 output.autoTabLn("{");
@@ -181,7 +181,7 @@ namespace Karkas.MyGenerationHelper.Generators
             foreach (IColumn column in pTable.Columns)
             {
                 string memberVariableName = utils.SetCamelCase(column.Name);
-                string propertyVariableName = utils.SetPascalCase(column.Name);
+                string propertyVariableName = utils.GetPascalCase(column.Name);
                 output.autoTabLn("public static string " + propertyVariableName);
                 BaslangicSusluParentezVeTabArtir(output);
                 output.autoTabLn("get");

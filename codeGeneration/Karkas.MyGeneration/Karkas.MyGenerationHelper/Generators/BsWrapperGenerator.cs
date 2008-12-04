@@ -51,12 +51,12 @@ namespace Karkas.MyGenerationHelper.Generators
             baseNameSpaceDal = baseNameSpace + ".Dal";
             baseNameSpaceBs = baseNameSpace + ".Bs";
 
-            classNameTypeLibrary = utils.SetPascalCase(table.Name);
-            classNameDal = utils.SetPascalCase(table.Name) + "Dal";
-            classNameBs = utils.SetPascalCase(table.Name) + "Bs";
-            classNameBsWrapper = utils.SetPascalCase(table.Name) + "BsWrapper";
+            classNameTypeLibrary = utils.GetPascalCase(table.Name);
+            classNameDal = utils.GetPascalCase(table.Name) + "Dal";
+            classNameBs = utils.GetPascalCase(table.Name) + "Bs";
+            classNameBsWrapper = utils.GetPascalCase(table.Name) + "BsWrapper";
 
-            schemaName = utils.SetPascalCase(table.Schema);
+            schemaName = utils.GetPascalCase(table.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
 
 

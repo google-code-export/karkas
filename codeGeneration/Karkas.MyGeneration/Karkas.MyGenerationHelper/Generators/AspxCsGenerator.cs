@@ -19,8 +19,8 @@ namespace Karkas.MyGenerationHelper.Generators
             string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, table.Schema);
             string baseNamespaceWeb = baseNameSpace + ".WebApp";
 
-            string className = utils.SetPascalCase(table.Name);
-            string schemaName = utils.SetPascalCase(table.Schema);
+            string className = utils.GetPascalCase(table.Name);
+            string schemaName = utils.GetPascalCase(table.Schema);
             string classNameSpace = baseNamespaceWeb + "." + schemaName;
             string formName = className + "Form";
 
@@ -49,7 +49,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.decTab();
             output.autoTabLn("}");
 
-            string savePath = Path.Combine(utils.ProjeDizininiAl(database), "WebApp\\" + utils.SetPascalCase(table.Schema) + "\\" + formName + ".aspx.cs");
+            string savePath = Path.Combine(utils.ProjeDizininiAl(database), "WebApp\\" + utils.GetPascalCase(table.Schema) + "\\" + formName + ".aspx.cs");
             output.save(savePath, true);
             output.clear();
 
