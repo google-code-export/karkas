@@ -42,11 +42,11 @@ namespace Karkas.MyGenerationHelper.Generators
             baseNameSpaceDal = baseNameSpace + ".Dal";
             baseNameSpaceBs = baseNameSpace + ".Bs";
 
-            classNameTypeLibrary = utils.SetPascalCase(table.Name);
-            classNameDal = utils.SetPascalCase(table.Name) + "Dal";
-            classNameBs = utils.SetPascalCase(table.Name) + "Bs";
+            classNameTypeLibrary = utils.GetPascalCase(table.Name);
+            classNameDal = utils.GetPascalCase(table.Name) + "Dal";
+            classNameBs = utils.GetPascalCase(table.Name) + "Bs";
 
-            schemaName = utils.SetPascalCase(table.Schema);
+            schemaName = utils.GetPascalCase(table.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
             bool identityVarmi;
             string pkcumlesi = "";

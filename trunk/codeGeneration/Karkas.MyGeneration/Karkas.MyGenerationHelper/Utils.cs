@@ -529,7 +529,7 @@ namespace Karkas.MyGenerationHelper
             return new NameChecker().SetCamelCase(name);
         }
 
-        public string SetPascalCase(string name)
+        public string GetPascalCase(string name)
         {
             return new NameChecker().SetPascalCase(name);
         }
@@ -544,11 +544,11 @@ namespace Karkas.MyGenerationHelper
                 (pColumn.Name.Equals(pColumn.Table.Name,StringComparison.OrdinalIgnoreCase))
                 )
             {
-                return SetPascalCase(pColumn.Name) + "Property";
+                return GetPascalCase(pColumn.Name) + "Property";
             }
             else
             {
-                return SetPascalCase(pColumn.Name);
+                return GetPascalCase(pColumn.Name);
             }
         }
 

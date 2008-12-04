@@ -46,8 +46,8 @@ namespace Karkas.MyGenerationHelper.Generators
             }
 
 
-            classNameTypeLibrary = utils.SetPascalCase(table.Name);
-            schemaName = utils.SetPascalCase(table.Schema);
+            classNameTypeLibrary = utils.GetPascalCase(table.Name);
+            schemaName = utils.GetPascalCase(table.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
             identityVarmi = utils.IdentityVarMi(table);
             bool pkGuidMi = utils.PkGuidMi(table);
@@ -142,7 +142,7 @@ namespace Karkas.MyGenerationHelper.Generators
                 string methodYazisi = string.Format("protected override void identityKolonDegeriniSetle({0} pTypeLibrary,{1} pIdentityKolonValue)", classNameTypeLibrary, identityType);
                 output.autoTabLn(methodYazisi);
                 BaslangicSusluParentezVeTabArtir(output);
-                string propertySetleYazisi = string.Format("pTypeLibrary.{0} = pIdentityKolonValue;", utils.SetPascalCase(identityColumnAdi));
+                string propertySetleYazisi = string.Format("pTypeLibrary.{0} = pIdentityKolonValue;", utils.GetPascalCase(identityColumnAdi));
                 output.autoTabLn(propertySetleYazisi);
                 BitisSusluParentezVeTabAzalt(output);
 

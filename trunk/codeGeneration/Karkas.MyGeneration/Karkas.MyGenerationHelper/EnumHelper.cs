@@ -39,7 +39,7 @@ namespace Karkas.MyGenerationHelper
 
             StringBuilder sb = new StringBuilder();
             sb.Append(string.Format("public partial class {0}Enum"
-                                    , u.SetPascalCase(tableName)));
+                                    , u.GetPascalCase(tableName)));
             sb.Append(  @"
     {");
             while (reader.Read())
@@ -49,7 +49,7 @@ namespace Karkas.MyGenerationHelper
                 {
                     sb.Append(String.Format("\t\tpublic const {0} {1} = {2};"
                 , charpDataTypeOfEnum
-                , u.SetPascalCase(tHelper.ReplaceTurkishChars((reader.GetString(enumAdiOrdinal))))
+                , u.GetPascalCase(tHelper.ReplaceTurkishChars((reader.GetString(enumAdiOrdinal))))
                 , reader.GetValue(0).ToString()));
 
                 }

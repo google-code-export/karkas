@@ -20,8 +20,8 @@ namespace Karkas.MyGenerationHelper.Generators
             string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, pTable.Schema);
             string baseNamespaceWeb = baseNameSpace + ".WebApp";
 
-            string className = utils.SetPascalCase(pTable.Name);
-            string schemaName = utils.SetPascalCase(pTable.Schema);
+            string className = utils.GetPascalCase(pTable.Name);
+            string schemaName = utils.GetPascalCase(pTable.Schema);
             string classNameSpace = baseNamespaceWeb + "." + schemaName;
             string formName = className + "Form";
 
@@ -29,7 +29,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.writeln(RenderAsString(pTable, classNameSpace, className, formName));
             writeTableRows(output, pTable);
             output.writeln("</asp:Content>");
-            string savePath = Path.Combine(utils.ProjeDizininiAl(database), "WebApp\\" + utils.SetPascalCase(pTable.Schema) + "\\" + formName + ".aspx");
+            string savePath = Path.Combine(utils.ProjeDizininiAl(database), "WebApp\\" + utils.GetPascalCase(pTable.Schema) + "\\" + formName + ".aspx");
             output.save(savePath, true);
             output.clear();
 
@@ -69,7 +69,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.incTab();
             foreach (IColumn column in table.Columns)
             {
-                string propertyVariableName = utils.SetPascalCase(column.Name);
+                string propertyVariableName = utils.GetPascalCase(column.Name);
 
                 cellYazisiniGetir(output, column, propertyVariableName);
 
