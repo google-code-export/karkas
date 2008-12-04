@@ -62,6 +62,9 @@ namespace Karkas.MyGenerationHelper.Generators
             BaslangicSusluParentez(output);
             classYaz(output, classNameBs,classNameDal,classNameTypeLibrary);
             BaslangicSusluParentezVeTabArtir(output);
+
+            OverrideDatabaseNameYaz(output, table);
+
             SilKomutuYazPkIle(output);
 
             sorgulaPkAdiIleYaz(output, classNameTypeLibrary, pkType, pkAdi);
@@ -86,6 +89,16 @@ namespace Karkas.MyGenerationHelper.Generators
             }
         }
 
+        private void OverrideDatabaseNameYaz(IZeusOutput output, ITable table)
+        {
+            output.autoTabLn("public override string DatabaseName");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("get");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn(string.Format("return \"{0}\";", table.Database.Name));
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentezVeTabAzalt(output);
+        }
 
 
         private static void sorgulaPkAdiIleYaz(IZeusOutput output, string classNameTypeLibrary, string pkType, string pkAdi)
