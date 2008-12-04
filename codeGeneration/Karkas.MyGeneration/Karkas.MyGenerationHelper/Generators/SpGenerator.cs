@@ -245,7 +245,15 @@ namespace Karkas.MyGenerationHelper.Generators
                 }
                 else if (param.Direction == ParamDirection.Output || param.Direction == ParamDirection.InputOutput)
                 {
-                    yazi = string.Format(" builder.parameterEkleOutput( \"{0}\",{1});", param.Name, param.DbTargetType);
+                    if (param.CharacterMaxLength == 0)
+                    {
+                        yazi = string.Format(" builder.parameterEkleOutput( \"{0}\",{1});", param.Name, param.DbTargetType);
+                        
+                    }
+                    else
+                    {
+                        yazi = string.Format(" builder.parameterEkleOutput( \"{0}\",{1},{2});", param.Name, param.DbTargetType,param.CharacterMaxLength);
+                    }
                 }
                 output.autoTabLn(yazi);
             }
