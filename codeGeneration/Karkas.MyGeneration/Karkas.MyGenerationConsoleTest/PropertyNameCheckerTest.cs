@@ -25,7 +25,7 @@ namespace Karkas.MyGenerationTest
         {
             string propertyName = "a-/#1b";
             string propertyNameNew = nameChecker.SetPascalCase(propertyName);
-            Assert.IsTrue(String.Equals("AdashSlashSharp1b", propertyNameNew, StringComparison.InvariantCulture)); 
+            Assert.IsTrue(String.Equals("A1b", propertyNameNew, StringComparison.InvariantCulture)); 
         }
         
         [Test]
@@ -33,7 +33,7 @@ namespace Karkas.MyGenerationTest
         {
             string propertyName = "(1.3) ip";
             string propertyNameNew = nameChecker.SetPascalCase(propertyName);
-            Assert.IsTrue(String.Equals("LeftPar1Dot3RightParSpaceIp", propertyNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("13Ip", propertyNameNew, StringComparison.InvariantCulture));
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace Karkas.MyGenerationTest
         {
             string propertyName = "-/#ba";
             string propertyNameNew = nameChecker.SetPascalCase(propertyName);
-            Assert.IsTrue(String.Equals("DashSlashSharpBa", propertyNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("Ba", propertyNameNew, StringComparison.InvariantCulture));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Karkas.MyGenerationTest
         {
             string propertyName = "-/#b-/a";
             string propertyNameNew = nameChecker.SetPascalCase(propertyName);
-            Assert.IsTrue(String.Equals("DashSlashSharpBdashSlashA", propertyNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("BA", propertyNameNew, StringComparison.InvariantCulture));
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace Karkas.MyGenerationTest
         {
             string propertyName = "1-2#days";
             string propertyNameNew = nameChecker.SetPascalCase(propertyName);
-            Assert.IsTrue(String.Equals("D1Dash2SharpDays", propertyNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("D12Days", propertyNameNew, StringComparison.InvariantCulture));
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Karkas.MyGenerationTest
         {
             string propertyName = "01to-2days";
             string propertyNameNew = nameChecker.SetPascalCase(propertyName);
-            Assert.IsTrue(String.Equals("D01toDash2days", propertyNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("D01to2days", propertyNameNew, StringComparison.InvariantCulture));
         }
     }
 }

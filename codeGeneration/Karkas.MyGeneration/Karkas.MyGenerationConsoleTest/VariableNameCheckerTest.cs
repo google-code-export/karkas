@@ -41,7 +41,7 @@ namespace Karkas.MyGenerationTest
         {
             string variableName = "a-/#1b";
             string variableNameNew = nameChecker.SetCamelCase(variableName);
-            Assert.IsTrue(String.Equals("aDashSlashSharp1b", variableNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("a1b", variableNameNew, StringComparison.InvariantCulture));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Karkas.MyGenerationTest
         {
             string variableName = "12B2a";
             string variableNameNew = nameChecker.SetCamelCase(variableName);
-            Assert.IsTrue(String.Equals("d12B2a", variableNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("d12b2a", variableNameNew, StringComparison.InvariantCulture));
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace Karkas.MyGenerationTest
         {
             string variableName = "-/#ba";
             string variableNameNew = nameChecker.SetCamelCase(variableName);
-            Assert.IsTrue(String.Equals("dashSlashSharpBa", variableNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("ba", variableNameNew, StringComparison.InvariantCulture));
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Karkas.MyGenerationTest
         {
             string variableName = "-/#b-/a";
             string variableNameNew = nameChecker.SetCamelCase(variableName);
-            Assert.IsTrue(String.Equals("dashSlashSharpBDashSlashA", variableNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("bA", variableNameNew, StringComparison.InvariantCulture));
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace Karkas.MyGenerationTest
         {
             string variableName = "1-2days";
             string variableNameNew = nameChecker.SetCamelCase(variableName);
-            Assert.IsTrue(String.Equals("d1Dash2days", variableNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("d12days", variableNameNew, StringComparison.InvariantCulture));
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Karkas.MyGenerationTest
         {
             string variableName = "01to-2#Days";
             string variableNameNew = nameChecker.SetCamelCase(variableName);
-            Assert.IsTrue(String.Equals("d01toDash2SharpDays", variableNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("d01to2Days", variableNameNew, StringComparison.InvariantCulture));
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace Karkas.MyGenerationTest
         {
             string variableName = "12+Days";
             string variableNameNew = nameChecker.SetCamelCase(variableName);
-            Assert.IsTrue(String.Equals("d12PlusDays", variableNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("d12Days", variableNameNew, StringComparison.InvariantCulture));
         }
 
         [Test]
@@ -113,7 +113,7 @@ namespace Karkas.MyGenerationTest
         {
             string variableName = "rEf";
             string variableNameNew = nameChecker.SetCamelCase(variableName);
-            Assert.IsTrue(String.Equals("rEf", variableNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("refReservedWord", variableNameNew, StringComparison.InvariantCulture));
         }
 
         [Test]
