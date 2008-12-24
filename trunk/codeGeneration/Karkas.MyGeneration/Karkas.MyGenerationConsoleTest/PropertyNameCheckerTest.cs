@@ -40,7 +40,7 @@ namespace Karkas.MyGenerationTest
         {
             string propertyName = "(1.3) ip";
             string propertyNameNew = nameChecker.SetPascalCase(propertyName);
-            Assert.IsTrue(String.Equals("13Ip", propertyNameNew, StringComparison.InvariantCulture));
+            Assert.IsTrue(String.Equals("d13Ip", propertyNameNew, StringComparison.InvariantCulture));
         }
 
         [Test]

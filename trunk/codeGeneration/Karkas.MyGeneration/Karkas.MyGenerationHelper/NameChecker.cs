@@ -172,7 +172,9 @@ namespace Karkas.MyGenerationHelper
 
         private string solveReservedWordIssues(string degistirilecekString)
         {
-            return (reservedWordsForCSharp.Contains(degistirilecekString)) ? degistirilecekString + RESERVED_WORD_KEYWORD : degistirilecekString;
+            string reservedWordControl = degistirilecekString.ToLowerInvariant();
+            string sonuc = (reservedWordsForCSharp.Contains(reservedWordControl)) ? reservedWordControl + RESERVED_WORD_KEYWORD : degistirilecekString;
+            return sonuc;
         }
 
         /// <summary>
@@ -260,7 +262,9 @@ namespace Karkas.MyGenerationHelper
                         break;
                     }
 
-                    if (!char.IsPunctuation(simdikiChar.Value) && char.IsUpper(simdikiChar.Value))
+                    if (!char.IsPunctuation(simdikiChar.Value)
+                        && !char.IsNumber(simdikiChar.Value)
+                        && char.IsUpper(simdikiChar.Value))
                     {
                         i = tumBuyukOlanCharlarIcinIlerle(degistirilecekString, i);
                         birOncekiChar = birOncekiChariAl(i, degistirilecekString);
@@ -281,7 +285,9 @@ namespace Karkas.MyGenerationHelper
                         break;
                     }
 
-                    if (!char.IsPunctuation(simdikiChar.Value) && char.IsLower(simdikiChar.Value))
+                    if (!char.IsPunctuation(simdikiChar.Value) 
+                        && !char.IsNumber(simdikiChar.Value)
+                        && char.IsLower(simdikiChar.Value))
                     {
                         i = tumKucukOlanCharlarIcinIlerle(degistirilecekString, i);
                         birOncekiChar = birOncekiChariAl(i, degistirilecekString);
@@ -318,7 +324,7 @@ namespace Karkas.MyGenerationHelper
                     if (char.IsNumber(simdikiChar.Value))
                     {
                         if (birOncekiChar.HasValue
-                            && char.IsNumber(birOncekiChar.Value)
+                            && !char.IsNumber(birOncekiChar.Value)
                             )
                         {
                             kelimelerinYerleri.Add(i);
