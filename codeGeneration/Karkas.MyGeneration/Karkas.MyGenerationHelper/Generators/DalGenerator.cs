@@ -137,12 +137,12 @@ namespace Karkas.MyGenerationHelper.Generators
 
         private void identityKolonDegeriniSetleYaz(IZeusOutput output, ITable table)
         {
-            string methodYazisi = string.Format("protected override void identityKolonDegeriniSetle({0} pTypeLibrary,int pIdentityKolonValue)", classNameTypeLibrary);
+            string methodYazisi = string.Format("protected override void identityKolonDegeriniSetle({0} pTypeLibrary,long pIdentityKolonValue)", classNameTypeLibrary);
             output.autoTabLn(methodYazisi);
             BaslangicSusluParentezVeTabArtir(output);
             if (identityVarmi)
             {
-                string propertySetleYazisi = string.Format("pTypeLibrary.{0} = pIdentityKolonValue;", utils.GetPascalCase(identityColumnAdi));
+                string propertySetleYazisi = string.Format("pTypeLibrary.{0} = ({1} )pIdentityKolonValue;", utils.GetPascalCase(identityColumnAdi), identityType);
                 output.autoTabLn(propertySetleYazisi);
             }
             BitisSusluParentezVeTabAzalt(output);
