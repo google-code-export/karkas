@@ -282,11 +282,11 @@ namespace Karkas.MyGenerationHelper.Generators
         private static void InsertYaz(IZeusOutput output, string classNameTypeLibrary)
         {
             output.writeln("        [DataObjectMethod(DataObjectMethodType.Insert)]");
-            output.write("        public void Ekle(");
+            output.write("        public int Ekle(");
             output.write(classNameTypeLibrary);
             output.writeln(" p1)");
             output.writeln("        {");
-            output.writeln("            bs.Ekle(p1);");
+            output.writeln("            return bs.Ekle(p1);");
             output.writeln("        }");
             output.writeln("");
             output.writeln("");
