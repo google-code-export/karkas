@@ -251,16 +251,69 @@ namespace Karkas.MyGenerationHelper
             {
                 List<int> kelimelerinYerleri = new List<int>();
 
+
                 for (int i = 0; i < degistirilecekString.Length; i++)
                 {
                     char? birOncekiChar = birOncekiChariAl(i, degistirilecekString);
                     char? simdikiChar = simdikiChariAl(degistirilecekString, i);
                     char? birSonrakiChar = GetBirSonrakiChariAl(i, degistirilecekString);
+                    // UKullaniciKey gibi kelimeler icin kontrol
+
+                    if (i == 0
+                        && simdikiChar.HasValue
+                        && birSonrakiChar.HasValue
+                        && char.IsUpper(simdikiChar.Value)
+                        && char.IsUpper(birSonrakiChar.Value)
+                        )
+                    {
+                        char? ucuncuChar = simdikiChariAl(degistirilecekString, 2);
+                        if (ucuncuChar.HasValue
+                            && !char.IsPunctuation(ucuncuChar.Value)
+                            && !char.IsNumber(ucuncuChar.Value)
+                            && char.IsLower(ucuncuChar.Value)
+                            )
+                        {
+                            i = 3;
+                            continue;
+                        }
+
+                        
+                    }
 
                     if (!simdikiChar.HasValue)
                     {
                         break;
                     }
+
+
+                    if (!char.IsPunctuation(simdikiChar.Value)
+                        && !char.IsNumber(simdikiChar.Value)
+                        && char.IsUpper(simdikiChar.Value)
+                        && birSonrakiChar.HasValue
+                        && char.IsLower(birSonrakiChar.Value)
+                        )
+                    {
+                        i++;
+                        i = tumKucukOlanCharlarIcinIlerle(degistirilecekString, i);
+                        birOncekiChar = birOncekiChariAl(i, degistirilecekString);
+                        simdikiChar = simdikiChariAl(degistirilecekString, i);
+                        birSonrakiChar = GetBirSonrakiChariAl(i, degistirilecekString);
+                        if (birOncekiChar.HasValue
+                                && simdikiChar.HasValue
+                                && !char.IsPunctuation(simdikiChar.Value)
+                                && char.IsLower(birOncekiChar.Value)
+                                && char.IsUpper(simdikiChar.Value))
+                        {
+                            kelimelerinYerleri.Add(i);
+                            continue;
+                        }
+
+                    }
+                    if (!simdikiChar.HasValue)
+                    {
+                        break;
+                    }
+
 
                     if (!char.IsPunctuation(simdikiChar.Value)
                         && !char.IsNumber(simdikiChar.Value)
@@ -284,6 +337,9 @@ namespace Karkas.MyGenerationHelper
                     {
                         break;
                     }
+
+
+
 
                     if (!char.IsPunctuation(simdikiChar.Value) 
                         && !char.IsNumber(simdikiChar.Value)
@@ -323,6 +379,7 @@ namespace Karkas.MyGenerationHelper
 
                     if (char.IsNumber(simdikiChar.Value))
                     {
+                        tumNumaraOlanCharlarIcinIlerle(degistirilecekString, i);
                         if (birOncekiChar.HasValue
                             && !char.IsNumber(birOncekiChar.Value)
                             )
@@ -393,6 +450,21 @@ namespace Karkas.MyGenerationHelper
                 return birSonrakiChar;
             }
 
+            private int tumNumaraOlanCharlarIcinIlerle(string degistirilecekString, int charYeri)
+            {
+                int i = charYeri;
+                for (; i < degistirilecekString.Length; i++)
+                {
+                    char simdikiChar = degistirilecekString[i];
+                    if (char.IsNumber(simdikiChar))
+                    {
+                        continue;
+                    }
+                }
+                return i;
+            }
+
+
             private int tumKucukOlanCharlarIcinIlerle(string degistirilecekString, int charYeri)
             {
                 int i = charYeri;
@@ -433,4 +505,6 @@ namespace Karkas.MyGenerationHelper
 
         }
     }
+
+
 }

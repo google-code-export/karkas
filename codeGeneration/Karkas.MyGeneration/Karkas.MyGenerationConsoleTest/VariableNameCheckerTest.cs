@@ -27,10 +27,17 @@ namespace Karkas.MyGenerationTest
             pascalCaseTesti(variableName, variableNameExpected);
         }
         [Test]
-        public void VariablePascalCaseCalisiyorMuPascalCaseVer()
+        public void VariablePascalCaseCalisiyorMuPascalCaseVer1()
         {
             string variableName = "basitTablo";
             string variableNameExpected = "BasitTablo";
+            pascalCaseTesti(variableName, variableNameExpected);
+        }
+        [Test]
+        public void VariablePascalCaseCalisiyorMuPascalCaseVer2()
+        {
+            string variableName = "MusteriKey";
+            string variableNameExpected = "MusteriKey";
             pascalCaseTesti(variableName, variableNameExpected);
         }
 
@@ -38,15 +45,17 @@ namespace Karkas.MyGenerationTest
         public void VariablePascalCaseCalisiyorMuListeTest()
         {
             string[] variableNameListesi = {"BASIT_TABLO","BASIT TABLO"
-                                              ,"basit_tablo","basit tablo"};
+                                              ,"basit_tablo","basit tablo"
+                                            ,"MusteriKey"};
             string[] variableNameExpectedListesi = {"BasitTablo","BasitTablo"
-                                              ,"BasitTablo","BasitTablo"}; ;
+                                              ,"BasitTablo","BasitTablo"
+                                                   ,"MusteriKey"};
             for (int i = 0; i < variableNameListesi.Length; i++)
             {
                 string variableName = variableNameListesi[i];
                 string variableNameExpected = variableNameExpectedListesi[i];
                 pascalCaseTesti(variableName, variableNameExpected);
-                
+
             }
 
         }
@@ -57,6 +66,8 @@ namespace Karkas.MyGenerationTest
             string variableNameNew = nameChecker.SetPascalCase(variableName);
             Assert.AreEqual(variableNameNew, variableNameExpected);
         }
+
+
 
         [Test]
         public void VariableCamelCaseCalisiyorMu()
@@ -133,7 +144,7 @@ namespace Karkas.MyGenerationTest
 
         [Test]
         public void VariableContainsReservedWordRefTest()
-        {            
+        {
             string variableName = "refreeName";
             string variableNameNew = nameChecker.SetCamelCase(variableName);
             Assert.IsTrue(String.Equals("refreeName", variableNameNew, StringComparison.InvariantCulture));
@@ -174,8 +185,12 @@ namespace Karkas.MyGenerationTest
         [Test]
         public void DegiskenBuyukKucukHarfSorunu2()
         {
-            string variableName = "usp_MUH_ANALITIK_HAKEDIS_UID";
+            string variableName = "Usp_MUH_ANALITIK_HAKEDIS_UID";
             string variableNameNew = nameChecker.SetPascalCase(variableName);
+            Assert.IsTrue(String.Equals("UspMuhAnalitikHakedisUid", variableNameNew, StringComparison.InvariantCulture));
+
+            variableName = "usp_MUH_ANALITIK_HAKEDIS_UID";
+            variableNameNew = nameChecker.SetPascalCase(variableName);
             Assert.IsTrue(String.Equals("UspMuhAnalitikHakedisUid", variableNameNew, StringComparison.InvariantCulture));
 
 
