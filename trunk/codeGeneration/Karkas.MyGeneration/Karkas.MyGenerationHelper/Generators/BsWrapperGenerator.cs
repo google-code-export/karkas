@@ -75,7 +75,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.writeln("{");
             ClassBaslangicYaz(output, classNameBs, classNameBsWrapper);
             ConstructorYaz(output, classNameBsWrapper);
-            InsertYaz(output, classNameTypeLibrary);
+            EkleYaz(output);
             GuncelleYaz(output, classNameTypeLibrary);
             SilKomutuYaz(output, classNameTypeLibrary);
             SilKomutuYazPkIle(output);
@@ -279,17 +279,35 @@ namespace Karkas.MyGenerationHelper.Generators
             output.writeln("        }");
         }
 
-        private static void InsertYaz(IZeusOutput output, string classNameTypeLibrary)
+        private void EkleYaz(IZeusOutput output)
         {
-            output.writeln("        [DataObjectMethod(DataObjectMethodType.Insert)]");
-            output.write("        public int Ekle(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" p1)");
-            output.writeln("        {");
-            output.writeln("            return bs.Ekle(p1);");
-            output.writeln("        }");
-            output.writeln("");
-            output.writeln("");
+            if (pkType == "int" 
+                || pkType == "long"
+                || pkType == "short"
+                || pkType == "byte"
+                )
+            {
+                output.writeln("        [DataObjectMethod(DataObjectMethodType.Insert)]");
+                output.write(string.Format("        public {0} Ekle({1} p1 )", pkType,classNameTypeLibrary));
+                output.writeln("        {");
+                output.writeln(string.Format("            return ({0}) bs.Ekle(p1);", pkType));
+                output.writeln("        }");
+                output.writeln("");
+                output.writeln("");
+                
+            }
+            else
+            {
+                output.writeln("        [DataObjectMethod(DataObjectMethodType.Insert)]");
+                output.write(string.Format("        public void Ekle({0} p1 )",classNameTypeLibrary));
+                output.writeln("        {");
+                output.writeln("            bs.Ekle(p1);");
+                output.writeln("            return;");
+                output.writeln("        }");
+                output.writeln("");
+                output.writeln("");
+
+            }
         }
 
     }
