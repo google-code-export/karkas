@@ -19,6 +19,13 @@ namespace Karkas.MyGenerationTest
         {
             nameChecker = new NameChecker();
         }
+        [Test]
+        public void Property2BuyukHarfTest()
+        {
+            string propertyName = "UKullaniciKey";
+            string propertyNameNew = nameChecker.SetPascalCase(propertyName);
+            Assert.IsTrue(String.Equals("UKullaniciKey", propertyNameNew, StringComparison.InvariantCulture));
+        }
 
         [Test]
         public void PropertyHasNonStandardCharsInTheMiddleTest()

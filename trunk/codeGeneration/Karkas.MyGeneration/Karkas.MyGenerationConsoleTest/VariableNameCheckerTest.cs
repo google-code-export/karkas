@@ -23,10 +23,41 @@ namespace Karkas.MyGenerationTest
         public void VariablePascalCaseCalisiyorMu()
         {
             string variableName = "BASIT_TABLO";
-            string variableNameNew = nameChecker.SetPascalCase(variableName);
             string variableNameExpected = "BasitTablo";
+            pascalCaseTesti(variableName, variableNameExpected);
+        }
+        [Test]
+        public void VariablePascalCaseCalisiyorMuPascalCaseVer()
+        {
+            string variableName = "basitTablo";
+            string variableNameExpected = "BasitTablo";
+            pascalCaseTesti(variableName, variableNameExpected);
+        }
+
+        [Test]
+        public void VariablePascalCaseCalisiyorMuListeTest()
+        {
+            string[] variableNameListesi = {"BASIT_TABLO","BASIT TABLO"
+                                              ,"basit_tablo","basit tablo"};
+            string[] variableNameExpectedListesi = {"BasitTablo","BasitTablo"
+                                              ,"BasitTablo","BasitTablo"}; ;
+            for (int i = 0; i < variableNameListesi.Length; i++)
+            {
+                string variableName = variableNameListesi[i];
+                string variableNameExpected = variableNameExpectedListesi[i];
+                pascalCaseTesti(variableName, variableNameExpected);
+                
+            }
+
+        }
+
+
+        private void pascalCaseTesti(string variableName, string variableNameExpected)
+        {
+            string variableNameNew = nameChecker.SetPascalCase(variableName);
             Assert.AreEqual(variableNameNew, variableNameExpected);
         }
+
         [Test]
         public void VariableCamelCaseCalisiyorMu()
         {
@@ -143,7 +174,7 @@ namespace Karkas.MyGenerationTest
         [Test]
         public void DegiskenBuyukKucukHarfSorunu2()
         {
-            string variableName = "Usp_MUH_ANALITIK_HAKEDIS_UID";
+            string variableName = "usp_MUH_ANALITIK_HAKEDIS_UID";
             string variableNameNew = nameChecker.SetPascalCase(variableName);
             Assert.IsTrue(String.Equals("UspMuhAnalitikHakedisUid", variableNameNew, StringComparison.InvariantCulture));
 

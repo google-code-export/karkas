@@ -91,7 +91,7 @@ namespace Karkas.MyGenerationHelper.Generators
             PkGuidMiYaz(output, table);
 
 
-            SilKomutuYazPkIle(output, classNameTypeLibrary,table);
+            SilKomutuYazPkIle(output, classNameTypeLibrary, table);
 
             ProcessRowYaz(output, table, classNameTypeLibrary);
 
@@ -121,12 +121,12 @@ namespace Karkas.MyGenerationHelper.Generators
 
         }
 
-        private void SilKomutuYazPkIle(IZeusOutput output, string classNameTypeLibrary,ITable table)
+        private void SilKomutuYazPkIle(IZeusOutput output, string classNameTypeLibrary, ITable table)
         {
             string pkPropertyName = utils.getPropertyVariableName(table.Columns[pkAdi]);
-            output.autoTabLn(string.Format("public virtual void Sil({0} {1})",pkType,  pkPropertyName));
+            output.autoTabLn(string.Format("public virtual void Sil({0} {1})", pkType, pkPropertyName));
             BaslangicSusluParentezVeTabArtir(output);
-            output.autoTabLn(string.Format("{0} row = new {0}();",classNameTypeLibrary));
+            output.autoTabLn(string.Format("{0} row = new {0}();", classNameTypeLibrary));
             output.autoTabLn(string.Format("row.{0} = {0};", pkPropertyName));
             output.autoTabLn("base.Sil(row);");
             BitisSusluParentezVeTabAzalt(output);
@@ -137,16 +137,16 @@ namespace Karkas.MyGenerationHelper.Generators
 
         private void identityKolonDegeriniSetleYaz(IZeusOutput output, ITable table)
         {
+            string methodYazisi = string.Format("protected override void identityKolonDegeriniSetle({0} pTypeLibrary,{1} pIdentityKolonValue)", classNameTypeLibrary, identityType);
+            output.autoTabLn(methodYazisi);
+            BaslangicSusluParentezVeTabArtir(output);
             if (identityVarmi)
             {
-                string methodYazisi = string.Format("protected override void identityKolonDegeriniSetle({0} pTypeLibrary,{1} pIdentityKolonValue)", classNameTypeLibrary, identityType);
-                output.autoTabLn(methodYazisi);
-                BaslangicSusluParentezVeTabArtir(output);
                 string propertySetleYazisi = string.Format("pTypeLibrary.{0} = pIdentityKolonValue;", utils.GetPascalCase(identityColumnAdi));
                 output.autoTabLn(propertySetleYazisi);
-                BitisSusluParentezVeTabAzalt(output);
-
             }
+            BitisSusluParentezVeTabAzalt(output);
+
         }
 
 
@@ -191,20 +191,9 @@ namespace Karkas.MyGenerationHelper.Generators
         {
             output.autoTab("public partial class ");
             output.write(classNameTypeLibrary);
-            if (identityVarmi)
-            {
-                output.write("Dal : BaseDalForIdentity<");
-                output.write(classNameTypeLibrary);
-                output.write(",");
-                output.write(identityType);
-                output.writeln(">");
-            }
-            else
-            {
-                output.write("Dal : BaseDal<");
-                output.write(classNameTypeLibrary);
-                output.writeln(">");
-            }
+            output.write("Dal : BaseDal<");
+            output.write(classNameTypeLibrary);
+            output.writeln(">");
             BaslangicSusluParentezVeTabArtir(output);
         }
 
@@ -269,7 +258,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
         private static bool updateWhereSatirindaOlmaliMi(IColumn column)
         {
-            return ((column.IsInPrimaryKey) || columnVersiyonZamaniMi(column)); 
+            return ((column.IsInPrimaryKey) || columnVersiyonZamaniMi(column));
         }
 
         private void UpdateStringYaz(IZeusOutput output, ITable table, ref string pkcumlesi)
@@ -290,7 +279,7 @@ namespace Karkas.MyGenerationHelper.Generators
                 }
                 if (!columnParametreOlmaliMi(column))
                 {
-                    if (!updateWhereSatirindaOlmaliMi(column) )
+                    if (!updateWhereSatirindaOlmaliMi(column))
                     {
                         cumle += column.Name + " = @" + column.Name + ",";
                     }
@@ -496,7 +485,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
         private static bool columnParametreOlmaliMi(IColumn column)
         {
-            return ((column.IsAutoKey) || (column.IsComputed) );
+            return ((column.IsAutoKey) || (column.IsComputed));
         }
 
         private static bool columnVersiyonZamaniMi(IColumn column)

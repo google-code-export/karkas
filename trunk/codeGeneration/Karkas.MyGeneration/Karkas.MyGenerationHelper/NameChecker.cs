@@ -120,26 +120,23 @@ namespace Karkas.MyGenerationHelper
 
         public string SetPascalCase(string degistirilecekString)
         {
-            return solveLanguageSpecificProblems(degistirilecekString, false);
+            string result = solveLanguageSpecificProblems(degistirilecekString, false);
+            result = solveReservedWordIssues(result);
+            result = caseHelper.SetPascalCase(result);
+            return result;
         }
 
         public string SetCamelCase(string degistirilecekString)
         {
-            return solveLanguageSpecificProblems(degistirilecekString, true);
+            string result = solveLanguageSpecificProblems(degistirilecekString, false);
+            result = solveReservedWordIssues(result);
+            result = caseHelper.SetCamelCase(result);
+            return result;
         }
 
         private string solveLanguageSpecificProblems(string degistirilecekString, bool isCamelCase)
         {
-            string result = cleanNonStandardChars(degistirilecekString);
-
-
-
-            if (isCamelCase)
-                result = caseHelper.SetCamelCase(result);
-            else
-                result = caseHelper.SetPascalCase(result);
-
-            return solveReservedWordIssues(result);
+            return cleanNonStandardChars(degistirilecekString);
         }
 
 
@@ -216,105 +213,215 @@ namespace Karkas.MyGenerationHelper
             public string SetPascalCase(string degistirilecekString)
             {
                 degistirilecekString = kotuKarakterlerdenAyir(degistirilecekString);
-                degistirilecekString = kelimelereAyir(degistirilecekString);
+                List<string> kelimeler = kelimelereAyir(degistirilecekString);
 
-                string text = "";
-                bool kelimeAyrimi = true;
-                bool SadaceBuyukHarfMi = true;
-                foreach (char ch in degistirilecekString)
+                string sonKelime = "";
+
+                foreach (var kelime in kelimeler)
                 {
-                    if (char.IsLower(ch))
+                    char[] cList = kelime.ToCharArray();
+                    for (int i = 0; i < cList.Length; i++)
                     {
-                        SadaceBuyukHarfMi = false;
-                        break;
+                        cList[i] = char.ToLowerInvariant(cList[i]);
                     }
-                }
-                foreach (char ch in degistirilecekString)
-                {
-                    switch (ch)
+                    if (cList.Length > 0)
                     {
-                        case ' ':
-                            kelimeAyrimi = true;
-                            break;
-
-                        case '.':
-                            kelimeAyrimi = true;
-                            break;
-
-                        case '_':
-                            kelimeAyrimi = true;
-                            break;
-
-                        default:
-                            if (kelimeAyrimi)
-                            {
-                                text = text + ch.ToString().ToUpperInvariant();
-                                kelimeAyrimi = false;
-                            }
-                            else if (SadaceBuyukHarfMi)
-                            {
-                                text = text + ch.ToString().ToLowerInvariant();
-                            }
-                            else
-                            {
-                                text = text + ch.ToString();
-                            }
-                            break;
+                        cList[0] = char.ToUpperInvariant(cList[0]);
                     }
+                    sonKelime += new string(cList);
                 }
-                return text;
+                return sonKelime;
             }
 
-            private string kelimelereAyir(string degistirilecekString)
+            private char? simdikiChariAl(string degistirilecekString, int i)
+            {
+                if (i >= 0 && i < degistirilecekString.Length)
+                {
+                    return degistirilecekString[i];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            private List<string> kelimelereAyir(string degistirilecekString)
             {
                 List<int> kelimelerinYerleri = new List<int>();
 
                 for (int i = 0; i < degistirilecekString.Length; i++)
                 {
-                    if (degistirilecekString[i] == '_')
+                    char? birOncekiChar = birOncekiChariAl(i, degistirilecekString);
+                    char? simdikiChar = simdikiChariAl(degistirilecekString, i);
+                    char? birSonrakiChar = GetBirSonrakiChariAl(i, degistirilecekString);
+
+                    if (!simdikiChar.HasValue)
                     {
-                        kelimelerinYerleri.Add(i);
+                        break;
                     }
-                    if (char.IsNumber(degistirilecekString[i]))
+
+                    if (!char.IsPunctuation(simdikiChar.Value) && char.IsUpper(simdikiChar.Value))
                     {
-                        kelimelerinYerleri.Add(i);
+                        i = tumBuyukOlanCharlarIcinIlerle(degistirilecekString, i);
+                        birOncekiChar = birOncekiChariAl(i, degistirilecekString);
+                        simdikiChar = simdikiChariAl(degistirilecekString, i);
+                        birSonrakiChar = GetBirSonrakiChariAl(i, degistirilecekString);
+                        if (birOncekiChar.HasValue
+                                && simdikiChar.HasValue
+                                && !char.IsPunctuation(simdikiChar.Value)
+                                && char.IsUpper(birOncekiChar.Value)
+                                && char.IsLower(simdikiChar.Value))
+                        {
+                            kelimelerinYerleri.Add(i);
+                        }
+
                     }
-                    if ((i != 0) && (i != degistirilecekString.Length - 1) &&
+                    if (!simdikiChar.HasValue)
+                    {
+                        break;
+                    }
+
+                    if (!char.IsPunctuation(simdikiChar.Value) && char.IsLower(simdikiChar.Value))
+                    {
+                        i = tumKucukOlanCharlarIcinIlerle(degistirilecekString, i);
+                        birOncekiChar = birOncekiChariAl(i, degistirilecekString);
+                        simdikiChar = simdikiChariAl(degistirilecekString, i);
+                        birSonrakiChar = GetBirSonrakiChariAl(i, degistirilecekString);
+                        if (birOncekiChar.HasValue
+                            && simdikiChar.HasValue
+                            && !char.IsPunctuation(simdikiChar.Value)
+                            && char.IsLower(birOncekiChar.Value)
+                            && char.IsUpper(simdikiChar.Value))
+                        {
+                            kelimelerinYerleri.Add(i);
+                        }
+
+                    }
+
+                    if (!simdikiChar.HasValue)
+                    {
+                        break;
+                    }
+
+                    if (simdikiChar == '_')
+                    {
+                        if (birOncekiChar.HasValue
+                            && birOncekiChar != simdikiChar
+                            )
+                        {
+                            kelimelerinYerleri.Add(i);
+                        }
+                        i++;
+                        continue;
+                    }
+
+                    if (char.IsNumber(simdikiChar.Value))
+                    {
+                        if (birOncekiChar.HasValue
+                            && char.IsNumber(birOncekiChar.Value)
+                            )
+                        {
+                            kelimelerinYerleri.Add(i);
+                        }
+                        i++;
+                        continue;
+                    }
+                    if (
+                        birSonrakiChar.HasValue &&
                         (
-                        char.IsUpper(degistirilecekString[i + 1])
+                        char.IsUpper(birSonrakiChar.Value)
                         &&
-                        char.IsLower(degistirilecekString[i]))
+                        char.IsLower(simdikiChar.Value)
                         )
+                       )
                     {
-                        kelimelerinYerleri.Add(i+1);
+                        kelimelerinYerleri.Add(i + 1);
+                    }
+                    if (
+                        birSonrakiChar.HasValue &&
+                        (
+                        char.IsUpper(birSonrakiChar.Value)
+                        &&
+                        char.IsUpper(simdikiChar.Value)
+                        )
+                       )
+                    {
+                        kelimelerinYerleri.Add(i);
                     }
                 }
 
                 kelimelerinYerleri.Add(degistirilecekString.Length);
                 int kesmeBaslangic = 0;
                 List<String> parcalanmisKelimeler = new List<string>();
+
                 for (int i = 0; i < kelimelerinYerleri.Count; i++)
                 {
-                    parcalanmisKelimeler.Add(degistirilecekString.Substring(kesmeBaslangic, kelimelerinYerleri[i] -kesmeBaslangic ));
+                    string s = degistirilecekString.Substring(kesmeBaslangic, kelimelerinYerleri[i] - kesmeBaslangic);
+                    s = s.Replace("_", "");
+                    parcalanmisKelimeler.Add(s);
                     kesmeBaslangic = kelimelerinYerleri[i];
                 }
 
-                string sonuc = "";
 
-                foreach (string s in parcalanmisKelimeler)
+                return parcalanmisKelimeler;
+            }
+
+
+            private char? birOncekiChariAl(int i, string degistirilecekString)
+            {
+                char? birOncekiChar = null;
+                if (i != 0)
                 {
-                    if (sonuc == "")
+                    birOncekiChar = degistirilecekString[i - 1];
+                }
+                return birOncekiChar;
+            }
+
+            private char? GetBirSonrakiChariAl(int i, string degistirilecekString)
+            {
+                char? birSonrakiChar = null;
+                if ((i < degistirilecekString.Length-1))
+                {
+                    birSonrakiChar = degistirilecekString[i + 1];
+                }
+                return birSonrakiChar;
+            }
+
+            private int tumKucukOlanCharlarIcinIlerle(string degistirilecekString, int charYeri)
+            {
+                int i = charYeri;
+                char simdikiChar = ' ';
+                for (; i < degistirilecekString.Length; i++)
+                {
+                    simdikiChar = degistirilecekString[i];
+                    if (char.IsPunctuation(simdikiChar)
+                        ||
+                        char.IsNumber(simdikiChar)
+                        ||
+                        char.IsUpper(simdikiChar))
                     {
-                        sonuc = s.ToUpperInvariant();
-                    }
-                    else
-                    {
-                        sonuc = sonuc + "_" + s.Replace("_", "").ToUpperInvariant();
+                        break;
                     }
                 }
-
-                return sonuc;
-
+                return i;
+            }
+            private int tumBuyukOlanCharlarIcinIlerle(string degistirilecekString, int charYeri)
+            {
+                int i = charYeri;
+                char simdikiChar = ' ';
+                for (; i < degistirilecekString.Length; i++)
+                {
+                    simdikiChar = degistirilecekString[i];
+                    if (char.IsPunctuation(simdikiChar)
+                        ||
+                        char.IsNumber(simdikiChar)
+                        ||
+                        char.IsLower(simdikiChar))
+                    {
+                        break;
+                    }
+                }
+                return i;
             }
 
 
