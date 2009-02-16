@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,12 +10,12 @@ namespace Karkas.MyGenerationHelper
         Dictionary<string, string> liste = new Dictionary<string, string>();
         public TurkishHelper()
         {
-            liste.Add("Adi", "Adý");
-            liste.Add("Tur", "Tür");
-            liste.Add("Kisi", "Kiþi");
-            liste.Add("Ogrenim", "Öðrenim");
-            liste.Add("Bolum", "Bolüm");
-            liste.Add("Giris", "Giriþ");
+            liste.Add("Adi", "AdÄ±");
+            liste.Add("Tur", "TÃ¼r");
+            liste.Add("Kisi", "KiÅŸi");
+            liste.Add("Ogrenim", "Ã–ÄŸrenim");
+            liste.Add("Bolum", "BolÃ¼m");
+            liste.Add("Giris", "GiriÅŸ");
             string a = @"
             Aciklama";
                 
@@ -23,23 +23,23 @@ namespace Karkas.MyGenerationHelper
 
         public string ReplaceTurkishChars(string str)
         {
-            str = str.Replace('ð', 'g');
-            str = str.Replace('Ð', 'G');
+            str = str.Replace('ÄŸ', 'g');
+            str = str.Replace('Äž', 'G');
 
-            str = str.Replace('ü', 'u');
-            str = str.Replace('Ü', 'U');
+            str = str.Replace('Ã¼', 'u');
+            str = str.Replace('Ãœ', 'U');
 
-            str = str.Replace('þ', 's');
-            str = str.Replace('Þ', 'S');
+            str = str.Replace('ÅŸ', 's');
+            str = str.Replace('Åž', 'S');
 
-            str = str.Replace('ý', 'i');
-            str = str.Replace('Ý', 'I');
+            str = str.Replace('Ä±', 'i');
+            str = str.Replace('Ä°', 'I');
 
-            str = str.Replace('ö', 'o');
-            str = str.Replace('Ö', 'O');
+            str = str.Replace('Ã¶', 'o');
+            str = str.Replace('Ã–', 'O');
 
-            str = str.Replace('ç', 'c');
-            str = str.Replace('Ç', 'C');
+            str = str.Replace('Ã§', 'c');
+            str = str.Replace('Ã‡', 'C');
 
             return str;
         }
@@ -48,7 +48,7 @@ namespace Karkas.MyGenerationHelper
 
 
         /// <summary>
-        /// Ingilizce harfleri ile yazýlmýþ bir kelimeyi türkçe harflere çevirir.
+        /// Ingilizce harfleri ile yazÄ±lmÄ±ÅŸ bir kelimeyi tÃ¼rkÃ§e harflere Ã§evirir.
         /// </summary>
         /// <param name="cevirilecekKelime"></param>
         /// <returns></returns>
@@ -76,3 +76,4 @@ namespace Karkas.MyGenerationHelper
         }
     }
 }
+

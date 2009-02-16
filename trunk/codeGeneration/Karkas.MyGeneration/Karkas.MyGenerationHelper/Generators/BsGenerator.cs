@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using Zeus;
 using Zeus.Data;
@@ -177,5 +177,6 @@ namespace Karkas.MyGenerationHelper.Generators
 
 
 }
+
 
 

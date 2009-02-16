@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,7 +10,7 @@ namespace Karkas.MyGenerationTest
     [TestFixture]
     public class TurkishHelperTest
     {
-        string hataMesaji = "Turkçe yardımcı düzgün calışmıyor";
+        string hataMesaji = "TurkÃ§e yardÄ±mcÄ± dÃ¼zgÃ¼n calÄ±ÅŸmÄ±yor";
         [Test]
         public void TestTurkceKarakterler()
         {
@@ -18,8 +18,9 @@ namespace Karkas.MyGenerationTest
             string ingilizce1 = "Adi";
             string turkce1 = "Adi";
             Assert.IsTrue(tHelper.ReplaceTurkishChars(ingilizce1) == turkce1,hataMesaji );
-            Assert.IsTrue(tHelper.ReplaceTurkishChars("Şanlıurfa") == "Sanliurfa", hataMesaji);
-            Assert.IsFalse(tHelper.ReplaceTurkishChars("Şanlıurfa") == "Şanlıurfa", hataMesaji);
+            Assert.IsTrue(tHelper.ReplaceTurkishChars("ÅanlÄ±urfa") == "Sanliurfa", hataMesaji);
+            Assert.IsFalse(tHelper.ReplaceTurkishChars("ÅanlÄ±urfa") == "ÅanlÄ±urfa", hataMesaji);
         } 
     }
 }
+

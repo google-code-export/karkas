@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
@@ -287,7 +287,7 @@ namespace Karkas.MyGenerationHelper
                     ,"}"
                     ,"catch(Exception)"
                     ,"{"
-                    ,string.Format("\tthis.Onaylayici.OnaylayiciListesi.Add(new DaimaBasarisiz(this,\"{0}\",\"Ceviri islemi Baþarýsýz oldu\"));",propertyName)
+                    ,string.Format("\tthis.Onaylayici.OnaylayiciListesi.Add(new DaimaBasarisiz(this,\"{0}\",\"Ceviri islemi BaÅŸarÄ±sÄ±z oldu\"));",propertyName)
                     ,"}"
                     };
             if (column.LanguageType == "Guid")
@@ -610,3 +610,4 @@ namespace Karkas.MyGenerationHelper
         }
     }
 }
+

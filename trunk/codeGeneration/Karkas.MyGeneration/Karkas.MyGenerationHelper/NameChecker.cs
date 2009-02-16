@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Karkas.MyGenerationHelper.Interfaces;
@@ -508,3 +508,4 @@ namespace Karkas.MyGenerationHelper
 
 
 }
+
