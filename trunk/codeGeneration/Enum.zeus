@@ -233,8 +233,8 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			string baseNameSpace = KarkasUtils.NamespaceIniAlSchemaIle(database,table.Schema);
 			string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
-			className = KarkasUtils.SetPascalCase(table.Name);
-			schemaName = KarkasUtils.SetPascalCase(table.Schema);
+			className = KarkasUtils.GetPascalCase(table.Name);
+			schemaName = KarkasUtils.GetPascalCase(table.Schema);
 			classNameSpace = baseNameSpaceTypeLibrary + ".Enums." + schemaName;
 			
 %>using System;
