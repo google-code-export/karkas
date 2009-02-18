@@ -311,7 +311,7 @@ public class GeneratedGui : DotNetScriptGui
 ##|BODY_TAG_START <%
 ##|BODY_TAG_END %>
 ##|BODY_BEGIN
-<%#DEBUG%><%#NAMESPACE System.IO, System.Text, System.Text.RegularExpressions, System.Globalization,System.Collections.Generic %><%
+<%#DEBUG%><%#REFERENCE System.Windows.Forms.dll,System.Drawing.dll%><%#NAMESPACE System.Windows.Forms,System.Drawing,System.IO, System.Text, System.Text.RegularExpressions, System.Globalization,System.Collections.Generic %><%
 public class GeneratedTemplate : DotNetScriptTemplate
 {
 	public GeneratedTemplate(ZeusContext context) : base(context) {}
@@ -427,6 +427,11 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		}
 		
 		
+		Dnp.Utils.ProgressDialog progressDialog = new Dnp.Utils.ProgressDialog();
+		progressDialog.Show();
+		progressDialog.ProgressBar.Minimum = 0;
+		progressDialog.ProgressBar.Maximum = selectedTables.Count;
+		progressDialog.ProgressBar.Value = 0;
 		
 
 		for (int i =0; i<selectedTables.Count ;i++)
@@ -453,6 +458,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 				}
 				
 			}
+			progressDialog.Text = String.Format("Generating {0}.{1} ..",table.Schema, table.Name);
+			
+			
+			
 			if (generateDatabaseTables)
 			{
 				KarkasUtils.RenderDatabaseTablesCode(output,table,MyMeta.ConnectionString);
@@ -473,6 +482,12 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			{
 				KarkasUtils.RenderBsWrapperCode(output,table);
 			}
+			
+			if(progressDialog.ProgressBar.Value < selectedTables.Count)
+			{
+				progressDialog.ProgressBar.Value += 1;
+			}
+			
 //			if (generateAspx)
 //			{
 //				KarkasUtils.RenderAspxCode(output,table);
@@ -530,8 +545,8 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		
 
 
+		output.writeln("Code Generation Finished");
 	}
-	
 	
 
 
