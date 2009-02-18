@@ -129,7 +129,7 @@ namespace Karkas.MyGenerationHelper.Generators
             BaslangicSusluParentezVeTabArtir(output);
             output.autoTabLn("get");
             BaslangicSusluParentezVeTabArtir(output);
-            output.autoTabLn("return " + pkAdi + ";");
+            output.autoTabLn(string.Format("return \"{0}\";" , pkAdi ));
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
             output.autoTabLn("");
