@@ -82,7 +82,7 @@ namespace Karkas.MyGenerationHelper
             }
             else
             {
-                dbName = "STB_MTK";
+                dbName = "KARKAS_ORNEK";
             }
             return dbName;
         }
