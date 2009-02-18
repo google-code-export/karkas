@@ -90,6 +90,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
             PkGuidMiYaz(output, table);
 
+            PrimaryKeyYaz(output, table);
 
             SilKomutuYazPkIle(output, classNameTypeLibrary, table);
 
@@ -118,6 +119,20 @@ namespace Karkas.MyGenerationHelper.Generators
 
             }
 
+
+        }
+
+        private void PrimaryKeyYaz(IZeusOutput output, ITable table)
+        {
+            output.autoTabLn("");
+            output.autoTabLn("public override string PrimaryKey");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("get");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("return " + pkAdi + ";");
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentezVeTabAzalt(output);
+            output.autoTabLn("");
 
         }
 
