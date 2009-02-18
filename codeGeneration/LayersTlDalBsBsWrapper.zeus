@@ -212,6 +212,11 @@ public class GeneratedGui : DotNetScriptGui
 		}
 	}
 	
+	public string getFullTableName(ITable table)
+	{
+		return table.Schema + "." + table.Name;
+	}
+	
 	public void bindTables( string sDatabase ,string pSchemaName)
 	{
 			GuiListBox lstTables = ui["chooseTables"] as GuiListBox;
@@ -223,7 +228,7 @@ public class GeneratedGui : DotNetScriptGui
 			{
 				if (table.Schema == pSchemaName)
 				{
-					chooseTables[table.Name] = table.Name;
+					chooseTables[ getFullTableName(table)] = getFullTableName(table);
 				}
 			}
 	}
@@ -433,8 +438,20 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			}
 			else
 			{
-				string tableName = selectedTables[i] as String;
-				table = database.Tables[tableName];
+				string tableFullName = selectedTables[i] as String;
+				string[] sList = tableFullName.Split('.');
+				string selectedTableName = sList[1];
+				string selectedSchemaName = sList[0];
+				table = database.Tables[selectedTableName];
+				for(int index=0;index<database.Tables.Count;index++)
+				{
+				   ITable t = database.Tables[index];
+				   if ((t.Schema == selectedTableName) && (t.Name == selectedTableName))
+				   {
+ 				     table = t;
+				   }
+				}
+				
 			}
 			if (generateDatabaseTables)
 			{
