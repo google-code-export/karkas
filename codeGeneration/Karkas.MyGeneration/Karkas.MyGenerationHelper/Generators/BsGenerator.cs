@@ -33,7 +33,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
 
         private static Utils utils = new Utils();
-        public void Render(IZeusOutput output, ITable table)
+        public void Render(IZeusOutput output, IContainer table)
         {
             output.tabLevel = 0;
             IDatabase database = table.Database;
@@ -89,7 +89,7 @@ namespace Karkas.MyGenerationHelper.Generators
             }
         }
 
-        private void OverrideDatabaseNameYaz(IZeusOutput output, ITable table)
+        private void OverrideDatabaseNameYaz(IZeusOutput output, IContainer table)
         {
             output.autoTabLn("public override string DatabaseName");
             BaslangicSusluParentezVeTabArtir(output);

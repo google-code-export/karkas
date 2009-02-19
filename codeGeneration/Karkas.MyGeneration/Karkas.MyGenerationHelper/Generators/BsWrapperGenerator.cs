@@ -32,7 +32,7 @@ namespace Karkas.MyGenerationHelper.Generators
         string pkType = "";
 
         private static Utils utils = new Utils();
-        public void Render(IZeusOutput output, ITable table)
+        public void Render(IZeusOutput output, IContainer table)
         {
 
             output.tabLevel = 0;
