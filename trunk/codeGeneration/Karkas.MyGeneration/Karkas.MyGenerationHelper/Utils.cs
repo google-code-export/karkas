@@ -10,6 +10,7 @@ using Karkas.MyGenerationHelper.Generators;
 using Zeus;
 using System.IO;
 using System.Globalization;
+using Karkas.MyGenerationHelper.Interfaces;
 
 namespace Karkas.MyGenerationHelper
 {
@@ -31,12 +32,12 @@ namespace Karkas.MyGenerationHelper
         public void RenderTypeLibraryCode(IZeusOutput output, ITable table)
         {
             TypeLibraryGenerator gen = new TypeLibraryGenerator();
-            gen.Render(output, table);
+            gen.Render(output, new TableContainer(table));
         }
         public void RenderTypeLibraryCode(IZeusOutput output, IView view)
         {
             TypeLibraryGenerator gen = new TypeLibraryGenerator();
-            gen.RenderTypeLibraryCode(output, view);
+            gen.Render(output, new ViewContainer(view));
         }
         public void RenderStoredProcedureCode(IZeusOutput output, IProcedure proc)
         {
@@ -47,17 +48,17 @@ namespace Karkas.MyGenerationHelper
         public void RenderDalCode(IZeusOutput output, ITable table)
         {
             DalGenerator gen = new DalGenerator();
-            gen.Render(output, table);
+            gen.Render(output, new TableContainer(table));
         }
         public void RenderBsCode(IZeusOutput output, ITable table)
         {
             BsGenerator gen = new BsGenerator();
-            gen.Render(output, table);
+            gen.Render(output, new TableContainer(table));
         }
         public void RenderBsWrapperCode(IZeusOutput output, ITable table)
         {
             BsWrapperGenerator gen = new BsWrapperGenerator();
-            gen.Render(output, table);
+            gen.Render(output, new TableContainer( table));
         }
         public void RenderAspxCode(IZeusOutput output, ITable table,string pMasterName)
         {
@@ -113,7 +114,7 @@ namespace Karkas.MyGenerationHelper
         #endregion
 
 
-        public string IdentityColumnAdiniBul(ITable table)
+        public string IdentityColumnAdiniBul(IContainer table)
         {
             string adi = "";
             foreach (IColumn column in table.Columns)
@@ -126,7 +127,7 @@ namespace Karkas.MyGenerationHelper
             return adi;
         }
 
-        public string PrimaryKeyAdiniBul(ITable table)
+        public string PrimaryKeyAdiniBul(IContainer table)
         {
             string adi = "";
             foreach (IColumn column in table.Columns)
@@ -139,7 +140,7 @@ namespace Karkas.MyGenerationHelper
             return adi;
         }
 
-        public string PrimaryKeyTipiniBul(ITable table)
+        public string PrimaryKeyTipiniBul(IContainer table)
         {
             string tip = "";
             foreach (IColumn column in table.Columns)
@@ -151,7 +152,7 @@ namespace Karkas.MyGenerationHelper
             }
             return tip;
         }
-        public string IdentityTipiniBul(ITable table)
+        public string IdentityTipiniBul(IContainer table)
         {
             string tip = "";
             foreach (IColumn column in table.Columns)
@@ -163,7 +164,7 @@ namespace Karkas.MyGenerationHelper
             }
             return tip;
         }
-        public bool IdentityVarMi(ITable table)
+        public bool IdentityVarMi(IContainer table)
         {
             bool sonuc = false;
             foreach (IColumn column in table.Columns)
@@ -176,7 +177,7 @@ namespace Karkas.MyGenerationHelper
             return sonuc;
         }
 
-        public string IdentityVarMiAsString(ITable table)
+        public string IdentityVarMiAsString(IContainer table)
         {
             string sonuc = "false";
             foreach (IColumn column in table.Columns)
@@ -604,7 +605,7 @@ namespace Karkas.MyGenerationHelper
 
 
 
-        public bool PkGuidMi(ITable table)
+        public bool PkGuidMi(IContainer table)
         {
             bool sonuc = false;
             foreach (IColumn column in table.Columns)
