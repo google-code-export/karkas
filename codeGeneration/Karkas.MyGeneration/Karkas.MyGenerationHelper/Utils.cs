@@ -555,9 +555,17 @@ namespace Karkas.MyGenerationHelper
         public string GetLanguageType(IColumn column)
         {
             if (IsValueType(column) && column.IsNullable)
+            {
                 return "Nullable<" + column.LanguageType + ">";
+            }
+            else if (column.LanguageType == "Unknown" && column.DataTypeName == "sysname")
+            {
+                return "string";
+            }
             else
+            {
                 return column.LanguageType;
+            }
         }
 
         public bool IsValueType(IColumn column)
