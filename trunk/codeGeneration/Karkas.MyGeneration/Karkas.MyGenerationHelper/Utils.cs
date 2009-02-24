@@ -111,6 +111,12 @@ namespace Karkas.MyGenerationHelper
             return smoHelper.GetTableDescription(pDatabaseName, pSchemaName, pTableName, pConnectionString);
         }
 
+
+        public string[] GetSchemaList(string pDatabaseName, string pConnectionString)
+        {
+            return smoHelper.GetSchemaList(pDatabaseName, pConnectionString);
+        }
+
         #endregion
 
 

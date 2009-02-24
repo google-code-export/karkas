@@ -6,6 +6,7 @@ using Microsoft.SqlServer.Management.Common;
 using System.Collections.Specialized;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Karkas.MyGenerationHelper
 {
@@ -97,7 +98,42 @@ namespace Karkas.MyGenerationHelper
         }
 
 
+        string[] ignoredSchemas = {"db_accessadmin"
+                                    ,"db_backupoperator"
+                                    ,"db_datareader"
+                                    ,"db_datawriter"
+                                    ,"db_ddladmin"
+                                    ,"db_denydatareader"
+                                    ,"db_denydatawriter"
+                                    ,"db_owner"
+                                    ,"db_securityadmin"
+                                    ,"dbo"
+                                    ,"guest"
+                                    ,"INFORMATION_SCHEMA"
+                                    ,"sys"
+                                    };
 
+        internal string[] GetSchemaList(string pDatabaseName, string pConnectionString)
+        {
+            pConnectionString = ConnectionHelper.RemoveProviderFromConnectionString(pConnectionString);
+            Server server = new Server(new ServerConnection(new SqlConnection(pConnectionString)));
+            Database db = server.Databases[pDatabaseName];
+
+            List<string> schemaList = new List<string>();
+            foreach (Schema item in db.Schemas)
+            {
+                var list = from str in ignoredSchemas
+                           where str == item.Name
+                               select str;
+                if (list.ToArray().Length > 0)
+                {
+                    continue;
+                }
+                schemaList.Add(item.Name);
+            }
+            return schemaList.ToArray();
+
+        }
     }
 }
 
