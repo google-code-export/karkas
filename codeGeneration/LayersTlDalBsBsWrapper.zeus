@@ -268,16 +268,7 @@ public class GeneratedGui : DotNetScriptGui
 	public void bindSchemas( string sDatabase )
 	{
 		GuiComboBox lstSchemas = ui["chooseSchemas"] as GuiComboBox;
-		IDatabase db = MyMeta.Databases[sDatabase];
-		ArrayList liste = new ArrayList();
-		foreach (ITable table in db.Tables)
-		{
-			if (!liste.Contains(table.Schema))
-			{
-				liste.Add(table.Schema);
-			}
-		}
-		lstSchemas.BindData( liste );
+		lstSchemas.BindData( KarkasUtils.GetSchemaList(sDatabase,MyMeta.ConnectionString) );
 	}
 	
 	public void chooseDatabase_onchange( GuiComboBox control )

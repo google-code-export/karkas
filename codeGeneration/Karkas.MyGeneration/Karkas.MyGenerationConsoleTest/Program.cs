@@ -13,19 +13,14 @@ namespace Karkas.MyGenerationConsoleTest
     {
         public static void Main(string[] args)
         {
-            VariableNameCheckerTest test = new VariableNameCheckerTest();
-            test.DegiskenBuyukKucukHarfSorunu2();
 
 
-            PropertyNameCheckerTest test2 = new PropertyNameCheckerTest();
-            test2.PropertyHasNonStandardCharsAtTheBeginningTest();
-            test2.PropertyHasNonStandardCharsAtTheBeginningAndInTheMiddleTest();
-            test2.PropertyHasNonStandardCharsInTheMiddleTest();
-            test2.PropertyHasNonStandardCharsLeftAndRightParanthesisDotAndSpaceInTheMiddleTest();
-            test2.PropertyHasNumericCharsAtTheBeginningAndInTheMiddleTest();
-            test2.PropertyHasNumericCharsAtTheBeginningTest();
-
-
+            Utils uti = new Utils();
+            string[] schemalar = uti.GetSchemaList("KARKAS_ORNEK", "Data Source=localhost;Initial Catalog=KARKAS_ORNEK;Integrated Security=True");
+            foreach (var item in schemalar)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
