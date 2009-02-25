@@ -18,7 +18,7 @@ namespace Karkas.MyGenerationHelper
     {
         #region Generator Helper Fonksiyonlari
 
-		public void RenderDatabaseTablesCode(IZeusOutput output,ITable table,string connectionString)
+        public void RenderDatabaseTablesCode(IZeusOutput output, ITable table, string connectionString)
         {
             output.writeln(GetTableDescription(table.Database.Name, table.Schema, table.Name, connectionString));
             output.save(Path.Combine(DizininiAlDatabaseVeSchemaIle(table.Database, table.Schema) + "\\Database\\CreateScripts\\" + table.Schema, table.Schema + "_" + table.Name + ".CreateTable.sql"), false);
@@ -26,7 +26,7 @@ namespace Karkas.MyGenerationHelper
             output.writeln(GetTableRelationDescriptions(table.Database.Name, table.Schema, table.Name, connectionString));
             output.save(Path.Combine(DizininiAlDatabaseVeSchemaIle(table.Database, table.Schema) + "\\Database\\CreateRelationScripts\\" + table.Schema, table.Schema + "_" + table.Name + ".Relations.sql"), false);
             output.clear();
-            
+
         }
 
         public void RenderTypeLibraryCode(IZeusOutput output, ITable table)
@@ -58,12 +58,12 @@ namespace Karkas.MyGenerationHelper
         public void RenderBsWrapperCode(IZeusOutput output, ITable table)
         {
             BsWrapperGenerator gen = new BsWrapperGenerator();
-            gen.Render(output, new TableContainer( table));
+            gen.Render(output, new TableContainer(table));
         }
-        public void RenderAspxCode(IZeusOutput output, ITable table,string pMasterName)
+        public void RenderAspxCode(IZeusOutput output, ITable table, string pMasterName)
         {
             AspxGenerator genA = new AspxGenerator();
-            genA.Render(output, table,pMasterName);
+            genA.Render(output, table, pMasterName);
             AspxCsGenerator genCs = new AspxCsGenerator();
             genCs.Render(output, table);
         }
@@ -97,16 +97,16 @@ namespace Karkas.MyGenerationHelper
         }
 
 
-#endregion
+        #endregion
 
 
         #region "SMO Helper Fonksiyonlari"
         SmoHelper smoHelper = new SmoHelper();
-        public string GetTableRelationDescriptions(string pDatabaseName, string pSchemaName, string pTableName,string pConnectionString)
+        public string GetTableRelationDescriptions(string pDatabaseName, string pSchemaName, string pTableName, string pConnectionString)
         {
             return smoHelper.GetTableRelationDescriptions(pDatabaseName, pSchemaName, pTableName, pConnectionString);
         }
-        public string GetTableDescription(string pDatabaseName, string pSchemaName, string pTableName,string pConnectionString)
+        public string GetTableDescription(string pDatabaseName, string pSchemaName, string pTableName, string pConnectionString)
         {
             return smoHelper.GetTableDescription(pDatabaseName, pSchemaName, pTableName, pConnectionString);
         }
@@ -232,24 +232,23 @@ namespace Karkas.MyGenerationHelper
             {
                 return true;
             }
-                
+
         }
 
-
-        public bool ColumnValueTypeMi(IColumn column)
+        public bool ArgumentValueTypeMi(string pLanguageType)
         {
             if (
-                column.LanguageType == "Guid"
-                || column.LanguageType == "int"
-                || column.LanguageType == "byte"
-                || column.LanguageType == "bool"
-                || column.LanguageType == "DateTime"
-                || column.LanguageType == "short"
-                || column.LanguageType == "long"
-                || column.LanguageType == "decimal"
-                || column.LanguageType == "double"
-                || column.LanguageType == "float"
-                )
+                    pLanguageType == "Guid"
+                    || pLanguageType == "int"
+                    || pLanguageType == "byte"
+                    || pLanguageType == "bool"
+                    || pLanguageType == "DateTime"
+                    || pLanguageType == "short"
+                    || pLanguageType == "long"
+                    || pLanguageType == "decimal"
+                    || pLanguageType == "double"
+                    || pLanguageType == "float"
+                    )
             {
                 return true;
             }
@@ -257,9 +256,15 @@ namespace Karkas.MyGenerationHelper
             {
                 return false;
             }
+
         }
 
-        public string GetConvertToSyntax(string tipi,string degiskenDegeri)
+        public bool ColumnValueTypeMi(IColumn column)
+        {
+            return ArgumentValueTypeMi(column.LanguageType);
+        }
+
+        public string GetConvertToSyntax(string tipi, string degiskenDegeri)
         {
             string sonuc = string.Format("({0}) {1}", tipi, degiskenDegeri);
             switch (tipi)
@@ -280,12 +285,12 @@ namespace Karkas.MyGenerationHelper
             return sonuc;
         }
 
-        public string[] GetConvertToSyntax(IColumn column,string propertyName)
+        public string[] GetConvertToSyntax(IColumn column, string propertyName)
         {
             //            return column.LanguageType;
             string degerDegiskenAdi = "value";
             string araDegiskenAdi = "_a";
-            int araDegiskenYeri = 2; 
+            int araDegiskenYeri = 2;
             string[] sonucListesi = new string[]{
                     "try"
                     ,"{"
@@ -299,7 +304,7 @@ namespace Karkas.MyGenerationHelper
                     };
             if (column.LanguageType == "Guid")
             {
-                sonucListesi[araDegiskenYeri] = string.Format("\tGuid {0} = new Guid({1});",araDegiskenAdi,degerDegiskenAdi);;
+                sonucListesi[araDegiskenYeri] = string.Format("\tGuid {0} = new Guid({1});", araDegiskenAdi, degerDegiskenAdi); ;
                 return sonucListesi;
             }
             else if (column.LanguageType == "int")
@@ -514,7 +519,7 @@ namespace Karkas.MyGenerationHelper
         }
 
 
-        
+
         public ITables filterListAccordingToSchemaName(ITables tableList, string schemaName)
         {
             ITables newList = new MyMeta.Sql.SqlTables();
@@ -544,11 +549,11 @@ namespace Karkas.MyGenerationHelper
         public string getPropertyVariableName(IColumn pColumn)
         {
             if (
-                (pColumn.Name.Equals(pColumn.Table.Name,StringComparison.CurrentCultureIgnoreCase))
-            || 
-                (pColumn.Name.Equals(pColumn.Table.Name,StringComparison.InvariantCultureIgnoreCase))
-            || 
-                (pColumn.Name.Equals(pColumn.Table.Name,StringComparison.OrdinalIgnoreCase))
+                (pColumn.Name.Equals(pColumn.Table.Name, StringComparison.CurrentCultureIgnoreCase))
+            ||
+                (pColumn.Name.Equals(pColumn.Table.Name, StringComparison.InvariantCultureIgnoreCase))
+            ||
+                (pColumn.Name.Equals(pColumn.Table.Name, StringComparison.OrdinalIgnoreCase))
                 )
             {
                 return GetPascalCase(pColumn.Name) + "Property";
