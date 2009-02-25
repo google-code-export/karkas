@@ -260,11 +260,26 @@ namespace Karkas.MyGenerationHelper.Generators
 
         }
 
-        private static void typeGoreDegerYaz(IZeusOutput output, IParameter param)
+        private  string parametreTypeIYaz(IParameter param)
+        {
+            string sonuc = "";
+            if (utils.ArgumentValueTypeMi(param.LanguageType))
+            {
+                sonuc = param.LanguageType + "?";
+            }
+            else
+            {
+                sonuc = param.LanguageType;
+            }
+            return sonuc;
+
+        }
+
+        private  void typeGoreDegerYaz(IZeusOutput output, IParameter param)
         {
             if (param.Direction == ParamDirection.Input)
             {
-                output.write(param.LanguageType + " " + param.Name);
+                output.write(parametreTypeIYaz(param) + " " + param.Name);
             }
             else if (param.Direction == ParamDirection.Output)
             {
