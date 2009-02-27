@@ -9,12 +9,13 @@ using Karkas.MyGenerationHelper;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using Karkas.MyGenerationHelper.Interfaces;
 
 namespace Karkas.MyGenerationHelper.Generators
 {
     public class DalGenerator : BaseGenerator
     {
-        private static Utils utils = new Utils();
+        private Utils utils = new Utils();
 
         string classNameTypeLibrary = "";
         string schemaName = "";
@@ -30,38 +31,38 @@ namespace Karkas.MyGenerationHelper.Generators
         string listeType = "";
         string identityType = "";
 
-        public void Render(IZeusOutput output, IContainer table)
+        public void Render(IZeusOutput output, IContainer container)
         {
             output.tabLevel = 0;
-            IDatabase database = table.Database;
-            baseNameSpace = utils.NamespaceIniAlSchemaIle(database, table.Schema);
+            IDatabase database = container.Database;
+            baseNameSpace = utils.NamespaceIniAlSchemaIle(database, container.Schema);
             baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
-            pkAdi = utils.PrimaryKeyAdiniBul(table);
-            identityColumnAdi = utils.IdentityColumnAdiniBul(table);
-            if (pkAdi == "")
+            pkAdi = utils.PrimaryKeyAdiniBul(container);
+            identityColumnAdi = utils.IdentityColumnAdiniBul(container);
+            if (pkAdi == "" && container is TableContainer)
             {
                 output.autoTabLn("Sectiginiz tablolardan birinde Primary Key yoktur. Code Generation sadace primaryKey'i olan tablolarda duzgun calisir.");
                 return;
             }
 
 
-            classNameTypeLibrary = utils.GetPascalCase(table.Name);
-            schemaName = utils.GetPascalCase(table.Schema);
+            classNameTypeLibrary = utils.GetPascalCase(container.Name);
+            schemaName = utils.GetPascalCase(container.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
-            identityVarmi = utils.IdentityVarMi(table);
-            bool pkGuidMi = utils.PkGuidMi(table);
+            identityVarmi = utils.IdentityVarMi(container);
+            bool pkGuidMi = utils.PkGuidMi(container);
             string pkcumlesi = "";
 
             string baseNameSpaceDal = baseNameSpace + ".Dal." + schemaName;
 
-            pkType = utils.PrimaryKeyTipiniBul(table);
-            identityType = utils.IdentityTipiniBul(table);
+            pkType = utils.PrimaryKeyTipiniBul(container);
+            identityType = utils.IdentityTipiniBul(container);
 
             listeType = "List<" + classNameTypeLibrary + ">";
 
-            string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName, classNameTypeLibrary + "Dal.generated.cs");
-            string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName, classNameTypeLibrary + "Dal.cs");
+            string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, container.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName, classNameTypeLibrary + "Dal.generated.cs");
+            string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, container.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName, classNameTypeLibrary + "Dal.cs");
 
             UsingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceDal);
 
@@ -69,36 +70,36 @@ namespace Karkas.MyGenerationHelper.Generators
 
             output.autoTabLn("");
 
-            OverrideDatabaseNameYaz(output, table);
+            OverrideDatabaseNameYaz(output, container);
 
-            identityKolonDegeriniSetleYaz(output, table);
+            identityKolonDegeriniSetleYaz(output, container);
 
-            SelectCountYaz(output, table);
+            SelectCountYaz(output, container);
 
-            SelectStringYaz(output, table);
+            SelectStringYaz(output, container);
 
-            DeleteStringYaz(output, table);
+            DeleteStringYaz(output, container);
 
-            UpdateStringYaz(output, table, ref pkcumlesi);
+            UpdateStringYaz(output, container, ref pkcumlesi);
 
-            InsertStringYaz(output, table, ref identityVarmi);
+            InsertStringYaz(output, container, ref identityVarmi);
 
 
             SorgulaPkIleGetirYaz(output, classNameTypeLibrary, pkAdi, pkType);
 
             IdentityVarMiYaz(output, identityVarmi);
 
-            PkGuidMiYaz(output, table);
+            PkGuidMiYaz(output, container);
 
-            PrimaryKeyYaz(output, table);
+            PrimaryKeyYaz(output, container);
 
-            SilKomutuYazPkIle(output, classNameTypeLibrary, table);
+            SilKomutuYazPkIle(output, classNameTypeLibrary, container);
 
-            ProcessRowYaz(output, table, classNameTypeLibrary);
+            ProcessRowYaz(output, container, classNameTypeLibrary);
 
-            InsertCommandParametersAddYaz(output, table, classNameTypeLibrary);
-            UpdateCommandParametersAddYaz(output, table, classNameTypeLibrary);
-            DeleteCommandParametersAddYaz(output, table, classNameTypeLibrary);
+            InsertCommandParametersAddYaz(output, container, classNameTypeLibrary);
+            UpdateCommandParametersAddYaz(output, container, classNameTypeLibrary);
+            DeleteCommandParametersAddYaz(output, container, classNameTypeLibrary);
 
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
@@ -129,22 +130,27 @@ namespace Karkas.MyGenerationHelper.Generators
             BaslangicSusluParentezVeTabArtir(output);
             output.autoTabLn("get");
             BaslangicSusluParentezVeTabArtir(output);
-            output.autoTabLn(string.Format("return \"{0}\";" , pkAdi ));
+            output.autoTabLn(string.Format("return \"{0}\";", pkAdi));
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
             output.autoTabLn("");
 
         }
 
-        private void SilKomutuYazPkIle(IZeusOutput output, string classNameTypeLibrary, IContainer table)
+
+
+        private void SilKomutuYazPkIle(IZeusOutput output, string classNameTypeLibrary, IContainer container)
         {
-            string pkPropertyName = utils.getPropertyVariableName(table.Columns[pkAdi]);
-            output.autoTabLn(string.Format("public virtual void Sil({0} {1})", pkType, pkPropertyName));
-            BaslangicSusluParentezVeTabArtir(output);
-            output.autoTabLn(string.Format("{0} row = new {0}();", classNameTypeLibrary));
-            output.autoTabLn(string.Format("row.{0} = {0};", pkPropertyName));
-            output.autoTabLn("base.Sil(row);");
-            BitisSusluParentezVeTabAzalt(output);
+            if (container is TableContainer)
+            {
+                string pkPropertyName = utils.getPropertyVariableName(container.Columns[pkAdi]);
+                output.autoTabLn(string.Format("public virtual void Sil({0} {1})", pkType, pkPropertyName));
+                BaslangicSusluParentezVeTabArtir(output);
+                output.autoTabLn(string.Format("{0} row = new {0}();", classNameTypeLibrary));
+                output.autoTabLn(string.Format("row.{0} = {0};", pkPropertyName));
+                output.autoTabLn("base.Sil(row);");
+                BitisSusluParentezVeTabAzalt(output);
+            }
         }
 
 
@@ -245,7 +251,7 @@ namespace Karkas.MyGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
         }
 
-        private void DeleteStringYaz(IZeusOutput output, IContainer table)
+        private void DeleteStringYaz(IZeusOutput output, IContainer container)
         {
             string cumle = "";
             output.autoTabLn("protected override string DeleteString");
@@ -255,18 +261,26 @@ namespace Karkas.MyGenerationHelper.Generators
             cumle += "return @\"DELETE ";
 
             string whereClause = "";
-            foreach (IColumn column in table.Columns)
+
+            if (container is TableContainer)
             {
-                if (column.IsInPrimaryKey)
+                foreach (IColumn column in container.Columns)
                 {
-                    whereClause += column.Name + " = @" + column.Name + " AND";
+                    if (column.IsInPrimaryKey)
+                    {
+                        whereClause += column.Name + " = @" + column.Name + " AND";
+                    }
                 }
+                whereClause = whereClause.Remove(whereClause.Length - 4) + "\"";
+                cumle += "  FROM " + container.Schema + "." + container.Name + " WHERE ";
             }
-            whereClause = whereClause.Remove(whereClause.Length - 4);
+            else
+            {
 
+                cumle = "throw new NotSupportedException(\"VIEW ustunden Ekle/Guncelle/Sil desteklenmemektedir\")";
+            }
 
-            cumle += "  FROM " + table.Schema + "." + table.Name + " WHERE ";
-            output.autoTabLn(cumle + whereClause + "\";");
+            output.autoTabLn(cumle + whereClause + ";");
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
         }
@@ -276,51 +290,58 @@ namespace Karkas.MyGenerationHelper.Generators
             return ((column.IsInPrimaryKey) || columnVersiyonZamaniMi(column));
         }
 
-        private void UpdateStringYaz(IZeusOutput output, IContainer table, ref string pkcumlesi)
+        private void UpdateStringYaz(IZeusOutput output, IContainer container, ref string pkcumlesi)
         {
             string cumle = "";
             output.autoTabLn("protected override string UpdateString");
             BaslangicSusluParentezVeTabArtir(output);
             output.autoTabLn("get ");
             BaslangicSusluParentezVeTabArtir(output);
-            output.autoTabLn("return @\"UPDATE " + table.Schema + "." + table.Name);
-            output.autoTabLn(" SET ");
-
-            foreach (IColumn column in table.Columns)
+            if (container is TableContainer)
             {
-                if (updateWhereSatirindaOlmaliMi(column))
+                output.autoTabLn("return @\"UPDATE " + container.Schema + "." + container.Name);
+                output.autoTabLn(" SET ");
+
+                foreach (IColumn column in container.Columns)
                 {
-                    pkcumlesi += " " + column.Name + " = @" + column.Name + " AND";
-                }
-                if (!columnParametreOlmaliMi(column))
-                {
-                    if (!updateWhereSatirindaOlmaliMi(column))
+                    if (updateWhereSatirindaOlmaliMi(column))
                     {
-                        cumle += column.Name + " = @" + column.Name + ",";
+                        pkcumlesi += " " + column.Name + " = @" + column.Name + " AND";
+                    }
+                    if (!columnParametreOlmaliMi(column))
+                    {
+                        if (!updateWhereSatirindaOlmaliMi(column))
+                        {
+                            cumle += column.Name + " = @" + column.Name + ",";
+                        }
                     }
                 }
-            }
-            if (cumle.Length > 0)
-            {
-                cumle = cumle.Remove(cumle.Length - 1);
-            }
-            if (pkcumlesi.Length > 0)
-            {
-                pkcumlesi = pkcumlesi.Remove(pkcumlesi.Length - 3);
-            }
+                if (cumle.Length > 0)
+                {
+                    cumle = cumle.Remove(cumle.Length - 1);
+                }
+                if (pkcumlesi.Length > 0)
+                {
+                    pkcumlesi = pkcumlesi.Remove(pkcumlesi.Length - 3);
+                }
 
 
-            output.autoTab(cumle);
-            output.autoTabLn("");
-            output.autoTabLn("WHERE ");
-            output.autoTabLn(pkcumlesi + "\";");
+                output.autoTab(cumle);
+                output.autoTabLn("");
+                output.autoTabLn("WHERE ");
+                output.autoTabLn(pkcumlesi + "\";");
+            }
+            else
+            {
+                output.autoTabLn("throw new NotSupportedException(\"VIEW ustunden Ekle/Guncelle/Sil desteklenmemektedir\");");
+            }
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
         }
 
 
 
-        private void InsertStringYaz(IZeusOutput output, IContainer table, ref bool identityVarmi)
+        private void InsertStringYaz(IZeusOutput output, IContainer container, ref bool identityVarmi)
         {
             string cumle = "";
 
@@ -328,49 +349,56 @@ namespace Karkas.MyGenerationHelper.Generators
             BaslangicSusluParentezVeTabArtir(output);
             output.autoTabLn("get ");
             BaslangicSusluParentezVeTabArtir(output);
-            output.autoTabLn("return @\"INSERT INTO " + table.Schema + "." + table.Name + " ");
-            cumle += " (";
-            identityVarmi = false;
-            foreach (IColumn column in table.Columns)
+            if (container is TableContainer)
             {
-                if (column.IsComputed)
+                output.autoTabLn("return @\"INSERT INTO " + container.Schema + "." + container.Name + " ");
+                cumle += " (";
+                identityVarmi = false;
+                foreach (IColumn column in container.Columns)
                 {
-                    continue;
-                }
-                if (!column.IsAutoKey)
-                {
-                    cumle += column.Name + ",";
-                }
-                else
-                {
-                    identityVarmi = true;
-                }
+                    if (column.IsComputed)
+                    {
+                        continue;
+                    }
+                    if (!column.IsAutoKey)
+                    {
+                        cumle += column.Name + ",";
+                    }
+                    else
+                    {
+                        identityVarmi = true;
+                    }
 
-            }
-            cumle = cumle.Remove(cumle.Length - 1);
-            cumle += ") ";
-            output.autoTabLn(cumle);
-            output.autoTabLn(" VALUES ");
-            cumle = "(";
-            output.autoTab("");
-            foreach (IColumn column in table.Columns)
-            {
-                if (column.IsComputed)
-                {
-                    continue;
                 }
-                if (!column.IsAutoKey)
+                cumle = cumle.Remove(cumle.Length - 1);
+                cumle += ") ";
+                output.autoTabLn(cumle);
+                output.autoTabLn(" VALUES ");
+                cumle = "(";
+                output.autoTab("");
+                foreach (IColumn column in container.Columns)
                 {
-                    cumle += "@" + column.Name + ",";
+                    if (column.IsComputed)
+                    {
+                        continue;
+                    }
+                    if (!column.IsAutoKey)
+                    {
+                        cumle += "@" + column.Name + ",";
+                    }
                 }
+                cumle = cumle.Remove(cumle.Length - 1);
+                cumle += ")";
+                if (identityVarmi)
+                {
+                    cumle += ";SELECT scope_identity();";
+                }
+                output.autoTabLn(cumle + "\";");
             }
-            cumle = cumle.Remove(cumle.Length - 1);
-            cumle += ")";
-            if (identityVarmi)
+            else
             {
-                cumle += ";SELECT scope_identity();";
+                output.autoTabLn("throw new NotSupportedException(\"VIEW ustunden Ekle/Guncelle/Sil desteklenmemektedir\");");
             }
-            output.autoTabLn(cumle + "\";");
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
         }
@@ -383,6 +411,8 @@ namespace Karkas.MyGenerationHelper.Generators
 
         private void SorgulaPkIleGetirYaz(IZeusOutput output, string classNameTypeLibrary, string pkAdi, string pkType)
         {
+            if (!string.IsNullOrEmpty(pkAdi))
+            {
             string classSatiri = "public " + classNameTypeLibrary + " Sorgula"
                             + pkAdi + "Ile(" + pkType
                             + " p1)";
@@ -400,6 +430,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn("\treturn null;");
             output.autoTabLn("}");
             BitisSusluParentezVeTabAzalt(output);
+            }
         }
 
         private void IdentityVarMiYaz(IZeusOutput output, bool identityVarmi)
@@ -526,7 +557,7 @@ namespace Karkas.MyGenerationHelper.Generators
             string s = "builder.parameterEkle(\"@"
                         + column.Name
                         + "\","
-                        + column.DbTargetType
+                        + getDbTargetType(column)
                         + ", row."
                         + utils.getPropertyVariableName(column)
                         + ","
@@ -535,12 +566,24 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn(s);
         }
 
+        private string getDbTargetType(IColumn column)
+        {
+            if (column.DbTargetType == "Unknown")
+            {
+                return "SqlDbType.VarChar";
+            }
+            else
+            {
+                return column.DbTargetType;
+            }
+        }
+
         private void builderParameterEkleNormal(IZeusOutput output, IColumn column)
         {
             string s = "builder.parameterEkle(\"@"
                         + column.Name
                         + "\","
-                        + column.DbTargetType
+                        + getDbTargetType(column)
                         + ", row."
                         + utils.getPropertyVariableName(column)
                         + ");";

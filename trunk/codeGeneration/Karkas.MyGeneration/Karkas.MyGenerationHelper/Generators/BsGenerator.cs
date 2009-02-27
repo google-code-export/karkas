@@ -9,6 +9,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using Karkas.MyGenerationHelper.Interfaces;
 
 namespace Karkas.MyGenerationHelper.Generators
 {
@@ -33,20 +34,20 @@ namespace Karkas.MyGenerationHelper.Generators
 
 
         private static Utils utils = new Utils();
-        public void Render(IZeusOutput output, IContainer table)
+        public void Render(IZeusOutput output, IContainer container)
         {
             output.tabLevel = 0;
-            IDatabase database = table.Database;
-            baseNameSpace = utils.NamespaceIniAlSchemaIle(database, table.Schema);
+            IDatabase database = container.Database;
+            baseNameSpace = utils.NamespaceIniAlSchemaIle(database, container.Schema);
             baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
             baseNameSpaceDal = baseNameSpace + ".Dal";
             baseNameSpaceBs = baseNameSpace + ".Bs";
 
-            classNameTypeLibrary = utils.GetPascalCase(table.Name);
-            classNameDal = utils.GetPascalCase(table.Name) + "Dal";
-            classNameBs = utils.GetPascalCase(table.Name) + "Bs";
+            classNameTypeLibrary = utils.GetPascalCase(container.Name);
+            classNameDal = utils.GetPascalCase(container.Name) + "Dal";
+            classNameBs = utils.GetPascalCase(container.Name) + "Bs";
 
-            schemaName = utils.GetPascalCase(table.Schema);
+            schemaName = utils.GetPascalCase(container.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
             bool identityVarmi;
             string pkcumlesi = "";
@@ -54,25 +55,28 @@ namespace Karkas.MyGenerationHelper.Generators
             string baseNameSpaceBsWithSchema = baseNameSpace + ".Bs." + schemaName;
             string baseNameSpaceDalWithSchema = baseNameSpace + ".Dal." + schemaName;
 
-            pkType = utils.PrimaryKeyTipiniBul(table);
-            pkAdi = utils.PrimaryKeyAdiniBul(table);
+            pkType = utils.PrimaryKeyTipiniBul(container);
+            pkAdi = utils.PrimaryKeyAdiniBul(container);
 
 
             usingNamespaceleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema, baseNameSpaceDalWithSchema);
             BaslangicSusluParentez(output);
-            classYaz(output, classNameBs,classNameDal,classNameTypeLibrary);
+            classYaz(output, classNameBs, classNameDal, classNameTypeLibrary);
             BaslangicSusluParentezVeTabArtir(output);
 
-            OverrideDatabaseNameYaz(output, table);
+            OverrideDatabaseNameYaz(output, container);
 
-            SilKomutuYazPkIle(output);
+            if (container is TableContainer)
+            {
+                SilKomutuYazPkIle(output);
 
-            sorgulaPkAdiIleYaz(output, classNameTypeLibrary, pkType, pkAdi);
+                sorgulaPkAdiIleYaz(output, classNameTypeLibrary, pkType, pkAdi);
+            }
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentez(output);
 
-            string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.generated.cs");
-            string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.cs");
+            string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, container.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.generated.cs");
+            string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, container.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.cs");
             output.saveEnc(outputFullFileNameGenerated, "o", "utf8");
             output.clear();
 
@@ -80,7 +84,7 @@ namespace Karkas.MyGenerationHelper.Generators
             {
                 usingNamespaceleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema, baseNameSpaceDalWithSchema);
                 BaslangicSusluParentezVeTabArtir(output);
-                classYaz(output, classNameBs,classNameDal,classNameTypeLibrary);
+                classYaz(output, classNameBs, classNameDal, classNameTypeLibrary);
                 BaslangicSusluParentezVeTabArtir(output);
                 BitisSusluParentezVeTabAzalt(output);
                 BitisSusluParentezVeTabAzalt(output);
@@ -133,7 +137,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
 
 
-        private static void classYaz(IZeusOutput output, string classNameBs,string classNameDal,string classNameTypeLibrary)
+        private static void classYaz(IZeusOutput output, string classNameBs, string classNameDal, string classNameTypeLibrary)
         {
             output.autoTab("public partial class ");
             output.autoTabLn(string.Format("{0} : BaseBs<{1}, {2}>", classNameBs, classNameTypeLibrary, classNameDal));

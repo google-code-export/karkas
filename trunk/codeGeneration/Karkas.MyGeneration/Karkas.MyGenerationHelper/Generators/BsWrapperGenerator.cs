@@ -9,6 +9,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using Karkas.MyGenerationHelper.Interfaces;
 
 namespace Karkas.MyGenerationHelper.Generators
 {
@@ -32,7 +33,7 @@ namespace Karkas.MyGenerationHelper.Generators
         string pkType = "";
 
         private static Utils utils = new Utils();
-        public void Render(IZeusOutput output, IContainer table)
+        public void Render(IZeusOutput output, IContainer container)
         {
 
             output.tabLevel = 0;
@@ -42,21 +43,21 @@ namespace Karkas.MyGenerationHelper.Generators
             string baseNameSpaceDal = baseNameSpace + ".Dal";
             string baseNameSpaceBs = baseNameSpace + ".Bs";
 
-            IDatabase database = table.Database;
+            IDatabase database = container.Database;
 
 
 
-            baseNameSpace = utils.NamespaceIniAlSchemaIle(database, table.Schema);
+            baseNameSpace = utils.NamespaceIniAlSchemaIle(database, container.Schema);
             baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
             baseNameSpaceDal = baseNameSpace + ".Dal";
             baseNameSpaceBs = baseNameSpace + ".Bs";
 
-            classNameTypeLibrary = utils.GetPascalCase(table.Name);
-            classNameDal = utils.GetPascalCase(table.Name) + "Dal";
-            classNameBs = utils.GetPascalCase(table.Name) + "Bs";
-            classNameBsWrapper = utils.GetPascalCase(table.Name) + "BsWrapper";
+            classNameTypeLibrary = utils.GetPascalCase(container.Name);
+            classNameDal = utils.GetPascalCase(container.Name) + "Dal";
+            classNameBs = utils.GetPascalCase(container.Name) + "Bs";
+            classNameBsWrapper = utils.GetPascalCase(container.Name) + "BsWrapper";
 
-            schemaName = utils.GetPascalCase(table.Schema);
+            schemaName = utils.GetPascalCase(container.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
 
 
@@ -64,8 +65,8 @@ namespace Karkas.MyGenerationHelper.Generators
             string baseNameSpaceBsWrapperWithSchema = baseNameSpace + ".BsWrapper." + schemaName;
             string baseNameSpaceDalWithSchema = baseNameSpace + ".Dal." + schemaName;
 
-            pkType = utils.PrimaryKeyTipiniBul(table);
-            pkAdi = utils.PrimaryKeyAdiniBul(table);
+            pkType = utils.PrimaryKeyTipiniBul(container);
+            pkAdi = utils.PrimaryKeyAdiniBul(container);
 
 
             usingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema);
@@ -78,11 +79,17 @@ namespace Karkas.MyGenerationHelper.Generators
             EkleYaz(output);
             GuncelleYaz(output, classNameTypeLibrary);
             SilKomutuYaz(output, classNameTypeLibrary);
-            SilKomutuYazPkIle(output);
+
+            if (container is TableContainer)
+            {
+                SilKomutuYazPkIle(output);
+
+                SorgulaPKAdiIleYaz(output, classNameTypeLibrary, pkType, pkAdi);
+            }
+
             DurumaGoreEkleGuncelleVeyaSil(output, classNameTypeLibrary);
             SorgulaHepsiniGetirYaz(output, classNameTypeLibrary);
             SorgulaHepsiniGetirSiraliYaz(output, classNameTypeLibrary);
-            SorgulaPKAdiIleYaz(output, classNameTypeLibrary, pkType, pkAdi);
             TopluEkleGuncelleVeyaSilYaz(output, classNameTypeLibrary);
             KomutuCalistiranKullaniciyiYaz(output);
             output.writeln("");
@@ -90,8 +97,8 @@ namespace Karkas.MyGenerationHelper.Generators
             output.writeln("    }");
             output.writeln("}");
 
-            string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.generated.cs");
-            string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, table.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.cs");
+            string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, container.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.generated.cs");
+            string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, container.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.cs");
             output.saveEnc(outputFullFileNameGenerated, "o", "utf8");
             output.clear();
 

@@ -506,7 +506,22 @@ public class GeneratedTemplate : DotNetScriptTemplate
 				string viewName = selectedViews[i] as String;
 				view = database.Views[viewName];
 			}
-			KarkasUtils.RenderTypeLibraryCode(output,view);
+			if (generateTypeLibrary)
+			{
+				KarkasUtils.RenderTypeLibraryCode(output,view);
+			}
+			if (generateDal)
+			{
+				KarkasUtils.RenderDalCode(output,view);
+			}
+			if (generateBs)
+			{
+				KarkasUtils.RenderBsCode(output,view);
+			}
+			if (generateBsWrapper)
+			{
+				KarkasUtils.RenderBsWrapperCode(output,view);
+			}
 		}
 
 		IList selectedStoredProcedures = null;
