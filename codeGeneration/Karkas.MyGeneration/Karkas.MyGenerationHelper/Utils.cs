@@ -50,15 +50,30 @@ namespace Karkas.MyGenerationHelper
             DalGenerator gen = new DalGenerator();
             gen.Render(output, new TableContainer(table));
         }
+        public void RenderDalCode(IZeusOutput output, IView view)
+        {
+            DalGenerator gen = new DalGenerator();
+            gen.Render(output, new ViewContainer(view));
+        }
         public void RenderBsCode(IZeusOutput output, ITable table)
         {
             BsGenerator gen = new BsGenerator();
             gen.Render(output, new TableContainer(table));
         }
+        public void RenderBsCode(IZeusOutput output, IView view)
+        {
+            BsGenerator gen = new BsGenerator();
+            gen.Render(output, new ViewContainer(view));
+        }
         public void RenderBsWrapperCode(IZeusOutput output, ITable table)
         {
             BsWrapperGenerator gen = new BsWrapperGenerator();
             gen.Render(output, new TableContainer(table));
+        }
+        public void RenderBsWrapperCode(IZeusOutput output, IView view)
+        {
+            BsWrapperGenerator gen = new BsWrapperGenerator();
+            gen.Render(output, new ViewContainer(view));
         }
         public void RenderAspxCode(IZeusOutput output, ITable table, string pMasterName)
         {
@@ -371,92 +386,6 @@ namespace Karkas.MyGenerationHelper
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         public string GetDataReaderSyntax(IColumn column)
         {
             //            return column.LanguageType;
@@ -512,6 +441,10 @@ namespace Karkas.MyGenerationHelper
             {
                 return "dr.GetValue";
             }
+            else if (column.LanguageType == "Unknown")
+            {
+                return "dr.GetString";
+            }
 
 
 
@@ -548,20 +481,22 @@ namespace Karkas.MyGenerationHelper
 
         public string getPropertyVariableName(IColumn pColumn)
         {
-            if (
-                (pColumn.Name.Equals(pColumn.Table.Name, StringComparison.CurrentCultureIgnoreCase))
-            ||
-                (pColumn.Name.Equals(pColumn.Table.Name, StringComparison.InvariantCultureIgnoreCase))
-            ||
-                (pColumn.Name.Equals(pColumn.Table.Name, StringComparison.OrdinalIgnoreCase))
-                )
+
+            if (pColumn.Table != null)
             {
-                return GetPascalCase(pColumn.Name) + "Property";
+                if (
+
+                    (pColumn.Name.Equals(pColumn.Table.Name, StringComparison.CurrentCultureIgnoreCase))
+                ||
+                    (pColumn.Name.Equals(pColumn.Table.Name, StringComparison.InvariantCultureIgnoreCase))
+                ||
+                    (pColumn.Name.Equals(pColumn.Table.Name, StringComparison.OrdinalIgnoreCase))
+                    )
+                {
+                    return GetPascalCase(pColumn.Name) + "Property";
+                }
             }
-            else
-            {
-                return GetPascalCase(pColumn.Name);
-            }
+            return GetPascalCase(pColumn.Name);
         }
 
         public string GetLanguageType(IColumn column)
