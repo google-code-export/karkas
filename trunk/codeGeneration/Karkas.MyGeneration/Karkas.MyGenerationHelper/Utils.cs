@@ -45,10 +45,10 @@ namespace Karkas.MyGenerationHelper
             gen.Render(output, proc);
         }
 
-        public void RenderDalCode(IZeusOutput output, ITable table)
+        public string RenderDalCode(IZeusOutput output, ITable table)
         {
             DalGenerator gen = new DalGenerator();
-            gen.Render(output, new TableContainer(table));
+            return gen.Render(output, new TableContainer(table));
         }
         public void RenderDalCode(IZeusOutput output, IView view)
         {

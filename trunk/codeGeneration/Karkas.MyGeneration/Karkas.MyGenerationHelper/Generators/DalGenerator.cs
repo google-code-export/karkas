@@ -31,7 +31,7 @@ namespace Karkas.MyGenerationHelper.Generators
         string listeType = "";
         string identityType = "";
 
-        public void Render(IZeusOutput output, IContainer container)
+        public string Render(IZeusOutput output, IContainer container)
         {
             output.tabLevel = 0;
             IDatabase database = container.Database;
@@ -42,8 +42,7 @@ namespace Karkas.MyGenerationHelper.Generators
             identityColumnAdi = utils.IdentityColumnAdiniBul(container);
             if (pkAdi == "" && container is TableContainer)
             {
-                output.autoTabLn("Sectiginiz tablolardan birinde Primary Key yoktur. Code Generation sadace primaryKey'i olan tablolarda duzgun calisir.");
-                return;
+                return "Sectiginiz tablolardan " + container.Name  + " icinde Primary Key yoktur. Code Generation (DAL) sadace primaryKey'i olan tablolarda duzgun calisir.";
             }
 
 
@@ -119,6 +118,7 @@ namespace Karkas.MyGenerationHelper.Generators
                 output.clear();
 
             }
+            return "";
 
 
         }
