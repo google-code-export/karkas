@@ -321,6 +321,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 	private bool generateAspx = false;
 	private string[] ignoredSchemas = {"GECICI"};
 
+    List<string> SonucMesajlari = new List<string>();
 	public override void Render()
 	{
 		string className = "";
@@ -463,7 +464,11 @@ public class GeneratedTemplate : DotNetScriptTemplate
 			}
 			if (generateDal)
 			{
-				KarkasUtils.RenderDalCode(output,table);
+				string sonucMesaji = KarkasUtils.RenderDalCode(output,table);
+				if (!string.IsNullOrEmpty(sonucMesaji))
+				{
+					SonucMesajlari.Add(sonucMesaji);
+				}
 			}
 			if (generateBs)
 			{
@@ -552,6 +557,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 
 
 		output.writeln("Code Generation Finished");
+		foreach(string sonucMesaji in SonucMesajlari)
+		{
+			output.writeln(sonucMesaji);
+		}
 	}
 	
 

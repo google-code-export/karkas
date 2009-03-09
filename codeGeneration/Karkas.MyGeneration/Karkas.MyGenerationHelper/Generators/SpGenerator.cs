@@ -4,6 +4,7 @@ using System.Text;
 using Zeus;
 using MyMeta;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Karkas.MyGenerationHelper.Generators
 {
@@ -101,12 +102,55 @@ namespace Karkas.MyGenerationHelper.Generators
 
             RenderNormalWithAdoTemplate(output, proc);
             RenderNormal(output, proc);
+            RenderNormalForDefaultOverload(output, proc);
 
 
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
             output.saveEnc(outputFullFileName, "o", "utf8");
             output.clear();
+
+        }
+
+        private void RenderNormalForDefaultOverload(IZeusOutput output, IProcedure proc)
+        {
+            string ilkDefaultParameterName;
+            if (defaultParameterValueVarmı(proc,out ilkDefaultParameterName))
+            {
+                string sonucDegeri = donusDegeriVarsaSetle(proc);
+                output.autoTabLn(string.Format("public static {0} {1}", sonucDegeri, methodName));
+                generateParametersMethodSignature(output, proc);
+                BaslangicSusluParentezVeTabArtir(output);
+
+
+                output.autoTabLn("AdoTemplate template = new AdoTemplate();");
+                output.autoTabLn(string.Format("template.Connection = new SqlConnection(ConnectionSingleton.Instance.getConnectionString(\"{0}\"));", database.Name));
+
+                generateParametersOverloadCagir(output, proc);
+                BitisSusluParentezVeTabAzalt(output);
+            }
+        }
+
+        private bool defaultParameterValueVarmı(IProcedure proc,out string pParamName)
+        {
+            bool sonuc = false;
+            pParamName = null;
+            string[] procedureSatirlari = proc.ProcedureText.Split('\n');
+            foreach (IParameter param in proc.Parameters)
+            {
+                string regExStr = string.Format("{0} {1}.+=", param.Name,param.DataTypeNameComplete);
+                Regex parameterDefaultValue = new Regex(regExStr,RegexOptions.IgnoreCase);
+                foreach (string procedureSatiri in procedureSatirlari)
+                {
+                    if (parameterDefaultValue.IsMatch(procedureSatiri))
+                    {
+                        pParamName = param.Name;
+                        sonuc = true;
+                    }
+                    
+                }
+            }
+            return sonuc;
 
         }
 
@@ -186,7 +230,7 @@ namespace Karkas.MyGenerationHelper.Generators
             {
                 output.autoTabLn(",template");
                 output.autoTabLn(");");
-                
+
             }
         }
         private string paramDirectionVeNameAl(IParameter param)
@@ -248,11 +292,11 @@ namespace Karkas.MyGenerationHelper.Generators
                     if (param.CharacterMaxLength == 0)
                     {
                         yazi = string.Format(" builder.parameterEkleOutput( \"{0}\",{1});", param.Name, param.DbTargetType);
-                        
+
                     }
                     else
                     {
-                        yazi = string.Format(" builder.parameterEkleOutput( \"{0}\",{1},{2});", param.Name, param.DbTargetType,param.CharacterMaxLength);
+                        yazi = string.Format(" builder.parameterEkleOutput( \"{0}\",{1},{2});", param.Name, param.DbTargetType, param.CharacterMaxLength);
                     }
                 }
                 output.autoTabLn(yazi);
@@ -260,7 +304,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
         }
 
-        private  string parametreTypeIYaz(IParameter param)
+        private string parametreTypeIYaz(IParameter param)
         {
             string sonuc = "";
             if (utils.ArgumentValueTypeMi(param.LanguageType))
@@ -275,7 +319,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
         }
 
-        private  void typeGoreDegerYaz(IZeusOutput output, IParameter param)
+        private void typeGoreDegerYaz(IZeusOutput output, IParameter param)
         {
             if (param.Direction == ParamDirection.Input)
             {
