@@ -110,7 +110,6 @@ namespace Karkas.MyGenerationHelper.Generators
                 UsingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceDal);
                 output.autoTab("public partial class ");
                 output.writeln(classNameTypeLibrary + "Dal");
-
                 BaslangicSusluParentezVeTabArtir(output);
                 BitisSusluParentezVeTabAzalt(output);
                 BitisSusluParentezVeTabAzalt(output);
@@ -185,6 +184,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
         private void UsingleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceDal)
         {
+            output.autoTabLn("");
             output.autoTabLn("using System;");
             output.autoTabLn("using System.Collections.Generic;");
             output.autoTabLn("using System.Data;");

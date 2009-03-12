@@ -60,10 +60,9 @@ namespace Karkas.MyGenerationHelper.Generators
 
 
             usingNamespaceleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema, baseNameSpaceDalWithSchema);
-            BaslangicSusluParentez(output);
-            classYaz(output, classNameBs, classNameDal, classNameTypeLibrary);
             BaslangicSusluParentezVeTabArtir(output);
-
+            classYaz(output, classNameBs, classNameDal, classNameTypeLibrary);
+            BaslangicSusluParentez(output);
             OverrideDatabaseNameYaz(output, container);
 
             if (container is TableContainer)
@@ -73,7 +72,7 @@ namespace Karkas.MyGenerationHelper.Generators
                 sorgulaPkAdiIleYaz(output, classNameTypeLibrary, pkType, pkAdi);
             }
             BitisSusluParentezVeTabAzalt(output);
-            BitisSusluParentez(output);
+            BitisSusluParentezVeTabAzalt(output);
 
             string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, container.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.generated.cs");
             string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, container.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.cs");
@@ -116,14 +115,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.autoTabLn("return dal.Sorgula" + pkAdi + "Ile(p1);");
             output.decTab();
             output.autoTabLn("}");
-
         }
-
-
-
-
-
-
 
         private void SilKomutuYazPkIle(IZeusOutput output)
         {
@@ -134,15 +126,12 @@ namespace Karkas.MyGenerationHelper.Generators
 
         }
 
-
-
-
         private static void classYaz(IZeusOutput output, string classNameBs, string classNameDal, string classNameTypeLibrary)
         {
             output.autoTab("public partial class ");
-            output.autoTabLn(string.Format("{0} : BaseBs<{1}, {2}>", classNameBs, classNameTypeLibrary, classNameDal));
-            output.incTab();
-            //output.autoTabLn("{");
+            output.write(classNameBs);
+            output.write(" : BaseBs<" + classNameTypeLibrary + ", ");
+            output.writeln(classNameDal + ">");
         }
 
         public void usingNamespaceleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceBsWithSchema, string baseNameSpaceDalWithSchema)
