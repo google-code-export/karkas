@@ -24,29 +24,18 @@ namespace Karkas.MyGenerationHelper.Generators
         string classNameSpace = "";
         string memberVariableName = "";
         string propertyVariableName = "";
-
         string baseNameSpace = "";
-
-
-
         string pkAdi = "";
         string pkType = "";
 
         private static Utils utils = new Utils();
         public void Render(IZeusOutput output, IContainer container)
         {
-
             output.tabLevel = 0;
-
-
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
             string baseNameSpaceDal = baseNameSpace + ".Dal";
             string baseNameSpaceBs = baseNameSpace + ".Bs";
-
             IDatabase database = container.Database;
-
-
-
             baseNameSpace = utils.NamespaceIniAlSchemaIle(database, container.Schema);
             baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
             baseNameSpaceDal = baseNameSpace + ".Dal";
@@ -105,14 +94,12 @@ namespace Karkas.MyGenerationHelper.Generators
             if (!File.Exists(outputFullFileName))
             {
                 usingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema);
-                output.write("namespace ");
-                output.write(baseNameSpaceBsWrapperWithSchema);
-                BaslangicSusluParentezVeTabArtir(output);
-                output.autoTab("    public partial class ");
-                output.autoTabLn(classNameBsWrapper);
-                BaslangicSusluParentezVeTabArtir(output);
-                BitisSusluParentezVeTabAzalt(output);
-                BitisSusluParentezVeTabAzalt(output);
+                output.writeln("namespace " + baseNameSpaceBsWrapperWithSchema);
+                output.writeln("{");
+                output.autoTabLn("public partial class " + classNameBsWrapper);
+                output.autoTabLn("{");
+                output.autoTabLn("}");
+                output.writeln("}");
                 output.save(outputFullFileName, false);
                 output.clear();
             }
@@ -157,6 +144,8 @@ namespace Karkas.MyGenerationHelper.Generators
             output.writeln("\t\t\t\tbs.KomutuCalistiranKullaniciKisiKey = (Guid)HttpContext.Current.Session[SessionEnumHelper.KISI_KEY];");
             output.writeln("\t\t\t}");
             output.writeln("\t\t}");
+            output.autoTabLn("");
+            output.autoTabLn("");
         }
 
 
@@ -221,10 +210,8 @@ namespace Karkas.MyGenerationHelper.Generators
 
         private static void SorgulaHepsiniGetirYaz(IZeusOutput output, string classNameTypeLibrary)
         {
-            output.writeln("      [DataObjectMethod(DataObjectMethodType.Select, true)]");
-            output.write("        public List<");
-            output.write(classNameTypeLibrary);
-            output.writeln("> SorgulaHepsiniGetir()");
+            output.autoTabLn("[DataObjectMethod(DataObjectMethodType.Select, true)]");
+            output.autoTabLn("public List<" + classNameTypeLibrary + "> SorgulaHepsiniGetir()");
             output.writeln("        {");
             output.writeln("            return bs.SorgulaHepsiniGetir();");
             output.writeln("        }");
@@ -232,10 +219,8 @@ namespace Karkas.MyGenerationHelper.Generators
         }
         private static void SorgulaHepsiniGetirSiraliYaz(IZeusOutput output, string classNameTypeLibrary)
         {
-            output.writeln("      [DataObjectMethod(DataObjectMethodType.Select, false)]");
-            output.write("        public List<");
-            output.write(classNameTypeLibrary);
-            output.writeln("> SorgulaHepsiniGetirSirali(params string[] pSiraListesi)");
+            output.autoTabLn("[DataObjectMethod(DataObjectMethodType.Select, false)]");
+            output.autoTabLn("public List<" + classNameTypeLibrary + "> SorgulaHepsiniGetirSirali(params string[] pSiraListesi)");
             output.writeln("        {");
             output.writeln("            return bs.SorgulaHepsiniGetirSirali(pSiraListesi);");
             output.writeln("        }");
@@ -256,23 +241,22 @@ namespace Karkas.MyGenerationHelper.Generators
 
         private static void SilKomutuYaz(IZeusOutput output, string classNameTypeLibrary)
         {
-            output.writeln("        [DataObjectMethod(DataObjectMethodType.Delete)]");
-            output.write("        public void Sil(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" k)");
-            output.writeln("        {");
+            output.autoTabLn("[DataObjectMethod(DataObjectMethodType.Delete)]");
+            output.autoTabLn("public void Sil(" + classNameTypeLibrary + " k)");
+            output.autoTabLn("{");
             output.writeln("            bs.Sil(k);");
-            output.writeln("        }");
+            output.autoTabLn("}");
+            output.writeln("");
             output.writeln("");
         }
         private void SilKomutuYazPkIle(IZeusOutput output)
         {
-            output.incTab();
-            output.incTab();
             output.autoTabLn(string.Format("public void Sil({0} {1})", pkType, pkAdi));
             BaslangicSusluParentezVeTabArtir(output);
             output.autoTabLn("bs.Sil(" + pkAdi + ");");
             BitisSusluParentezVeTabAzalt(output);
+            output.writeln("");
+            output.writeln("");
         }
 
         private static void GuncelleYaz(IZeusOutput output, string classNameTypeLibrary)
@@ -284,44 +268,45 @@ namespace Karkas.MyGenerationHelper.Generators
             output.writeln("        {");
             output.writeln("            bs.Guncelle(k);");
             output.writeln("        }");
+            output.writeln("");
+            output.writeln("");
+
         }
 
         private void EkleYaz(IZeusOutput output)
         {
-            if (pkType == "int" 
+            if (pkType == "int"
                 || pkType == "long"
                 || pkType == "short"
                 || pkType == "byte"
                 )
             {
-                output.writeln("        [DataObjectMethod(DataObjectMethodType.Insert)]");
-                output.write(string.Format("        public {0} Ekle({1} p1 )", pkType,classNameTypeLibrary));
-                output.writeln("        {");
-                output.writeln(string.Format("            return ({0}) bs.Ekle(p1);", pkType));
-                output.writeln("        }");
+                output.incTab();
+                output.incTab();
+                output.autoTabLn("[DataObjectMethod(DataObjectMethodType.Insert)]");
+                output.autoTabLn(string.Format("public {0} Ekle({1} p1)", pkType, classNameTypeLibrary));
+                BaslangicSusluParentezVeTabArtir(output);
+                output.autoTabLn(string.Format("return ({0})bs.Ekle(p1);", pkType));
+                BitisSusluParentezVeTabAzalt(output);
                 output.writeln("");
                 output.writeln("");
-                
+
             }
             else
             {
-                output.writeln("        [DataObjectMethod(DataObjectMethodType.Insert)]");
-                output.write(string.Format("        public void Ekle({0} p1 )",classNameTypeLibrary));
-                output.writeln("        {");
-                output.writeln("            bs.Ekle(p1);");
-                output.writeln("            return;");
-                output.writeln("        }");
+                output.incTab();
+                output.incTab();
+                output.autoTabLn("[DataObjectMethod(DataObjectMethodType.Insert)]");
+                output.autoTabLn(string.Format("public void Ekle({0} p1)", classNameTypeLibrary));
+                BaslangicSusluParentezVeTabArtir(output);
+                output.autoTabLn("bs.Ekle(p1);");
+                output.autoTabLn("return;");
+                BitisSusluParentezVeTabAzalt(output);
                 output.writeln("");
                 output.writeln("");
-
             }
         }
-
     }
-
-
-
-
 }
 
 
