@@ -7,11 +7,60 @@ using System.Collections.Specialized;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using Karkas.Core.DataUtil;
+using Karkas.Core.Utility;
 
 namespace Karkas.MyGenerationHelper
 {
     public class SmoHelper
     {
+
+        #region InsertStatements
+        private const string sysdiagrams_MAIN_INSERT = @"SET IDENTITY_INSERT [dbo].[sysdiagrams] ON
+                                                        {0}
+                                                        SET IDENTITY_INSERT [dbo].[sysdiagrams] OFF
+                                                        ";
+
+        private const string sysdiagrams_ONE_ROW = @"INSERT INTO [dbo].[sysdiagrams]
+                           ([name]
+                           ,[principal_id]
+                           ,[diagram_id]
+                           ,[version]
+                           ,[definition])
+                     VALUES
+                           ('{0}'
+                           ,'{1}'
+                           ,'{2}'
+                           ,'{3}'
+                           ,'{4}')
+                            ";
+        private const string sysdiagrams_SELECT = @"SELECT [name]
+                                                  ,[principal_id]
+                                                  ,[diagram_id]
+                                                  ,[version]
+                                                  ,[definition]
+                                              FROM [dbo].[sysdiagrams]";
+
+
+        #endregion
+        public string GetSysdiagramsInserts(string connectionString)
+        {
+            string sonuc = "";
+            connectionString = ConnectionHelper.RemoveProviderFromConnectionString(connectionString);
+            AdoTemplate template = new AdoTemplate();
+            DataTable dt = template.DataTableOlustur(sysdiagrams_SELECT);
+
+            StringBuilder sb = new StringBuilder();
+            foreach (DataRow row in dt.Rows)
+            {
+                byte[] icerik = (byte[]) row[4];
+                sb.AppendFormat(sysdiagrams_ONE_ROW, row[0], row[1], row[2], row[3], icerik.ByteArrayToString());
+            }
+            sonuc = String.Format(sysdiagrams_MAIN_INSERT,sb.ToString());
+            return sonuc;
+        }
+
+
 
         public string GetTableDescription(string pDatabaseName, string pSchemaName, string pTableName, string connectionString)
         {
