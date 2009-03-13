@@ -24,7 +24,11 @@ namespace Karkas.MyGenerationHelper.Generators
         string classNameSpace = "";
         string memberVariableName = "";
         string propertyVariableName = "";
+
         string baseNameSpace = "";
+
+
+
         string pkAdi = "";
         string pkType = "";
 
@@ -32,10 +36,15 @@ namespace Karkas.MyGenerationHelper.Generators
         public void Render(IZeusOutput output, IContainer container)
         {
             output.tabLevel = 0;
+
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
             string baseNameSpaceDal = baseNameSpace + ".Dal";
             string baseNameSpaceBs = baseNameSpace + ".Bs";
+
             IDatabase database = container.Database;
+
+
+
             baseNameSpace = utils.NamespaceIniAlSchemaIle(database, container.Schema);
             baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
             baseNameSpaceDal = baseNameSpace + ".Dal";
@@ -50,6 +59,7 @@ namespace Karkas.MyGenerationHelper.Generators
             classNameSpace = baseNameSpace + "." + schemaName;
 
 
+            string baseNameSpaceTypeLibraryWithSchema = baseNameSpace + ".TypeLibrary." + schemaName;
             string baseNameSpaceBsWithSchema = baseNameSpace + ".Bs." + schemaName;
             string baseNameSpaceBsWrapperWithSchema = baseNameSpace + ".BsWrapper." + schemaName;
             string baseNameSpaceDalWithSchema = baseNameSpace + ".Dal." + schemaName;
@@ -58,33 +68,22 @@ namespace Karkas.MyGenerationHelper.Generators
             pkAdi = utils.PrimaryKeyAdiniBul(container);
 
 
-            usingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema);
-            output.write("namespace ");
-            output.write(baseNameSpaceBsWrapperWithSchema);
-            output.writeln("");
-            output.writeln("{");
-            ClassBaslangicYaz(output, classNameBs, classNameBsWrapper);
-            ConstructorYaz(output, classNameBsWrapper);
-            EkleYaz(output);
-            GuncelleYaz(output, classNameTypeLibrary);
-            SilKomutuYaz(output, classNameTypeLibrary);
-
+            usingleriYaz(output, schemaName, baseNameSpaceTypeLibraryWithSchema, baseNameSpaceDalWithSchema, baseNameSpaceBsWithSchema);
+            output.autoTab("namespace ");
+            output.autoTab(baseNameSpaceBsWrapperWithSchema);
+            output.autoTabLn("");
+            BaslangicSusluParentezVeTabArtir(output);
+            ClassBaslangicYaz(output,classNameTypeLibrary, classNameBs, classNameBsWrapper);
             if (container is TableContainer)
             {
                 SilKomutuYazPkIle(output);
-
                 SorgulaPKAdiIleYaz(output, classNameTypeLibrary, pkType, pkAdi);
             }
 
-            DurumaGoreEkleGuncelleVeyaSil(output, classNameTypeLibrary);
-            SorgulaHepsiniGetirYaz(output, classNameTypeLibrary);
-            SorgulaHepsiniGetirSiraliYaz(output, classNameTypeLibrary);
-            TopluEkleGuncelleVeyaSilYaz(output, classNameTypeLibrary);
-            KomutuCalistiranKullaniciyiYaz(output);
-            output.writeln("");
-            output.writeln("");
-            output.writeln("    }");
-            output.writeln("}");
+            output.autoTabLn("");
+            output.autoTabLn("");
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentezVeTabAzalt(output);
 
             string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, container.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.generated.cs");
             string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, container.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.cs");
@@ -93,13 +92,15 @@ namespace Karkas.MyGenerationHelper.Generators
 
             if (!File.Exists(outputFullFileName))
             {
-                usingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema);
-                output.writeln("namespace " + baseNameSpaceBsWrapperWithSchema);
-                output.writeln("{");
-                output.autoTabLn("public partial class " + classNameBsWrapper);
-                output.autoTabLn("{");
-                output.autoTabLn("}");
-                output.writeln("}");
+                usingleriYaz(output, schemaName, baseNameSpaceTypeLibraryWithSchema, baseNameSpaceDalWithSchema, baseNameSpaceBsWithSchema);
+                output.autoTab("namespace ");
+                output.autoTab(baseNameSpaceBsWrapperWithSchema);
+                BaslangicSusluParentezVeTabArtir(output);
+                output.autoTab("public partial class ");
+                output.autoTabLn(classNameBsWrapper);
+                BaslangicSusluParentezVeTabArtir(output);
+                BitisSusluParentezVeTabAzalt(output);
+                BitisSusluParentezVeTabAzalt(output);
                 output.save(outputFullFileName, false);
                 output.clear();
             }
@@ -107,206 +108,80 @@ namespace Karkas.MyGenerationHelper.Generators
 
         }
 
-        private static void usingleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceBsWithSchema)
+        private static void usingleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibraryWithSchema, string baseNameSpaceDalWithSchema, string baseNameSpaceBsWithSchema)
         {
-            output.writeln("");
-            output.writeln("using System;");
-            output.writeln("using System.Collections.Generic;");
-            output.writeln("using System.Data;");
-            output.writeln("using System.Data.SqlClient;");
-            output.writeln("using System.Text;");
-            output.writeln("using System.ComponentModel;");
-            output.writeln("using System.Web;");
-            output.writeln("using System.Web.Caching;");
-            output.writeln("using Karkas.Web.Helpers.HelperClasses;");
-            output.write("using ");
-            output.write(baseNameSpaceTypeLibrary);
-            output.writeln(";");
-            output.write("using ");
-            output.write(baseNameSpaceTypeLibrary);
-            output.write(".");
-            output.write(schemaName);
-            output.writeln(";");
-            output.write("using ");
-            output.write(baseNameSpaceBsWithSchema);
-            output.writeln(";");
-            output.writeln("");
-            output.writeln("");
-        }
-        private static void ConstructorYaz(IZeusOutput output, string classNameBsWrapper)
-        {
-            output.write("\t\tpublic ");
-            output.write(classNameBsWrapper);
-            output.writeln("()");
-            output.writeln("\t\t{");
-            output.writeln("\t\t\tif ((HttpContext.Current != null) && (HttpContext.Current.Session != null) && (HttpContext.Current.Session[SessionEnumHelper.KISI_KEY] != null))");
-            output.writeln("\t\t\t{");
-            output.writeln("\t\t\t\tbs.KomutuCalistiranKullaniciKisiKey = (Guid)HttpContext.Current.Session[SessionEnumHelper.KISI_KEY];");
-            output.writeln("\t\t\t}");
-            output.writeln("\t\t}");
             output.autoTabLn("");
+            output.autoTabLn("using System;");
+            output.autoTabLn("using System.Collections.Generic;");
+            output.autoTabLn("using System.Data;");
+            output.autoTabLn("using System.Data.SqlClient;");
+            output.autoTabLn("using System.Text;");
+            output.autoTabLn("using System.ComponentModel;");
+            output.autoTabLn("using System.Web;");
+            output.autoTabLn("using System.Web.Caching;");
+            output.autoTabLn("using Karkas.Web.Helpers.HelperClasses;");
+            output.autoTabLn("using Karkas.Core.DataUtil.BaseClasses;");
+
+            output.autoTabLn(string.Format("using {0};", baseNameSpaceTypeLibraryWithSchema));
+            output.autoTabLn(string.Format("using {0};",baseNameSpaceDalWithSchema));
+            output.autoTabLn(string.Format("using {0};",baseNameSpaceBsWithSchema));
+        }
+
+
+
+        private void ClassBaslangicYaz(IZeusOutput output, string classNameTypeLibrary, string classNameBs, string classNameBsWrapper)
+        {
+            
+            output.autoTabLn("[DataObject]");
+            output.autoTab("public partial class ");
+            output.autoTab(classNameBsWrapper);
+            output.autoTab(string.Format(": BaseBsWrapper<{0},{0}Dal,{0}Bs>", classNameTypeLibrary));
             output.autoTabLn("");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("");
+            output.autoTabLn(string.Format("{0} _bs = new {0}();", classNameBs));
+
+            output.autoTabLn(string.Format("public override {0} bs", classNameBs));
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("get");
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn("return _bs;");
+            BitisSusluParentezVeTabAzalt(output);
+            BitisSusluParentezVeTabAzalt(output);
+
         }
 
 
-        private static void ClassBaslangicYaz(IZeusOutput output, string classNameBs, string classNameBsWrapper)
+
+        private void SorgulaPKAdiIleYaz(IZeusOutput output, string classNameTypeLibrary, string pkType, string pkAdi)
         {
-            output.writeln("    [DataObject]");
-            output.write("    public partial class ");
-            output.write(classNameBsWrapper);
-            output.writeln(" ");
-            output.writeln("    {");
-            output.write("        ");
-            output.write(classNameBs);
-            output.write(" bs = new ");
-            output.write(classNameBs);
-            output.writeln("();");
-            output.writeln("\t\t");
-            output.writeln("");
-        }
-        private static void KomutuCalistiranKullaniciyiYaz(IZeusOutput output)
-        {
-            output.writeln("        public Guid KomutuCalistiranKullaniciKisiKey");
-            output.writeln("        {");
-            output.writeln("\t\t\tget");
-            output.writeln("\t\t\t{");
-            output.writeln("\t\t\t\treturn bs.KomutuCalistiranKullaniciKisiKey;");
-            output.writeln("\t\t\t}");
-            output.writeln("\t\t\tset");
-            output.writeln("\t\t\t{");
-            output.writeln("\t\t\t\tbs.KomutuCalistiranKullaniciKisiKey = value;");
-            output.writeln("\t\t\t}");
-            output.writeln("        }");
+            output.autoTabLn("[DataObjectMethod(DataObjectMethodType.Select)]");
+            output.autoTabLn(string.Format("public {0} Sorgula{1}Ile({2} p1)",classNameTypeLibrary,pkAdi,pkType));
+            BaslangicSusluParentezVeTabArtir(output);
+            output.autoTabLn(string.Format("return bs.Sorgula{0}Ile(p1);",pkAdi));
+            BitisSusluParentezVeTabAzalt(output);
         }
 
-        private static void TopluEkleGuncelleVeyaSilYaz(IZeusOutput output, string classNameTypeLibrary)
-        {
-            output.writeln("        [DataObjectMethod(DataObjectMethodType.Insert)]");
-            output.write("        public void TopluEkleGuncelleVeyaSil(List<");
-            output.write(classNameTypeLibrary);
-            output.writeln("> liste)");
-            output.writeln("        {");
-            output.writeln("            bs.TopluEkleGuncelleVeyaSil(liste);");
-            output.writeln("        }");
-        }
 
-        private static void SorgulaPKAdiIleYaz(IZeusOutput output, string classNameTypeLibrary, string pkType, string pkAdi)
-        {
-            output.writeln("        [DataObjectMethod(DataObjectMethodType.Select)]");
-            output.write("\t\tpublic ");
-            output.write(classNameTypeLibrary);
-            output.write(" Sorgula");
-            output.write(pkAdi);
-            output.write("Ile(");
-            output.write(pkType);
-            output.writeln(" p1)");
-            output.writeln("\t\t{");
-            output.write("\t\t\treturn bs.Sorgula");
-            output.write(pkAdi);
-            output.writeln("Ile(p1);");
-            output.writeln("\t\t}");
-            output.writeln("\t\t");
-        }
 
-        private static void SorgulaHepsiniGetirYaz(IZeusOutput output, string classNameTypeLibrary)
-        {
-            output.autoTabLn("[DataObjectMethod(DataObjectMethodType.Select, true)]");
-            output.autoTabLn("public List<" + classNameTypeLibrary + "> SorgulaHepsiniGetir()");
-            output.writeln("        {");
-            output.writeln("            return bs.SorgulaHepsiniGetir();");
-            output.writeln("        }");
-            output.writeln("");
-        }
-        private static void SorgulaHepsiniGetirSiraliYaz(IZeusOutput output, string classNameTypeLibrary)
-        {
-            output.autoTabLn("[DataObjectMethod(DataObjectMethodType.Select, false)]");
-            output.autoTabLn("public List<" + classNameTypeLibrary + "> SorgulaHepsiniGetirSirali(params string[] pSiraListesi)");
-            output.writeln("        {");
-            output.writeln("            return bs.SorgulaHepsiniGetirSirali(pSiraListesi);");
-            output.writeln("        }");
-            output.writeln("");
-        }
 
-        private static void DurumaGoreEkleGuncelleVeyaSil(IZeusOutput output, string classNameTypeLibrary)
-        {
-            output.write("        public void DurumaGoreEkleGuncelleVeyaSil(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" k)");
-            output.writeln("        {");
-            output.writeln("            bs.DurumaGoreEkleGuncelleVeyaSil(k);");
-            output.writeln("        }");
-            output.writeln("");
-            output.writeln("");
-        }
 
-        private static void SilKomutuYaz(IZeusOutput output, string classNameTypeLibrary)
-        {
-            output.autoTabLn("[DataObjectMethod(DataObjectMethodType.Delete)]");
-            output.autoTabLn("public void Sil(" + classNameTypeLibrary + " k)");
-            output.autoTabLn("{");
-            output.writeln("            bs.Sil(k);");
-            output.autoTabLn("}");
-            output.writeln("");
-            output.writeln("");
-        }
+
         private void SilKomutuYazPkIle(IZeusOutput output)
         {
             output.autoTabLn(string.Format("public void Sil({0} {1})", pkType, pkAdi));
             BaslangicSusluParentezVeTabArtir(output);
             output.autoTabLn("bs.Sil(" + pkAdi + ");");
             BitisSusluParentezVeTabAzalt(output);
-            output.writeln("");
-            output.writeln("");
         }
 
-        private static void GuncelleYaz(IZeusOutput output, string classNameTypeLibrary)
-        {
-            output.writeln("        [DataObjectMethod(DataObjectMethodType.Update)]");
-            output.write("        public void Guncelle(");
-            output.write(classNameTypeLibrary);
-            output.writeln(" k)");
-            output.writeln("        {");
-            output.writeln("            bs.Guncelle(k);");
-            output.writeln("        }");
-            output.writeln("");
-            output.writeln("");
 
-        }
 
-        private void EkleYaz(IZeusOutput output)
-        {
-            if (pkType == "int"
-                || pkType == "long"
-                || pkType == "short"
-                || pkType == "byte"
-                )
-            {
-                output.incTab();
-                output.incTab();
-                output.autoTabLn("[DataObjectMethod(DataObjectMethodType.Insert)]");
-                output.autoTabLn(string.Format("public {0} Ekle({1} p1)", pkType, classNameTypeLibrary));
-                BaslangicSusluParentezVeTabArtir(output);
-                output.autoTabLn(string.Format("return ({0})bs.Ekle(p1);", pkType));
-                BitisSusluParentezVeTabAzalt(output);
-                output.writeln("");
-                output.writeln("");
-
-            }
-            else
-            {
-                output.incTab();
-                output.incTab();
-                output.autoTabLn("[DataObjectMethod(DataObjectMethodType.Insert)]");
-                output.autoTabLn(string.Format("public void Ekle({0} p1)", classNameTypeLibrary));
-                BaslangicSusluParentezVeTabArtir(output);
-                output.autoTabLn("bs.Ekle(p1);");
-                output.autoTabLn("return;");
-                BitisSusluParentezVeTabAzalt(output);
-                output.writeln("");
-                output.writeln("");
-            }
-        }
     }
+
+
+
+
 }
 
 
