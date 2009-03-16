@@ -80,6 +80,7 @@
     <Compile Include="Generators\BsGenerator.cs" />
     <Compile Include="Generators\BsWrapperGenerator.cs" />
     <Compile Include="Generators\DalGenerator.cs" />
+    <Compile Include="Generators\DatabaseTablesGenerator.cs" />
     <Compile Include="Generators\NamespaceHelper.cs" />
     <Compile Include="Generators\SpGenerator.cs" />
     <Compile Include="Generators\TypeLibraryGenerator.cs" />

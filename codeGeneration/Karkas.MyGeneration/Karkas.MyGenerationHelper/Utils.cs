@@ -20,12 +20,8 @@ namespace Karkas.MyGenerationHelper
 
         public void RenderDatabaseTablesCode(IZeusOutput output, ITable table, string connectionString)
         {
-            output.writeln(GetTableDescription(table.Database.Name, table.Schema, table.Name, connectionString));
-            output.save(Path.Combine(DizininiAlDatabaseVeSchemaIle(table.Database, table.Schema) + "\\Database\\CreateScripts\\" + table.Schema, table.Schema + "_" + table.Name + ".CreateTable.sql"), false);
-            output.clear();
-            output.writeln(GetTableRelationDescriptions(table.Database.Name, table.Schema, table.Name, connectionString));
-            output.save(Path.Combine(DizininiAlDatabaseVeSchemaIle(table.Database, table.Schema) + "\\Database\\CreateRelationScripts\\" + table.Schema, table.Schema + "_" + table.Name + ".Relations.sql"), false);
-            output.clear();
+            DatabaseTablesGenerator gen = new DatabaseTablesGenerator();
+            gen.Render(output, table, connectionString);
 
         }
 
@@ -114,26 +110,11 @@ namespace Karkas.MyGenerationHelper
 
         #endregion
 
-
-        #region "SMO Helper Fonksiyonlari"
-        SmoHelper smoHelper = new SmoHelper();
-        public string GetTableRelationDescriptions(string pDatabaseName, string pSchemaName, string pTableName, string pConnectionString)
-        {
-            return smoHelper.GetTableRelationDescriptions(pDatabaseName, pSchemaName, pTableName, pConnectionString);
-        }
-        public string GetTableDescription(string pDatabaseName, string pSchemaName, string pTableName, string pConnectionString)
-        {
-            return smoHelper.GetTableDescription(pDatabaseName, pSchemaName, pTableName, pConnectionString);
-        }
-
-
         public string[] GetSchemaList(string pDatabaseName, string pConnectionString)
         {
+            SmoHelper smoHelper = new SmoHelper();
             return smoHelper.GetSchemaList(pDatabaseName, pConnectionString);
         }
-
-        #endregion
-
 
         public string IdentityColumnAdiniBul(IContainer table)
         {
