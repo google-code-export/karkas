@@ -10,7 +10,7 @@ using System.Linq;
 using Karkas.Core.DataUtil;
 using Karkas.Core.Utility;
 
-namespace Karkas.MyGenerationHelper
+namespace Karkas.MyGenerationHelper.SmoHelpers
 {
     public class SmoHelper
     {
@@ -183,6 +183,7 @@ namespace Karkas.MyGenerationHelper
             return schemaList.ToArray();
 
         }
+
     }
 }
 

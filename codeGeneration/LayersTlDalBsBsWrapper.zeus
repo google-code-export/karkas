@@ -38,16 +38,16 @@ public class GeneratedGui : DotNetScriptGui
 			GuiLabel label1 = ui.AddLabel( "label1", "Çıkış Dizini:", "Çıkış Dizinini Seçin." );
 			label1.Width =75;
 			outputPath = ui.AddTextBox( "outputPath", sOutputPath, "Çıkış Dizinini Seçin." );
-			outputPath.Width = 420;
+			outputPath.Width = 474;
 			outputPath.Enabled = false;
 			
 			// Seç Butonu :)
 			outputPath.Left = label1.Left + label1.Width;
 			outputPath.Top = label1.Top;
-			GuiFilePicker selectPath = ui.AddFilePicker( "selectPath", "Seç", "Çıkış Dizinini Şeçin.", "outputPath", true );
-			selectPath.Top = outputPath.Top;
-			selectPath.Width = 50;
-			selectPath.Left = outputPath.Left + outputPath.Width + 5;
+			//GuiFilePicker selectPath = ui.AddFilePicker( "selectPath", "Seç", "Çıkış Dizinini Şeçin.", "outputPath", true );
+			//selectPath.Top = outputPath.Top;
+			//selectPath.Width = 50;
+			//selectPath.Left = outputPath.Left + outputPath.Width + 5;
 			
 			// İsim alanı TextBox
 			GuiLabel label2 = ui.AddLabel( "label2", "İsim Alanı: ",  "Nesnelerinizin isim alanını verin." );
