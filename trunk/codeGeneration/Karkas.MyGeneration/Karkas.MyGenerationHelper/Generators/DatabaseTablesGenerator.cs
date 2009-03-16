@@ -5,37 +5,29 @@ using System.Text;
 using System.IO;
 using Zeus;
 using MyMeta;
+using Karkas.MyGenerationHelper.SmoHelpers;
 
 namespace Karkas.MyGenerationHelper.Generators
 {
     public class DatabaseTablesGenerator
     {
+        SmoHelper smoHelper = new SmoHelper();
+        InsertScriptHelper insertHelper = new InsertScriptHelper();
         public void Render(IZeusOutput output, ITable table, string connectionString)
         {
             Utils utils = new Utils();
-            output.writeln(GetTableDescription(table.Database.Name, table.Schema, table.Name, connectionString));
+
+            output.writeln(smoHelper.GetTableDescription(table.Database.Name, table.Schema, table.Name, connectionString));
             output.save(Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(table.Database, table.Schema) + "\\Database\\CreateScripts\\" + table.Schema, table.Schema + "_" + table.Name + ".CreateTable.sql"), false);
             output.clear();
-            output.writeln(GetTableRelationDescriptions(table.Database.Name, table.Schema, table.Name, connectionString));
+
+            output.writeln(smoHelper.GetTableRelationDescriptions(table.Database.Name, table.Schema, table.Name, connectionString));
             output.save(Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(table.Database, table.Schema) + "\\Database\\CreateRelationScripts\\" + table.Schema, table.Schema + "_" + table.Name + ".Relations.sql"), false);
             output.clear();
+
+            output.writeln(insertHelper.GetRowsToBeInserted(table.Database.Name, table.Schema, table.Name, connectionString));
+            output.save(Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(table.Database, table.Schema) + "\\Database\\InsertScripts\\" + table.Schema, table.Schema + "_" + table.Name + ".Inserts.sql"), false);
+            output.clear();
         }
-
-        #region "SMO Helper Fonksiyonlari"
-
-        SmoHelper smoHelper = new SmoHelper();
-
-        public string GetTableRelationDescriptions(string pDatabaseName, string pSchemaName, string pTableName, string pConnectionString)
-        {
-            return smoHelper.GetTableRelationDescriptions(pDatabaseName, pSchemaName, pTableName, pConnectionString);
-        }
-        public string GetTableDescription(string pDatabaseName, string pSchemaName, string pTableName, string pConnectionString)
-        {
-            return smoHelper.GetTableDescription(pDatabaseName, pSchemaName, pTableName, pConnectionString);
-        }
-
-
-        #endregion
-
     }
 }
