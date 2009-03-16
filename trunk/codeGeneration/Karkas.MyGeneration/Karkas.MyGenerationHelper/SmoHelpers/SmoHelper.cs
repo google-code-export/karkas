@@ -74,6 +74,7 @@ namespace Karkas.MyGenerationHelper.SmoHelpers
             baseOptions.DriDefaults = true;
             baseOptions.IncludeHeaders = false;
             baseOptions.DriPrimaryKey = true;
+            baseOptions.ExtendedProperties = true;
 
 //            baseOptions.DriAll = true;
 
