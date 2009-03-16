@@ -39,6 +39,7 @@ public class GeneratedGui : DotNetScriptGui
 			label1.Width =75;
 			outputPath = ui.AddTextBox( "outputPath", sOutputPath, "Çıkış Dizinini Seçin." );
 			outputPath.Width = 420;
+			outputPath.Enabled = false;
 			
 			// Seç Butonu :)
 			outputPath.Left = label1.Left + label1.Width;
