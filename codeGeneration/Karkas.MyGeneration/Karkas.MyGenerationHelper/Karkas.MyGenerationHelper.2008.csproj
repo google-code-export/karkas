@@ -46,9 +46,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Karkas.Ornek\ThirdParty\Karkas.Core.Utility.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=9.0.242.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.SqlServer.Smo, Version=9.0.242.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.SqlServer.SmoEnum, Version=9.0.242.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.AnalysisServices.AdomdClient, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="MyMeta, Version=1.3.0.0, Culture=neutral, PublicKeyToken=dbe33188b40af272, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\MyGeneration13\MyMeta.dll</HintPath>
@@ -90,7 +90,7 @@
     <Compile Include="Interfaces\ViewContainer.cs" />
     <Compile Include="KarkasXmlParser.cs" />
     <Compile Include="NameChecker.cs" />
-    <Compile Include="SmoHelper.cs" />
+    <Compile Include="SmoHelpers\SmoHelper.cs" />
     <Compile Include="SmoHelpers\StoredProcedureHelper.cs" />
     <Compile Include="SmoHelpers\UserDefinedFunctionHelper.cs" />
     <Compile Include="TurkishHelper.cs" />
