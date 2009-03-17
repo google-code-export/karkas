@@ -26,6 +26,12 @@ namespace Karkas.MyGenerationHelper
 
         }
 
+        public void RenderInsertScriptsCode(IZeusOutput output, ITable table, string connectionString)
+        {
+            InsertScriptsGenerator gen = new InsertScriptsGenerator();
+            gen.Render(output, table, connectionString);
+        }
+
         public void RenderTypeLibraryCode(IZeusOutput output, ITable table)
         {
             TypeLibraryGenerator gen = new TypeLibraryGenerator();

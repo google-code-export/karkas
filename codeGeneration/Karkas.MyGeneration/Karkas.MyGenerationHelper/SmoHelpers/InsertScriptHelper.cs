@@ -38,7 +38,8 @@ namespace Karkas.MyGenerationHelper.SmoHelpers
             {
                 conn.Open();
                 command.Connection = conn;
-                command.CommandText = String.Format(@"SELECT * FROM {0}.{1}.{2}", pDatabaseName, pSchemaName, pTableName);
+                //Just in case "top 5000" eklendi
+                command.CommandText = String.Format(@"SELECT TOP 5000 * FROM {0}.{1}.{2}", pDatabaseName, pSchemaName, pTableName);
 
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 adapter.Fill(table);
@@ -105,7 +106,8 @@ namespace Karkas.MyGenerationHelper.SmoHelpers
                                         (p is System.Int16) ||
                                         (p is System.Int64) ||
                                         (p is System.Decimal) ||
-                                        (p is System.Double)
+                                        (p is System.Double) || 
+                                        (p is System.Byte)
                                             );
             if (!cevirmeGerekliMi)
             {
