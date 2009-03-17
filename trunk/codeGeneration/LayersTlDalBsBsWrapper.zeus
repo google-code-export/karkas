@@ -104,7 +104,7 @@ public class GeneratedGui : DotNetScriptGui
 			GuiCheckBox DboIgnoreCheckBox = ui.AddCheckBox("DboIgnoreCheckBox", "dbo ignore",true, "Eğer bu seçeneği tıklarsanız, dbo scheması dikkate alınmadan veritabanından kod üretir.");
 			DboIgnoreCheckBox.Width = 250;
 
-			//dbo Ignore CheckBox
+			//dbo Debug CheckBox
 			GuiCheckBox isDebugCheckBox = ui.AddCheckBox("isDebugCheckBox", "Debug",false, "Eğer bu seçeneği tıklarsanız, debugger launch edilir.");
 			isDebugCheckBox.Width = 250;
 			isDebugCheckBox.Top = DboIgnoreCheckBox.Top;
@@ -113,6 +113,12 @@ public class GeneratedGui : DotNetScriptGui
 			GuiCheckBox chkDatabaseBox = ui.AddCheckBox("chkDatabaseBox", "Database tabloları Generate Et", true, "Eğer bu seçeneği tıklarsanız,Database Tabloları üretilir"); 
 			chkDatabaseBox.Width = 250;
 			
+			//Insert CheckBox
+			GuiCheckBox chkInsertBox = ui.AddCheckBox("chkInsertBox", "Insert Scriptleri Generate Et",false, "Eğer bu seçeneği tıklarsanız, Insert Scriptleri üretilir.");
+			chkInsertBox.Width = 250;
+			chkInsertBox.Top = isDebugCheckBox.Top;
+			chkInsertBox.Left = isDebugCheckBox.Left + 300;
+
 			//Aspx  CheckBox
 			GuiCheckBox chkAspxBox = ui.AddCheckBox("chkAspxBox", "Aspx Generate Et",false, "Eğer bu seçeneği tıklarsanız, Aspx kodu üretilir.");
 			chkAspxBox.Width = 250;
@@ -139,8 +145,6 @@ public class GeneratedGui : DotNetScriptGui
 			chkBsWrapperBox.Width = 250;
 			chkBsWrapperBox.Top = chkBsBox.Top;
 			chkBsWrapperBox.Left = chkBsBox.Left + 300;
-
-
 
 
 
@@ -320,6 +324,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 	private bool generateBsWrapper = false;
 	private bool ignoreSomeSchemas = false;
 	private bool generateAspx = false;
+	private bool generateInsertScripts = false;
 	private string[] ignoredSchemas = {"GECICI"};
 
     List<string> SonucMesajlari = new List<string>();
@@ -358,6 +363,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		if (Convert.ToBoolean(input["chkDatabaseBox"]))
 		{
 			generateDatabaseTables = true;
+		}
+		if (Convert.ToBoolean(input["chkInsertBox"]))
+		{
+			generateInsertScripts = true;
 		}
 		if (Convert.ToBoolean(input["chkTypeLibraryBox"]))
 		{
@@ -470,6 +479,10 @@ public class GeneratedTemplate : DotNetScriptTemplate
 				{
 					SonucMesajlari.Add(sonucMesaji);
 				}
+			}
+			if (generateInsertScripts)
+			{
+				KarkasUtils.RenderInsertScriptsCode(output, table, MyMeta.ConnectionString);
 			}
 			if (generateBs)
 			{
