@@ -161,6 +161,19 @@ namespace Karkas.MyGenerationHelper.SmoHelpers
                                     ,"guest"
                                     ,"INFORMATION_SCHEMA"
                                     ,"sys"
+									,"aspnet_Membership_BasicAccess"
+									,"aspnet_Membership_FullAccess"
+									,"aspnet_Membership_ReportingAccess"
+									,"aspnet_Personalization_BasicAccess"
+									,"aspnet_Personalization_FullAccess"
+									,"aspnet_Personalization_ReportingAccess"
+									,"aspnet_Profile_BasicAccess"
+									,"aspnet_Profile_FullAccess"
+									,"aspnet_Profile_ReportingAccess"
+									,"aspnet_Roles_BasicAccess"
+									,"aspnet_Roles_FullAccess"
+									,"aspnet_Roles_ReportingAccess"
+									,"aspnet_WebEvent_FullAccess"
                                     };
 
         internal string[] GetSchemaList(string pDatabaseName, string pConnectionString)
