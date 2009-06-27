@@ -74,6 +74,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyNameCheckerTest.cs" />
+    <Compile Include="Tests\SmoHelper\SchemaTest.cs" />
     <Compile Include="TurkishHelperTest.cs" />
     <Compile Include="VariableNameCheckerTest.cs" />
   </ItemGroup>
