@@ -314,6 +314,7 @@ public class GeneratedTemplate : DotNetScriptTemplate
 
 
 	private bool isDEBUG = false;
+	private bool ignoreDbo = false;
 	private bool generateAllTables = false;
 	private bool generateAllViews = false;
 	private bool generateAllStoredProcedures = false;
@@ -325,11 +326,12 @@ public class GeneratedTemplate : DotNetScriptTemplate
 	private bool ignoreSomeSchemas = false;
 	private bool generateAspx = false;
 	private bool generateInsertScripts = false;
-	private string[] ignoredSchemas = {"GECICI"};
+	private List<string> ignoredSchemas = new List<String>();
 
     List<string> SonucMesajlari = new List<string>();
 	public override void Render()
 	{
+		ignoredSchemas.Add("GECICI");
 		string className = "";
 		string schemaName = "";
 		string classNameSpace = "";
@@ -338,6 +340,13 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		string outputFullFileName = "";
 		string outputPath = input["outputPath"].ToString();
 
+
+
+		if (Convert.ToBoolean(input["DboIgnoreCheckBox"]))
+		{
+			ignoreDbo = true;
+			ignoredSchemas.Add("dbo");
+		}
 		if (Convert.ToBoolean(input["isDebugCheckBox"]))
 		{
 			isDEBUG = true;
@@ -405,9 +414,9 @@ public class GeneratedTemplate : DotNetScriptTemplate
 		{
 				selectedTables = database.Tables as IList;
 				List<ITable> liste = new List<ITable>();
-				bool ekle = true;
 				foreach (ITable t in selectedTables)
 				{
+					bool ekle = true;
 					foreach(string s in ignoredSchemas)
 					{
 						if (t.Schema == s)
