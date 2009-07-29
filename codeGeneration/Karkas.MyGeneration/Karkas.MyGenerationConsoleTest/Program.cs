@@ -13,11 +13,11 @@ namespace Karkas.MyGenerationConsoleTest
 {
     public class Program
     {
-        const string ConnectionString = "Data Source=localhost;Initial Catalog=KARKAS_ORNEK;Integrated Security=True";
-        const string insertConnString = @"Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=False;User ID=sa;Initial Catalog=DAMAK_TADI;Data Source=BASAR-PC\SQLEXPRESS2";
-        const string insertTableName = "GENEL";
-        const string insertSchemaName = "PERSONEL";
-        const string insertDBName = "DAMAK_TADI";
+        public const string ConnectionString = "Data Source=localhost;Initial Catalog=KARKAS_ORNEK;Integrated Security=True";
+        public const string insertConnString = @"Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=False;User ID=sa;Initial Catalog=DAMAK_TADI;Data Source=BASAR-PC\SQLEXPRESS2";
+        public const string insertTableName = "GENEL";
+        public const string insertSchemaName = "PERSONEL";
+        public const string insertDBName = "DAMAK_TADI";
 
         public static void Main(string[] args)
         {
