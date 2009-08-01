@@ -237,6 +237,11 @@ namespace Karkas.MyGenerationHelper.Generators
             output.incTab();
             foreach (IColumn column in table.Columns)
             {
+                string tipi = utils.GetLanguageType(column);
+                if (tipi == "string")
+                {
+                    continue;
+                }
                 string memberVariableName = utils.GetCamelCase(column.Name);
                 string propertyVariableName = utils.getPropertyVariableName(column);
                 output.autoTabLn("[DebuggerBrowsable(DebuggerBrowsableState.Never)]");
