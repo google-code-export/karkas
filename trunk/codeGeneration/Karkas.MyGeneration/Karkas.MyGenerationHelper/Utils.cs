@@ -288,9 +288,9 @@ namespace Karkas.MyGenerationHelper
             return sonuc;
         }
 
+
         public string[] GetConvertToSyntax(IColumn column, string propertyName)
         {
-            //            return column.LanguageType;
             string degerDegiskenAdi = "value";
             string araDegiskenAdi = "_a";
             int araDegiskenYeri = 2;
@@ -302,7 +302,9 @@ namespace Karkas.MyGenerationHelper
                     ,"}"
                     ,"catch(Exception)"
                     ,"{"
-                    ,string.Format("\tthis.Onaylayici.OnaylayiciListesi.Add(new DaimaBasarisiz(this,\"{0}\",\"Ceviri islemi Başarısız oldu\"));",propertyName)
+                    ,string.Format("\tthis.Onaylayici.OnaylayiciListesi.Add(new DaimaBasarisiz(this,\"{0}\",string.Format(CEVIRI_YAZISI,\"{0}\",\"{1}\")));"
+                                ,propertyName
+                                ,column.LanguageType)
                     ,"}"
                     };
             if (column.LanguageType == "Guid")
