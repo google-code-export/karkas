@@ -34,7 +34,7 @@ namespace Karkas.MyGenerationHelper.Generators
 
             usingNamespaceleriYaz(output, classNameSpace);
 
-            ClassIsmiYaz(output, className,table);
+            ClassIsmiYaz(output, className, table);
 
             output.autoTabLn("{");
 
@@ -55,7 +55,7 @@ namespace Karkas.MyGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
 
-            output.saveEnc(outputFullFileNameGenerated, "o","utf8");
+            output.saveEnc(outputFullFileNameGenerated, "o", "utf8");
             output.clear();
 
 
@@ -126,11 +126,11 @@ namespace Karkas.MyGenerationHelper.Generators
         private static void DebuggerDisplayYaz(IZeusOutput output, IContainer table)
         {
             string yazi = "";
-            foreach (IColumn  column in table.Columns)
+            foreach (IColumn column in table.Columns)
             {
                 if (column.IsInPrimaryKey || column.IsAutoKey || column.IsInForeignKey)
                 {
-                    yazi += utils.getPropertyVariableName(column) + " = {" + utils.getPropertyVariableName(column)  + "}";
+                    yazi += utils.getPropertyVariableName(column) + " = {" + utils.getPropertyVariableName(column) + "}";
                 }
 
             }
@@ -162,7 +162,7 @@ namespace Karkas.MyGenerationHelper.Generators
             output.writeln("");
         }
 
-        
+
 
         private void OnaylamaKoduYaz(IZeusOutput output, IContainer table)
         {
@@ -190,7 +190,7 @@ namespace Karkas.MyGenerationHelper.Generators
             foreach (IColumn column in table.Columns)
             {
                 propertyName = utils.getPropertyVariableName(column);
-                string yazi = string.Format("public const string {0} = \"{1}\";",propertyName,column.Name);
+                string yazi = string.Format("public const string {0} = \"{1}\";", propertyName, column.Name);
                 output.autoTabLn(yazi);
             }
             BitisSusluParentezVeTabAzalt(output);
