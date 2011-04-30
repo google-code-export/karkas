@@ -63,12 +63,12 @@
   <ItemGroup>
     <Compile Include="Interfaces\IColumn.cs" />
     <Compile Include="Interfaces\IDatabase.cs" />
+    <Compile Include="Interfaces\IOutput.cs" />
     <Compile Include="Interfaces\ParamDirection.cs" />
     <Compile Include="Interfaces\IParameter.cs" />
     <Compile Include="Interfaces\IProcedure.cs" />
     <Compile Include="Interfaces\ITable.cs" />
     <Compile Include="Interfaces\IView.cs" />
-    <Compile Include="Interfaces\IZeusOutput.cs" />
     <Compile Include="ConnectionHelper.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="Generators\AspxCsGenerator.cs" />
