@@ -9,13 +9,12 @@ namespace Karkas.CodeGenerationHelper.Generators
     public class AspxCsGenerator
     {
         Utils utils = new Utils();
-        KarkasXmlParser parser = new KarkasXmlParser();
 
         public void Render(IOutput output, ITable table)
         {
             IDatabase database = table.Database;
 
-            string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, table.Schema);
+            string baseNameSpace = database.projectNameSpace;
             string baseNamespaceWeb = baseNameSpace + ".WebApp";
 
             string className = utils.GetPascalCase(table.Name);

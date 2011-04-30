@@ -87,7 +87,6 @@
     <Compile Include="Interfaces\IContainer.cs" />
     <Compile Include="Interfaces\INameChecker.cs" />
     <Compile Include="Interfaces\ViewContainer.cs" />
-    <Compile Include="KarkasXmlParser.cs" />
     <Compile Include="NameChecker.cs" />
     <Compile Include="SmoHelpers\InsertScriptHelper.cs" />
     <Compile Include="SmoHelpers\SmoHelper.cs" />

@@ -7,6 +7,8 @@ namespace Karkas.CodeGenerationHelper.Interfaces
 {
     public interface IOutput
     {
+
+
         int tabLevel { get; set; }
 
         void autoTabLn(string p);

@@ -85,10 +85,10 @@ namespace Karkas.CodeGenerationHelper.Generators
             schemaName = utils.GetPascalCase(proc.Schema);
 
 
-            string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, proc.Schema);
+            string baseNameSpace = database.projectNameSpace;
             string baseNameSpaceDal = baseNameSpace + ".Dal";
             string classNameSpace = baseNameSpaceDal + "." + schemaName;
-            string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, proc.Schema) + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName + "\\StoredProcedures", "usp_" + methodName + ".generated.cs");
+            string outputFullFileName = Path.Combine(database.projectFolder + "\\Dal\\" + baseNameSpace + ".Dal\\" + schemaName + "\\StoredProcedures", "usp_" + methodName + ".generated.cs");
 
             UsingleriYaz(output);
 

@@ -17,14 +17,33 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         internal Database database;
         internal string connectionString;
 
-        public DatabaseSqlServer(String pConnectionString,string pDatabaseName)
+        public DatabaseSqlServer(String pConnectionString,string pDatabaseName,string pProjectNameSpace,string pProjectFolder)
         {
             connectionString = ConnectionHelper.RemoveProviderFromConnectionString(pConnectionString);
 
             server = new Server(new ServerConnection(new SqlConnection(connectionString)));
             database = server.Databases[pDatabaseName];
+            _projectNameSpace = pProjectNameSpace;
+            _projectFolder = pProjectFolder;
 
         }
+        string _projectNameSpace;
+        string _projectFolder;
+        public string projectNameSpace
+        {
+            get
+            {
+                return _projectNameSpace;
+            }
+        }
+        public string projectFolder
+        {
+            get
+            {
+                return _projectFolder;
+            }
+        }
+
 
 
         public string Name

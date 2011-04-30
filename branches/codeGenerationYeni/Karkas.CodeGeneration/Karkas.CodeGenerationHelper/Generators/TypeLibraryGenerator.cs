@@ -19,14 +19,14 @@ namespace Karkas.CodeGenerationHelper.Generators
             IDatabase database = table.Database;
             output.tabLevel = 0;
 
-            string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, table.Schema);
+            string baseNameSpace = database.projectNameSpace;
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
             string className = utils.GetPascalCase(table.Name);
             string schemaName = utils.GetPascalCase(table.Schema);
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
-            string outputFullFileName = Path.Combine(utils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".cs");
-            string outputFullFileNameGenerated = Path.Combine(utils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
+            string outputFullFileName = Path.Combine(database.projectFolder + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".cs");
+            string outputFullFileNameGenerated = Path.Combine(database.projectFolder + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
             //output.setPreserveSource(outputFullFileNameGenerated, "//::", ":://");
 
 

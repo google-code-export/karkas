@@ -12,10 +12,6 @@ namespace Karkas.CodeGenerationHelper
 
         StringBuilder buffer = new StringBuilder(1000);
         private int _tabLevel = 0;
-        public BaseOutput()
-        {
-
-        }
 
         public int tabLevel
         {

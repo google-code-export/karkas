@@ -9,7 +9,6 @@ namespace Karkas.CodeGenerationHelper.Generators
     public class AspxGenerator
     {
         Utils utils = new Utils();
-        KarkasXmlParser parser = new KarkasXmlParser();
 
         string masterName = "Main";
 

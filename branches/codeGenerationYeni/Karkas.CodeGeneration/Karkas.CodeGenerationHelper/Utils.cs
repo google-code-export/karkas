@@ -90,27 +90,26 @@ namespace Karkas.CodeGenerationHelper
 
 
         #region "Parser Helper Fonksiyonlari"
-        KarkasXmlParser parser = new KarkasXmlParser();
 
         public string ProjeNamespaceIsminiAl(IDatabase database)
         {
-            return parser.ProjeNamespaceIsminiAl(database);
+            return database.projectNameSpace;
         }
         public string ProjeDizininiAl(IDatabase database)
         {
-            return parser.ProjeDizininiAl(database);
+            return database.projectFolder;
         }
-
-
-
-        public string DizininiAlDatabaseVeSchemaIle(IDatabase database, string schemaName)
+        internal string DizininiAlDatabaseVeSchemaIle(IDatabase database, string p)
         {
-            return parser.DizininiAlDatabaseVeSchemaIle(database, schemaName);
+            return ProjeDizininiAl(database);
         }
-        public string NamespaceIniAlSchemaIle(IDatabase database, string schemaName)
+
+        internal string NamespaceIniAlSchemaIle(IDatabase database, string p)
         {
-            return parser.NamespaceIniAlSchemaIle(database, schemaName);
+            return ProjeNamespaceIsminiAl(database);
         }
+
+
 
 
         #endregion
@@ -552,6 +551,8 @@ namespace Karkas.CodeGenerationHelper
             }
             return sonuc;
         }
+
+
     }
 }
 
