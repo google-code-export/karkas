@@ -12,7 +12,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         Column smoColumn;
         TableSqlServer table;
 
-        public ColumnSqlServer(Column pSmoColumn,TableSqlServer pTable)
+        public ColumnSqlServer(Column pSmoColumn, TableSqlServer pTable)
         {
             smoColumn = pSmoColumn;
             table = pTable;
@@ -69,21 +69,22 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         private string getLanguageTypeFromDataType()
         {
             if (
-                    DataTypeName.Equals("varchar") || 
-                    DataTypeName.Equals("nvarchar") || 
-                    DataTypeName.Equals("char") || 
+                    DataTypeName.Equals("varchar") ||
+                    DataTypeName.Equals("nvarchar") ||
+                    DataTypeName.Equals("char") ||
                     DataTypeName.Equals("nchar") ||
                     DataTypeName.Equals("ntext") ||
-                    DataTypeName.Equals("text") 
-                
+                    DataTypeName.Equals("Xml") ||
+                    DataTypeName.Equals("text")
+
                 )
             {
-                
+
                 return "string";
             }
             if (DataTypeName.Equals("uniqueidentifier"))
             {
-                return "System.Guid";
+                return "Guid";
             }
             if (DataTypeName.Equals("int"))
             {
@@ -102,8 +103,8 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
                 return "long";
             }
             if (
-                DataTypeName.Equals("datetime") || 
-                DataTypeName.Equals("smalldatetime") 
+                DataTypeName.Equals("datetime") ||
+                DataTypeName.Equals("smalldatetime")
                 )
             {
                 return "DateTime";
@@ -116,55 +117,60 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
             {
                 return "bool";
             }
-            
-                
-            
+
+
+
             if (
-                DataTypeName.Equals("numeric") || 
-                DataTypeName.Equals("decimal") || 
-                DataTypeName.Equals("money") || 
-                DataTypeName.Equals("smallmoney") 
+                DataTypeName.Equals("numeric") ||
+                DataTypeName.Equals("decimal") ||
+                DataTypeName.Equals("money") ||
+                DataTypeName.Equals("smallmoney")
                 )
             {
                 return "decimal";
             }
             if (DataTypeName.Equals("float"))
             {
-                return "float";
+                return "double";
             }
             if (DataTypeName.Equals("real"))
             {
-                return "double";
+                return "float";
             }
             if (
                 DataTypeName.Equals("image") ||
                 DataTypeName.Equals("binary") ||
-                DataTypeName.Equals("varbinary")  ||
+                DataTypeName.Equals("varbinary") ||
                 DataTypeName.Equals("timestamp")
                 )
             {
                 return "byte[]";
             }
             if (DataTypeName.Equals("sql_variant") )
+                
             {
                 return "object";
             }
 
-            
+
             return "Unknown";
 
         }
-
+        string _LanguageType;
         public string LanguageType
         {
             get
             {
-                string sonuc = getLanguageTypeFromDataType();
-                if (sonuc.Equals("Unknown"))
+                if (String.IsNullOrEmpty(_LanguageType))
                 {
-                    Console.WriteLine("Name : {0} , DataType : {1} ", Name, DataTypeName);
+                    string sonuc = getLanguageTypeFromDataType();
+                    if (sonuc.Equals("Unknown"))
+                    {
+                        Console.WriteLine("Name : {0} , DataType : {1} ", Name, DataTypeName);
+                    }
+                    _LanguageType = sonuc;
                 }
-                return sonuc;
+                return _LanguageType;
             }
         }
 
@@ -196,7 +202,13 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         {
             get
             {
-                return smoColumn.DataType.ToString();
+                string val = smoColumn.DataType.ToString();
+                if ( val == "")
+                {
+                    val = smoColumn.DataType.SqlDataType.ToString();
+                        
+                }
+                return val;
             }
         }
 
