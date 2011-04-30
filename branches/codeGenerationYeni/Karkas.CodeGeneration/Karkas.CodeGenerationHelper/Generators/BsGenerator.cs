@@ -30,7 +30,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
 
         private static Utils utils = new Utils();
-        public void Render(IZeusOutput output, IContainer container)
+        public void Render(IOutput output, IContainer container)
         {
             output.tabLevel = 0;
             IDatabase database = container.Database;
@@ -88,7 +88,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             }
         }
 
-        private void OverrideDatabaseNameYaz(IZeusOutput output, IContainer table)
+        private void OverrideDatabaseNameYaz(IOutput output, IContainer table)
         {
             output.autoTabLn("public override string DatabaseName");
             BaslangicSusluParentezVeTabArtir(output);
@@ -100,7 +100,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         }
 
 
-        private static void sorgulaPkAdiIleYaz(IZeusOutput output, string classNameTypeLibrary, string pkType, string pkAdi)
+        private static void sorgulaPkAdiIleYaz(IOutput output, string classNameTypeLibrary, string pkType, string pkAdi)
         {
             string classSatiri = "public " + classNameTypeLibrary + " Sorgula"
                             + pkAdi + "Ile(" + pkType
@@ -113,7 +113,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             output.autoTabLn("}");
         }
 
-        private void SilKomutuYazPkIle(IZeusOutput output)
+        private void SilKomutuYazPkIle(IOutput output)
         {
             output.autoTabLn(string.Format("public void Sil({0} {1})", pkType, pkAdi));
             BaslangicSusluParentezVeTabArtir(output);
@@ -122,7 +122,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         }
 
-        private static void classYaz(IZeusOutput output, string classNameBs, string classNameDal, string classNameTypeLibrary)
+        private static void classYaz(IOutput output, string classNameBs, string classNameDal, string classNameTypeLibrary)
         {
             output.autoTab("public partial class ");
             output.write(classNameBs);
@@ -130,7 +130,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             output.writeln(classNameDal + ">");
         }
 
-        public void usingNamespaceleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceBsWithSchema, string baseNameSpaceDalWithSchema)
+        public void usingNamespaceleriYaz(IOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceBsWithSchema, string baseNameSpaceDalWithSchema)
         {
             output.autoTabLn("");
             output.autoTabLn("using System;");

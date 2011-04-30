@@ -13,7 +13,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         string masterName = "Main";
 
-        public void Render(IZeusOutput output, ITable pTable,string pMasterName)
+        public void Render(IOutput output, ITable pTable,string pMasterName)
         {
             IDatabase database = pTable.Database;
             string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, pTable.Schema);
@@ -62,7 +62,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         }
 
 
-        public void writeTableRows(IZeusOutput output, ITable table)
+        public void writeTableRows(IOutput output, ITable table)
         {
             output.writeln("<table class=\"AnaTablo\">");
             output.incTab();
@@ -85,7 +85,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         }
 
-        private void cellYazisiniGetir(IZeusOutput output, IColumn column, string propertyVariableName)
+        private void cellYazisiniGetir(IOutput output, IColumn column, string propertyVariableName)
         {
             if ((column.LanguageType == "Guid") || (column.LanguageType == "byte[]"))
             {

@@ -12,7 +12,7 @@ namespace Karkas.CodeGenerationHelper.Generators
     {
         InsertScriptHelper insertHelper = new InsertScriptHelper();
 
-        public void Render(IZeusOutput output, ITable table, string connectionString)
+        public void Render(IOutput output, ITable table, string connectionString)
         {
             Utils utils = new Utils();
             output.writeln(insertHelper.GetRowsToBeInserted(table.Database.Name, table.Schema, table.Name, connectionString));

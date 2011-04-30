@@ -29,7 +29,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         string pkType = "";
 
         private static Utils utils = new Utils();
-        public void Render(IZeusOutput output, IContainer container)
+        public void Render(IOutput output, IContainer container)
         {
             output.tabLevel = 0;
 
@@ -104,7 +104,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         }
 
-        private static void usingleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibraryWithSchema, string baseNameSpaceDalWithSchema, string baseNameSpaceBsWithSchema)
+        private static void usingleriYaz(IOutput output, string schemaName, string baseNameSpaceTypeLibraryWithSchema, string baseNameSpaceDalWithSchema, string baseNameSpaceBsWithSchema)
         {
             output.autoTabLn("");
             output.autoTabLn("using System;");
@@ -125,7 +125,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
 
 
-        private void ClassBaslangicYaz(IZeusOutput output, string classNameTypeLibrary, string classNameBs, string classNameBsWrapper)
+        private void ClassBaslangicYaz(IOutput output, string classNameTypeLibrary, string classNameBs, string classNameBsWrapper)
         {
             
             output.autoTabLn("[DataObject]");
@@ -149,7 +149,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
 
 
-        private void SorgulaPKAdiIleYaz(IZeusOutput output, string classNameTypeLibrary, string pkType, string pkAdi)
+        private void SorgulaPKAdiIleYaz(IOutput output, string classNameTypeLibrary, string pkType, string pkAdi)
         {
             output.autoTabLn("[DataObjectMethod(DataObjectMethodType.Select)]");
             output.autoTabLn(string.Format("public {0} Sorgula{1}Ile({2} p1)",classNameTypeLibrary,pkAdi,pkType));
@@ -163,7 +163,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
 
 
-        private void SilKomutuYazPkIle(IZeusOutput output)
+        private void SilKomutuYazPkIle(IOutput output)
         {
             output.autoTabLn(string.Format("public void Sil({0} {1})", pkType, pkAdi));
             BaslangicSusluParentezVeTabArtir(output);

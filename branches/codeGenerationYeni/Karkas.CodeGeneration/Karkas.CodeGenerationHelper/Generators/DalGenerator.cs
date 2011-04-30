@@ -27,7 +27,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         string listeType = "";
         string identityType = "";
 
-        public string Render(IZeusOutput output, IContainer container)
+        public string Render(IOutput output, IContainer container)
         {
             output.tabLevel = 0;
             IDatabase database = container.Database;
@@ -118,7 +118,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         }
 
-        private void PrimaryKeyYaz(IZeusOutput output, IContainer table)
+        private void PrimaryKeyYaz(IOutput output, IContainer table)
         {
             output.autoTabLn("");
             output.autoTabLn("public override string PrimaryKey");
@@ -134,7 +134,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
 
 
-        private void SilKomutuYazPkIle(IZeusOutput output, string classNameTypeLibrary, IContainer container)
+        private void SilKomutuYazPkIle(IOutput output, string classNameTypeLibrary, IContainer container)
         {
             if (container is TableContainer)
             {
@@ -152,7 +152,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
 
 
-        private void identityKolonDegeriniSetleYaz(IZeusOutput output, IContainer table)
+        private void identityKolonDegeriniSetleYaz(IOutput output, IContainer table)
         {
             string methodYazisi = string.Format("protected override void identityKolonDegeriniSetle({0} pTypeLibrary,long pIdentityKolonValue)", classNameTypeLibrary);
             output.autoTabLn(methodYazisi);
@@ -167,7 +167,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         }
 
 
-        private void OverrideDatabaseNameYaz(IZeusOutput output, IContainer table)
+        private void OverrideDatabaseNameYaz(IOutput output, IContainer table)
         {
             output.autoTabLn("public override string DatabaseName");
             BaslangicSusluParentezVeTabArtir(output);
@@ -179,7 +179,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         }
 
 
-        private void UsingleriYaz(IZeusOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceDal)
+        private void UsingleriYaz(IOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceDal)
         {
             output.autoTabLn("");
             output.autoTabLn("using System;");
@@ -205,7 +205,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         }
 
-        private void ClassYaz(IZeusOutput output, string classNameTypeLibrary, bool identityVarmi, string identityType)
+        private void ClassYaz(IOutput output, string classNameTypeLibrary, bool identityVarmi, string identityType)
         {
             output.autoTab("public partial class ");
             output.write(classNameTypeLibrary);
@@ -216,7 +216,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         }
 
 
-        private void SelectCountYaz(IZeusOutput output, IContainer table)
+        private void SelectCountYaz(IOutput output, IContainer table)
         {
             output.autoTabLn("protected override string SelectCountString");
             BaslangicSusluParentezVeTabArtir(output);
@@ -229,7 +229,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         }
 
 
-        private void SelectStringYaz(IZeusOutput output, IContainer table)
+        private void SelectStringYaz(IOutput output, IContainer table)
         {
             output.autoTabLn("protected override string SelectString");
             BaslangicSusluParentezVeTabArtir(output);
@@ -248,7 +248,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
         }
 
-        private void DeleteStringYaz(IZeusOutput output, IContainer container)
+        private void DeleteStringYaz(IOutput output, IContainer container)
         {
             string cumle = "";
             output.autoTabLn("protected override string DeleteString");
@@ -287,7 +287,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             return ((column.IsInPrimaryKey) || columnVersiyonZamaniMi(column));
         }
 
-        private void UpdateStringYaz(IZeusOutput output, IContainer container, ref string pkcumlesi)
+        private void UpdateStringYaz(IOutput output, IContainer container, ref string pkcumlesi)
         {
             string cumle = "";
             output.autoTabLn("protected override string UpdateString");
@@ -338,7 +338,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
 
 
-        private void InsertStringYaz(IZeusOutput output, IContainer container, ref bool identityVarmi)
+        private void InsertStringYaz(IOutput output, IContainer container, ref bool identityVarmi)
         {
             string cumle = "";
 
@@ -401,12 +401,12 @@ namespace Karkas.CodeGenerationHelper.Generators
         }
 
 
-        private void listeTanimla(IZeusOutput output)
+        private void listeTanimla(IOutput output)
         {
             output.autoTabLn(listeType + " liste = new " + listeType + "();");
         }
 
-        private void SorgulaPkIleGetirYaz(IZeusOutput output, string classNameTypeLibrary, string pkAdi, string pkType)
+        private void SorgulaPkIleGetirYaz(IOutput output, string classNameTypeLibrary, string pkAdi, string pkType)
         {
             if (!string.IsNullOrEmpty(pkAdi))
             {
@@ -430,7 +430,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             }
         }
 
-        private void IdentityVarMiYaz(IZeusOutput output, bool identityVarmi)
+        private void IdentityVarMiYaz(IOutput output, bool identityVarmi)
         {
             string identitySonuc = "";
             if (identityVarmi)
@@ -451,7 +451,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
         }
-        private void PkGuidMiYaz(IZeusOutput output, IContainer table)
+        private void PkGuidMiYaz(IOutput output, IContainer table)
         {
             string pkGuidMiSonuc = "";
             if (utils.PkGuidMi(table))
@@ -475,7 +475,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             output.autoTabLn("");
         }
 
-        private void ProcessRowYaz(IZeusOutput output, IContainer table, string classNameTypeLibrary)
+        private void ProcessRowYaz(IOutput output, IContainer table, string classNameTypeLibrary)
         {
             string propertyVariableName = "";
             output.autoTab("protected override void ProcessRow(System.Data.IDataReader dr, ");
@@ -505,7 +505,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         }
 
 
-        private void InsertCommandParametersAddYaz(IZeusOutput output, IContainer table, string classNameTypeLibrary)
+        private void InsertCommandParametersAddYaz(IOutput output, IContainer table, string classNameTypeLibrary)
         {
             output.autoTab("protected override void InsertCommandParametersAdd(SqlCommand cmd, ");
             output.write(classNameTypeLibrary);
@@ -536,7 +536,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             return (column.Name == "VersiyonZamani");
         }
 
-        private void builderParameterEkle(IZeusOutput output, IColumn column)
+        private void builderParameterEkle(IOutput output, IColumn column)
         {
             if (column.CharacterMaxLength == 0)
             {
@@ -549,7 +549,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             }
         }
 
-        private void builderParameterEkleString(IZeusOutput output, IColumn column)
+        private void builderParameterEkleString(IOutput output, IColumn column)
         {
             string s = "builder.parameterEkle(\"@"
                         + column.Name
@@ -575,7 +575,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             }
         }
 
-        private void builderParameterEkleNormal(IZeusOutput output, IColumn column)
+        private void builderParameterEkleNormal(IOutput output, IColumn column)
         {
             string s = "builder.parameterEkle(\"@"
                         + column.Name
@@ -587,7 +587,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             output.autoTabLn(s);
         }
 
-        private void DeleteCommandParametersAddYaz(IZeusOutput output, IContainer table, string classNameTypeLibrary)
+        private void DeleteCommandParametersAddYaz(IOutput output, IContainer table, string classNameTypeLibrary)
         {
             output.autoTab("protected override void DeleteCommandParametersAdd(SqlCommand cmd, ");
             output.autoTab(classNameTypeLibrary);
@@ -606,7 +606,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
         }
 
-        private void UpdateCommandParametersAddYaz(IZeusOutput output, IContainer table, string classNameTypeLibrary)
+        private void UpdateCommandParametersAddYaz(IOutput output, IContainer table, string classNameTypeLibrary)
         {
             output.autoTab("protected override void UpdateCommandParametersAdd(SqlCommand cmd, ");
             output.autoTab(classNameTypeLibrary);

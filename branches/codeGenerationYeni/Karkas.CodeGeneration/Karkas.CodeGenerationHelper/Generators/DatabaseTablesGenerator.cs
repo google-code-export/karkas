@@ -12,7 +12,7 @@ namespace Karkas.CodeGenerationHelper.Generators
     {
         SmoHelper smoHelper = new SmoHelper();
         InsertScriptHelper insertHelper = new InsertScriptHelper();
-        public void Render(IZeusOutput output, ITable table, string connectionString)
+        public void Render(IOutput output, ITable table, string connectionString)
         {
             Utils utils = new Utils();
 

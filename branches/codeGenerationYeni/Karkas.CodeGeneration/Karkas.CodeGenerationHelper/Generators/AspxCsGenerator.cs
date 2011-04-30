@@ -11,7 +11,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         Utils utils = new Utils();
         KarkasXmlParser parser = new KarkasXmlParser();
 
-        public void Render(IZeusOutput output, ITable table)
+        public void Render(IOutput output, ITable table)
         {
             IDatabase database = table.Database;
 
@@ -54,7 +54,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         }
 
-        private static void renderPageLoad(IZeusOutput output)
+        private static void renderPageLoad(IOutput output)
         {
             output.autoTabLn("protected void Page_Load(object sender, EventArgs e)");
             output.autoTabLn("{");
@@ -64,7 +64,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             output.autoTabLn("}");
         }
 
-        public void renderUsing(IZeusOutput pOutput, ITable pTable)
+        public void renderUsing(IOutput pOutput, ITable pTable)
         {
             string strUsings = @"
 using System;

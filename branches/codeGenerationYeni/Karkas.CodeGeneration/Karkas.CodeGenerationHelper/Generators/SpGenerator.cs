@@ -39,7 +39,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         bool sorguSonucSetiTekElemanli = false;
         string sorguSonucuTekElemanTipi = "";
 
-        public void Render(IZeusOutput output, IProcedure proc)
+        public void Render(IOutput output, IProcedure proc)
         {
             output.tabLevel = 0;
             if (proc.Schema == "sys")
@@ -111,7 +111,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         }
 
-        private void RenderNormalForDefaultOverload(IZeusOutput output, IProcedure proc)
+        private void RenderNormalForDefaultOverload(IOutput output, IProcedure proc)
         {
             string ilkDefaultParameterName;
             if (defaultParameterValueVarmı(proc,out ilkDefaultParameterName))
@@ -164,7 +164,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             }
             return false;
         }
-        private void generateParametersMethodSignatureWithAdoTemplate(IZeusOutput output, IProcedure proc)
+        private void generateParametersMethodSignatureWithAdoTemplate(IOutput output, IProcedure proc)
         {
             output.autoTabLn("(");
             output.incTab();
@@ -197,7 +197,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
             output.autoTabLn(")");
         }
-        private void generateParametersOverloadCagir(IZeusOutput output, IProcedure proc)
+        private void generateParametersOverloadCagir(IOutput output, IProcedure proc)
         {
             output.autoTabLn("return " + methodName + "(");
             output.incTab();
@@ -246,7 +246,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         }
 
 
-        private void generateParametersMethodSignature(IZeusOutput output, IProcedure proc)
+        private void generateParametersMethodSignature(IOutput output, IProcedure proc)
         {
             output.autoTabLn("(");
             output.incTab();
@@ -271,7 +271,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             output.autoTabLn(")");
         }
 
-        private void generateParametersParameterBuilder(IZeusOutput output, IProcedure proc)
+        private void generateParametersParameterBuilder(IOutput output, IProcedure proc)
         {
             output.autoTabLn("ParameterBuilder builder = new ParameterBuilder();");
 
@@ -321,7 +321,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         }
 
-        private void typeGoreDegerYaz(IZeusOutput output, IParameter param)
+        private void typeGoreDegerYaz(IOutput output, IParameter param)
         {
             if (param.Direction == ParamDirection.Input)
             {
@@ -336,7 +336,7 @@ namespace Karkas.CodeGenerationHelper.Generators
                 output.write("out " + param.LanguageType + " " + param.Name);
             }
         }
-        private void RenderNormalWithAdoTemplate(IZeusOutput output, IProcedure proc)
+        private void RenderNormalWithAdoTemplate(IOutput output, IProcedure proc)
         {
             string sonucDegeri = donusDegeriVarsaSetle(proc);
             output.autoTabLn(string.Format("public static {0} {1}", sonucDegeri, methodName));
@@ -380,7 +380,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
         }
 
-        private void RenderNormal(IZeusOutput output, IProcedure proc)
+        private void RenderNormal(IOutput output, IProcedure proc)
         {
             string sonucDegeri = donusDegeriVarsaSetle(proc);
             output.autoTabLn(string.Format("public static {0} {1}", sonucDegeri, methodName));
@@ -399,7 +399,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         /// Write variable assignment code for input/output parameters in the list.
         /// </summary>
         /// <param name="output">Standard zeus output.</param>
-        private void assignInputOutputParameters(IZeusOutput output)
+        private void assignInputOutputParameters(IOutput output)
         {
             foreach (IParameter inputOutputParam in inputOutputParams)
             {
@@ -437,7 +437,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             return donusDegeri;
         }
 
-        private void UsingleriYaz(IZeusOutput output)
+        private void UsingleriYaz(IOutput output)
         {
             output.autoTabLn("using System;");
             output.autoTabLn("using System.Collections.Generic;");

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Karkas.CodeGenerationHelper.Interfaces
 {
-    public interface IZeusOutput
+    public interface IOutput
     {
         int tabLevel { get; set; }
 

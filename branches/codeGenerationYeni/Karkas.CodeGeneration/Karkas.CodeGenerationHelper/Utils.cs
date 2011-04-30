@@ -17,66 +17,66 @@ namespace Karkas.CodeGenerationHelper
     {
         #region Generator Helper Fonksiyonlari
 
-        public void RenderDatabaseTablesCode(IZeusOutput output, ITable table, string connectionString)
+        public void RenderDatabaseTablesCode(IOutput output, ITable table, string connectionString)
         {
             DatabaseTablesGenerator gen = new DatabaseTablesGenerator();
             gen.Render(output, table, connectionString);
 
         }
 
-        public void RenderInsertScriptsCode(IZeusOutput output, ITable table, string connectionString)
+        public void RenderInsertScriptsCode(IOutput output, ITable table, string connectionString)
         {
             InsertScriptsGenerator gen = new InsertScriptsGenerator();
             gen.Render(output, table, connectionString);
         }
 
-        public void RenderTypeLibraryCode(IZeusOutput output, ITable table)
+        public void RenderTypeLibraryCode(IOutput output, ITable table)
         {
             TypeLibraryGenerator gen = new TypeLibraryGenerator();
             gen.Render(output, new TableContainer(table));
         }
-        public void RenderTypeLibraryCode(IZeusOutput output, IView view)
+        public void RenderTypeLibraryCode(IOutput output, IView view)
         {
             TypeLibraryGenerator gen = new TypeLibraryGenerator();
             gen.Render(output, new ViewContainer(view));
         }
-        public void RenderStoredProcedureCode(IZeusOutput output, IProcedure proc)
+        public void RenderStoredProcedureCode(IOutput output, IProcedure proc)
         {
             SpGenerator gen = new SpGenerator();
             gen.Render(output, proc);
         }
 
-        public string RenderDalCode(IZeusOutput output, ITable table)
+        public string RenderDalCode(IOutput output, ITable table)
         {
             DalGenerator gen = new DalGenerator();
             return gen.Render(output, new TableContainer(table));
         }
-        public void RenderDalCode(IZeusOutput output, IView view)
+        public void RenderDalCode(IOutput output, IView view)
         {
             DalGenerator gen = new DalGenerator();
             gen.Render(output, new ViewContainer(view));
         }
-        public void RenderBsCode(IZeusOutput output, ITable table)
+        public void RenderBsCode(IOutput output, ITable table)
         {
             BsGenerator gen = new BsGenerator();
             gen.Render(output, new TableContainer(table));
         }
-        public void RenderBsCode(IZeusOutput output, IView view)
+        public void RenderBsCode(IOutput output, IView view)
         {
             BsGenerator gen = new BsGenerator();
             gen.Render(output, new ViewContainer(view));
         }
-        public void RenderBsWrapperCode(IZeusOutput output, ITable table)
+        public void RenderBsWrapperCode(IOutput output, ITable table)
         {
             BsWrapperGenerator gen = new BsWrapperGenerator();
             gen.Render(output, new TableContainer(table));
         }
-        public void RenderBsWrapperCode(IZeusOutput output, IView view)
+        public void RenderBsWrapperCode(IOutput output, IView view)
         {
             BsWrapperGenerator gen = new BsWrapperGenerator();
             gen.Render(output, new ViewContainer(view));
         }
-        public void RenderAspxCode(IZeusOutput output, ITable table, string pMasterName)
+        public void RenderAspxCode(IOutput output, ITable table, string pMasterName)
         {
             AspxGenerator genA = new AspxGenerator();
             genA.Render(output, table, pMasterName);
