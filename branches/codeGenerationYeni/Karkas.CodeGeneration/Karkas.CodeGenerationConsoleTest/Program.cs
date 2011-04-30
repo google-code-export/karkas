@@ -27,7 +27,7 @@ namespace Karkas.MyGenerationConsoleTest
             IOutput output = new SqlServerOutput();
             DatabaseSqlServer database = new DatabaseSqlServer(ConnectionString, "KARKAS_ORNEK");
 
-            ITable table = new TableSqlServer(database, "ACIKLAMA", "ORNEKLER");
+            ITable table = new TableSqlServer(database, "ORNEK_TABLO", "ORNEKLER");
 
 
             typeGen.Render(output, table);

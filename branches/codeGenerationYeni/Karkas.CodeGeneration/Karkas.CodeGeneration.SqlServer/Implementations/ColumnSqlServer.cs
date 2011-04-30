@@ -68,19 +68,103 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
 
         private string getLanguageTypeFromDataType()
         {
-
+            if (
+                    DataTypeName.Equals("varchar") || 
+                    DataTypeName.Equals("nvarchar") || 
+                    DataTypeName.Equals("char") || 
+                    DataTypeName.Equals("nchar") ||
+                    DataTypeName.Equals("ntext") ||
+                    DataTypeName.Equals("text") 
+                
+                )
+            {
+                
+                return "string";
+            }
             if (DataTypeName.Equals("uniqueidentifier"))
             {
                 return "System.Guid";
             }
+            if (DataTypeName.Equals("int"))
+            {
+                return "int";
+            }
+            if (DataTypeName.Equals("tinyint"))
+            {
+                return "byte";
+            }
+            if (DataTypeName.Equals("smallint"))
+            {
+                return "short";
+            }
+            if (DataTypeName.Equals("bigint"))
+            {
+                return "long";
+            }
+            if (
+                DataTypeName.Equals("datetime") || 
+                DataTypeName.Equals("smalldatetime") 
+                )
+            {
+                return "DateTime";
+            }
+            if (DataTypeName.Equals("bit"))
+            {
+                return "bool";
+            }
+            if (DataTypeName.Equals("bit"))
+            {
+                return "bool";
+            }
+            
+                
+            
+            if (
+                DataTypeName.Equals("numeric") || 
+                DataTypeName.Equals("decimal") || 
+                DataTypeName.Equals("money") || 
+                DataTypeName.Equals("smallmoney") 
+                )
+            {
+                return "decimal";
+            }
+            if (DataTypeName.Equals("float"))
+            {
+                return "float";
+            }
+            if (DataTypeName.Equals("real"))
+            {
+                return "double";
+            }
+            if (
+                DataTypeName.Equals("image") ||
+                DataTypeName.Equals("binary") ||
+                DataTypeName.Equals("varbinary")  ||
+                DataTypeName.Equals("timestamp")
+                )
+            {
+                return "byte[]";
+            }
+            if (DataTypeName.Equals("sql_variant") )
+            {
+                return "object";
+            }
+
+            
             return "Unknown";
+
         }
 
         public string LanguageType
         {
             get
             {
-                return getLanguageTypeFromDataType();
+                string sonuc = getLanguageTypeFromDataType();
+                if (sonuc.Equals("Unknown"))
+                {
+                    Console.WriteLine("Name : {0} , DataType : {1} ", Name, DataTypeName);
+                }
+                return sonuc;
             }
         }
 
