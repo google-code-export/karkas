@@ -17,7 +17,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         public TableSqlServer(DatabaseSqlServer pDatabase,string pFullName)
         {
             database = pDatabase;
-            smoTable = pDatabase.database.Tables[pFullName];
+            smoTable = pDatabase.smoDatabase.Tables[pFullName];
             if (smoTable == null)
             {
                 throw new ArgumentException("Table can not be found, Tablo bulunamadı");
@@ -26,7 +26,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         public TableSqlServer(DatabaseSqlServer pDatabase, string pTableName,string pSchemaName)
         {
             database = pDatabase;
-            smoTable = pDatabase.database.Tables[pTableName,pSchemaName];
+            smoTable = pDatabase.smoDatabase.Tables[pTableName,pSchemaName];
             if (smoTable == null)
             {
                 throw new ArgumentException("Table can not be found, Tablo bulunamadı");
@@ -144,5 +144,11 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
                 return Name;
             }
         }
+
+        public override string ToString()
+        {
+            return String.Format("Table : {0}.{1}", Name, Schema);
+        }
+
     }
 }

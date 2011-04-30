@@ -13,16 +13,16 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
 {
     public class DatabaseSqlServer : IDatabase
     {
-        internal Server server;
-        internal Database database;
+        internal Server smoServer;
+        internal Database smoDatabase;
         internal string connectionString;
 
         public DatabaseSqlServer(String pConnectionString,string pDatabaseName,string pProjectNameSpace,string pProjectFolder)
         {
             connectionString = ConnectionHelper.RemoveProviderFromConnectionString(pConnectionString);
 
-            server = new Server(new ServerConnection(new SqlConnection(connectionString)));
-            database = server.Databases[pDatabaseName];
+            smoServer = new Server(new ServerConnection(new SqlConnection(connectionString)));
+            smoDatabase = smoServer.Databases[pDatabaseName];
             _projectNameSpace = pProjectNameSpace;
             _projectFolder = pProjectFolder;
 
@@ -50,12 +50,38 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         {
             get
             {
-                return database.Name;
+                return smoDatabase.Name;
             }
             set
             {
                 throw new NotImplementedException();
             }
         }
+
+        List<ITable> _tableList;
+        public List<ITable> Tables
+        {
+           
+            get 
+            {
+                if (_tableList == null)
+                {
+                    _tableList = new List<ITable>();
+                    foreach (Table smoTable in smoDatabase.Tables)
+                    {
+                        ITable t = new TableSqlServer(this, smoTable.Name, smoTable.Schema);
+                        _tableList.Add(t);
+                    }
+                }
+                return _tableList;
+            
+            }
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
     }
 }

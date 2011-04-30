@@ -27,10 +27,16 @@ namespace Karkas.MyGenerationConsoleTest
             IOutput output = new SqlServerOutput();
             DatabaseSqlServer database = new DatabaseSqlServer(ConnectionString, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\KarkascodeGenerationYeni\\Karkas.CodeGeneration\\OrnekGeneration");
 
-            ITable table = new TableSqlServer(database, "ORNEK_TABLO", "ORNEKLER");
+            List<ITable> tableListesi = database.Tables;
+
+            foreach (ITable table in tableListesi)
+            {
+                typeGen.Render(output, table);
+            }
+            
 
 
-            typeGen.Render(output, table);
+
 
         }
 

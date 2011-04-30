@@ -11,5 +11,7 @@ namespace Karkas.CodeGenerationHelper.Interfaces
         string projectNameSpace { get; }
         string projectFolder { get; }
 
+
+        List<ITable> Tables { get; }
     }
 }
