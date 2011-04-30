@@ -21,7 +21,7 @@ namespace Karkas.MyGenerationConsoleTest.Tests.SmoHelper
 		{
 
 			Utils uti = new Utils();
-			string[] schemalar = uti.GetSchemaList("NOBET", ConnectionString);
+			string[] schemalar = uti.GetSchemaList("KARKAS_ORNEK", ConnectionString);
 			foreach (string item in schemalar)
 			{
 				Console.WriteLine(item);
