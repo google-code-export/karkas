@@ -100,25 +100,10 @@ namespace Karkas.CodeGenerationHelper.Generators
             output.autoTabLn("[Serializable]");
             DebuggerDisplayYaz(output, table);
             output.autoTab("public partial class ");
-            output.autoTab(className);
-            output.autoTabLn("");
-
-            try
-            {
-                output.getPreservedData("inheritance");
-                output.preserve("inheritance");
-            }
-            catch (NullReferenceException)
-            {
-                string preservedBlock = output.getPreserveBlock("inheritance");
-                string newBlock = preservedBlock.Replace("////",
-                "// " + Environment.NewLine
-                + ": BaseTypeLibrary " + Environment.NewLine + "//");
-                output.writeLine("");
-                output.autoTab(newBlock);
-            }
-
+            output.autoTab(className + ": BaseTypeLibrary");
             output.writeLine("");
+
+
         }
 
         private static void DebuggerDisplayYaz(IOutput output, IContainer table)

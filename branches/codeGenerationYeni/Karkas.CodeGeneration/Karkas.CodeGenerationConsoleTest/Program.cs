@@ -25,7 +25,7 @@ namespace Karkas.MyGenerationConsoleTest
 
             TypeLibraryGenerator typeGen = new TypeLibraryGenerator();
             IOutput output = new SqlServerOutput();
-            DatabaseSqlServer database = new DatabaseSqlServer(ConnectionString, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\KarkascodeGenerationYeni\\Karkas.CodeGeneration\\OrnekGeneration");
+            DatabaseSqlServer database = new DatabaseSqlServer(ConnectionString, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
 
             List<ITable> tableListesi = database.Tables;
 
