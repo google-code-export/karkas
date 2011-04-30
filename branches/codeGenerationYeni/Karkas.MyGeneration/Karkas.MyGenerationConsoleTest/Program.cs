@@ -4,7 +4,6 @@ using System.Text;
 using Karkas.MyGenerationHelper;
 using Karkas.MyGenerationHelper.Generators;
 using System.Configuration;
-using MyMeta;
 using Karkas.MyGenerationTest;
 using Karkas.Core.DataUtil;
 using Karkas.MyGenerationHelper.SmoHelpers;

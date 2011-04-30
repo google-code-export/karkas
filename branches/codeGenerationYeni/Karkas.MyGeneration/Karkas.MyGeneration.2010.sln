@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karkas.MyGenerationHelper.2010", "Karkas.MyGenerationHelper\Karkas.MyGenerationHelper.2010.csproj", "{100A5B2E-8244-4331-A069-AC9FA98954A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karkas.MyGenerationConsoleTest.2010", "Karkas.MyGenerationConsoleTest\Karkas.MyGenerationConsoleTest.2010.csproj", "{BAB01BD3-050F-4553-A3FD-9E6231E5BD55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{100A5B2E-8244-4331-A069-AC9FA98954A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{100A5B2E-8244-4331-A069-AC9FA98954A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{100A5B2E-8244-4331-A069-AC9FA98954A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAB01BD3-050F-4553-A3FD-9E6231E5BD55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAB01BD3-050F-4553-A3FD-9E6231E5BD55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAB01BD3-050F-4553-A3FD-9E6231E5BD55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAB01BD3-050F-4553-A3FD-9E6231E5BD55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
