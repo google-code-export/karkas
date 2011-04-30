@@ -71,8 +71,19 @@ namespace Karkas.CodeGenerationHelper
             buffer.Append(pLine);
         }
 
+        private string findDirectoryNameFromFileName(string pFileName)
+        {
+            return new FileInfo(pFileName).Directory.FullName;
+        }
+
         public void save(string pFileName, bool pIfExistsOverride)
         {
+            string directoryName = findDirectoryNameFromFileName(pFileName);
+            if (!Directory.Exists(directoryName))
+            {
+                Directory.CreateDirectory(directoryName);
+            }
+
             if (pIfExistsOverride)
             {
                 File.WriteAllText(pFileName, buffer.ToString(),Encoding.UTF8);

@@ -7,26 +7,26 @@ namespace Karkas.CodeGenerationHelper.Interfaces
 {
     public interface IColumn
     {
-        bool IsAutoKey { get; set; }
+        bool IsAutoKey { get;  }
 
-        string Name { get; set; }
+        string Name { get;  }
 
-        bool IsInPrimaryKey { get; set; }
+        bool IsInPrimaryKey { get;  }
 
-        bool IsInForeignKey { get; set; }
+        bool IsInForeignKey { get;  }
 
-        bool IsNullable { get; set; }
+        bool IsNullable { get;  }
 
-        string LanguageType { get; set; }
+        string LanguageType { get;  }
 
-        ITable Table { get; set; }
+        ITable Table { get;  }
 
-        bool IsComputed { get; set; }
+        bool IsComputed { get;  }
 
-        string DbTargetType { get; set; }
+        string DbTargetType { get;  }
 
-        string DataTypeName { get; set; }
+        string DataTypeName { get;  }
 
-        int CharacterMaxLength { get; set; }
+        int CharacterMaxLength { get;  }
     }
 }

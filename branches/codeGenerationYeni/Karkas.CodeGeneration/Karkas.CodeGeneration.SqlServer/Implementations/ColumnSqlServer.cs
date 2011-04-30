@@ -3,20 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Karkas.CodeGenerationHelper.Interfaces;
+using Microsoft.SqlServer.Management.Smo;
 
 namespace Karkas.CodeGeneration.SqlServer.Implementations
 {
     public class ColumnSqlServer : IColumn
     {
+        Column smoColumn;
+        TableSqlServer table;
+
+        public ColumnSqlServer(Column pSmoColumn,TableSqlServer pTable)
+        {
+            smoColumn = pSmoColumn;
+            table = pTable;
+        }
+
         public bool IsAutoKey
         {
             get
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                if (smoColumn.Identity)
+                {
+                    return true;
+                }
+                if (smoColumn.RowGuidCol)
+                {
+                    return true;
+                }
+                return false;
             }
         }
 
@@ -24,11 +38,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         {
             get
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                return smoColumn.Name;
             }
         }
 
@@ -36,11 +46,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         {
             get
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                return smoColumn.InPrimaryKey;
             }
         }
 
@@ -48,11 +54,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         {
             get
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                return smoColumn.IsForeignKey;
             }
         }
 
@@ -60,23 +62,25 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         {
             get
             {
-                throw new NotImplementedException();
+                return smoColumn.Nullable;
             }
-            set
+        }
+
+        private string getLanguageTypeFromDataType()
+        {
+
+            if (DataTypeName.Equals("uniqueidentifier"))
             {
-                throw new NotImplementedException();
+                return "System.Guid";
             }
+            return "Unknown";
         }
 
         public string LanguageType
         {
             get
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                return getLanguageTypeFromDataType();
             }
         }
 
@@ -84,11 +88,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         {
             get
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                return table;
             }
         }
 
@@ -96,11 +96,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         {
             get
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                return smoColumn.Computed;
             }
         }
 
@@ -108,11 +104,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         {
             get
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                return smoColumn.DataType.ToString();
             }
         }
 
@@ -120,11 +112,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         {
             get
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                return smoColumn.DataType.ToString();
             }
         }
 
@@ -132,11 +120,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         {
             get
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                return smoColumn.DataType.MaximumLength;
             }
         }
     }

@@ -10,6 +10,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
     public class TableSqlServer : ITable
     {
         private IDatabase database;
+        private ColumnCollection smoColumnCollection;
         private string name;
         Table smoTable;
 
@@ -72,11 +73,27 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
             }
         }
 
+        private List<IColumn> _Columns = null;
         public List<IColumn> Columns
         {
             get
             {
-                throw new NotImplementedException();
+                if (_Columns != null)
+                {
+                    return _Columns;
+                }
+                _Columns = new List<IColumn>();
+
+                if (smoColumnCollection == null)
+                {
+                    smoColumnCollection = smoTable.Columns;
+                }
+                foreach (Column smoColumn in smoColumnCollection)
+                {
+                    IColumn column = new ColumnSqlServer(smoColumn,this);
+                    _Columns.Add(column);
+                }
+                return _Columns;
             }
             set
             {
