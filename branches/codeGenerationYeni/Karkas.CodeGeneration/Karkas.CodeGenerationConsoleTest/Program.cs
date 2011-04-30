@@ -7,6 +7,9 @@ using System.Configuration;
 using Karkas.MyGenerationTest;
 using Karkas.Core.DataUtil;
 using Karkas.CodeGenerationHelper.SmoHelpers;
+using Karkas.CodeGeneration.SqlServer;
+using Karkas.CodeGenerationHelper.Interfaces;
+using Karkas.CodeGeneration.SqlServer.Implementations;
 
 namespace Karkas.MyGenerationConsoleTest
 {
@@ -18,6 +21,21 @@ namespace Karkas.MyGenerationConsoleTest
         public static void Main(string[] args)
         {
 
+
+
+            TypeLibraryGenerator typeGen = new TypeLibraryGenerator();
+            IOutput output = new SqlServerOutput();
+            DatabaseSqlServer database = new DatabaseSqlServer(ConnectionString, "KARKAS_ORNEK");
+
+            ITable table = new TableSqlServer(database, "ACIKLAMA", "ORNEKLER");
+
+
+            typeGen.Render(output, table);
+
+        }
+
+        private static void schemaListesiEkranaYaz()
+        {
             Utils uti = new Utils();
             string[] schemalar = uti.GetSchemaList("KARKAS_ORNEK", ConnectionString);
             foreach (var item in schemalar)

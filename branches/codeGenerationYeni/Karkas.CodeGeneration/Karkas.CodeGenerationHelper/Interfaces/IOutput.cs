@@ -13,11 +13,11 @@ namespace Karkas.CodeGenerationHelper.Interfaces
 
         void autoTab(string p);
 
-        void incTab();
+        void increaseTab();
 
-        void decTab();
+        void decreaseTab();
 
-        void writeln(string p);
+        void writeLine(string p);
 
         void save(string p, bool p_2);
 
@@ -25,7 +25,7 @@ namespace Karkas.CodeGenerationHelper.Interfaces
 
         void setPreserveSource(string outputFullFileNameGenerated, string p, string p_2);
 
-        void saveEnc(string outputFullFileNameGenerated, string p, string p_2);
+        void saveEncoding(string outputFullFileNameGenerated, string p, string p_2);
 
         void getPreservedData(string p);
 

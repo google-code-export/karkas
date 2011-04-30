@@ -15,7 +15,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         public void Render(IOutput output, ITable table, string connectionString)
         {
             Utils utils = new Utils();
-            output.writeln(insertHelper.GetRowsToBeInserted(table.Database.Name, table.Schema, table.Name, connectionString));
+            output.writeLine(insertHelper.GetRowsToBeInserted(table.Database.Name, table.Schema, table.Name, connectionString));
             output.save(Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(table.Database, table.Schema) + "\\Database\\InsertScripts\\" + table.Schema, table.Schema + "_" + table.Name + ".Inserts.sql"), false);
             output.clear();
 

@@ -106,7 +106,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
-            output.saveEnc(outputFullFileName, "o", "utf8");
+            output.saveEncoding(outputFullFileName, "o", "utf8");
             output.clear();
 
         }
@@ -167,7 +167,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         private void generateParametersMethodSignatureWithAdoTemplate(IOutput output, IProcedure proc)
         {
             output.autoTabLn("(");
-            output.incTab();
+            output.increaseTab();
             for (int i = 0; i < proc.Parameters.Count; i++)
             {
                 IParameter param = proc.Parameters[i];
@@ -184,7 +184,7 @@ namespace Karkas.CodeGenerationHelper.Generators
                     }
                     typeGoreDegerYaz(output, param);
                 }
-                output.writeln("");
+                output.writeLine("");
             }
             if (parametresizMi)
             {
@@ -200,7 +200,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         private void generateParametersOverloadCagir(IOutput output, IProcedure proc)
         {
             output.autoTabLn("return " + methodName + "(");
-            output.incTab();
+            output.increaseTab();
             bool ilkVirgulsuzYazilmadi = true;
             for (int i = 0; i < proc.Parameters.Count; i++)
             {
@@ -249,7 +249,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         private void generateParametersMethodSignature(IOutput output, IProcedure proc)
         {
             output.autoTabLn("(");
-            output.incTab();
+            output.increaseTab();
             for (int i = 0; i < proc.Parameters.Count; i++)
             {
                 IParameter param = proc.Parameters[i];
@@ -266,7 +266,7 @@ namespace Karkas.CodeGenerationHelper.Generators
                     }
                     typeGoreDegerYaz(output, param);
                 }
-                output.writeln("");
+                output.writeLine("");
             }
             output.autoTabLn(")");
         }

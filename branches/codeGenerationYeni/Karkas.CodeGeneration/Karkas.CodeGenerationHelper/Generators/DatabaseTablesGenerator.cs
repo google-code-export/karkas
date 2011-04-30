@@ -16,11 +16,11 @@ namespace Karkas.CodeGenerationHelper.Generators
         {
             Utils utils = new Utils();
 
-            output.writeln(smoHelper.GetTableDescription(table.Database.Name, table.Schema, table.Name, connectionString));
+            output.writeLine(smoHelper.GetTableDescription(table.Database.Name, table.Schema, table.Name, connectionString));
             output.save(Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(table.Database, table.Schema) + "\\Database\\CreateScripts\\" + table.Schema, table.Schema + "_" + table.Name + ".CreateTable.sql"), false);
             output.clear();
 
-            output.writeln(smoHelper.GetTableRelationDescriptions(table.Database.Name, table.Schema, table.Name, connectionString));
+            output.writeLine(smoHelper.GetTableRelationDescriptions(table.Database.Name, table.Schema, table.Name, connectionString));
             output.save(Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(table.Database, table.Schema) + "\\Database\\CreateRelationScripts\\" + table.Schema, table.Schema + "_" + table.Name + ".Relations.sql"), false);
             output.clear();
         }

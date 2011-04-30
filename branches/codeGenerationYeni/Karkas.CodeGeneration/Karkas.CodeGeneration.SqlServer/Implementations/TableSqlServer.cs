@@ -3,11 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Karkas.CodeGenerationHelper.Interfaces;
+using Microsoft.SqlServer.Management.Smo;
 
-namespace Karkas.CodeGeneration.SqlServer
+namespace Karkas.CodeGeneration.SqlServer.Implementations
 {
     public class TableSqlServer : ITable
     {
+        private IDatabase database;
+        private string name;
+        Table smoTable;
+
+        public TableSqlServer(DatabaseSqlServer pDatabase,string pFullName)
+        {
+            database = pDatabase;
+            smoTable = pDatabase.database.Tables[pFullName];
+            if (smoTable == null)
+            {
+                throw new ArgumentException("Table can not be found, Tablo bulunamadı");
+            }
+        }
+        public TableSqlServer(DatabaseSqlServer pDatabase, string pTableName,string pSchemaName)
+        {
+            database = pDatabase;
+            smoTable = pDatabase.database.Tables[pTableName,pSchemaName];
+            if (smoTable == null)
+            {
+                throw new ArgumentException("Table can not be found, Tablo bulunamadı");
+            }
+        }
+
+
+
         public int findIndexFromName(string name)
         {
             throw new NotImplementedException();
@@ -17,11 +43,16 @@ namespace Karkas.CodeGeneration.SqlServer
         {
             get
             {
-                throw new NotImplementedException();
+                return database;
             }
             set
             {
-                throw new NotImplementedException();
+                if (value is TableSqlServer)
+                {
+                    database = value;
+                }
+                throw new ArgumentException("Beklenmedik Tip, TableSqlServer bekleniyordu");
+
             }
         }
 
@@ -29,11 +60,7 @@ namespace Karkas.CodeGeneration.SqlServer
         {
             get
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                return smoTable.Schema;
             }
         }
 
@@ -41,11 +68,7 @@ namespace Karkas.CodeGeneration.SqlServer
         {
             get
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                return smoTable.Name;
             }
         }
 
@@ -101,11 +124,7 @@ namespace Karkas.CodeGeneration.SqlServer
         {
             get
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                return Name;
             }
         }
     }

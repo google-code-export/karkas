@@ -83,7 +83,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
             string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, container.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.generated.cs");
             string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, container.Schema) + "\\BsWrapper\\" + baseNameSpace + ".BsWrapper\\" + schemaName, classNameTypeLibrary + "BsWrapper.cs");
-            output.saveEnc(outputFullFileNameGenerated, "o", "utf8");
+            output.saveEncoding(outputFullFileNameGenerated, "o", "utf8");
             output.clear();
 
             if (!File.Exists(outputFullFileName))

@@ -99,17 +99,17 @@ namespace Karkas.CodeGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
 
-            output.saveEnc(outputFullFileNameGenerated, "o", "utf8");
+            output.saveEncoding(outputFullFileNameGenerated, "o", "utf8");
             output.clear();
             if (!File.Exists(outputFullFileName))
             {
                 UsingleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceDal);
                 output.autoTab("public partial class ");
-                output.writeln(classNameTypeLibrary + "Dal");
+                output.writeLine(classNameTypeLibrary + "Dal");
                 BaslangicSusluParentezVeTabArtir(output);
                 BitisSusluParentezVeTabAzalt(output);
                 BitisSusluParentezVeTabAzalt(output);
-                output.saveEnc(outputFullFileName, "o", "utf8");
+                output.saveEncoding(outputFullFileName, "o", "utf8");
                 output.clear();
 
             }
@@ -211,7 +211,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             output.write(classNameTypeLibrary);
             output.write("Dal : BaseDal<");
             output.write(classNameTypeLibrary);
-            output.writeln(">");
+            output.writeLine(">");
             BaslangicSusluParentezVeTabArtir(output);
         }
 
@@ -480,7 +480,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             string propertyVariableName = "";
             output.autoTab("protected override void ProcessRow(System.Data.IDataReader dr, ");
             output.write(classNameTypeLibrary);
-            output.writeln(" row)");
+            output.writeLine(" row)");
             BaslangicSusluParentezVeTabArtir(output);
             for (int i = 0; i < table.Columns.Count; i++)
             {
@@ -509,7 +509,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         {
             output.autoTab("protected override void InsertCommandParametersAdd(SqlCommand cmd, ");
             output.write(classNameTypeLibrary);
-            output.writeln(" row)");
+            output.writeLine(" row)");
             BaslangicSusluParentezVeTabArtir(output);
             output.autoTabLn("ParameterBuilder builder = new ParameterBuilder(cmd);");
 

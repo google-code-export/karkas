@@ -27,10 +27,6 @@ namespace Karkas.CodeGenerationHelper.Interfaces
             {
                 return this.view.Alias;
             }
-            set
-            {
-                this.view.Alias = value;
-            }
         }
 
         public List<IColumn> Columns

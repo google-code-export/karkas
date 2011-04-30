@@ -3,86 +3,130 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Karkas.CodeGenerationHelper.Interfaces;
+using System.IO;
 
 namespace Karkas.CodeGenerationHelper
 {
     public class BaseOutput : IOutput
     {
+
+        StringBuilder buffer = new StringBuilder(1000);
+        private int _tabLevel = 0;
+        public BaseOutput()
+        {
+
+        }
+
         public int tabLevel
         {
             get
             {
-                throw new NotImplementedException();
+                return _tabLevel;
             }
             set
             {
-                throw new NotImplementedException();
+                _tabLevel = value;
             }
         }
 
-        public void autoTabLn(string p)
+        private void writeNewLine()
         {
-            throw new NotImplementedException();
+            buffer.Append(Environment.NewLine);
         }
 
-        public void autoTab(string p)
+        public void autoTabLn(string pLine)
         {
-            throw new NotImplementedException();
+            autoTab(pLine);
+            writeNewLine();
+            
         }
 
-        public void incTab()
+        public void autoTab(string pLine)
         {
-            throw new NotImplementedException();
+            for (int i = 1; i < _tabLevel; i++)
+            {
+                buffer.Append("\t");
+            }
+            buffer.Append(pLine);
         }
 
-        public void decTab()
+        public void increaseTab()
         {
-            throw new NotImplementedException();
+            _tabLevel++;
         }
 
-        public void writeln(string p)
+        public void decreaseTab()
         {
-            throw new NotImplementedException();
+            _tabLevel--;
         }
 
-        public void save(string p, bool p_2)
+        public void writeLine(string pLine)
         {
-            throw new NotImplementedException();
+            write(pLine);
+            writeNewLine();
+        }
+
+        public void write(string pLine)
+        {
+            buffer.Append(pLine);
+        }
+
+        public void save(string pFileName, bool pIfExistsOverride)
+        {
+            if (pIfExistsOverride)
+            {
+                File.WriteAllText(pFileName, buffer.ToString(),Encoding.UTF8);
+            }
+            else
+            {
+                if (!File.Exists(pFileName))
+                {
+                    File.WriteAllText(pFileName, buffer.ToString());
+                }
+            }
+        }
+
+        public void saveEncoding(string outputFullFileNameGenerated, string pOption, string pEncoding)
+        {
+            if (pOption == "o")
+            {
+                save(outputFullFileNameGenerated, true);
+            }
+            else
+            {
+                save(outputFullFileNameGenerated, false);
+            }
         }
 
         public void clear()
         {
-            throw new NotImplementedException();
+            buffer = new StringBuilder(1000);
         }
 
         public void setPreserveSource(string outputFullFileNameGenerated, string p, string p_2)
         {
-            throw new NotImplementedException();
-        }
-
-        public void saveEnc(string outputFullFileNameGenerated, string p, string p_2)
-        {
-            throw new NotImplementedException();
+            // TODO Simdilik bir sey yapmıcak
+            //throw new NotImplementedException();
         }
 
         public void getPreservedData(string p)
         {
-            throw new NotImplementedException();
+            // TODO Simdilik bir sey yapmıcak
+            //throw new NotImplementedException();
         }
 
         public void preserve(string p)
         {
-            throw new NotImplementedException();
+            // TODO Simdilik bir sey yapmıcak
+            //throw new NotImplementedException();
         }
 
         public string getPreserveBlock(string p)
         {
-            throw new NotImplementedException();
+            // TODO Simdilik bir sey yapmıcak
+            //throw new NotImplementedException();
+            return "";
         }
 
-        public void write(string p)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

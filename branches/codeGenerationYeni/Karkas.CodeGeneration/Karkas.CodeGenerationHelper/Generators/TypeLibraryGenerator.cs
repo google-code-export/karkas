@@ -27,7 +27,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
             string outputFullFileName = Path.Combine(utils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".cs");
             string outputFullFileNameGenerated = Path.Combine(utils.ProjeDizininiAl(database) + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".generated.cs");
-            output.setPreserveSource(outputFullFileNameGenerated, "//::", ":://");
+            //output.setPreserveSource(outputFullFileNameGenerated, "//::", ":://");
 
 
             usingNamespaceleriYaz(output, classNameSpace);
@@ -46,14 +46,14 @@ namespace Karkas.CodeGenerationHelper.Generators
             ShallowCopyYaz(output, table, className);
 
 
-            output.writeln("");
+            output.writeLine("");
 
             OnaylamaKoduYaz(output, table);
             EtiketIsimleriYaz(output, table, classNameSpace);
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
 
-            output.saveEnc(outputFullFileNameGenerated, "o", "utf8");
+            output.saveEncoding(outputFullFileNameGenerated, "o", "utf8");
             output.clear();
 
 
@@ -75,7 +75,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         }
 
 
-        public void usingNamespaceleriYaz(IOutput output, string classNameSpace)
+        private void usingNamespaceleriYaz(IOutput output, string classNameSpace)
         {
             output.autoTabLn("using System;");
             output.autoTabLn("using System.Data;");
@@ -90,13 +90,13 @@ namespace Karkas.CodeGenerationHelper.Generators
             output.autoTabLn("");
             output.autoTab("namespace ");
             output.autoTabLn(classNameSpace);
-            output.writeln("");
+            output.writeLine("");
             BaslangicSusluParentezVeTabArtir(output);
         }
 
         private static void ClassIsmiYaz(IOutput output, string className, IContainer table)
         {
-            output.incTab();
+            output.increaseTab();
             output.autoTabLn("[Serializable]");
             DebuggerDisplayYaz(output, table);
             output.autoTab("public partial class ");
@@ -114,11 +114,11 @@ namespace Karkas.CodeGenerationHelper.Generators
                 string newBlock = preservedBlock.Replace("////",
                 "// " + Environment.NewLine
                 + ": BaseTypeLibrary " + Environment.NewLine + "//");
-                output.writeln("");
+                output.writeLine("");
                 output.autoTab(newBlock);
             }
 
-            output.writeln("");
+            output.writeLine("");
         }
 
         private static void DebuggerDisplayYaz(IOutput output, IContainer table)
@@ -136,7 +136,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         }
         private static void ClassIsmiYaz(IOutput output, string className)
         {
-            output.incTab();
+            output.increaseTab();
             output.autoTabLn("[Serializable]");
             output.autoTab("public partial class ");
             output.autoTab(className);
@@ -153,11 +153,11 @@ namespace Karkas.CodeGenerationHelper.Generators
                 string newBlock = preservedBlock.Replace("////",
                 "// " + Environment.NewLine
                 + ": BaseTypeLibrary " + Environment.NewLine + "//");
-                output.writeln("");
+                output.writeLine("");
                 output.autoTab(newBlock);
             }
 
-            output.writeln("");
+            output.writeLine("");
         }
 
 
@@ -180,7 +180,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             BitisSusluParentezVeTabAzalt(output);
         }
 
-        public void PropertyIsimleriYaz(IOutput output, IContainer table, string className)
+        private void PropertyIsimleriYaz(IOutput output, IContainer table, string className)
         {
             output.autoTabLn("public class PropertyIsimleri");
             BaslangicSusluParentezVeTabArtir(output);
@@ -195,9 +195,9 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         }
 
-        public void PropertiesYaz(IOutput output, IContainer table)
+        private void PropertiesYaz(IOutput output, IContainer table)
         {
-            output.incTab();
+            output.increaseTab();
             foreach (IColumn column in table.Columns)
             {
                 string memberVariableName = utils.GetCamelCase(column.Name);
@@ -206,7 +206,7 @@ namespace Karkas.CodeGenerationHelper.Generators
                 output.autoTabLn("[DebuggerBrowsable(DebuggerBrowsableState.Never)]");
                 output.autoTabLn(string.Format("public {0} {1}", utils.GetLanguageType(column), propertyVariableName));
                 output.autoTabLn("{");
-                output.incTab();
+                output.increaseTab();
                 output.autoTabLn("[DebuggerStepThrough]");
                 output.autoTabLn("get");
                 output.autoTabLn("{");
@@ -215,24 +215,24 @@ namespace Karkas.CodeGenerationHelper.Generators
                 output.autoTabLn("[DebuggerStepThrough]");
                 output.autoTabLn("set");
                 output.autoTabLn("{");
-                output.incTab();
+                output.increaseTab();
                 output.autoTabLn(string.Format("if ((this.RowState == DataRowState.Unchanged) && ({0}!= value))", memberVariableName));
                 output.autoTabLn("{");
                 output.autoTabLn("\tthis.RowState = DataRowState.Modified;");
                 output.autoTabLn("}");
                 output.autoTabLn(string.Format("{0} = value;", memberVariableName));
-                output.decTab();
+                output.decreaseTab();
                 output.autoTabLn("}");
-                output.decTab();
+                output.decreaseTab();
                 output.autoTabLn("}");
-                output.writeln("");
+                output.writeLine("");
             }
-            output.decTab();
+            output.decreaseTab();
         }
 
-        public void PropertiesAsStringYaz(IOutput output, IContainer table)
+        private void PropertiesAsStringYaz(IOutput output, IContainer table)
         {
-            output.incTab();
+            output.increaseTab();
             foreach (IColumn column in table.Columns)
             {
                 string tipi = utils.GetLanguageType(column);
@@ -246,7 +246,7 @@ namespace Karkas.CodeGenerationHelper.Generators
                 output.autoTabLn("[XmlIgnore, SoapIgnore]");
                 output.autoTabLn(string.Format("public string {0}AsString", propertyVariableName));
                 output.autoTabLn("{");
-                output.incTab();
+                output.increaseTab();
                 output.autoTabLn("[DebuggerStepThrough]");
                 output.autoTabLn("get");
                 output.autoTabLn("{");
@@ -255,19 +255,19 @@ namespace Karkas.CodeGenerationHelper.Generators
                 output.autoTabLn("[DebuggerStepThrough]");
                 output.autoTabLn("set");
                 output.autoTabLn("{");
-                output.incTab();
+                output.increaseTab();
                 string[] yaziListesi = utils.GetConvertToSyntax(column, propertyVariableName);
                 foreach (string str in yaziListesi)
                 {
                     output.autoTabLn(str);
                 }
-                output.decTab();
+                output.decreaseTab();
                 output.autoTabLn("}");
-                output.decTab();
+                output.decreaseTab();
                 output.autoTabLn("}");
-                output.writeln("");
+                output.writeLine("");
             }
-            output.decTab();
+            output.decreaseTab();
         }
 
         private void ToStringDegeriDondur(IColumn column, IOutput output, string memberVariableName)
@@ -284,39 +284,39 @@ namespace Karkas.CodeGenerationHelper.Generators
 
 
 
-        public void ShallowCopyYaz(IOutput output, IContainer table, string pTypeName)
+        private void ShallowCopyYaz(IOutput output, IContainer table, string pTypeName)
         {
-            output.incTab();
+            output.increaseTab();
             output.autoTabLn(string.Format("public {0} ShallowCopy()", pTypeName));
             output.autoTabLn("{");
-            output.incTab();
+            output.increaseTab();
             output.autoTabLn(string.Format("{0} obj = new {0}();", pTypeName));
             foreach (IColumn column in table.Columns)
             {
                 output.autoTabLn(string.Format("obj.{0} = {0};", utils.GetCamelCase(column.Name)));
             }
             output.autoTabLn("return obj;");
-            output.decTab();
+            output.decreaseTab();
             output.autoTabLn("}");
-            output.decTab();
+            output.decreaseTab();
             output.autoTabLn("");
 
         }
 
 
-        public void MemberVariablesYaz(IOutput output, IContainer table)
+        private void MemberVariablesYaz(IOutput output, IContainer table)
         {
-            output.incTab();
+            output.increaseTab();
             foreach (IColumn column in table.Columns)
             {
                 output.autoTabLn(String.Format("private {0} {1};", utils.GetLanguageType(column), utils.GetCamelCase(column.Name)));
             }
-            output.decTab();
-            output.writeln("");
+            output.decreaseTab();
+            output.writeLine("");
         }
 
 
-        public void EtiketIsimleriYaz(IOutput output, IContainer pTable, string pNamespace)
+        private void EtiketIsimleriYaz(IOutput output, IContainer pTable, string pNamespace)
         {
             output.autoTabLn("public static class EtiketIsimleri");
             BaslangicSusluParentezVeTabArtir(output);

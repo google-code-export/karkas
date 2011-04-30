@@ -30,22 +30,22 @@ namespace Karkas.CodeGenerationHelper.Generators
 
             output.autoTabLn("namespace " + baseNamespaceWeb);
             output.autoTabLn("{");
-            output.incTab();
+            output.increaseTab();
 
 
             output.autoTabLn(string.Format("public partial class {0} : {1}", formName, basePage));
             output.autoTabLn("{");
 
 
-            output.incTab();
+            output.increaseTab();
             renderPageLoad(output);
 
             // class tab
-            output.decTab();
+            output.decreaseTab();
             output.autoTabLn("}");
 
             // namespace tab
-            output.decTab();
+            output.decreaseTab();
             output.autoTabLn("}");
 
             string savePath = Path.Combine(utils.ProjeDizininiAl(database), "WebApp\\" + utils.GetPascalCase(table.Schema) + "\\" + formName + ".aspx.cs");
@@ -58,9 +58,9 @@ namespace Karkas.CodeGenerationHelper.Generators
         {
             output.autoTabLn("protected void Page_Load(object sender, EventArgs e)");
             output.autoTabLn("{");
-            output.incTab();
+            output.increaseTab();
             // Page Load Code Here
-            output.decTab();
+            output.decreaseTab();
             output.autoTabLn("}");
         }
 
@@ -77,7 +77,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 ";
-            pOutput.writeln(strUsings);
+            pOutput.writeLine(strUsings);
         }
 
     }

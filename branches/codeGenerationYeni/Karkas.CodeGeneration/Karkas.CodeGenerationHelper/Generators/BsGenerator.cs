@@ -72,7 +72,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
             string outputFullFileNameGenerated = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, container.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.generated.cs");
             string outputFullFileName = Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(database, container.Schema) + "\\Bs\\" + baseNameSpace + ".Bs\\" + schemaName, classNameTypeLibrary + "Bs.cs");
-            output.saveEnc(outputFullFileNameGenerated, "o", "utf8");
+            output.saveEncoding(outputFullFileNameGenerated, "o", "utf8");
             output.clear();
 
             if (!File.Exists(outputFullFileName))
@@ -83,7 +83,7 @@ namespace Karkas.CodeGenerationHelper.Generators
                 BaslangicSusluParentezVeTabArtir(output);
                 BitisSusluParentezVeTabAzalt(output);
                 BitisSusluParentezVeTabAzalt(output);
-                output.saveEnc(outputFullFileName, "o", "utf8");
+                output.saveEncoding(outputFullFileName, "o", "utf8");
                 output.clear();
             }
         }
@@ -107,9 +107,9 @@ namespace Karkas.CodeGenerationHelper.Generators
                             + " p1)";
             output.autoTabLn(classSatiri);
             output.autoTabLn("{");
-            output.incTab();
+            output.increaseTab();
             output.autoTabLn("return dal.Sorgula" + pkAdi + "Ile(p1);");
-            output.decTab();
+            output.decreaseTab();
             output.autoTabLn("}");
         }
 
@@ -127,7 +127,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             output.autoTab("public partial class ");
             output.write(classNameBs);
             output.write(" : BaseBs<" + classNameTypeLibrary + ", ");
-            output.writeln(classNameDal + ">");
+            output.writeLine(classNameDal + ">");
         }
 
         public void usingNamespaceleriYaz(IOutput output, string schemaName, string baseNameSpaceTypeLibrary, string baseNameSpaceBsWithSchema, string baseNameSpaceDalWithSchema)

@@ -43,6 +43,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdParty\Karkas.Core.Utility.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AnalysisServices.AdomdClient, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -55,7 +60,7 @@
     <Compile Include="Implementations\ColumnSqlServer.cs" />
     <Compile Include="Implementations\DatabaseSqlServer.cs" />
     <Compile Include="Implementations\TableSqlServer.cs" />
-    <Compile Include="Output.cs" />
+    <Compile Include="SqlServerOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

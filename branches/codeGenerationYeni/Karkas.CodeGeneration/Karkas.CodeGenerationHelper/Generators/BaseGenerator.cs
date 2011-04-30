@@ -7,24 +7,24 @@ namespace Karkas.CodeGenerationHelper.Generators
 {
     public abstract class BaseGenerator
     {
-        public void BaslangicSusluParentezVeTabArtir(IOutput output)
+        protected void BaslangicSusluParentezVeTabArtir(IOutput output)
         {
             output.autoTabLn("{");
-            output.incTab();
+            output.increaseTab();
         }
-        public void BitisSusluParentezVeTabAzalt(IOutput output)
+        protected void BitisSusluParentezVeTabAzalt(IOutput output)
         {
-            output.decTab();
+            output.decreaseTab();
             output.autoTabLn("}");
         }
-        public void BaslangicSusluParentez(IOutput output)
+        protected void BaslangicSusluParentez(IOutput output)
         {
             output.autoTabLn("{");
-            output.incTab();
+            output.increaseTab();
         }
-        public void BitisSusluParentez(IOutput output)
+        protected void BitisSusluParentez(IOutput output)
         {
-            output.decTab();
+            output.decreaseTab();
             output.autoTabLn("}");
         }
 

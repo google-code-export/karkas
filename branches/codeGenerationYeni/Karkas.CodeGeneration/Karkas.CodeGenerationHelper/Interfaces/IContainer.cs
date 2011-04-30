@@ -7,7 +7,7 @@ namespace Karkas.CodeGenerationHelper
 {
     public interface IContainer
     {
-        string Alias { get; set; }
+        string Alias { get;  }
         List<IColumn> Columns { get; }
         IDatabase Database { get; }
         DateTime DateCreated { get; }

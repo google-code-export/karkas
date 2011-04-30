@@ -25,9 +25,9 @@ namespace Karkas.CodeGenerationHelper.Generators
             string formName = className + "Form";
 
 
-            output.writeln(RenderAsString(pTable, classNameSpace, className, formName));
+            output.writeLine(RenderAsString(pTable, classNameSpace, className, formName));
             writeTableRows(output, pTable);
-            output.writeln("</asp:Content>");
+            output.writeLine("</asp:Content>");
             string savePath = Path.Combine(utils.ProjeDizininiAl(database), "WebApp\\" + utils.GetPascalCase(pTable.Schema) + "\\" + formName + ".aspx");
             output.save(savePath, true);
             output.clear();
@@ -64,8 +64,8 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         public void writeTableRows(IOutput output, ITable table)
         {
-            output.writeln("<table class=\"AnaTablo\">");
-            output.incTab();
+            output.writeLine("<table class=\"AnaTablo\">");
+            output.increaseTab();
             foreach (IColumn column in table.Columns)
             {
                 string propertyVariableName = utils.GetPascalCase(column.Name);
@@ -73,15 +73,15 @@ namespace Karkas.CodeGenerationHelper.Generators
                 cellYazisiniGetir(output, column, propertyVariableName);
 
             }
-            output.decTab();
-            output.writeln(@"
+            output.decreaseTab();
+            output.writeLine(@"
         <tr>
             <td  colspan=""2"">
                 <asp:Button runat=""server"" ID=""KaydetButton"" OnClick=""KaydetButton_Click"" SkinId=""Guncelle_Yazisiz"" />
             </td>
         </tr>
         ");
-            output.writeln("</table>");
+            output.writeLine("</table>");
 
         }
 
@@ -103,9 +103,9 @@ namespace Karkas.CodeGenerationHelper.Generators
                 return;
             }
 
-            output.writeln("\t<tr>");
-            output.writeln(kolonYapisinaGoreControlYaz(column, propertyVariableName));
-            output.writeln("\t</tr>");
+            output.writeLine("\t<tr>");
+            output.writeLine(kolonYapisinaGoreControlYaz(column, propertyVariableName));
+            output.writeLine("\t</tr>");
         }
 
         private string kolonYapisinaGoreControlYaz(IColumn column, string propertyVariableName)
