@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using Zeus;
-using MyMeta;
 using Karkas.MyGenerationHelper.SmoHelpers;
+using Karkas.MyGenerationHelper.Interfaces;
 
 namespace Karkas.MyGenerationHelper.Generators
 {

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MyMeta;
-using Zeus;
 using System.IO;
+using Karkas.MyGenerationHelper.Interfaces;
 
 namespace Karkas.MyGenerationHelper.Generators
 {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MyMeta;
 
 namespace Karkas.MyGenerationHelper.Interfaces
 {
@@ -33,7 +32,7 @@ namespace Karkas.MyGenerationHelper.Interfaces
             }
         }
 
-        public IColumns Columns
+        public List<IColumn> Columns
         {
             get { return this.table.Columns; }
         }

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MyMeta;
 using Karkas.MyGenerationHelper;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Globalization;
-using Zeus;
 using Karkas.MyGenerationHelper.Interfaces;
 
 namespace Karkas.MyGenerationHelper.Generators

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Text;
-using Zeus;
-using Zeus.Data;
-using Zeus.UserInterface;
-using MyMeta;
 using Karkas.MyGenerationHelper;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -142,7 +138,8 @@ namespace Karkas.MyGenerationHelper.Generators
         {
             if (container is TableContainer)
             {
-                string pkPropertyName = utils.getPropertyVariableName(container.Columns[pkAdi]);
+                // TODO buranında düzelmesi lazım.
+                string pkPropertyName = utils.getPropertyVariableName(container.Columns[0]);
                 output.autoTabLn(string.Format("public virtual void Sil({0} {1})", pkType, pkPropertyName));
                 BaslangicSusluParentezVeTabArtir(output);
                 output.autoTabLn(string.Format("{0} row = new {0}();", classNameTypeLibrary));

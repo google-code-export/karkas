@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Zeus;
-using MyMeta;
 using System.IO;
 using System.Text.RegularExpressions;
+using Karkas.MyGenerationHelper.Interfaces;
 
 namespace Karkas.MyGenerationHelper.Generators
 {
@@ -60,7 +59,7 @@ namespace Karkas.MyGenerationHelper.Generators
             else
             {
                 bool hepsiReturnMi = true;
-                foreach (Parameter param in proc.Parameters)
+                foreach (IParameter param in proc.Parameters)
                 {
                     if (param.Direction != ParamDirection.ReturnValue)
                     {
@@ -275,6 +274,9 @@ namespace Karkas.MyGenerationHelper.Generators
         private void generateParametersParameterBuilder(IZeusOutput output, IProcedure proc)
         {
             output.autoTabLn("ParameterBuilder builder = new ParameterBuilder();");
+
+
+            
 
             foreach (IParameter param in proc.Parameters)
             {

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karkas.MyGenerationHelper.2008", "Karkas.MyGenerationHelper\Karkas.MyGenerationHelper.2008.csproj", "{100A5B2E-8244-4331-A069-AC9FA98954A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karkas.MyGenerationHelper.2010", "Karkas.MyGenerationHelper\Karkas.MyGenerationHelper.2010.csproj", "{100A5B2E-8244-4331-A069-AC9FA98954A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

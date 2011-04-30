@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using Karkas.MyGenerationHelper.SmoHelpers;
 using System.IO;
-using MyMeta;
-using Zeus;
+using Karkas.MyGenerationHelper.Interfaces;
 
 namespace Karkas.MyGenerationHelper.Generators
 {

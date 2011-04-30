@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
-using MyMeta;
 using System.Data;
 using System.Data.SqlClient;
 using System.Xml;
 using Karkas.MyGenerationHelper.Generators;
-using Zeus;
 using System.IO;
 using System.Globalization;
 using Karkas.MyGenerationHelper.Interfaces;
@@ -443,9 +441,10 @@ namespace Karkas.MyGenerationHelper
 
 
 
-        public ITables filterListAccordingToSchemaName(ITables tableList, string schemaName)
+        public List<ITable> filterListAccordingToSchemaName(List<ITable> tableList, string schemaName)
         {
-            ITables newList = new MyMeta.Sql.SqlTables();
+            // TODO burada tablo listesi alan kodu yaz.
+            List<ITable> newList = null; //= new MyMeta.Sql.SqlTables();
 
             foreach (ITable t in tableList)
             {

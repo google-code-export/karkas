@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MyMeta;
 using System.Xml;
 using System.Xml.XPath;
 using System.Reflection;
+using Karkas.MyGenerationHelper.Interfaces;
 
 namespace Karkas.MyGenerationHelper
 {
