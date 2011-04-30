@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -7,14 +8,14 @@
     <ProjectGuid>{100A5B2E-8244-4331-A069-AC9FA98954A7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Karkas.MyGenerationHelper</RootNamespace>
-    <AssemblyName>Karkas.MyGenerationHelper</AssemblyName>
+    <RootNamespace>Karkas.CodeGenerationHelper</RootNamespace>
+    <AssemblyName>Karkas.CodeGenerationHelper</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <OldToolsVersion>2.0</OldToolsVersion>
+    <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,28 +37,19 @@
   <ItemGroup>
     <Reference Include="Karkas.Core.DataUtil, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Karkas.Ornek\ThirdParty\Karkas.Core.DataUtil.dll</HintPath>
+      <HintPath>..\ThirdParty\Karkas.Core.DataUtil.dll</HintPath>
     </Reference>
     <Reference Include="Karkas.Core.Onaylama, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Karkas.Ornek\ThirdParty\Karkas.Core.Onaylama.dll</HintPath>
+      <HintPath>..\ThirdParty\Karkas.Core.Onaylama.dll</HintPath>
     </Reference>
-    <Reference Include="Karkas.Core.Utility, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Karkas.Ornek\ThirdParty\Karkas.Core.Utility.dll</HintPath>
+    <Reference Include="Karkas.Core.Utility">
+      <HintPath>..\ThirdParty\Karkas.Core.Utility.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AnalysisServices.AdomdClient, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
-    <Reference Include="MyMeta, Version=1.3.0.0, Culture=neutral, PublicKeyToken=dbe33188b40af272, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\MyGeneration13\MyMeta.dll</HintPath>
-    </Reference>
-    <Reference Include="PluginInterfaces, Version=1.3.0.0, Culture=neutral, PublicKeyToken=23fec39d9195101e, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\MyGeneration13\PluginInterfaces.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -67,12 +59,16 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml" />
-    <Reference Include="Zeus, Version=1.3.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\MyGeneration13\Zeus.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IColumn.cs" />
+    <Compile Include="Interfaces\IDatabase.cs" />
+    <Compile Include="Interfaces\ParamDirection.cs" />
+    <Compile Include="Interfaces\IParameter.cs" />
+    <Compile Include="Interfaces\IProcedure.cs" />
+    <Compile Include="Interfaces\ITable.cs" />
+    <Compile Include="Interfaces\IView.cs" />
+    <Compile Include="Interfaces\IZeusOutput.cs" />
     <Compile Include="ConnectionHelper.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="Generators\AspxCsGenerator.cs" />

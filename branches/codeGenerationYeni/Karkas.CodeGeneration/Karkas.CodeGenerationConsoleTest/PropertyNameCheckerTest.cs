@@ -6,8 +6,8 @@ namespace Karkas.MyGenerationTest
 {
     using System;
     using NUnit.Framework;
-    using Karkas.MyGenerationHelper.Interfaces;
-    using Karkas.MyGenerationHelper;
+    using Karkas.CodeGenerationHelper.Interfaces;
+    using Karkas.CodeGenerationHelper;
 
     [TestFixture]
     public class PropertyNameCheckerTest

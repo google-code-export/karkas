@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
-using Karkas.MyGenerationHelper;
+using Karkas.CodeGenerationHelper;
 
 namespace Karkas.MyGenerationTest
 {

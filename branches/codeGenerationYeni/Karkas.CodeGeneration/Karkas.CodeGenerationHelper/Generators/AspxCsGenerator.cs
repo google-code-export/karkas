@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using Karkas.MyGenerationHelper.Interfaces;
+using Karkas.CodeGenerationHelper.Interfaces;
 
-namespace Karkas.MyGenerationHelper.Generators
+namespace Karkas.CodeGenerationHelper.Generators
 {
     public class AspxCsGenerator
     {

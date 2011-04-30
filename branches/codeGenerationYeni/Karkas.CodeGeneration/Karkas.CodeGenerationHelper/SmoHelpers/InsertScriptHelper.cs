@@ -7,7 +7,7 @@ using Microsoft.SqlServer.Management.Common;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace Karkas.MyGenerationHelper.SmoHelpers
+namespace Karkas.CodeGenerationHelper.SmoHelpers
 {
     public class InsertScriptHelper
     {

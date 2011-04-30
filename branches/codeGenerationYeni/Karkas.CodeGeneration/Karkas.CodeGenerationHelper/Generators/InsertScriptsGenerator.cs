@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Karkas.MyGenerationHelper.SmoHelpers;
+using Karkas.CodeGenerationHelper.SmoHelpers;
 using System.IO;
-using Karkas.MyGenerationHelper.Interfaces;
+using Karkas.CodeGenerationHelper.Interfaces;
 
-namespace Karkas.MyGenerationHelper.Generators
+namespace Karkas.CodeGenerationHelper.Generators
 {
     public class InsertScriptsGenerator
     {

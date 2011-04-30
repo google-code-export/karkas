@@ -5,7 +5,7 @@ using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;
 using System.Data.SqlClient;
 
-namespace Karkas.MyGenerationHelper.SmoHelpers
+namespace Karkas.CodeGenerationHelper.SmoHelpers
 {
     internal class StoredProcedureHelper
     {

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections;
-using Karkas.MyGenerationHelper;
+using Karkas.CodeGenerationHelper;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Globalization;
-using Karkas.MyGenerationHelper.Interfaces;
+using Karkas.CodeGenerationHelper.Interfaces;
 
-namespace Karkas.MyGenerationHelper.Generators
+namespace Karkas.CodeGenerationHelper.Generators
 {
     public class BsGenerator : BaseGenerator
     {

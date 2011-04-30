@@ -5,13 +5,13 @@ using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
 using System.Xml;
-using Karkas.MyGenerationHelper.Generators;
+using Karkas.CodeGenerationHelper.Generators;
 using System.IO;
 using System.Globalization;
-using Karkas.MyGenerationHelper.Interfaces;
-using Karkas.MyGenerationHelper.SmoHelpers;
+using Karkas.CodeGenerationHelper.Interfaces;
+using Karkas.CodeGenerationHelper.SmoHelpers;
 
-namespace Karkas.MyGenerationHelper
+namespace Karkas.CodeGenerationHelper
 {
     public class Utils
     {

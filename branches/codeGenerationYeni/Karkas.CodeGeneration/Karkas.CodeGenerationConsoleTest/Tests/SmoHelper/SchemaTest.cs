@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Karkas.MyGenerationHelper;
+using Karkas.CodeGenerationHelper;
 using NUnit.Framework;
 namespace Karkas.MyGenerationConsoleTest.Tests.SmoHelper
 {

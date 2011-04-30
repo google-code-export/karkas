@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Karkas.MyGenerationHelper.Generators
+namespace Karkas.CodeGenerationHelper.Generators
 {
     public class NamespaceHelper
     {

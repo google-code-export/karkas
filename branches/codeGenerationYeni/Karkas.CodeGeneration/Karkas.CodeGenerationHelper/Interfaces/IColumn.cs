@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Karkas.MyGenerationHelper.Interfaces
+namespace Karkas.CodeGenerationHelper.Interfaces
 {
     public interface IColumn
     {

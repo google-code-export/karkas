@@ -4,7 +4,7 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace Karkas.MyGenerationHelper
+namespace Karkas.CodeGenerationHelper
 {
     public class EnumHelper
     {

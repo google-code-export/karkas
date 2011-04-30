@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using Karkas.MyGenerationHelper.SmoHelpers;
-using Karkas.MyGenerationHelper.Interfaces;
+using Karkas.CodeGenerationHelper.SmoHelpers;
+using Karkas.CodeGenerationHelper.Interfaces;
 
-namespace Karkas.MyGenerationHelper.Generators
+namespace Karkas.CodeGenerationHelper.Generators
 {
     public class DatabaseTablesGenerator
     {

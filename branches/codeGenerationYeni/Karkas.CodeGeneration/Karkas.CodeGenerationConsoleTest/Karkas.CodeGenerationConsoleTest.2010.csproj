@@ -64,13 +64,13 @@
     <Compile Include="VariableNameCheckerTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Karkas.MyGenerationHelper\Karkas.MyGenerationHelper.csproj">
-      <Project>{100A5B2E-8244-4331-A069-AC9FA98954A7}</Project>
-      <Name>Karkas.MyGenerationHelper</Name>
-    </ProjectReference>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <ProjectReference Include="..\Karkas.CodeGenerationHelper\Karkas.CodeGenerationHelper.2010.csproj">
+      <Project>{100A5B2E-8244-4331-A069-AC9FA98954A7}</Project>
+      <Name>Karkas.CodeGenerationHelper.2010</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

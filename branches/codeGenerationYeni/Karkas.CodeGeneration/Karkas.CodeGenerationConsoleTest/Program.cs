@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Karkas.MyGenerationHelper;
-using Karkas.MyGenerationHelper.Generators;
+using Karkas.CodeGenerationHelper;
+using Karkas.CodeGenerationHelper.Generators;
 using System.Configuration;
 using Karkas.MyGenerationTest;
 using Karkas.Core.DataUtil;
-using Karkas.MyGenerationHelper.SmoHelpers;
+using Karkas.CodeGenerationHelper.SmoHelpers;
 
 namespace Karkas.MyGenerationConsoleTest
 {

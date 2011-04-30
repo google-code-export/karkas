@@ -4,9 +4,9 @@ using System.Text;
 using System.Xml;
 using System.Xml.XPath;
 using System.Reflection;
-using Karkas.MyGenerationHelper.Interfaces;
+using Karkas.CodeGenerationHelper.Interfaces;
 
-namespace Karkas.MyGenerationHelper
+namespace Karkas.CodeGenerationHelper
 {
     public class KarkasXmlParser
     {

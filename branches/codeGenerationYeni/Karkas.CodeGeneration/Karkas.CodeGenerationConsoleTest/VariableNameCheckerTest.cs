@@ -6,7 +6,7 @@ namespace Karkas.MyGenerationTest
 {
     using System;
     using NUnit.Framework;
-    using Karkas.MyGenerationHelper;
+    using Karkas.CodeGenerationHelper;
 
     [TestFixture]
     public class VariableNameCheckerTest

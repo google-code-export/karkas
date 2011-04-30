@@ -10,7 +10,7 @@ using System.Linq;
 using Karkas.Core.DataUtil;
 using Karkas.Core.Utility;
 
-namespace Karkas.MyGenerationHelper.SmoHelpers
+namespace Karkas.CodeGenerationHelper.SmoHelpers
 {
     public class SmoHelper
     {

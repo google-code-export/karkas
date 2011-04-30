@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Karkas.MyGenerationHelper.Interfaces
+namespace Karkas.CodeGenerationHelper.Interfaces
 {
     public class TableContainer : IContainer
     {
