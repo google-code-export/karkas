@@ -83,10 +83,8 @@
     <Compile Include="Generators\NamespaceHelper.cs" />
     <Compile Include="Generators\SpGenerator.cs" />
     <Compile Include="Generators\TypeLibraryGenerator.cs" />
-    <Compile Include="Interfaces\TableContainer.cs" />
     <Compile Include="Interfaces\IContainer.cs" />
     <Compile Include="Interfaces\INameChecker.cs" />
-    <Compile Include="Interfaces\ViewContainer.cs" />
     <Compile Include="NameChecker.cs" />
     <Compile Include="SmoHelpers\InsertScriptHelper.cs" />
     <Compile Include="SmoHelpers\SmoHelper.cs" />

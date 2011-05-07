@@ -56,12 +56,13 @@ namespace Karkas.CodeGenerationHelper.Generators
 
 
             usingNamespaceleriYaz(output, schemaName, baseNameSpaceTypeLibrary, baseNameSpaceBsWithSchema, baseNameSpaceDalWithSchema);
+            output.increaseTab();
             BaslangicSusluParentezVeTabArtir(output);
             classYaz(output, classNameBs, classNameDal, classNameTypeLibrary);
             BaslangicSusluParentez(output);
             OverrideDatabaseNameYaz(output, container);
 
-            if (container is TableContainer)
+            if (container is ITable)
             {
                 SilKomutuYazPkIle(output);
 

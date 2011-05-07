@@ -36,7 +36,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
             pkAdi = utils.PrimaryKeyAdiniBul(container);
             identityColumnAdi = utils.IdentityColumnAdiniBul(container);
-            if (pkAdi == "" && container is TableContainer)
+            if (pkAdi == "" && container is ITable)
             {
                 return "Sectiginiz tablolardan " + container.Name  + " icinde Primary Key yoktur. Code Generation (DAL) sadace primaryKey'i olan tablolarda duzgun calisir.";
             }
@@ -136,7 +136,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         private void SilKomutuYazPkIle(IOutput output, string classNameTypeLibrary, IContainer container)
         {
-            if (container is TableContainer)
+            if (container is ITable)
             {
                 // TODO buranında düzelmesi lazım.
                 string pkPropertyName = utils.getPropertyVariableName(container.Columns[0]);
@@ -259,7 +259,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
             string whereClause = "";
 
-            if (container is TableContainer)
+            if (container is ITable)
             {
                 foreach (IColumn column in container.Columns)
                 {
@@ -294,7 +294,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             BaslangicSusluParentezVeTabArtir(output);
             output.autoTabLn("get ");
             BaslangicSusluParentezVeTabArtir(output);
-            if (container is TableContainer)
+            if (container is ITable)
             {
                 output.autoTabLn("return @\"UPDATE " + container.Schema + "." + container.Name);
                 output.autoTabLn(" SET ");
@@ -346,7 +346,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             BaslangicSusluParentezVeTabArtir(output);
             output.autoTabLn("get ");
             BaslangicSusluParentezVeTabArtir(output);
-            if (container is TableContainer)
+            if (container is ITable)
             {
                 output.autoTabLn("return @\"INSERT INTO " + container.Schema + "." + container.Name + " ");
                 cumle += " (";

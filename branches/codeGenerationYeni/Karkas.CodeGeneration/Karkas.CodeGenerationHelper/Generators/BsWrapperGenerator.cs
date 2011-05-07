@@ -70,7 +70,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             output.autoTabLn("");
             BaslangicSusluParentezVeTabArtir(output);
             ClassBaslangicYaz(output,classNameTypeLibrary, classNameBs, classNameBsWrapper);
-            if (container is TableContainer)
+            if (container is ITable)
             {
                 SilKomutuYazPkIle(output);
                 SorgulaPKAdiIleYaz(output, classNameTypeLibrary, pkType, pkAdi);

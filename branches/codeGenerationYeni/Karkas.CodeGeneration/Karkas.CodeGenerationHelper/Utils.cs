@@ -33,12 +33,12 @@ namespace Karkas.CodeGenerationHelper
         public void RenderTypeLibraryCode(IOutput output, ITable table)
         {
             TypeLibraryGenerator gen = new TypeLibraryGenerator();
-            gen.Render(output, new TableContainer(table));
+            gen.Render(output,  table);
         }
         public void RenderTypeLibraryCode(IOutput output, IView view)
         {
             TypeLibraryGenerator gen = new TypeLibraryGenerator();
-            gen.Render(output, new ViewContainer(view));
+            gen.Render(output, view);
         }
         public void RenderStoredProcedureCode(IOutput output, IProcedure proc)
         {
@@ -49,32 +49,32 @@ namespace Karkas.CodeGenerationHelper
         public string RenderDalCode(IOutput output, ITable table)
         {
             DalGenerator gen = new DalGenerator();
-            return gen.Render(output, new TableContainer(table));
+            return gen.Render(output, table);
         }
         public void RenderDalCode(IOutput output, IView view)
         {
             DalGenerator gen = new DalGenerator();
-            gen.Render(output, new ViewContainer(view));
+            gen.Render(output, view);
         }
         public void RenderBsCode(IOutput output, ITable table)
         {
             BsGenerator gen = new BsGenerator();
-            gen.Render(output, new TableContainer(table));
+            gen.Render(output, table);
         }
         public void RenderBsCode(IOutput output, IView view)
         {
             BsGenerator gen = new BsGenerator();
-            gen.Render(output, new ViewContainer(view));
+            gen.Render(output, view);
         }
         public void RenderBsWrapperCode(IOutput output, ITable table)
         {
             BsWrapperGenerator gen = new BsWrapperGenerator();
-            gen.Render(output, new TableContainer(table));
+            gen.Render(output, table);
         }
         public void RenderBsWrapperCode(IOutput output, IView view)
         {
             BsWrapperGenerator gen = new BsWrapperGenerator();
-            gen.Render(output, new ViewContainer(view));
+            gen.Render(output, view);
         }
         public void RenderAspxCode(IOutput output, ITable table, string pMasterName)
         {
