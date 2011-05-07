@@ -86,7 +86,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
                     else
                     {
                         sonuc = sqlTypeToDotnetCSharpType(DataTypeName);
-                        
+
                     }
                     if (sonuc.Equals("Unknown"))
                     {
@@ -150,11 +150,11 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
 ";
 
             ParameterBuilder builder = new ParameterBuilder();
-            builder.parameterEkle("@UserDefinedTypeName",SqlDbType.VarChar,pUserDefinedTypeName);
+            builder.parameterEkle("@UserDefinedTypeName", SqlDbType.VarChar, pUserDefinedTypeName);
             AdoTemplate template = new AdoTemplate();
-            underlyingType = (string) template.TekDegerGetir(sql, builder.GetParameterArray());
+            underlyingType = (string)template.TekDegerGetir(sql, builder.GetParameterArray());
 
-//            userDefinedTypes.Add(pUserDefinedTypeName, underlyingType);
+            //            userDefinedTypes.Add(pUserDefinedTypeName, underlyingType);
             return underlyingType;
 
 
@@ -290,7 +290,18 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         {
             get
             {
-                return smoColumn.DataType.MaximumLength;
+                string lowerDataType = smoColumn.DataType.ToString().ToLowerInvariant();
+                int charMaxLength = 0;
+                if (
+                    lowerDataType.Contains("char")
+                    ||
+                    lowerDataType.Contains("text")
+
+                    )
+                {
+                    charMaxLength = smoColumn.DataType.MaximumLength;
+                }
+                return charMaxLength;
             }
         }
     }

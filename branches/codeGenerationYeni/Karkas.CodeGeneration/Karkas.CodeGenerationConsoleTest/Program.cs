@@ -21,8 +21,8 @@ namespace Karkas.MyGenerationConsoleTest
         {
             ConnectionSingleton.Instance.ConnectionString = ConnectionString;
 
-            codeGenerateAllTables("KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
-            //codeGenerateOneTable("ORNEK_TABLO","ORNEKLER","KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
+            //codeGenerateAllTables("KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
+            codeGenerateOneTable("ORNEK_TABLO","ORNEKLER","KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
         }
 
         private static void codeGenerateAllTables(string pDatabaseName, string pProjectNamespace, string pProjectFolder)
