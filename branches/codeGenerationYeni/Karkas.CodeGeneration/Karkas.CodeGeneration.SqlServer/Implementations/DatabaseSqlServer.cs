@@ -83,5 +83,11 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
             return Name;
         }
 
+
+        public ITable getTable(string pTableName, string pSchemaName)
+        {
+             ITable t = new TableSqlServer(this, pTableName, pSchemaName);
+             return t;
+        }
     }
 }

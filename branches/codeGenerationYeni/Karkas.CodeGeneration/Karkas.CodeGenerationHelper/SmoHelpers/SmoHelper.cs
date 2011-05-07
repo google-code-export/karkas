@@ -54,7 +54,8 @@ namespace Karkas.CodeGenerationHelper.SmoHelpers
             foreach (DataRow row in dt.Rows)
             {
                 byte[] icerik = (byte[]) row[4];
-                sb.AppendFormat(sysdiagrams_ONE_ROW, row[0], row[1], row[2], row[3], icerik.ByteArrayToString());
+                // TODO burayı düzelt
+                //sb.AppendFormat(sysdiagrams_ONE_ROW, row[0], row[1], row[2], row[3], icerik.ByteArrayToString());
             }
             sonuc = String.Format(sysdiagrams_MAIN_INSERT,sb.ToString());
             return sonuc;

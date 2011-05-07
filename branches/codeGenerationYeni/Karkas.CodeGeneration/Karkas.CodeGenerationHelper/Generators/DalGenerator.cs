@@ -513,7 +513,6 @@ namespace Karkas.CodeGenerationHelper.Generators
             BaslangicSusluParentezVeTabArtir(output);
             output.autoTabLn("ParameterBuilder builder = new ParameterBuilder(cmd);");
 
-            string paramName = "";
             foreach (IColumn column in table.Columns)
             {
                 if (!columnParametreOlmaliMi(column))

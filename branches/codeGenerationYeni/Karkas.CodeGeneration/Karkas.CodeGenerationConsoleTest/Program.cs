@@ -16,28 +16,46 @@ namespace Karkas.MyGenerationConsoleTest
     public class Program
     {
         public const string ConnectionString = "Data Source=localhost;Initial Catalog=KARKAS_ORNEK;Integrated Security=True";
-        public const string insertConnString = @"Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=False;User ID=sa;Initial Catalog=KARKAS_ORNEK;Data Source=localhost";
 
         public static void Main(string[] args)
         {
+            ConnectionSingleton.Instance.ConnectionString = ConnectionString;
 
+            //codeGenerateAllTables("KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
+            codeGenerateOneTable("ORNEK_TABLO","ORNEKLER","KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
+        }
 
-
+        private static void codeGenerateAllTables(string pDatabaseName, string pProjectNamespace, string pProjectFolder)
+        {
             TypeLibraryGenerator typeGen = new TypeLibraryGenerator();
+            DalGenerator dalGen = new DalGenerator();
+            BsGenerator bsGen = new BsGenerator();
             IOutput output = new SqlServerOutput();
-            DatabaseSqlServer database = new DatabaseSqlServer(ConnectionString, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
+            DatabaseSqlServer database = new DatabaseSqlServer(ConnectionString, pDatabaseName, pProjectNamespace, pProjectFolder);
 
             List<ITable> tableListesi = database.Tables;
 
             foreach (ITable table in tableListesi)
             {
                 typeGen.Render(output, table);
+                dalGen.Render(output, table);
+                bsGen.Render(output, table);
             }
-            
+        }
 
+        private static void codeGenerateOneTable(string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder)
+        {
+            TypeLibraryGenerator typeGen = new TypeLibraryGenerator();
+            DalGenerator dalGen = new DalGenerator();
+            BsGenerator bsGen = new BsGenerator();
+            IOutput output = new SqlServerOutput();
+            DatabaseSqlServer database = new DatabaseSqlServer(ConnectionString, pDatabaseName, pProjectNamespace, pProjectFolder);
 
+            ITable table = database.getTable(pTableName, pSchemaName);
 
-
+            typeGen.Render(output, table);
+            dalGen.Render(output, table);
+            bsGen.Render(output, table);
         }
 
         private static void schemaListesiEkranaYaz()

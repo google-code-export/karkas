@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using Karkas.CodeGenerationHelper.Interfaces;
 using Microsoft.SqlServer.Management.Smo;
+using System.Collections;
+using Karkas.Core.DataUtil;
+using System.Data;
 
 namespace Karkas.CodeGeneration.SqlServer.Implementations
 {
@@ -66,96 +69,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
             }
         }
 
-        private string getLanguageTypeFromDataType()
-        {
-            if (
-                    DataTypeName.Equals("varchar") ||
-                    DataTypeName.Equals("nvarchar") ||
-                    DataTypeName.Equals("char") ||
-                    DataTypeName.Equals("nchar") ||
-                    DataTypeName.Equals("ntext") ||
-                    DataTypeName.Equals("Xml") ||
-                    DataTypeName.Equals("text")
 
-                )
-            {
-
-                return "string";
-            }
-            if (DataTypeName.Equals("uniqueidentifier"))
-            {
-                return "Guid";
-            }
-            if (DataTypeName.Equals("int"))
-            {
-                return "int";
-            }
-            if (DataTypeName.Equals("tinyint"))
-            {
-                return "byte";
-            }
-            if (DataTypeName.Equals("smallint"))
-            {
-                return "short";
-            }
-            if (DataTypeName.Equals("bigint"))
-            {
-                return "long";
-            }
-            if (
-                DataTypeName.Equals("datetime") ||
-                DataTypeName.Equals("smalldatetime")
-                )
-            {
-                return "DateTime";
-            }
-            if (DataTypeName.Equals("bit"))
-            {
-                return "bool";
-            }
-            if (DataTypeName.Equals("bit"))
-            {
-                return "bool";
-            }
-
-
-
-            if (
-                DataTypeName.Equals("numeric") ||
-                DataTypeName.Equals("decimal") ||
-                DataTypeName.Equals("money") ||
-                DataTypeName.Equals("smallmoney")
-                )
-            {
-                return "decimal";
-            }
-            if (DataTypeName.Equals("float"))
-            {
-                return "double";
-            }
-            if (DataTypeName.Equals("real"))
-            {
-                return "float";
-            }
-            if (
-                DataTypeName.Equals("image") ||
-                DataTypeName.Equals("binary") ||
-                DataTypeName.Equals("varbinary") ||
-                DataTypeName.Equals("timestamp")
-                )
-            {
-                return "byte[]";
-            }
-            if (DataTypeName.Equals("sql_variant") )
-                
-            {
-                return "object";
-            }
-
-
-            return "Unknown";
-
-        }
         string _LanguageType;
         public string LanguageType
         {
@@ -163,14 +77,39 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
             {
                 if (String.IsNullOrEmpty(_LanguageType))
                 {
-                    string sonuc = getLanguageTypeFromDataType();
+                    string sonuc;
+                    if (smoColumn.DataType.SqlDataType.ToString() == "UserDefinedDataType")
+                    {
+                        string sqlTypeName = getUnderlyingTypeOfUserDefinedType(smoColumn.DataType.Name);
+                        sonuc = sqlTypeToDotnetCSharpType(sqlTypeName);
+                    }
+                    else
+                    {
+                        sonuc = sqlTypeToDotnetCSharpType(DataTypeName);
+                        
+                    }
                     if (sonuc.Equals("Unknown"))
                     {
-                        Console.WriteLine("Name : {0} , DataType : {1} ", Name, DataTypeName);
+                        Console.WriteLine("TableName : {0}, Name : {1} , DataType : {2} ", TableFullName, Name, DataTypeName);
                     }
                     _LanguageType = sonuc;
                 }
                 return _LanguageType;
+            }
+        }
+        public string TableFullName
+        {
+            get
+            {
+                return String.Format("{0}.{1}", Table.Schema, Table.Name);
+            }
+        }
+
+        public string TableName
+        {
+            get
+            {
+                return Table.Name;
             }
         }
 
@@ -190,11 +129,146 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
             }
         }
 
+        static Dictionary<string, string> userDefinedTypes = new Dictionary<string, string>();
+
+        private string getUnderlyingTypeOfUserDefinedType(string pUserDefinedTypeName)
+        {
+            string underlyingType;
+            //userDefinedTypes.TryGetValue(pUserDefinedTypeName,out underlyingType);
+            //if ( underlyingType != null)
+            //{
+            //    return underlyingType;
+            //}
+
+
+
+            string sql = @"SELECT name FROM sys.types
+ WHERE system_type_id =
+( SELECT system_type_id from  sys.types
+ where name = @UserDefinedTypeName)
+ and is_user_defined = 0
+";
+
+            ParameterBuilder builder = new ParameterBuilder();
+            builder.parameterEkle("@UserDefinedTypeName",SqlDbType.VarChar,pUserDefinedTypeName);
+            AdoTemplate template = new AdoTemplate();
+            underlyingType = (string) template.TekDegerGetir(sql, builder.GetParameterArray());
+
+//            userDefinedTypes.Add(pUserDefinedTypeName, underlyingType);
+            return underlyingType;
+
+
+        }
+
+        public string sqlTypeToDotnetSqlDbType(string pSqlTypeName)
+        {
+            if (pSqlTypeName == "char")
+            {
+                return "SqlDbType.Char";
+            }
+            return "Unknown";
+        }
+        public string sqlTypeToDotnetCSharpType(string pSqlTypeName)
+        {
+            if (
+                    pSqlTypeName.Equals("varchar") ||
+                    pSqlTypeName.Equals("nvarchar") ||
+                    pSqlTypeName.Equals("char") ||
+                    pSqlTypeName.Equals("nchar") ||
+                    pSqlTypeName.Equals("ntext") ||
+                    pSqlTypeName.Equals("Xml") ||
+                    pSqlTypeName.Equals("text")
+
+                )
+            {
+
+                return "string";
+            }
+            if (pSqlTypeName.Equals("uniqueidentifier"))
+            {
+                return "Guid";
+            }
+            if (pSqlTypeName.Equals("int"))
+            {
+                return "int";
+            }
+            if (pSqlTypeName.Equals("tinyint"))
+            {
+                return "byte";
+            }
+            if (pSqlTypeName.Equals("smallint"))
+            {
+                return "short";
+            }
+            if (pSqlTypeName.Equals("bigint"))
+            {
+                return "long";
+            }
+            if (
+                pSqlTypeName.Equals("datetime") ||
+                pSqlTypeName.Equals("smalldatetime")
+                )
+            {
+                return "DateTime";
+            }
+            if (pSqlTypeName.Equals("bit"))
+            {
+                return "bool";
+            }
+            if (pSqlTypeName.Equals("bit"))
+            {
+                return "bool";
+            }
+
+
+
+            if (
+                pSqlTypeName.Equals("numeric") ||
+                pSqlTypeName.Equals("decimal") ||
+                pSqlTypeName.Equals("money") ||
+                pSqlTypeName.Equals("smallmoney")
+                )
+            {
+                return "decimal";
+            }
+            if (pSqlTypeName.Equals("float"))
+            {
+                return "double";
+            }
+            if (pSqlTypeName.Equals("real"))
+            {
+                return "float";
+            }
+            if (
+                pSqlTypeName.Equals("image") ||
+                pSqlTypeName.Equals("binary") ||
+                pSqlTypeName.Equals("varbinary") ||
+                pSqlTypeName.Equals("timestamp")
+                )
+            {
+                return "byte[]";
+            }
+            if (pSqlTypeName.Equals("sql_variant"))
+            {
+                return "object";
+            }
+            return "Unknown";
+        }
+
         public string DbTargetType
         {
             get
             {
-                return smoColumn.DataType.ToString();
+                if (smoColumn.DataType.SqlDataType.ToString() == "UserDefinedDataType")
+                {
+                    string sqlTypeName = getUnderlyingTypeOfUserDefinedType(smoColumn.DataType.Name);
+                    return sqlTypeToDotnetSqlDbType(sqlTypeName);
+                }
+                if (smoColumn.DataType.SqlDataType.ToString() == "Numeric")
+                {
+                    return "SqlDbType.Decimal";
+                }
+                return "SqlDbType." + smoColumn.DataType.SqlDataType.ToString();
             }
         }
 
@@ -203,10 +277,10 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
             get
             {
                 string val = smoColumn.DataType.ToString();
-                if ( val == "")
+                if (val == "")
                 {
                     val = smoColumn.DataType.SqlDataType.ToString();
-                        
+
                 }
                 return val;
             }

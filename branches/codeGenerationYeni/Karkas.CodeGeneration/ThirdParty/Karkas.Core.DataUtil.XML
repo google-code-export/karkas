@@ -4,44 +4,7 @@
         <name>Karkas.Core.DataUtil</name>
     </assembly>
     <members>
-        <member name="P:Karkas.Core.DataUtil.PagingTemplate.KomutuCalistiranKullaniciKisiKey">
-            <summary>
-            Dal komutumuzu calistiran kisinin guid olarak key bilgisi.
-            Login olan kullanicinin Kisi Key'ine setlenmesi gerekir.
-            Otomatik olarak Bs tarafindan yapilacak
-            </summary>
-        </member>
         <member name="P:Karkas.Core.DataUtil.PagingHelper.KomutuCalistiranKullaniciKisiKey">
-            <summary>
-            Dal komutumuzu calistiran kisinin guid olarak key bilgisi.
-            Login olan kullanicinin Kisi Key'ine setlenmesi gerekir.
-            Otomatik olarak Bs tarafindan yapilacak
-            </summary>
-        </member>
-        <member name="P:Karkas.Core.DataUtil.BaseDalWithoutEntity.OtomatikConnectionYonetimi">
-            <summary>
-            Eger varsayılan deger, true bırakılırsa, connection yonetimi 
-            BaseDal tarafından yapılır. Komutlar cagrılmadan once, connection getirme
-            Connection'u acma ve kapama BaseDal kontrolundedir.
-            Eger false ise connection olusturma, acma Kapama Kullanıcıya aittir.
-            </summary>
-        </member>
-        <member name="P:Karkas.Core.DataUtil.BaseDalWithoutEntity.KomutuCalistiranKullaniciKisiKey">
-            <summary>
-            Dal komutumuzu calistiran kisinin guid olarak key bilgisi.
-            Login olan kullanicinin Kisi Key'ine setlenmesi gerekir.
-            Otomatik olarak Bs tarafindan yapilacak
-            </summary>
-        </member>
-        <member name="P:Karkas.Core.DataUtil.HelperFunctions.OtomatikConnectionYonetimi">
-            <summary>
-            Eger varsayılan deger, true bırakılırsa, connection yonetimi 
-            BaseDal tarafından yapılır. Komutlar cagrılmadan once, connection getirme
-            Connection'u acma ve kapama BaseDal kontrolundedir.
-            Eger false ise connection olusturma, acma Kapama Kullanıcıya aittir.
-            </summary>
-        </member>
-        <member name="P:Karkas.Core.DataUtil.HelperFunctions.KomutuCalistiranKullaniciKisiKey">
             <summary>
             Dal komutumuzu calistiran kisinin guid olarak key bilgisi.
             Login olan kullanicinin Kisi Key'ine setlenmesi gerekir.
@@ -63,6 +26,24 @@
             <param name="cmd"></param>
             <returns></returns>
         </member>
+        <member name="M:Karkas.Core.DataUtil.AdoTemplate.VarMiIfExists(System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            verilen sql cumlesini IF EXISTS icinde calıstırır, eğer sonuc listesi varsa
+            true diğer durumda false dondurur.
+            </summary>
+            <param name="sql"></param>
+            <param name="prmListesi"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Karkas.Core.DataUtil.AdoTemplate.VarMiIfExists(System.String)">
+            <summary>
+            verilen sql cumlesini IF EXISTS icinde calıstırır, eğer sonuc listesi varsa
+            true diğer durumda false dondurur.
+            </summary>
+            <param name="sql"></param>
+            <param name="prmListesi"></param>
+            <returns></returns>
+        </member>
         <member name="P:Karkas.Core.DataUtil.AdoTemplate.OtomatikConnectionYonetimi">
             <summary>
             Eger varsayılan deger, true bırakılırsa, connection yonetimi 
@@ -71,6 +52,30 @@
             Eger false ise connection olusturma, acma Kapama Kullanıcıya aittir.
             </summary>
         </member>
+        <member name="P:Karkas.Core.DataUtil.HelperFunctions.OtomatikConnectionYonetimi">
+            <summary>
+            Eger varsayılan deger, true bırakılırsa, connection yonetimi 
+            BaseDal tarafından yapılır. Komutlar cagrılmadan once, connection getirme
+            Connection'u acma ve kapama BaseDal kontrolundedir.
+            Eger false ise connection olusturma, acma Kapama Kullanıcıya aittir.
+            </summary>
+        </member>
+        <member name="T:Karkas.Core.DataUtil.BaseDal`1">
+            <summary>
+            T TypeLibrary Class
+            M Type of Primary Key of T
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Karkas.Core.DataUtil.BaseDalWithoutEntity.OtomatikConnectionYonetimi">
+            <summary>
+            Eger varsayılan deger, true bırakılırsa, connection yonetimi 
+            BaseDal tarafından yapılır. Komutlar cagrılmadan once, connection getirme
+            Connection'u acma ve kapama BaseDal kontrolundedir.
+            Eger false ise connection olusturma, acma Kapama Kullanıcıya aittir.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Karkas.Core.DataUtil.BaseDal`1.SorgulaKolonIsmiIle(System.String,System.Object)" -->
         <member name="T:Karkas.Core.DataUtil.BaseDalForIdentity`2">
             <summary>
             T TypeLibrary Class
@@ -79,12 +84,12 @@
             <typeparam name="T"></typeparam>
             <typeparam name="M"></typeparam>
         </member>
-        <member name="T:Karkas.Core.DataUtil.BaseDal`1">
+        <member name="P:Karkas.Core.DataUtil.PagingTemplate.KomutuCalistiranKullaniciKisiKey">
             <summary>
-            T TypeLibrary Class
-            M Type of Primary Key of T
+            Dal komutumuzu calistiran kisinin guid olarak key bilgisi.
+            Login olan kullanicinin Kisi Key'ine setlenmesi gerekir.
+            Otomatik olarak Bs tarafindan yapilacak
             </summary>
-            <typeparam name="T"></typeparam>
         </member>
     </members>
 </doc>
