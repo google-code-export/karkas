@@ -150,5 +150,43 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
             return String.Format("Table : {0}.{1}", Name, Schema);
         }
 
+
+        int? _primaryKeyColumnCount;
+        public int PrimaryKeyColumnCount
+        {
+            get 
+            {
+                if (_primaryKeyColumnCount.HasValue)
+                {
+                    return _primaryKeyColumnCount.Value;
+                }
+                int count = 0;
+                foreach (var item in this.Columns)
+                {
+                    if (item.IsInPrimaryKey)
+                    {
+                        count++;
+                    }
+                }
+                _primaryKeyColumnCount = count;
+                return count;
+            }
+        }
+
+
+        public bool HasPrimaryKey
+        {
+            get 
+            {
+                if (PrimaryKeyColumnCount > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

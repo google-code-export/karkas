@@ -8,8 +8,7 @@ namespace Karkas.CodeGenerationHelper.Interfaces
     public interface ITable : IContainer
     {
         int findIndexFromName(string name);
-
-
-
+        int PrimaryKeyColumnCount { get; }
+        bool HasPrimaryKey { get; }
     }
 }

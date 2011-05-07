@@ -36,9 +36,13 @@ namespace Karkas.CodeGenerationHelper.Generators
 
             pkAdi = utils.PrimaryKeyAdiniBul(container);
             identityColumnAdi = utils.IdentityColumnAdiniBul(container);
-            if (pkAdi == "" && container is ITable)
+            
+            if (container is ITable && (!((ITable) container).HasPrimaryKey ))
             {
-                return "Sectiginiz tablolardan " + container.Name  + " icinde Primary Key yoktur. Code Generation (DAL) sadace primaryKey'i olan tablolarda duzgun calisir.";
+                string uyari = 
+                 "Sectiginiz tablolardan " + container.Name  + " icinde Primary Key yoktur. Code Generation (DAL) sadace primaryKey'i olan tablolarda duzgun calisir.";
+                Console.WriteLine(uyari);
+                return uyari;
             }
 
 
@@ -136,16 +140,20 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         private void SilKomutuYazPkIle(IOutput output, string classNameTypeLibrary, IContainer container)
         {
-            if (container is ITable)
+            ITable table = container as ITable;
+            if (table != null )
             {
-                // TODO buranında düzelmesi lazım.
-                string pkPropertyName = utils.getPropertyVariableName(container.Columns[0]);
-                output.autoTabLn(string.Format("public virtual void Sil({0} {1})", pkType, pkPropertyName));
-                BaslangicSusluParentezVeTabArtir(output);
-                output.autoTabLn(string.Format("{0} row = new {0}();", classNameTypeLibrary));
-                output.autoTabLn(string.Format("row.{0} = {0};", pkPropertyName));
-                output.autoTabLn("base.Sil(row);");
-                BitisSusluParentezVeTabAzalt(output);
+                if (table.PrimaryKeyColumnCount == 1)
+                {
+                    IColumn pkColumn = utils.PrimaryKeyColumnTekIseBul(container);
+                    string pkPropertyName = utils.getPropertyVariableName(pkColumn);
+                    output.autoTabLn(string.Format("public virtual void Sil({0} {1})", pkType, pkPropertyName));
+                    BaslangicSusluParentezVeTabArtir(output);
+                    output.autoTabLn(string.Format("{0} row = new {0}();", classNameTypeLibrary));
+                    output.autoTabLn(string.Format("row.{0} = {0};", pkPropertyName));
+                    output.autoTabLn("base.Sil(row);");
+                    BitisSusluParentezVeTabAzalt(output);
+                }
             }
         }
 
@@ -537,14 +545,14 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         private void builderParameterEkle(IOutput output, IColumn column)
         {
-            if (column.CharacterMaxLength == 0)
+            if (column.isStringType)
             {
-                builderParameterEkleNormal(output, column);
+                builderParameterEkleString(output, column);
 
             }
             else
             {
-                builderParameterEkleString(output, column);
+                builderParameterEkleNormal(output, column);
             }
         }
 

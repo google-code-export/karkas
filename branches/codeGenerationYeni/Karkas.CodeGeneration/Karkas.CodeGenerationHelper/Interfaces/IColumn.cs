@@ -28,5 +28,9 @@ namespace Karkas.CodeGenerationHelper.Interfaces
         string DataTypeName { get;  }
 
         int CharacterMaxLength { get;  }
+
+        bool isStringType { get; }
+        bool isNumericType { get; }
+
     }
 }

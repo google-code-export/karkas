@@ -290,8 +290,21 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         {
             get
             {
-                string lowerDataType = smoColumn.DataType.ToString().ToLowerInvariant();
+
                 int charMaxLength = 0;
+                if (isStringType)
+                {
+                    charMaxLength = smoColumn.DataType.MaximumLength;
+                }
+                return charMaxLength;
+            }
+        }
+
+
+        public bool isStringType
+        {
+            get {
+                string lowerDataType = smoColumn.DataType.ToString().ToLowerInvariant();
                 if (
                     lowerDataType.Contains("char")
                     ||
@@ -299,10 +312,19 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
 
                     )
                 {
-                    charMaxLength = smoColumn.DataType.MaximumLength;
+                    return true;
                 }
-                return charMaxLength;
+                else
+                {
+                    return false;
+                }
+            
             }
+        }
+
+        public bool isNumericType
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 }

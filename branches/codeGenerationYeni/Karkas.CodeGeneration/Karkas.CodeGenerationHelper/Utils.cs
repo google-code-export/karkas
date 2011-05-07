@@ -145,6 +145,31 @@ namespace Karkas.CodeGenerationHelper
             }
             return adi;
         }
+        public IColumn PrimaryKeyColumnTekIseBul(IContainer table)
+        {
+            IColumn pkColon = null;
+            foreach (IColumn column in table.Columns)
+            {
+                if (column.IsInPrimaryKey)
+                {
+                    pkColon = column;
+                }
+            }
+            return pkColon;
+        }
+
+        public List<IColumn> PrimaryKeyColumnlariniBul(IContainer table)
+        {
+            List<IColumn> pkColonListesi = new List<IColumn>();
+            foreach (IColumn column in table.Columns)
+            {
+                if (column.IsInPrimaryKey)
+                {
+                    pkColonListesi.Add(column);
+                }
+            }
+            return pkColonListesi;
+        }
 
         public string PrimaryKeyTipiniBul(IContainer table)
         {

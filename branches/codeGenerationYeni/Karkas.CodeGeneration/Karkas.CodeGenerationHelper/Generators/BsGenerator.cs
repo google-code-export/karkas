@@ -62,11 +62,11 @@ namespace Karkas.CodeGenerationHelper.Generators
             BaslangicSusluParentez(output);
             OverrideDatabaseNameYaz(output, container);
 
-            if (container is ITable)
+            if (container is ITable && (!string.IsNullOrEmpty(pkAdi)))
             {
-                SilKomutuYazPkIle(output);
+                SilKomutuYazPkIle(output, container);
 
-                sorgulaPkAdiIleYaz(output, classNameTypeLibrary, pkType, pkAdi);
+                sorgulaPkAdiIleYaz(output, container,classNameTypeLibrary, pkType, pkAdi);
             }
             BitisSusluParentezVeTabAzalt(output);
             BitisSusluParentezVeTabAzalt(output);
@@ -101,25 +101,44 @@ namespace Karkas.CodeGenerationHelper.Generators
         }
 
 
-        private static void sorgulaPkAdiIleYaz(IOutput output, string classNameTypeLibrary, string pkType, string pkAdi)
+        private static void sorgulaPkAdiIleYaz(IOutput output, IContainer container, string classNameTypeLibrary, string pkType, string pkAdi)
         {
-            string classSatiri = "public " + classNameTypeLibrary + " Sorgula"
-                            + pkAdi + "Ile(" + pkType
-                            + " p1)";
-            output.autoTabLn(classSatiri);
-            output.autoTabLn("{");
-            output.increaseTab();
-            output.autoTabLn("return dal.Sorgula" + pkAdi + "Ile(p1);");
-            output.decreaseTab();
-            output.autoTabLn("}");
+            ITable table = container as ITable;
+            if (table != null)
+            {
+                if (table.PrimaryKeyColumnCount == 1)
+                {
+
+                    string classSatiri = "public " + classNameTypeLibrary + " Sorgula"
+                                    + pkAdi + "Ile(" + pkType
+                                    + " p1)";
+                    output.autoTabLn(classSatiri);
+                    output.autoTabLn("{");
+                    output.increaseTab();
+                    output.autoTabLn("return dal.Sorgula" + pkAdi + "Ile(p1);");
+                    output.decreaseTab();
+                    output.autoTabLn("}");
+                }
+            }
         }
 
-        private void SilKomutuYazPkIle(IOutput output)
+        private void SilKomutuYazPkIle(IOutput output, IContainer container)
         {
-            output.autoTabLn(string.Format("public void Sil({0} {1})", pkType, pkAdi));
-            BaslangicSusluParentezVeTabArtir(output);
-            output.autoTabLn("dal.Sil(" + pkAdi + ");");
-            BitisSusluParentezVeTabAzalt(output);
+            ITable table = container as ITable;
+            if (table != null)
+            {
+                if (table.PrimaryKeyColumnCount == 1)
+                {
+                    IColumn pkColumn = utils.PrimaryKeyColumnTekIseBul(container);
+                    string pkPropertyName = utils.getPropertyVariableName(pkColumn);
+                    output.autoTabLn(string.Format("public void Sil({0} p{1})", pkType, pkPropertyName));
+                    BaslangicSusluParentezVeTabArtir(output);
+                    // output.autoTabLn(string.Format("{0} row = new {0}();", classNameTypeLibrary));
+
+                    output.autoTabLn(string.Format("dal.Sil( p{0});",pkPropertyName));
+                    BitisSusluParentezVeTabAzalt(output);
+                }
+            }
 
         }
 
