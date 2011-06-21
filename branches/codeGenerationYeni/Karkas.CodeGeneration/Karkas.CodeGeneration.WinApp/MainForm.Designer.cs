@@ -106,6 +106,7 @@
             this.buttonSeciliTablolariUret.TabIndex = 5;
             this.buttonSeciliTablolariUret.Text = "Seçili Tablolari Üret";
             this.buttonSeciliTablolariUret.UseVisualStyleBackColor = true;
+            this.buttonSeciliTablolariUret.Click += new System.EventHandler(this.buttonSeciliTablolariUret_Click);
             // 
             // buttonTumTablolariUret
             // 

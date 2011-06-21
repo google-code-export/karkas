@@ -130,7 +130,12 @@ ORDER BY FULL_TABLE_NAME
 
         private void buttonTumTablolariUret_Click(object sender, EventArgs e)
         {
-            SqlServerHelper.codeGenerateAllTables(textBoxConnectionString.Text, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
+            SqlServerHelper.codeGenerateAllTables(textBoxConnectionString.Text
+                , labelDatabaseNameSonuc.Text
+                , textBoxProjectNamespace.Text
+            , textBoxCodeGenerationDizini.Text
+            );
+            MessageBox.Show("TÜM TABLOLAR İÇİN KOD ÜRETİLDİ");
 
         }
 
@@ -140,6 +145,27 @@ ORDER BY FULL_TABLE_NAME
             Settings.Default.SonConnectionStringDegeri = textBoxConnectionString.Text;
             Settings.Default.SonProjectNamespace = textBoxProjectNamespace.Text;
             Settings.Default.Save();
+
+        }
+
+        private void buttonSeciliTablolariUret_Click(object sender, EventArgs e)
+        {
+            foreach (var item in listBoxTableListesi.SelectedItems)
+            {
+                DataRowView view = (DataRowView)item;
+                string tableSchema = view["TABLE_SCHEMA"].ToString();
+                string tableName = view["TABLE_NAME"].ToString();
+                SqlServerHelper.codeGenerateOneTable(textBoxConnectionString.Text
+                    , tableName
+                    , tableSchema
+                    , labelDatabaseNameSonuc.Text
+                    , textBoxProjectNamespace.Text
+                    , textBoxCodeGenerationDizini.Text
+                    );
+
+            }
+
+            MessageBox.Show("SEÇİLEN TABLOLAR İÇİN KOD ÜRETİLDİ");
 
         }
     }
