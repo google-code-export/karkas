@@ -46,5 +46,17 @@ namespace Karkas.CodeGeneration.WinApp.Properties {
                 this["SonCodeGenerationDizini"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Karkas.Ornek")]
+        public string SonProjectNamespace {
+            get {
+                return ((string)(this["SonProjectNamespace"]));
+            }
+            set {
+                this["SonProjectNamespace"] = value;
+            }
+        }
     }
 }

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using Karkas.Core.DataUtil;
 using Karkas.CodeGeneration.WinApp.Properties;
+using Karkas.CodeGeneration.SqlServer;
 
 namespace Karkas.CodeGeneration.WinApp
 {
@@ -27,6 +28,12 @@ namespace Karkas.CodeGeneration.WinApp
             {
                 textBoxCodeGenerationDizini.Text = Settings.Default.SonCodeGenerationDizini;
             }
+            if (!string.IsNullOrWhiteSpace(Settings.Default.SonProjectNamespace))
+            {
+                textBoxProjectNamespace.Text = Settings.Default.SonProjectNamespace;
+            }
+            
+
 
         }
         SqlConnection connection;
@@ -62,6 +69,9 @@ UNION
 SELECT DISTINCT TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES
 ";
 
+        private const string SQL_DATABASE_NAME = @"
+SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
+";
 
         private const string SQL_TABLE_LIST = @"
 SELECT TABLE_SCHEMA,TABLE_NAME, TABLE_SCHEMA + '.' + TABLE_NAME AS FULL_TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
@@ -75,9 +85,15 @@ ORDER BY FULL_TABLE_NAME
 
         private void BilgileriDoldur( )
         {
+            databaseNameLabelDoldur();
             comboBoxSchemaListDoldur();
             listBoxTableListDoldur();
             this.comboBoxSchemaList.SelectedValueChanged += new System.EventHandler(this.comboBoxSchemaList_SelectedValueChanged);
+        }
+
+        private void databaseNameLabelDoldur()
+        {
+            labelDatabaseNameSonuc.Text = (string)template.TekDegerGetir(SQL_DATABASE_NAME);
         }
 
         private void listBoxTableListDoldur()
@@ -113,6 +129,12 @@ ORDER BY FULL_TABLE_NAME
                 Settings.Default.SonCodeGenerationDizini = textBoxCodeGenerationDizini.Text;
                 Settings.Default.Save();
             }
+
+        }
+
+        private void buttonTumTablolariUret_Click(object sender, EventArgs e)
+        {
+            SqlServerHelper.codeGenerateAllTables(textBoxConnectionString.Text, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
 
         }
     }
