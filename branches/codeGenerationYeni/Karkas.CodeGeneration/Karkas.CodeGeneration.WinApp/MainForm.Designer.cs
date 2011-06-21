@@ -37,13 +37,16 @@
             this.labelTabloListesi = new System.Windows.Forms.Label();
             this.labelSchemaList = new System.Windows.Forms.Label();
             this.comboBoxSchemaList = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxCodeGenerationDizini = new System.Windows.Forms.TextBox();
+            this.buttonFolderDialog = new System.Windows.Forms.Button();
             this.panelListe.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelConnectionString
             // 
             this.labelConnectionString.AutoSize = true;
-            this.labelConnectionString.Location = new System.Drawing.Point(43, 35);
+            this.labelConnectionString.Location = new System.Drawing.Point(21, 35);
             this.labelConnectionString.Name = "labelConnectionString";
             this.labelConnectionString.Size = new System.Drawing.Size(120, 17);
             this.labelConnectionString.TabIndex = 0;
@@ -55,7 +58,6 @@
             this.textBoxConnectionString.Name = "textBoxConnectionString";
             this.textBoxConnectionString.Size = new System.Drawing.Size(624, 22);
             this.textBoxConnectionString.TabIndex = 2;
-            this.textBoxConnectionString.Text = "Data Source=localhost;Initial Catalog=KARKAS_ORNEK;Integrated Security=True";
             // 
             // buttonTestConnectionString
             // 
@@ -70,7 +72,7 @@
             // labelConnectionStatus
             // 
             this.labelConnectionStatus.AutoSize = true;
-            this.labelConnectionStatus.Location = new System.Drawing.Point(52, 72);
+            this.labelConnectionStatus.Location = new System.Drawing.Point(43, 93);
             this.labelConnectionStatus.Name = "labelConnectionStatus";
             this.labelConnectionStatus.Size = new System.Drawing.Size(135, 17);
             this.labelConnectionStatus.TabIndex = 4;
@@ -124,11 +126,40 @@
             this.comboBoxSchemaList.Size = new System.Drawing.Size(242, 24);
             this.comboBoxSchemaList.TabIndex = 0;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(21, 64);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(154, 17);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Code Generation Dizini";
+            // 
+            // textBoxCodeGenerationDizini
+            // 
+            this.textBoxCodeGenerationDizini.Location = new System.Drawing.Point(203, 64);
+            this.textBoxCodeGenerationDizini.Name = "textBoxCodeGenerationDizini";
+            this.textBoxCodeGenerationDizini.Size = new System.Drawing.Size(623, 22);
+            this.textBoxCodeGenerationDizini.TabIndex = 7;
+            // 
+            // buttonFolderDialog
+            // 
+            this.buttonFolderDialog.Location = new System.Drawing.Point(846, 64);
+            this.buttonFolderDialog.Name = "buttonFolderDialog";
+            this.buttonFolderDialog.Size = new System.Drawing.Size(50, 29);
+            this.buttonFolderDialog.TabIndex = 8;
+            this.buttonFolderDialog.Text = "...";
+            this.buttonFolderDialog.UseVisualStyleBackColor = true;
+            this.buttonFolderDialog.Click += new System.EventHandler(this.buttonFolderDialog_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(985, 656);
+            this.Controls.Add(this.buttonFolderDialog);
+            this.Controls.Add(this.textBoxCodeGenerationDizini);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.panelListe);
             this.Controls.Add(this.labelConnectionStatus);
             this.Controls.Add(this.buttonTestConnectionString);
@@ -154,6 +185,9 @@
         private System.Windows.Forms.ComboBox comboBoxSchemaList;
         private System.Windows.Forms.Label labelTabloListesi;
         private System.Windows.Forms.ListBox listBoxTableListesi;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBoxCodeGenerationDizini;
+        private System.Windows.Forms.Button buttonFolderDialog;
     }
 }
 

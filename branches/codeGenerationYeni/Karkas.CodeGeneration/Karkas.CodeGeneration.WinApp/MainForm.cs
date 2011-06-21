@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using Karkas.Core.DataUtil;
+using Karkas.CodeGeneration.WinApp.Properties;
 
 namespace Karkas.CodeGeneration.WinApp
 {
@@ -16,6 +17,17 @@ namespace Karkas.CodeGeneration.WinApp
         public MainForm()
         {
             InitializeComponent();
+
+
+            if (!string.IsNullOrWhiteSpace( Settings.Default.SonConnectionStringDegeri))
+            {
+                textBoxConnectionString.Text = Settings.Default.SonConnectionStringDegeri;
+            }
+            if (!string.IsNullOrWhiteSpace( Settings.Default.SonCodeGenerationDizini))
+            {
+                textBoxCodeGenerationDizini.Text = Settings.Default.SonCodeGenerationDizini;
+            }
+
         }
         SqlConnection connection;
         AdoTemplate template;
@@ -32,6 +44,8 @@ namespace Karkas.CodeGeneration.WinApp
                 template = new AdoTemplate(connection);
                 labelConnectionStatus.Text = "Bağlantı Başarılı";
                 BilgileriDoldur();
+                Settings.Default.SonConnectionStringDegeri = textBoxConnectionString.Text;
+                Settings.Default.Save();
 
 
             }
@@ -50,7 +64,7 @@ SELECT DISTINCT TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES
 
 
         private const string SQL_TABLE_LIST = @"
-SELECT TABLE_SCHEMA + '.' + TABLE_NAME AS FULL_TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
+SELECT TABLE_SCHEMA,TABLE_NAME, TABLE_SCHEMA + '.' + TABLE_NAME AS FULL_TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
 WHERE
 ( (@TABLE_SCHEMA IS NULL) OR (@TABLE_SCHEMA = '__TUM_SCHEMALAR__') OR ( TABLE_SCHEMA = @TABLE_SCHEMA))
 AND
@@ -84,6 +98,22 @@ ORDER BY FULL_TABLE_NAME
         private void comboBoxSchemaList_SelectedValueChanged(object sender, EventArgs e)
         {
             listBoxTableListDoldur();
+        }
+
+        private void buttonFolderDialog_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            folderBrowserDialog.ShowNewFolderButton = false;
+            folderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
+
+            DialogResult dialogResult = folderBrowserDialog.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                textBoxCodeGenerationDizini.Text = folderBrowserDialog.SelectedPath;
+                Settings.Default.SonCodeGenerationDizini = textBoxCodeGenerationDizini.Text;
+                Settings.Default.Save();
+            }
+
         }
     }
 }
