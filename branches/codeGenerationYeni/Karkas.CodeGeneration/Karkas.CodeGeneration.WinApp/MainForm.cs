@@ -51,8 +51,6 @@ namespace Karkas.CodeGeneration.WinApp
                 template = new AdoTemplate(connection);
                 labelConnectionStatus.Text = "Bağlantı Başarılı";
                 BilgileriDoldur();
-                Settings.Default.SonConnectionStringDegeri = textBoxConnectionString.Text;
-                Settings.Default.Save();
 
 
             }
@@ -126,8 +124,6 @@ ORDER BY FULL_TABLE_NAME
             if (dialogResult == DialogResult.OK)
             {
                 textBoxCodeGenerationDizini.Text = folderBrowserDialog.SelectedPath;
-                Settings.Default.SonCodeGenerationDizini = textBoxCodeGenerationDizini.Text;
-                Settings.Default.Save();
             }
 
         }
@@ -135,6 +131,15 @@ ORDER BY FULL_TABLE_NAME
         private void buttonTumTablolariUret_Click(object sender, EventArgs e)
         {
             SqlServerHelper.codeGenerateAllTables(textBoxConnectionString.Text, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
+
+        }
+
+        private void buttonGecerliDegerleriKaydet_Click(object sender, EventArgs e)
+        {
+            Settings.Default.SonCodeGenerationDizini = textBoxCodeGenerationDizini.Text;
+            Settings.Default.SonConnectionStringDegeri = textBoxConnectionString.Text;
+            Settings.Default.SonProjectNamespace = textBoxProjectNamespace.Text;
+            Settings.Default.Save();
 
         }
     }

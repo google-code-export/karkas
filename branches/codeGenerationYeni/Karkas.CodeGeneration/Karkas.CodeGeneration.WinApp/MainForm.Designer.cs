@@ -46,6 +46,7 @@
             this.textBoxProjectNamespace = new System.Windows.Forms.TextBox();
             this.labelDatabaseName = new System.Windows.Forms.Label();
             this.labelDatabaseNameSonuc = new System.Windows.Forms.Label();
+            this.buttonGecerliDegerleriKaydet = new System.Windows.Forms.Button();
             this.panelListe.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -213,11 +214,22 @@
             this.labelDatabaseNameSonuc.Size = new System.Drawing.Size(0, 17);
             this.labelDatabaseNameSonuc.TabIndex = 12;
             // 
+            // buttonGecerliDegerleriKaydet
+            // 
+            this.buttonGecerliDegerleriKaydet.Location = new System.Drawing.Point(741, 184);
+            this.buttonGecerliDegerleriKaydet.Name = "buttonGecerliDegerleriKaydet";
+            this.buttonGecerliDegerleriKaydet.Size = new System.Drawing.Size(195, 28);
+            this.buttonGecerliDegerleriKaydet.TabIndex = 13;
+            this.buttonGecerliDegerleriKaydet.Text = "Geçerli Değerleri Kaydet";
+            this.buttonGecerliDegerleriKaydet.UseVisualStyleBackColor = true;
+            this.buttonGecerliDegerleriKaydet.Click += new System.EventHandler(this.buttonGecerliDegerleriKaydet_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(985, 656);
+            this.Controls.Add(this.buttonGecerliDegerleriKaydet);
             this.Controls.Add(this.labelDatabaseNameSonuc);
             this.Controls.Add(this.labelDatabaseName);
             this.Controls.Add(this.textBoxProjectNamespace);
@@ -259,6 +271,7 @@
         private System.Windows.Forms.TextBox textBoxProjectNamespace;
         private System.Windows.Forms.Label labelDatabaseName;
         private System.Windows.Forms.Label labelDatabaseNameSonuc;
+        private System.Windows.Forms.Button buttonGecerliDegerleriKaydet;
     }
 }
 
