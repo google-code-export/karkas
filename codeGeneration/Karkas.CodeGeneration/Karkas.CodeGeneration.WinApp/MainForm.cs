@@ -48,7 +48,9 @@ namespace Karkas.CodeGeneration.WinApp
                 }
                 connection = new SqlConnection(textBoxConnectionString.Text);
                 connection.Open();
-                template = new AdoTemplate(connection);
+                connection.Close();
+                ConnectionSingleton.Instance.ConnectionString = textBoxConnectionString.Text;                
+                template = new AdoTemplate(textBoxConnectionString.Text);
                 labelConnectionStatus.Text = "Bağlantı Başarılı";
                 BilgileriDoldur();
 
