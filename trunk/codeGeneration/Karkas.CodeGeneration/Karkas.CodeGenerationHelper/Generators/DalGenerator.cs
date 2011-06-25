@@ -41,8 +41,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             {
                 string uyari = 
                  "Sectiginiz tablolardan " + container.Name  + " icinde Primary Key yoktur. Code Generation (DAL) sadace primaryKey'i olan tablolarda duzgun calisir.";
-                Console.WriteLine(uyari);
-                return uyari;
+                throw new Exception(uyari);
             }
 
 
@@ -545,7 +544,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         private void builderParameterEkle(IOutput output, IColumn column)
         {
-            if (column.isStringType)
+            if (!column.isStringTypeWithoutLength && column.isStringType)
             {
                 builderParameterEkleString(output, column);
 

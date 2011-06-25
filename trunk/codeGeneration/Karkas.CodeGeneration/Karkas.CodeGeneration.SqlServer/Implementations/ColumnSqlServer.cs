@@ -134,13 +134,6 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         private string getUnderlyingTypeOfUserDefinedType(string pUserDefinedTypeName)
         {
             string underlyingType;
-            //userDefinedTypes.TryGetValue(pUserDefinedTypeName,out underlyingType);
-            //if ( underlyingType != null)
-            //{
-            //    return underlyingType;
-            //}
-
-
 
             string sql = @"SELECT name FROM sys.types
  WHERE system_type_id =
@@ -154,7 +147,6 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
             AdoTemplate template = new AdoTemplate();
             underlyingType = (string)template.TekDegerGetir(sql, builder.GetParameterArray());
 
-            //            userDefinedTypes.Add(pUserDefinedTypeName, underlyingType);
             return underlyingType;
 
 
@@ -268,6 +260,19 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
                 {
                     return "SqlDbType.Decimal";
                 }
+                if (smoColumn.DataType.SqlDataType.ToString() == "VarCharMax")
+                {
+                    return "SqlDbType.VarChar";
+                }
+                if (smoColumn.DataType.SqlDataType.ToString() == "NVarCharMax")
+                {
+                    return "SqlDbType.NVarChar";
+                }
+                if (smoColumn.DataType.SqlDataType.ToString() == "VarBinaryMax")
+                {
+                    return "SqlDbType.VarBinary";
+                }
+                
                 return "SqlDbType." + smoColumn.DataType.SqlDataType.ToString();
             }
         }
@@ -300,10 +305,29 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
             }
         }
 
+        public bool isStringTypeWithoutLength
+        {
+            get
+            {
+                if (isStringType)
+                {
+                    string lowerDataType = this.smoColumn.DataType.SqlDataType.ToString().ToLowerInvariant();
+                    if (
+                        lowerDataType.Contains("text")
+                        || lowerDataType.Contains("max")
+                        )
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
 
         public bool isStringType
         {
-            get {
+            get
+            {
                 string lowerDataType = smoColumn.DataType.ToString().ToLowerInvariant();
                 if (
                     lowerDataType.Contains("char")
@@ -318,7 +342,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
                 {
                     return false;
                 }
-            
+
             }
         }
 

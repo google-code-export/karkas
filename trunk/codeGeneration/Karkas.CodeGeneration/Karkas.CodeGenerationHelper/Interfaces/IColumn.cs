@@ -30,6 +30,7 @@ namespace Karkas.CodeGenerationHelper.Interfaces
         int CharacterMaxLength { get;  }
 
         bool isStringType { get; }
+        bool isStringTypeWithoutLength { get; }
         bool isNumericType { get; }
 
     }
