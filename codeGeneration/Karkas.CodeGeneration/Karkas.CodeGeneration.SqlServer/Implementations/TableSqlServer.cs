@@ -147,7 +147,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
 
         public override string ToString()
         {
-            return String.Format("Table : {0}.{1}", Name, Schema);
+            return String.Format("{0}.{1}", Schema,Name);
         }
 
 

@@ -47,6 +47,8 @@
             this.labelDatabaseName = new System.Windows.Forms.Label();
             this.labelDatabaseNameSonuc = new System.Windows.Forms.Label();
             this.buttonGecerliDegerleriKaydet = new System.Windows.Forms.Button();
+            this.checkBoxDboSemasiniAtla = new System.Windows.Forms.CheckBox();
+            this.checkBoxSysTablolariniAtla = new System.Windows.Forms.CheckBox();
             this.panelListe.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,6 +89,8 @@
             // 
             // panelListe
             // 
+            this.panelListe.Controls.Add(this.checkBoxSysTablolariniAtla);
+            this.panelListe.Controls.Add(this.checkBoxDboSemasiniAtla);
             this.panelListe.Controls.Add(this.buttonSeciliTablolariUret);
             this.panelListe.Controls.Add(this.buttonTumTablolariUret);
             this.panelListe.Controls.Add(this.listBoxTableListesi);
@@ -100,7 +104,7 @@
             // 
             // buttonSeciliTablolariUret
             // 
-            this.buttonSeciliTablolariUret.Location = new System.Drawing.Point(571, 127);
+            this.buttonSeciliTablolariUret.Location = new System.Drawing.Point(303, 385);
             this.buttonSeciliTablolariUret.Name = "buttonSeciliTablolariUret";
             this.buttonSeciliTablolariUret.Size = new System.Drawing.Size(161, 38);
             this.buttonSeciliTablolariUret.TabIndex = 5;
@@ -110,7 +114,7 @@
             // 
             // buttonTumTablolariUret
             // 
-            this.buttonTumTablolariUret.Location = new System.Drawing.Point(572, 79);
+            this.buttonTumTablolariUret.Location = new System.Drawing.Point(747, 188);
             this.buttonTumTablolariUret.Name = "buttonTumTablolariUret";
             this.buttonTumTablolariUret.Size = new System.Drawing.Size(161, 28);
             this.buttonTumTablolariUret.TabIndex = 4;
@@ -225,6 +229,30 @@
             this.buttonGecerliDegerleriKaydet.UseVisualStyleBackColor = true;
             this.buttonGecerliDegerleriKaydet.Click += new System.EventHandler(this.buttonGecerliDegerleriKaydet_Click);
             // 
+            // checkBoxDboSemasiniAtla
+            // 
+            this.checkBoxDboSemasiniAtla.AutoSize = true;
+            this.checkBoxDboSemasiniAtla.Checked = true;
+            this.checkBoxDboSemasiniAtla.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxDboSemasiniAtla.Location = new System.Drawing.Point(747, 102);
+            this.checkBoxDboSemasiniAtla.Name = "checkBoxDboSemasiniAtla";
+            this.checkBoxDboSemasiniAtla.Size = new System.Drawing.Size(141, 21);
+            this.checkBoxDboSemasiniAtla.TabIndex = 6;
+            this.checkBoxDboSemasiniAtla.Text = "dbo şemasını Atla";
+            this.checkBoxDboSemasiniAtla.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxSysTablolariniAtla
+            // 
+            this.checkBoxSysTablolariniAtla.AutoSize = true;
+            this.checkBoxSysTablolariniAtla.Checked = true;
+            this.checkBoxSysTablolariniAtla.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSysTablolariniAtla.Location = new System.Drawing.Point(747, 140);
+            this.checkBoxSysTablolariniAtla.Name = "checkBoxSysTablolariniAtla";
+            this.checkBoxSysTablolariniAtla.Size = new System.Drawing.Size(149, 21);
+            this.checkBoxSysTablolariniAtla.TabIndex = 7;
+            this.checkBoxSysTablolariniAtla.Text = "sys Tablolarını Atla";
+            this.checkBoxSysTablolariniAtla.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -273,6 +301,8 @@
         private System.Windows.Forms.Label labelDatabaseName;
         private System.Windows.Forms.Label labelDatabaseNameSonuc;
         private System.Windows.Forms.Button buttonGecerliDegerleriKaydet;
+        private System.Windows.Forms.CheckBox checkBoxSysTablolariniAtla;
+        private System.Windows.Forms.CheckBox checkBoxDboSemasiniAtla;
     }
 }
 

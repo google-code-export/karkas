@@ -136,6 +136,8 @@ ORDER BY FULL_TABLE_NAME
                 , labelDatabaseNameSonuc.Text
                 , textBoxProjectNamespace.Text
             , textBoxCodeGenerationDizini.Text
+            ,checkBoxDboSemasiniAtla.Checked
+            ,checkBoxSysTablolariniAtla.Checked
             );
             MessageBox.Show("TÜM TABLOLAR İÇİN KOD ÜRETİLDİ");
 

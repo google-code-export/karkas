@@ -10,7 +10,10 @@ namespace Karkas.CodeGeneration.SqlServer
 {
     public class SqlServerHelper
     {
-        public static void codeGenerateAllTables(string pConnectionString, string pDatabaseName, string pProjectNamespace, string pProjectFolder)
+        public static void codeGenerateAllTables(string pConnectionString, string pDatabaseName, string pProjectNamespace
+            , string pProjectFolder
+            ,bool dboSemaTablolariniAtla
+            ,bool sysTablolariniAtla)
         {
             TypeLibraryGenerator typeGen = new TypeLibraryGenerator();
             DalGenerator dalGen = new DalGenerator();
@@ -22,6 +25,14 @@ namespace Karkas.CodeGeneration.SqlServer
 
             foreach (ITable table in tableListesi)
             {
+                if (dboSemaTablolariniAtla && table.Schema == "dbo")
+                {
+                    continue;
+                }
+                if (sysTablolariniAtla && table.Name.StartsWith("sys"))
+                {
+                    continue;
+                }
                 typeGen.Render(output, table);
                 dalGen.Render(output, table);
                 bsGen.Render(output, table);
