@@ -21,7 +21,7 @@ namespace Karkas.MyGenerationConsoleTest
         {
             ConnectionSingleton.Instance.ConnectionString = _ConnectionString;
 
-            SqlServerHelper.codeGenerateAllTables(_ConnectionString,"KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
+            SqlServerHelper.codeGenerateAllTables(_ConnectionString,"KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek",true,true);
             SqlServerHelper.codeGenerateOneTable(_ConnectionString,"ORNEK_TABLO","ORNEKLER","KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
         }
 
