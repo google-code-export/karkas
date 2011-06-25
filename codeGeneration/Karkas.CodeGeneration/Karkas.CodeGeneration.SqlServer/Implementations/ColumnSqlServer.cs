@@ -125,7 +125,8 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
         {
             get
             {
-                return smoColumn.Computed;
+                return smoColumn.Computed || smoColumn.RowGuidCol || ( smoColumn.DataType.Name == "timestamp");
+                
             }
         }
 
