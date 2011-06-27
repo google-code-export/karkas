@@ -29,7 +29,7 @@ namespace Karkas.CodeGeneration.SqlServer
                 {
                     continue;
                 }
-                if (sysTablolariniAtla && table.Name.StartsWith("sys"))
+                if (sysTablolariniAtla && (table.Name.StartsWith("sys") || table.Name == "dtproperties"))
                 {
                     continue;
                 }
