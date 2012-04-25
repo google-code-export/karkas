@@ -59,6 +59,7 @@ namespace Karkas.CodeGeneration.WinApp
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                labelConnectionStatus.ForeColor = Color.Red;
                 labelConnectionStatus.Text = "!!!!Bağlantı BAŞARISIZ!!!!";
             }
 
