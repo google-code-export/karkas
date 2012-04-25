@@ -64,17 +64,17 @@ namespace Karkas.CodeGeneration.WinApp
             }
 
         }
-        private const string SQL_SCHEMA_LIST = @"
+        private const string SQL__SQLSERCER_SCHEMA_LIST = @"
 SELECT '__TUM_SCHEMALAR__' AS TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES
 UNION
 SELECT DISTINCT TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES
 ";
 
-        private const string SQL_DATABASE_NAME = @"
+        private const string SQL_SQLSERVER_DATABASE_NAME = @"
 SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
 ";
 
-        private const string SQL_TABLE_LIST = @"
+        private const string SQL_SQLSERVER_TABLE_LIST = @"
 SELECT TABLE_SCHEMA,TABLE_NAME, TABLE_SCHEMA + '.' + TABLE_NAME AS FULL_TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
 WHERE
 ( (@TABLE_SCHEMA IS NULL) OR (@TABLE_SCHEMA = '__TUM_SCHEMALAR__') OR ( TABLE_SCHEMA = @TABLE_SCHEMA))
@@ -94,20 +94,20 @@ ORDER BY FULL_TABLE_NAME
 
         private void databaseNameLabelDoldur()
         {
-            labelDatabaseNameSonuc.Text = (string)template.TekDegerGetir(SQL_DATABASE_NAME);
+            labelDatabaseNameSonuc.Text = (string)template.TekDegerGetir(SQL_SQLSERVER_DATABASE_NAME);
         }
 
         private void listBoxTableListDoldur()
         {
             ParameterBuilder builder = new ParameterBuilder();
             builder.parameterEkle("@TABLE_SCHEMA", SqlDbType.VarChar, comboBoxSchemaList.Text);
-            DataTable dtTableList = template.DataTableOlustur(SQL_TABLE_LIST, builder.GetParameterArray());
+            DataTable dtTableList = template.DataTableOlustur(SQL_SQLSERVER_TABLE_LIST, builder.GetParameterArray());
             listBoxTableListesi.DataSource = dtTableList;
         }
 
         private void comboBoxSchemaListDoldur( )
         {
-            DataTable dtSchemaList = template.DataTableOlustur(SQL_SCHEMA_LIST);
+            DataTable dtSchemaList = template.DataTableOlustur(SQL__SQLSERCER_SCHEMA_LIST);
             comboBoxSchemaList.DataSource = dtSchemaList;
             comboBoxSchemaList.Text = "__TUM_SCHEMALAR__";
         }
