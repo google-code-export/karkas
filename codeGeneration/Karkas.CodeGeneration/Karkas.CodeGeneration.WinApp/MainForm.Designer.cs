@@ -51,6 +51,8 @@
             this.buttonGecerliDegerleriKaydet = new System.Windows.Forms.Button();
             this.textBoxDatabaseName = new System.Windows.Forms.TextBox();
             this.buttonOtherConnections = new System.Windows.Forms.Button();
+            this.comboBoxDatabaseType = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.panelListe.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,7 +88,7 @@
             // labelConnectionStatus
             // 
             this.labelConnectionStatus.AutoSize = true;
-            this.labelConnectionStatus.Location = new System.Drawing.Point(16, 139);
+            this.labelConnectionStatus.Location = new System.Drawing.Point(16, 209);
             this.labelConnectionStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelConnectionStatus.Name = "labelConnectionStatus";
             this.labelConnectionStatus.Size = new System.Drawing.Size(102, 13);
@@ -103,7 +105,7 @@
             this.panelListe.Controls.Add(this.labelTabloListesi);
             this.panelListe.Controls.Add(this.labelSchemaList);
             this.panelListe.Controls.Add(this.comboBoxSchemaList);
-            this.panelListe.Location = new System.Drawing.Point(9, 177);
+            this.panelListe.Location = new System.Drawing.Point(9, 288);
             this.panelListe.Margin = new System.Windows.Forms.Padding(2);
             this.panelListe.Name = "panelListe";
             this.panelListe.Size = new System.Drawing.Size(693, 346);
@@ -292,11 +294,30 @@
             this.buttonOtherConnections.UseVisualStyleBackColor = true;
             this.buttonOtherConnections.Click += new System.EventHandler(this.buttonOtherConnections_Click);
             // 
+            // comboBoxDatabaseType
+            // 
+            this.comboBoxDatabaseType.FormattingEnabled = true;
+            this.comboBoxDatabaseType.Location = new System.Drawing.Point(154, 150);
+            this.comboBoxDatabaseType.Name = "comboBoxDatabaseType";
+            this.comboBoxDatabaseType.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxDatabaseType.TabIndex = 16;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 155);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 13);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Veritabanı Tipi";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(862, 679);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.comboBoxDatabaseType);
             this.Controls.Add(this.buttonOtherConnections);
             this.Controls.Add(this.textBoxDatabaseName);
             this.Controls.Add(this.buttonGecerliDegerleriKaydet);
@@ -347,6 +368,8 @@
         private System.Windows.Forms.CheckBox checkBoxDboSemasiniAtla;
         private System.Windows.Forms.TextBox textBoxDatabaseName;
         private System.Windows.Forms.Button buttonOtherConnections;
+        private System.Windows.Forms.ComboBox comboBoxDatabaseType;
+        private System.Windows.Forms.Label label2;
     }
 }
 

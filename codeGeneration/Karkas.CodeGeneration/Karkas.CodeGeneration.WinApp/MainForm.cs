@@ -11,6 +11,8 @@ using Karkas.Core.DataUtil;
 using Karkas.CodeGeneration.SqlServer;
 using Volante;
 using Karkas.CodeGeneration.WinApp.ConfigurationInformation;
+using System.Reflection;
+using System.Data.Common;
 
 namespace Karkas.CodeGeneration.WinApp
 {
@@ -19,6 +21,9 @@ namespace Karkas.CodeGeneration.WinApp
         public MainForm()
         {
             InitializeComponent();
+
+            comboBoxDatabaseType.DataSource = Enum.GetValues(typeof(DatabaseType));
+
             panelListeDisable();
 
             setLastAccessedConnection();
@@ -70,20 +75,41 @@ namespace Karkas.CodeGeneration.WinApp
         }
 
 
-        SqlConnection connection;
+        DbConnection connection;
         AdoTemplate template;
         private void buttonTestConnectionString_Click(object sender, EventArgs e)
         {
-            string connectionString = textBoxConnectionString.Text
+            string connectionString = textBoxConnectionString.Text;
+
             try
             {
                 if (connection != null && connection.State == ConnectionState.Open)
                 {
                     connection.Close();
                 }
-                connection = new SqlConnection(connectionString);
-                connection.Open();
-                connection.Close();
+                DatabaseType type = (DatabaseType)comboBoxDatabaseType.SelectedItem;
+                if (type == null || type == DatabaseType.SqlServer)
+                {
+                    connection = new SqlConnection(connectionString);
+                    connection.Open();
+                    connection.Close();
+                }
+                else if (type == DatabaseType.Oracle)
+                {
+
+                    object objConnection = Activator.CreateInstance("System.Data.OracleClient", "System.Data.OracleClient.OracleConnection");
+
+                    if (objConnection != null)
+                    {
+                        connection = (DbConnection)objConnection;
+
+                        connection.Open();
+                        connection.Close();
+                    }
+
+                }
+
+
                 ConnectionSingleton.Instance.ConnectionString = connectionString;                
                 template = new AdoTemplate(connectionString);
                 labelConnectionStatus.Text = "Bağlantı Başarılı";

@@ -29,23 +29,38 @@
         private void InitializeComponent()
         {
             this.listBoxConnectionList = new System.Windows.Forms.ListBox();
+            this.buttonDelete = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxConnectionList
             // 
-            this.listBoxConnectionList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxConnectionList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxConnectionList.FormattingEnabled = true;
             this.listBoxConnectionList.Location = new System.Drawing.Point(0, 0);
             this.listBoxConnectionList.Name = "listBoxConnectionList";
-            this.listBoxConnectionList.Size = new System.Drawing.Size(639, 509);
+            this.listBoxConnectionList.Size = new System.Drawing.Size(997, 509);
             this.listBoxConnectionList.TabIndex = 0;
             this.listBoxConnectionList.DoubleClick += new System.EventHandler(this.listBoxConnectionList_DoubleClick);
+            // 
+            // buttonDelete
+            // 
+            this.buttonDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDelete.Location = new System.Drawing.Point(1022, 21);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(75, 23);
+            this.buttonDelete.TabIndex = 1;
+            this.buttonDelete.Text = "Delete";
+            this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // FormConnectionList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(639, 509);
+            this.ClientSize = new System.Drawing.Size(1109, 509);
+            this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.listBoxConnectionList);
             this.Name = "FormConnectionList";
             this.Text = "FormConnectionList";
@@ -56,6 +71,7 @@
         #endregion
 
         private System.Windows.Forms.ListBox listBoxConnectionList;
+        private System.Windows.Forms.Button buttonDelete;
 
     }
 }
