@@ -5,11 +5,57 @@ using System.Text;
 using Karkas.CodeGenerationHelper.Generators;
 using Karkas.CodeGenerationHelper.Interfaces;
 using Karkas.CodeGeneration.SqlServer.Implementations;
+using Karkas.Core.DataUtil;
+using Karkas.CodeGenerationHelper;
+using System.Data;
 
 namespace Karkas.CodeGeneration.SqlServer
 {
-    public class SqlServerHelper
+    public class SqlServerHelper : IDatabaseHelper
     {
+
+        private const string SQL__SQLSERCER_SCHEMA_LIST = @"
+SELECT '__TUM_SCHEMALAR__' AS TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES
+UNION
+SELECT DISTINCT TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES
+";
+
+
+
+        private const string SQL_SQLSERVER_TABLE_LIST = @"
+SELECT TABLE_SCHEMA,TABLE_NAME, TABLE_SCHEMA + '.' + TABLE_NAME AS FULL_TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
+WHERE
+( (@TABLE_SCHEMA IS NULL) OR (@TABLE_SCHEMA = '__TUM_SCHEMALAR__') OR ( TABLE_SCHEMA = @TABLE_SCHEMA))
+AND
+TABLE_TYPE = 'BASE TABLE'
+ORDER BY FULL_TABLE_NAME
+";
+
+        private const string SQL_SQLSERVER_DATABASE_NAME = @"
+SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
+";
+
+        public string getDatabaseName(AdoTemplate template)
+        {
+            return (string)template.TekDegerGetir(SQL_SQLSERVER_DATABASE_NAME);
+        }
+
+        public DataTable getTableListFromSchema(AdoTemplate template,string schemaName)
+        {
+            ParameterBuilder builder = new ParameterBuilder();
+            builder.parameterEkle("@TABLE_SCHEMA", DbType.String, schemaName);
+            DataTable dtTableList = template.DataTableOlustur(SQL_SQLSERVER_TABLE_LIST, builder.GetParameterArray());
+            return dtTableList;
+        }
+
+        public DataTable getSchemaList(AdoTemplate template)
+        {
+            return template.DataTableOlustur(SQL__SQLSERCER_SCHEMA_LIST);
+        }
+
+
+
+
         public static void codeGenerateAllTables(string pConnectionString, string pDatabaseName, string pProjectNamespace
             , string pProjectFolder
             ,bool dboSemaTablolariniAtla
@@ -53,6 +99,9 @@ namespace Karkas.CodeGeneration.SqlServer
             dalGen.Render(output, table);
             bsGen.Render(output, table);
         }
+
+
+
 
     }
 }
