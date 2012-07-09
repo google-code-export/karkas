@@ -90,30 +90,37 @@ namespace Karkas.CodeGeneration.WinApp
                     connection = new SqlConnection(connectionString);
                     connection.Open();
                     connection.Close();
+                    ConnectionSingleton.Instance.ConnectionString = connectionString;
+                    template = new AdoTemplate();
+                    template.Connection = connection;
+
+                    labelConnectionStatus.Text = "Bağlantı Başarılı";
+                    BilgileriDoldur();
                 }
                 else if (type == DatabaseType.Oracle)
                 {
                     Assembly oracleAssembly = Assembly.LoadWithPartialName("System.Data.OracleClient");
-                    Object objConnection = Activator.CreateInstance(oracleAssembly.FullName, "System.Data.OracleClient.OracleConnection");
+                    Object objReflection = Activator.CreateInstance(oracleAssembly.FullName, "System.Data.OracleClient.OracleConnection");
 
-                    if (objConnection != null && objConnection is ObjectHandle)
+                    if (objReflection != null && objReflection is ObjectHandle)
                     {
-                        ObjectHandle handle = (ObjectHandle)objConnection;
+                        ObjectHandle handle = (ObjectHandle)objReflection;
 
-                        Object objConnection2 = handle.Unwrap();
-                        connection = (DbConnection)objConnection2;
+                        Object objConnection = handle.Unwrap();
+                        connection = (DbConnection)objConnection;
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         connection.Close();
+                        ConnectionSingleton.Instance.ConnectionString = connectionString;
+                        ConnectionSingleton.Instance.ProviderName = "System.Data.OracleClient";
+                        template.Connection = connection;
+
+                        labelConnectionStatus.Text = "Bağlantı Başarılı";
+                        BilgileriDoldur();
                     }
 
                 }
 
-
-                ConnectionSingleton.Instance.ConnectionString = connectionString;                
-                template = new AdoTemplate(connectionString);
-                labelConnectionStatus.Text = "Bağlantı Başarılı";
-                BilgileriDoldur();
                 panelListe.Enabled = true;
 
 
@@ -175,7 +182,7 @@ ORDER BY FULL_TABLE_NAME
         private void listBoxTableListDoldur()
         {
             ParameterBuilder builder = new ParameterBuilder();
-            builder.parameterEkle("@TABLE_SCHEMA", SqlDbType.VarChar, comboBoxSchemaList.Text);
+            builder.parameterEkle("@TABLE_SCHEMA", DbType.String, comboBoxSchemaList.Text);
             DataTable dtTableList = template.DataTableOlustur(SQL_SQLSERVER_TABLE_LIST, builder.GetParameterArray());
             listBoxTableListesi.DataSource = dtTableList;
         }
