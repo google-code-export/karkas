@@ -144,7 +144,7 @@ namespace Karkas.CodeGeneration.SqlServer.Implementations
 ";
 
             ParameterBuilder builder = new ParameterBuilder();
-            builder.parameterEkle("@UserDefinedTypeName", SqlDbType.VarChar, pUserDefinedTypeName);
+            builder.parameterEkle("@UserDefinedTypeName", DbType.String, pUserDefinedTypeName);
             AdoTemplate template = new AdoTemplate();
             underlyingType = (string)template.TekDegerGetir(sql, builder.GetParameterArray());
 
