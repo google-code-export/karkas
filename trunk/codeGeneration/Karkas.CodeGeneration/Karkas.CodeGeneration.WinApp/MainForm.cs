@@ -14,6 +14,7 @@ using Karkas.CodeGeneration.WinApp.ConfigurationInformation;
 using System.Reflection;
 using System.Data.Common;
 using System.Runtime.Remoting;
+using Karkas.CodeGenerationHelper;
 
 namespace Karkas.CodeGeneration.WinApp
 {
@@ -95,6 +96,8 @@ namespace Karkas.CodeGeneration.WinApp
                     template.Connection = connection;
 
                     labelConnectionStatus.Text = "Bağlantı Başarılı";
+                    databaseHelper = new SqlServerHelper();
+
                     BilgileriDoldur();
                 }
                 else if (type == DatabaseType.Oracle)
@@ -146,24 +149,9 @@ namespace Karkas.CodeGeneration.WinApp
 
 
 
-        private const string SQL__SQLSERCER_SCHEMA_LIST = @"
-SELECT '__TUM_SCHEMALAR__' AS TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES
-UNION
-SELECT DISTINCT TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES
-";
 
-        private const string SQL_SQLSERVER_DATABASE_NAME = @"
-SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
-";
 
-        private const string SQL_SQLSERVER_TABLE_LIST = @"
-SELECT TABLE_SCHEMA,TABLE_NAME, TABLE_SCHEMA + '.' + TABLE_NAME AS FULL_TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
-WHERE
-( (@TABLE_SCHEMA IS NULL) OR (@TABLE_SCHEMA = '__TUM_SCHEMALAR__') OR ( TABLE_SCHEMA = @TABLE_SCHEMA))
-AND
-TABLE_TYPE = 'BASE TABLE'
-ORDER BY FULL_TABLE_NAME
-";
+        private IDatabaseHelper databaseHelper;
 
 
         private void BilgileriDoldur( )
@@ -176,20 +164,21 @@ ORDER BY FULL_TABLE_NAME
 
         private void databaseNameLabelDoldur()
         {
-            labelDatabaseNameSonuc.Text = (string)template.TekDegerGetir(SQL_SQLSERVER_DATABASE_NAME);
+            labelDatabaseNameSonuc.Text = databaseHelper.getDatabaseName(template);
         }
+
 
         private void listBoxTableListDoldur()
         {
-            ParameterBuilder builder = new ParameterBuilder();
-            builder.parameterEkle("@TABLE_SCHEMA", DbType.String, comboBoxSchemaList.Text);
-            DataTable dtTableList = template.DataTableOlustur(SQL_SQLSERVER_TABLE_LIST, builder.GetParameterArray());
+            DataTable dtTableList = databaseHelper.getTableListFromSchema(template, comboBoxSchemaList.Text);
             listBoxTableListesi.DataSource = dtTableList;
         }
 
+
+
         private void comboBoxSchemaListDoldur( )
         {
-            DataTable dtSchemaList = template.DataTableOlustur(SQL__SQLSERCER_SCHEMA_LIST);
+            DataTable dtSchemaList = databaseHelper.getSchemaList(template);
             comboBoxSchemaList.DataSource = dtSchemaList;
             comboBoxSchemaList.Text = "__TUM_SCHEMALAR__";
         }
