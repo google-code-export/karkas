@@ -23,8 +23,8 @@ namespace Karkas.MyGenerationConsoleTest
 
             IDatabaseHelper helper = new SqlServerHelper();
 
-            helper.codeGenerateAllTables(_ConnectionString, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek", true, true);
-            helper.codeGenerateOneTable(_ConnectionString, "ORNEK_TABLO", "ORNEKLER", "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
+            helper.CodeGenerateAllTables(_ConnectionString, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek", true, true);
+            helper.CodeGenerateOneTable(_ConnectionString, "ORNEK_TABLO", "ORNEKLER", "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
         }
 
 
