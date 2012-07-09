@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karkas.CodeGenerationConsoleTest.2010", "Karkas.CodeGenerationConsoleTest\Karkas.CodeGenerationConsoleTest.2010.csproj", "{BAB01BD3-050F-4553-A3FD-9E6231E5BD55}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karkas.CodeGenerationHelper.2010", "Karkas.CodeGenerationHelper\Karkas.CodeGenerationHelper.2010.csproj", "{100A5B2E-8244-4331-A069-AC9FA98954A7}"
@@ -8,6 +8,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karkas.CodeGeneration.SqlServer", "Karkas.CodeGeneration.SqlServer\Karkas.CodeGeneration.SqlServer.csproj", "{09F0420B-5193-4808-83D6-9550E0C214A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karkas.CodeGeneration.WinApp", "Karkas.CodeGeneration.WinApp\Karkas.CodeGeneration.WinApp.csproj", "{D0177E1B-65FE-4AAA-BFB8-58526F1769DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karkas.CodeGeneration.Oracle", "Karkas.CodeGeneration.Oracle\Karkas.CodeGeneration.Oracle.csproj", "{45EFD516-6B11-4392-B72A-09FDEEE12769}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,16 @@ Global
 		{D0177E1B-65FE-4AAA-BFB8-58526F1769DA}.Release|Mixed Platforms.Build.0 = Release|x86
 		{D0177E1B-65FE-4AAA-BFB8-58526F1769DA}.Release|x86.ActiveCfg = Release|x86
 		{D0177E1B-65FE-4AAA-BFB8-58526F1769DA}.Release|x86.Build.0 = Release|x86
+		{45EFD516-6B11-4392-B72A-09FDEEE12769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45EFD516-6B11-4392-B72A-09FDEEE12769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45EFD516-6B11-4392-B72A-09FDEEE12769}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{45EFD516-6B11-4392-B72A-09FDEEE12769}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{45EFD516-6B11-4392-B72A-09FDEEE12769}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{45EFD516-6B11-4392-B72A-09FDEEE12769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45EFD516-6B11-4392-B72A-09FDEEE12769}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45EFD516-6B11-4392-B72A-09FDEEE12769}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{45EFD516-6B11-4392-B72A-09FDEEE12769}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{45EFD516-6B11-4392-B72A-09FDEEE12769}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
