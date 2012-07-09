@@ -226,6 +226,7 @@ ORDER BY FULL_TABLE_NAME
             entry.ConnectionName = textBoxDatabaseName.Text;
             entry.CodeGenerationNamespace = textBoxProjectNamespace.Text;
             entry.ConnectionString  = textBoxConnectionString.Text;
+            entry.ConnectionDatabaseType = (DatabaseType) comboBoxDatabaseType.SelectedValue;
 
             DatabaseRoot.addToIndexesAndCommit(entry);
 
