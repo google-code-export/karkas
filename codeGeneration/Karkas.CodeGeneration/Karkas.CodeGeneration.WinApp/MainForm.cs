@@ -74,17 +74,18 @@ namespace Karkas.CodeGeneration.WinApp
         AdoTemplate template;
         private void buttonTestConnectionString_Click(object sender, EventArgs e)
         {
+            string connectionString = textBoxConnectionString.Text
             try
             {
                 if (connection != null && connection.State == ConnectionState.Open)
                 {
                     connection.Close();
                 }
-                connection = new SqlConnection(textBoxConnectionString.Text);
+                connection = new SqlConnection(connectionString);
                 connection.Open();
                 connection.Close();
-                ConnectionSingleton.Instance.ConnectionString = textBoxConnectionString.Text;                
-                template = new AdoTemplate(textBoxConnectionString.Text);
+                ConnectionSingleton.Instance.ConnectionString = connectionString;                
+                template = new AdoTemplate(connectionString);
                 labelConnectionStatus.Text = "Bağlantı Başarılı";
                 BilgileriDoldur();
                 panelListe.Enabled = true;
