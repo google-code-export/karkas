@@ -69,12 +69,17 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
             db.Commit();
         }
 
-        private static void addToIndexes(DatabaseEntry de)
+        public static void addToIndexes(DatabaseEntry de)
         {
             DbRootInstance.IndexName.Put(de.ConnectionName, de);
             DbRootInstance.IndexLastAccessTime.Put(de.LastAccessTimeUtc, de);
             DbRootInstance.IndexLastWriteTime.Put(de.LastWriteTimeUtc, de);
             DbRootInstance.IndexCreationTime.Put(de.CreationTimeUtc, de);
+        }
+        public static void addToIndexesAndCommit(DatabaseEntry de)
+        {
+            addToIndexes(de);
+            DbRootInstance.Database.Commit();
         }
 
         private static DatabaseEntry getExampleDatabaseEntry()

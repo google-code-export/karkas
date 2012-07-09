@@ -28,6 +28,8 @@ namespace Karkas.CodeGeneration.WinApp
 
         }
 
+        private DatabaseEntry currentDatabaseEntry = null;
+
         private void setLastAccessedConnection()
         {
             DatabaseRoot.openDatabase();
@@ -43,6 +45,8 @@ namespace Karkas.CodeGeneration.WinApp
 
             if (entry != null)
             {
+                currentDatabaseEntry = entry;
+
                 if (!string.IsNullOrWhiteSpace(entry.ConnectionString))
                 {
                     textBoxConnectionString.Text = entry.ConnectionString;
@@ -55,6 +59,7 @@ namespace Karkas.CodeGeneration.WinApp
                 {
                     textBoxProjectNamespace.Text = entry.CodeGenerationNamespace;
                 }
+                textBoxDatabaseName.Text = entry.ConnectionName;
 
             }
 
@@ -185,10 +190,13 @@ ORDER BY FULL_TABLE_NAME
 
         private void buttonGecerliDegerleriKaydet_Click(object sender, EventArgs e)
         {
-            Settings.Default.SonCodeGenerationDizini = textBoxCodeGenerationDizini.Text;
-            Settings.Default.SonConnectionStringDegeri = textBoxConnectionString.Text;
-            Settings.Default.SonProjectNamespace = textBoxProjectNamespace.Text;
-            Settings.Default.Save();
+            DatabaseEntry entry = new DatabaseEntry();
+            entry.CodeGenerationDirectory = textBoxCodeGenerationDizini.Text;
+            entry.ConnectionName = textBoxDatabaseName.Text;
+            entry.CodeGenerationNamespace = textBoxProjectNamespace.Text;
+            entry.ConnectionString  = textBoxConnectionString.Text;
+
+            DatabaseRoot.addToIndexesAndCommit(entry);
 
         }
 

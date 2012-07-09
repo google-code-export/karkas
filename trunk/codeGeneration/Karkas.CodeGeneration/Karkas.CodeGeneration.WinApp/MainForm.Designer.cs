@@ -49,6 +49,7 @@
             this.labelDatabaseName = new System.Windows.Forms.Label();
             this.labelDatabaseNameSonuc = new System.Windows.Forms.Label();
             this.buttonGecerliDegerleriKaydet = new System.Windows.Forms.Button();
+            this.textBoxDatabaseName = new System.Windows.Forms.TextBox();
             this.panelListe.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +66,7 @@
             // textBoxConnectionString
             // 
             this.textBoxConnectionString.Location = new System.Drawing.Point(154, 28);
-            this.textBoxConnectionString.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxConnectionString.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxConnectionString.Name = "textBoxConnectionString";
             this.textBoxConnectionString.Size = new System.Drawing.Size(469, 20);
             this.textBoxConnectionString.TabIndex = 2;
@@ -73,7 +74,7 @@
             // buttonTestConnectionString
             // 
             this.buttonTestConnectionString.Location = new System.Drawing.Point(634, 26);
-            this.buttonTestConnectionString.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonTestConnectionString.Margin = new System.Windows.Forms.Padding(2);
             this.buttonTestConnectionString.Name = "buttonTestConnectionString";
             this.buttonTestConnectionString.Size = new System.Drawing.Size(77, 20);
             this.buttonTestConnectionString.TabIndex = 3;
@@ -102,7 +103,7 @@
             this.panelListe.Controls.Add(this.labelSchemaList);
             this.panelListe.Controls.Add(this.comboBoxSchemaList);
             this.panelListe.Location = new System.Drawing.Point(9, 177);
-            this.panelListe.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelListe.Margin = new System.Windows.Forms.Padding(2);
             this.panelListe.Name = "panelListe";
             this.panelListe.Size = new System.Drawing.Size(693, 346);
             this.panelListe.TabIndex = 5;
@@ -113,7 +114,7 @@
             this.checkBoxSysTablolariniAtla.Checked = true;
             this.checkBoxSysTablolariniAtla.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxSysTablolariniAtla.Location = new System.Drawing.Point(560, 114);
-            this.checkBoxSysTablolariniAtla.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBoxSysTablolariniAtla.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxSysTablolariniAtla.Name = "checkBoxSysTablolariniAtla";
             this.checkBoxSysTablolariniAtla.Size = new System.Drawing.Size(113, 17);
             this.checkBoxSysTablolariniAtla.TabIndex = 7;
@@ -126,7 +127,7 @@
             this.checkBoxDboSemasiniAtla.Checked = true;
             this.checkBoxDboSemasiniAtla.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxDboSemasiniAtla.Location = new System.Drawing.Point(560, 83);
-            this.checkBoxDboSemasiniAtla.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBoxDboSemasiniAtla.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxDboSemasiniAtla.Name = "checkBoxDboSemasiniAtla";
             this.checkBoxDboSemasiniAtla.Size = new System.Drawing.Size(108, 17);
             this.checkBoxDboSemasiniAtla.TabIndex = 6;
@@ -136,7 +137,7 @@
             // buttonSeciliTablolariUret
             // 
             this.buttonSeciliTablolariUret.Location = new System.Drawing.Point(227, 313);
-            this.buttonSeciliTablolariUret.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonSeciliTablolariUret.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSeciliTablolariUret.Name = "buttonSeciliTablolariUret";
             this.buttonSeciliTablolariUret.Size = new System.Drawing.Size(121, 31);
             this.buttonSeciliTablolariUret.TabIndex = 5;
@@ -147,7 +148,7 @@
             // buttonTumTablolariUret
             // 
             this.buttonTumTablolariUret.Location = new System.Drawing.Point(560, 153);
-            this.buttonTumTablolariUret.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonTumTablolariUret.Margin = new System.Windows.Forms.Padding(2);
             this.buttonTumTablolariUret.Name = "buttonTumTablolariUret";
             this.buttonTumTablolariUret.Size = new System.Drawing.Size(121, 23);
             this.buttonTumTablolariUret.TabIndex = 4;
@@ -160,7 +161,7 @@
             this.listBoxTableListesi.DisplayMember = "FULL_TABLE_NAME";
             this.listBoxTableListesi.FormattingEnabled = true;
             this.listBoxTableListesi.Location = new System.Drawing.Point(145, 55);
-            this.listBoxTableListesi.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.listBoxTableListesi.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxTableListesi.Name = "listBoxTableListesi";
             this.listBoxTableListesi.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listBoxTableListesi.Size = new System.Drawing.Size(204, 251);
@@ -191,7 +192,7 @@
             this.comboBoxSchemaList.DisplayMember = "TABLE_SCHEMA";
             this.comboBoxSchemaList.FormattingEnabled = true;
             this.comboBoxSchemaList.Location = new System.Drawing.Point(148, 15);
-            this.comboBoxSchemaList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxSchemaList.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxSchemaList.Name = "comboBoxSchemaList";
             this.comboBoxSchemaList.Size = new System.Drawing.Size(182, 21);
             this.comboBoxSchemaList.TabIndex = 0;
@@ -209,7 +210,7 @@
             // textBoxCodeGenerationDizini
             // 
             this.textBoxCodeGenerationDizini.Location = new System.Drawing.Point(154, 56);
-            this.textBoxCodeGenerationDizini.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxCodeGenerationDizini.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCodeGenerationDizini.Name = "textBoxCodeGenerationDizini";
             this.textBoxCodeGenerationDizini.Size = new System.Drawing.Size(468, 20);
             this.textBoxCodeGenerationDizini.TabIndex = 7;
@@ -217,7 +218,7 @@
             // buttonFolderDialog
             // 
             this.buttonFolderDialog.Location = new System.Drawing.Point(634, 52);
-            this.buttonFolderDialog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonFolderDialog.Margin = new System.Windows.Forms.Padding(2);
             this.buttonFolderDialog.Name = "buttonFolderDialog";
             this.buttonFolderDialog.Size = new System.Drawing.Size(38, 24);
             this.buttonFolderDialog.TabIndex = 8;
@@ -238,7 +239,7 @@
             // textBoxProjectNamespace
             // 
             this.textBoxProjectNamespace.Location = new System.Drawing.Point(154, 84);
-            this.textBoxProjectNamespace.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxProjectNamespace.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxProjectNamespace.Name = "textBoxProjectNamespace";
             this.textBoxProjectNamespace.Size = new System.Drawing.Size(466, 20);
             this.textBoxProjectNamespace.TabIndex = 10;
@@ -265,7 +266,7 @@
             // buttonGecerliDegerleriKaydet
             // 
             this.buttonGecerliDegerleriKaydet.Location = new System.Drawing.Point(556, 150);
-            this.buttonGecerliDegerleriKaydet.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonGecerliDegerleriKaydet.Margin = new System.Windows.Forms.Padding(2);
             this.buttonGecerliDegerleriKaydet.Name = "buttonGecerliDegerleriKaydet";
             this.buttonGecerliDegerleriKaydet.Size = new System.Drawing.Size(146, 23);
             this.buttonGecerliDegerleriKaydet.TabIndex = 13;
@@ -273,11 +274,19 @@
             this.buttonGecerliDegerleriKaydet.UseVisualStyleBackColor = true;
             this.buttonGecerliDegerleriKaydet.Click += new System.EventHandler(this.buttonGecerliDegerleriKaydet_Click);
             // 
+            // textBoxDatabaseName
+            // 
+            this.textBoxDatabaseName.Location = new System.Drawing.Point(154, 111);
+            this.textBoxDatabaseName.Name = "textBoxDatabaseName";
+            this.textBoxDatabaseName.Size = new System.Drawing.Size(127, 20);
+            this.textBoxDatabaseName.TabIndex = 14;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(739, 533);
+            this.Controls.Add(this.textBoxDatabaseName);
             this.Controls.Add(this.buttonGecerliDegerleriKaydet);
             this.Controls.Add(this.labelDatabaseNameSonuc);
             this.Controls.Add(this.labelDatabaseName);
@@ -291,7 +300,7 @@
             this.Controls.Add(this.buttonTestConnectionString);
             this.Controls.Add(this.textBoxConnectionString);
             this.Controls.Add(this.labelConnectionString);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "Form1";
             this.panelListe.ResumeLayout(false);
@@ -324,6 +333,7 @@
         private System.Windows.Forms.Button buttonGecerliDegerleriKaydet;
         private System.Windows.Forms.CheckBox checkBoxSysTablolariniAtla;
         private System.Windows.Forms.CheckBox checkBoxDboSemasiniAtla;
+        private System.Windows.Forms.TextBox textBoxDatabaseName;
     }
 }
 
