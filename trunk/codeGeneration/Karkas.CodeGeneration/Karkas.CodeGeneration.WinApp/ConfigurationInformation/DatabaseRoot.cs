@@ -96,5 +96,12 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
             return de;
         }
 
+
+        public static List<DatabaseEntry> getAllDatabaseEntriesSortedByName()
+        {
+            var list = DatabaseRoot.DbRootInstance.IndexName.ToList();
+            return list;
+        }
+
     }
 }
