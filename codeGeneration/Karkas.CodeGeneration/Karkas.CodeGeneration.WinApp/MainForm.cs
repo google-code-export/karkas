@@ -72,6 +72,7 @@ namespace Karkas.CodeGeneration.WinApp
                 textBoxProjectNamespace.Text = entry.CodeGenerationNamespace;
             }
             textBoxDatabaseName.Text = entry.ConnectionName;
+            comboBoxDatabaseType.SelectedItem = entry.ConnectionDatabaseType;
         }
 
 
