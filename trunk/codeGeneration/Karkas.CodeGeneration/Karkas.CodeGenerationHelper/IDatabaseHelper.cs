@@ -14,11 +14,11 @@ namespace Karkas.CodeGenerationHelper
         DataTable getTableListFromSchema(AdoTemplate template, string schemaName);
         DataTable getSchemaList(AdoTemplate template);
 
-        void codeGenerateAllTables(string pConnectionString, string pDatabaseName, string pProjectNamespace
+        void CodeGenerateAllTables(string pConnectionString, string pDatabaseName, string pProjectNamespace
     , string pProjectFolder
     , bool dboSemaTablolariniAtla
     , bool sysTablolariniAtla);
-        void codeGenerateOneTable(string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder);
+        void CodeGenerateOneTable(string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder);
 
     }
 
