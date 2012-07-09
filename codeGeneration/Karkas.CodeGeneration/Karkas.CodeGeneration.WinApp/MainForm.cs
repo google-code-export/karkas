@@ -38,12 +38,7 @@ namespace Karkas.CodeGeneration.WinApp
         {
             DatabaseRoot.openDatabase();
 
-            DatabaseEntry entry = null;
-            foreach (var item in DatabaseRoot.DbRootInstance.IndexLastWriteTime)
-            {
-                entry = item;
-                break;
-            }
+            DatabaseEntry entry = DatabaseRoot.getLastAccessedDatabaseEntry();
 
             
 
@@ -98,7 +93,7 @@ namespace Karkas.CodeGeneration.WinApp
                 else if (type == DatabaseType.Oracle)
                 {
 
-                    object objConnection = Activator.CreateInstance("System.Data.OracleClient", "System.Data.OracleClient.OracleConnection");
+                    object objConnection = Activator.CreateInstance("System.Data.OracleClient.dll", "System.Data.OracleClient.OracleConnection");
 
                     if (objConnection != null)
                     {
@@ -228,6 +223,8 @@ ORDER BY FULL_TABLE_NAME
             entry.CodeGenerationNamespace = textBoxProjectNamespace.Text;
             entry.ConnectionString  = textBoxConnectionString.Text;
             entry.ConnectionDatabaseType = (DatabaseType) comboBoxDatabaseType.SelectedValue;
+            entry.LastWriteTimeUtc = DateTime.UtcNow;
+            entry.LastAccessTimeUtc = DateTime.UtcNow;
 
             DatabaseRoot.addToIndexesAndCommit(entry);
 
@@ -261,6 +258,9 @@ ORDER BY FULL_TABLE_NAME
 
             if (frm.SelectedDatabaseEntry != null)
             {
+                frm.SelectedDatabaseEntry.LastAccessTimeUtc = DateTime.UtcNow;
+                frm.SelectedDatabaseEntry.Modify();
+                DatabaseRoot.Commit();
                 databaseEntryToForm(frm.SelectedDatabaseEntry);
             }
         }

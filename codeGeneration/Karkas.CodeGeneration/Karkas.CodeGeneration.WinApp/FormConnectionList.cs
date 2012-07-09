@@ -43,5 +43,12 @@ namespace Karkas.CodeGeneration.WinApp
             bindListBox();
 
         }
+
+        private void buttonSelect_Click(object sender, EventArgs e)
+        {
+            SelectedDatabaseEntry = (DatabaseEntry)listBoxConnectionList.SelectedItem;
+            this.Close();
+
+        }
     }
 }

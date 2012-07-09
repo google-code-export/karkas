@@ -97,6 +97,18 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
         }
 
 
+        public static DatabaseEntry getLastAccessedDatabaseEntry()
+        {
+            return DbRootInstance.IndexLastAccessTime.First();
+
+        }
+
+
+        public static void Commit()
+        {
+            DbRootInstance.Database.Commit();
+        }
+
         public static List<DatabaseEntry> getAllDatabaseEntriesSortedByName()
         {
             var list = DatabaseRoot.DbRootInstance.IndexName.ToList();

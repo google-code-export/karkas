@@ -8,6 +8,14 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
 {
     public class DatabaseEntry : Persistent
     {
+        public DatabaseEntry()
+        {
+            CreationTimeUtc = DateTime.UtcNow;
+            LastAccessTimeUtc = DateTime.UtcNow;
+            LastWriteTimeUtc = DateTime.UtcNow;
+        }
+
+
         public String ConnectionName;
         public DatabaseType ConnectionDatabaseType;
         public String ConnectionString;
