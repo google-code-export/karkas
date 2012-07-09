@@ -10,6 +10,8 @@ using System.Data.SqlClient;
 using Karkas.Core.DataUtil;
 using Karkas.CodeGeneration.WinApp.Properties;
 using Karkas.CodeGeneration.SqlServer;
+using Volante;
+using Karkas.CodeGeneration.WinApp.ConfigurationInformation;
 
 namespace Karkas.CodeGeneration.WinApp
 {
@@ -18,24 +20,47 @@ namespace Karkas.CodeGeneration.WinApp
         public MainForm()
         {
             InitializeComponent();
-
             panelListeDisable();
-            if (!string.IsNullOrWhiteSpace( Settings.Default.SonConnectionStringDegeri))
-            {
-                textBoxConnectionString.Text = Settings.Default.SonConnectionStringDegeri;
-            }
-            if (!string.IsNullOrWhiteSpace( Settings.Default.SonCodeGenerationDizini))
-            {
-                textBoxCodeGenerationDizini.Text = Settings.Default.SonCodeGenerationDizini;
-            }
-            if (!string.IsNullOrWhiteSpace(Settings.Default.SonProjectNamespace))
-            {
-                textBoxProjectNamespace.Text = Settings.Default.SonProjectNamespace;
-            }
+
+            setLastAccessedConnection();
             
 
 
         }
+
+        private void setLastAccessedConnection()
+        {
+            DatabaseRoot.openDatabase();
+
+            DatabaseEntry entry = null;
+            foreach (var item in DatabaseRoot.DbRootInstance.IndexLastWriteTime)
+            {
+                entry = item;
+                break;
+            }
+
+            
+
+            if (entry != null)
+            {
+                if (!string.IsNullOrWhiteSpace(entry.ConnectionString))
+                {
+                    textBoxConnectionString.Text = entry.ConnectionString;
+                }
+                if (!string.IsNullOrWhiteSpace(entry.CodeGenerationDirectory))
+                {
+                    textBoxCodeGenerationDizini.Text = entry.CodeGenerationDirectory;
+                }
+                if (!string.IsNullOrWhiteSpace(entry.CodeGenerationNamespace))
+                {
+                    textBoxProjectNamespace.Text = entry.CodeGenerationNamespace;
+                }
+
+            }
+
+        }
+
+
         SqlConnection connection;
         AdoTemplate template;
         private void buttonTestConnectionString_Click(object sender, EventArgs e)
