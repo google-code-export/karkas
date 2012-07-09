@@ -3,24 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Karkas.CodeGenerationHelper;
+using Karkas.Core.DataUtil;
+using System.Data;
 
 namespace Karkas.CodeGeneration.Oracle
 {
     public class OracleHelper : IDatabaseHelper
     {
-        public string getDatabaseName(Core.DataUtil.AdoTemplate template)
+        private const string SQL_FOR_DATABASE_NAME = "Select name from v$database;";
+        private const string SQL_FOR_SCHEMA_LIST = @"
+SELECT '__TUM_SCHEMALAR__' AS TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES
+UNION
+select username from dba_users;";
+        private const string SQL_FOR_TABLE_LIST = @"
+SELECT OWNER AS TABLE_SCHEMA, OWNER || '.' || TABLE_NAME  AS FULL_TABLE_NAME  FROM  ALL_TABLES T
+WHERE  
+(:TABLE_SCHEMA IS NULL) OR (OWNER = :TABLE_SCHEMA)
+
+ORDER BY FULL_TABLE_NAME
+";
+
+        public string getDatabaseName(AdoTemplate template)
         {
-            throw new NotImplementedException();
+            return (string)template.TekDegerGetir(SQL_FOR_DATABASE_NAME);
+
         }
 
-        public System.Data.DataTable getTableListFromSchema(Core.DataUtil.AdoTemplate template, string schemaName)
+        public DataTable getTableListFromSchema(AdoTemplate template, string schemaName)
         {
-            throw new NotImplementedException();
+            ParameterBuilder builder = new ParameterBuilder();
+            builder.parameterEkle("@TABLE_SCHEMA", DbType.String, schemaName);
+            DataTable dtTableList = template.DataTableOlustur(SQL_FOR_TABLE_LIST, builder.GetParameterArray());
+            return dtTableList;
         }
 
-        public System.Data.DataTable getSchemaList(Core.DataUtil.AdoTemplate template)
+
+        public DataTable getSchemaList(AdoTemplate template)
         {
-            throw new NotImplementedException();
+            return template.DataTableOlustur(SQL_FOR_SCHEMA_LIST);
         }
     }
 }
