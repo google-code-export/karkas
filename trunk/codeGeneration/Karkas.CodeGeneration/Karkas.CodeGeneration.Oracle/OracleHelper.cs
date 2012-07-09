@@ -10,11 +10,12 @@ namespace Karkas.CodeGeneration.Oracle
 {
     public class OracleHelper : IDatabaseHelper
     {
-        private const string SQL_FOR_DATABASE_NAME = "Select name from v$database;";
+        private const string SQL_FOR_DATABASE_NAME = "Select name from v$database";
         private const string SQL_FOR_SCHEMA_LIST = @"
-SELECT '__TUM_SCHEMALAR__' AS TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES
+SELECT '__TUM_SCHEMALAR__' AS TABLE_SCHEMA FROM DUAL
 UNION
-select username from dba_users;";
+select username from dba_users
+ORDER BY TABLE_SCHEMA";
         private const string SQL_FOR_TABLE_LIST = @"
 SELECT OWNER AS TABLE_SCHEMA, OWNER || '.' || TABLE_NAME  AS FULL_TABLE_NAME  FROM  ALL_TABLES T
 WHERE  
@@ -32,7 +33,7 @@ ORDER BY FULL_TABLE_NAME
         public DataTable getTableListFromSchema(AdoTemplate template, string schemaName)
         {
             ParameterBuilder builder = new ParameterBuilder();
-            builder.parameterEkle("@TABLE_SCHEMA", DbType.String, schemaName);
+            builder.parameterEkle(":TABLE_SCHEMA", DbType.String, schemaName);
             DataTable dtTableList = template.DataTableOlustur(SQL_FOR_TABLE_LIST, builder.GetParameterArray());
             return dtTableList;
         }
