@@ -13,6 +13,7 @@ using Volante;
 using Karkas.CodeGeneration.WinApp.ConfigurationInformation;
 using System.Reflection;
 using System.Data.Common;
+using System.Runtime.Remoting;
 
 namespace Karkas.CodeGeneration.WinApp
 {
@@ -92,13 +93,16 @@ namespace Karkas.CodeGeneration.WinApp
                 }
                 else if (type == DatabaseType.Oracle)
                 {
+                    Assembly oracleAssembly = Assembly.LoadWithPartialName("System.Data.OracleClient");
+                    Object objConnection = Activator.CreateInstance(oracleAssembly.FullName, "System.Data.OracleClient.OracleConnection");
 
-                    object objConnection = Activator.CreateInstance("System.Data.OracleClient.dll", "System.Data.OracleClient.OracleConnection");
-
-                    if (objConnection != null)
+                    if (objConnection != null && objConnection is ObjectHandle)
                     {
-                        connection = (DbConnection)objConnection;
+                        ObjectHandle handle = (ObjectHandle)objConnection;
 
+                        Object objConnection2 = handle.Unwrap();
+                        connection = (DbConnection)objConnection2;
+                        connection.ConnectionString = connectionString;
                         connection.Open();
                         connection.Close();
                     }

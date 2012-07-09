@@ -99,6 +99,9 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
 
         public static DatabaseEntry getLastAccessedDatabaseEntry()
         {
+            List<DatabaseEntry> list = DbRootInstance.IndexLastAccessTime.ToList();
+
+
             return DbRootInstance.IndexLastAccessTime.First();
 
         }
