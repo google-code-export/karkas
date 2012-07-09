@@ -19,7 +19,7 @@ namespace Karkas.CodeGeneration.WinApp
         {
             InitializeComponent();
 
-
+            panelListeDisable();
             if (!string.IsNullOrWhiteSpace( Settings.Default.SonConnectionStringDegeri))
             {
                 textBoxConnectionString.Text = Settings.Default.SonConnectionStringDegeri;
@@ -53,6 +53,7 @@ namespace Karkas.CodeGeneration.WinApp
                 template = new AdoTemplate(textBoxConnectionString.Text);
                 labelConnectionStatus.Text = "Bağlantı Başarılı";
                 BilgileriDoldur();
+                panelListe.Enabled = true;
 
 
             }
@@ -64,6 +65,19 @@ namespace Karkas.CodeGeneration.WinApp
             }
 
         }
+
+
+        private void panelListeEnable()
+        {
+            panelListe.Enabled = true;
+        }
+        private void panelListeDisable()
+        {
+            panelListe.Enabled = false;
+        }
+
+
+
         private const string SQL__SQLSERCER_SCHEMA_LIST = @"
 SELECT '__TUM_SCHEMALAR__' AS TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES
 UNION
