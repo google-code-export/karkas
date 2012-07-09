@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Data.Common;
 using System.Runtime.Remoting;
 using Karkas.CodeGenerationHelper;
+using Karkas.CodeGeneration.Oracle;
 
 namespace Karkas.CodeGeneration.WinApp
 {
@@ -116,7 +117,10 @@ namespace Karkas.CodeGeneration.WinApp
                         connection.Close();
                         ConnectionSingleton.Instance.ConnectionString = connectionString;
                         ConnectionSingleton.Instance.ProviderName = "System.Data.OracleClient";
+                        template = new AdoTemplate();
                         template.Connection = connection;
+                        databaseHelper = new OracleHelper();
+
 
                         labelConnectionStatus.Text = "Bağlantı Başarılı";
                         BilgileriDoldur();
