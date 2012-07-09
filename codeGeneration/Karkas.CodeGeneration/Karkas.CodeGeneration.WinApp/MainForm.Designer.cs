@@ -50,6 +50,7 @@
             this.labelDatabaseNameSonuc = new System.Windows.Forms.Label();
             this.buttonGecerliDegerleriKaydet = new System.Windows.Forms.Button();
             this.textBoxDatabaseName = new System.Windows.Forms.TextBox();
+            this.buttonOtherConnections = new System.Windows.Forms.Button();
             this.panelListe.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -281,11 +282,22 @@
             this.textBoxDatabaseName.Size = new System.Drawing.Size(127, 20);
             this.textBoxDatabaseName.TabIndex = 14;
             // 
+            // buttonOtherConnections
+            // 
+            this.buttonOtherConnections.Location = new System.Drawing.Point(556, 107);
+            this.buttonOtherConnections.Name = "buttonOtherConnections";
+            this.buttonOtherConnections.Size = new System.Drawing.Size(146, 23);
+            this.buttonOtherConnections.TabIndex = 15;
+            this.buttonOtherConnections.Text = "Diğer Bağlantılar";
+            this.buttonOtherConnections.UseVisualStyleBackColor = true;
+            this.buttonOtherConnections.Click += new System.EventHandler(this.buttonOtherConnections_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(739, 533);
+            this.ClientSize = new System.Drawing.Size(862, 679);
+            this.Controls.Add(this.buttonOtherConnections);
             this.Controls.Add(this.textBoxDatabaseName);
             this.Controls.Add(this.buttonGecerliDegerleriKaydet);
             this.Controls.Add(this.labelDatabaseNameSonuc);
@@ -334,6 +346,7 @@
         private System.Windows.Forms.CheckBox checkBoxSysTablolariniAtla;
         private System.Windows.Forms.CheckBox checkBoxDboSemasiniAtla;
         private System.Windows.Forms.TextBox textBoxDatabaseName;
+        private System.Windows.Forms.Button buttonOtherConnections;
     }
 }
 

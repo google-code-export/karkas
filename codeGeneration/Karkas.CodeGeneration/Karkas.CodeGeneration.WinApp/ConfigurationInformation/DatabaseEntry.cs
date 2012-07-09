@@ -16,5 +16,14 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
         public DateTime CreationTimeUtc;
         public DateTime LastAccessTimeUtc;
         public DateTime LastWriteTimeUtc;
+
+
+        public override string ToString()
+        {
+            String str = string.Format("{0}\t{1}\t{2}", ConnectionName, CodeGenerationNamespace, ConnectionString);
+            return str;
+
+        }
+
     }
 }

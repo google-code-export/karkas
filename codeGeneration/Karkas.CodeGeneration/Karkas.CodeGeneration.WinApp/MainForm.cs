@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using Karkas.Core.DataUtil;
-using Karkas.CodeGeneration.WinApp.Properties;
 using Karkas.CodeGeneration.SqlServer;
 using Volante;
 using Karkas.CodeGeneration.WinApp.ConfigurationInformation;
@@ -45,24 +44,29 @@ namespace Karkas.CodeGeneration.WinApp
 
             if (entry != null)
             {
-                currentDatabaseEntry = entry;
-
-                if (!string.IsNullOrWhiteSpace(entry.ConnectionString))
-                {
-                    textBoxConnectionString.Text = entry.ConnectionString;
-                }
-                if (!string.IsNullOrWhiteSpace(entry.CodeGenerationDirectory))
-                {
-                    textBoxCodeGenerationDizini.Text = entry.CodeGenerationDirectory;
-                }
-                if (!string.IsNullOrWhiteSpace(entry.CodeGenerationNamespace))
-                {
-                    textBoxProjectNamespace.Text = entry.CodeGenerationNamespace;
-                }
-                textBoxDatabaseName.Text = entry.ConnectionName;
+                databaseEntryToForm(entry);
 
             }
 
+        }
+
+        private void databaseEntryToForm(DatabaseEntry entry)
+        {
+            currentDatabaseEntry = entry;
+
+            if (!string.IsNullOrWhiteSpace(entry.ConnectionString))
+            {
+                textBoxConnectionString.Text = entry.ConnectionString;
+            }
+            if (!string.IsNullOrWhiteSpace(entry.CodeGenerationDirectory))
+            {
+                textBoxCodeGenerationDizini.Text = entry.CodeGenerationDirectory;
+            }
+            if (!string.IsNullOrWhiteSpace(entry.CodeGenerationNamespace))
+            {
+                textBoxProjectNamespace.Text = entry.CodeGenerationNamespace;
+            }
+            textBoxDatabaseName.Text = entry.ConnectionName;
         }
 
 
@@ -219,6 +223,17 @@ ORDER BY FULL_TABLE_NAME
 
             MessageBox.Show("SEÇİLEN TABLOLAR İÇİN KOD ÜRETİLDİ");
 
+        }
+
+        private void buttonOtherConnections_Click(object sender, EventArgs e)
+        {
+            FormConnectionList frm = new FormConnectionList();
+            frm.ShowDialog();
+
+            if (frm.SelectedDatabaseEntry != null)
+            {
+                databaseEntryToForm(frm.SelectedDatabaseEntry);
+            }
         }
     }
 }
