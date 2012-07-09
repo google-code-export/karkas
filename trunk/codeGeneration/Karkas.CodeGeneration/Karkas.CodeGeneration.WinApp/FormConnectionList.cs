@@ -16,12 +16,17 @@ namespace Karkas.CodeGeneration.WinApp
         {
             InitializeComponent();
 
-            var list = DatabaseRoot.getAllDatabaseEntriesSortedByName();
-
-            listBoxConnectionList.DataSource = list;
+            bindListBox();
 
             
 
+        }
+
+        private void bindListBox()
+        {
+            var list = DatabaseRoot.getAllDatabaseEntriesSortedByName();
+
+            listBoxConnectionList.DataSource = list;
         }
         public DatabaseEntry SelectedDatabaseEntry { get; set; }
 
@@ -29,6 +34,14 @@ namespace Karkas.CodeGeneration.WinApp
         {
             SelectedDatabaseEntry = (DatabaseEntry)listBoxConnectionList.SelectedItem;
             this.Close();
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            SelectedDatabaseEntry = (DatabaseEntry)listBoxConnectionList.SelectedItem;
+            DatabaseRoot.removeFromIndexesAndCommit(SelectedDatabaseEntry);
+            bindListBox();
+
         }
     }
 }

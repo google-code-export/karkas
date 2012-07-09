@@ -103,5 +103,19 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
             return list;
         }
 
+
+        public static void removeFromIndexesAndCommit(DatabaseEntry de)
+        {
+            removeFromIndexes(de);
+            DbRootInstance.Database.Commit();
+
+        }
+        public static void removeFromIndexes(DatabaseEntry de)
+        {
+            DbRootInstance.IndexName.Remove(de.ConnectionName, de);
+            DbRootInstance.IndexLastAccessTime.Remove(de.LastAccessTimeUtc, de);
+            DbRootInstance.IndexLastWriteTime.Remove(de.LastWriteTimeUtc, de);
+            DbRootInstance.IndexCreationTime.Remove(de.CreationTimeUtc, de);
+        }
     }
 }
