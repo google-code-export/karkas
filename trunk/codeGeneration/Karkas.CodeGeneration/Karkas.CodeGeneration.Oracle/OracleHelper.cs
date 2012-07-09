@@ -43,5 +43,16 @@ ORDER BY FULL_TABLE_NAME
         {
             return template.DataTableOlustur(SQL_FOR_SCHEMA_LIST);
         }
+
+
+        public void codeGenerateAllTables(string pConnectionString, string pDatabaseName, string pProjectNamespace, string pProjectFolder, bool dboSemaTablolariniAtla, bool sysTablolariniAtla)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void codeGenerateOneTable(string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
