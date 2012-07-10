@@ -19,12 +19,17 @@ namespace Karkas.MyGenerationConsoleTest
 
         public static void Main(string[] args)
         {
+            //SqlServerTest();
+        }
+
+        private static void SqlServerTest()
+        {
             ConnectionSingleton.Instance.ConnectionString = _SqlServerExampleConnectionString;
 
             IDatabaseHelper helper = new SqlServerHelper();
 
-            helper.CodeGenerateAllTables(null,_SqlServerExampleConnectionString, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek", true, true);
-            helper.CodeGenerateOneTable(null,_SqlServerExampleConnectionString, "ORNEK_TABLO", "ORNEKLER", "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
+            helper.CodeGenerateAllTables(null, _SqlServerExampleConnectionString, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek", true, true);
+            helper.CodeGenerateOneTable(null, _SqlServerExampleConnectionString, "ORNEK_TABLO", "ORNEKLER", "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
         }
 
 
