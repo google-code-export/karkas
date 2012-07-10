@@ -46,12 +46,12 @@ ORDER BY FULL_TABLE_NAME
         }
 
 
-        public void CodeGenerateAllTables(string pConnectionString, string pDatabaseName, string pProjectNamespace, string pProjectFolder, bool dboSemaTablolariniAtla, bool sysTablolariniAtla)
+        public void CodeGenerateAllTables(AdoTemplate template, string pConnectionString, string pDatabaseName, string pProjectNamespace, string pProjectFolder, bool dboSemaTablolariniAtla, bool sysTablolariniAtla)
         {
             throw new NotImplementedException();
         }
 
-        public void CodeGenerateOneTable(string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder)
+        public void CodeGenerateOneTable(AdoTemplate template, string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder)
         {
             throw new NotImplementedException();
         }

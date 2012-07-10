@@ -56,7 +56,7 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
 
 
 
-        public void CodeGenerateAllTables(string pConnectionString, string pDatabaseName, string pProjectNamespace
+        public void CodeGenerateAllTables(AdoTemplate template,string pConnectionString, string pDatabaseName, string pProjectNamespace
             , string pProjectFolder
             ,bool dboSemaTablolariniAtla
             ,bool sysTablolariniAtla)
@@ -85,7 +85,7 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
             }
         }
 
-        public void CodeGenerateOneTable(string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder)
+        public void CodeGenerateOneTable(AdoTemplate template, string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder)
         {
             TypeLibraryGenerator typeGen = new TypeLibraryGenerator();
             DalGenerator dalGen = new DalGenerator();
