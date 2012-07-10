@@ -101,9 +101,13 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
         {
             List<DatabaseEntry> list = DbRootInstance.IndexLastAccessTime.ToList();
 
+            var firstElement = (
+                               from de in list 
+                             orderby de.LastAccessTimeUtc descending
+                             select de
+                             ).FirstOrDefault();
 
-            return DbRootInstance.IndexLastAccessTime.First();
-
+            return firstElement;
         }
 
 
@@ -119,6 +123,15 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
             return list;
         }
 
+        public static List<DatabaseEntry> getAllDatabaseEntriesSortedByLastAccessTime()
+        {
+            List<DatabaseEntry> list = DbRootInstance.IndexLastAccessTime.ToList();
+
+            var sortedList = from de in list
+                             orderby de.LastAccessTimeUtc descending
+                             select de;
+            return sortedList.ToList();
+        }
 
         public static void removeFromIndexesAndCommit(DatabaseEntry de)
         {
