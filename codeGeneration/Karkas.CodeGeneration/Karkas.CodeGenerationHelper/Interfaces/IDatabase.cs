@@ -13,5 +13,8 @@ namespace Karkas.CodeGenerationHelper.Interfaces
 
 
         List<ITable> Tables { get; }
+
+        ITable getTable(string pTableName, string pSchemaName);
+
     }
 }

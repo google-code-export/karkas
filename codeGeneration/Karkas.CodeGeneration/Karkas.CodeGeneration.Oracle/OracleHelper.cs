@@ -6,6 +6,8 @@ using Karkas.CodeGenerationHelper;
 using Karkas.Core.DataUtil;
 using System.Data;
 using Karkas.CodeGenerationHelper.Interfaces;
+using Karkas.CodeGenerationHelper.Generators;
+using Karkas.CodeGeneration.Oracle.Implementations;
 
 namespace Karkas.CodeGeneration.Oracle
 {
@@ -18,7 +20,7 @@ UNION
 select username from dba_users
 ORDER BY TABLE_SCHEMA";
         private const string SQL_FOR_TABLE_LIST = @"
-SELECT OWNER AS TABLE_SCHEMA, OWNER || '.' || TABLE_NAME  AS FULL_TABLE_NAME  FROM  ALL_TABLES T
+SELECT OWNER AS TABLE_SCHEMA, TABLE_NAME,OWNER || '.' || TABLE_NAME  AS FULL_TABLE_NAME  FROM  ALL_TABLES T
 WHERE  
 (:TABLE_SCHEMA IS NULL) OR (OWNER = :TABLE_SCHEMA)
 
@@ -53,7 +55,17 @@ ORDER BY FULL_TABLE_NAME
 
         public void CodeGenerateOneTable(AdoTemplate template, string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder)
         {
-            throw new NotImplementedException();
+            TypeLibraryGenerator typeGen = new TypeLibraryGenerator();
+            DalGenerator dalGen = new DalGenerator();
+            BsGenerator bsGen = new BsGenerator();
+            IOutput output = new OracleOutput();
+            DatabaseOracle database = new DatabaseOracle(template,pConnectionString, pDatabaseName, pProjectNamespace, pProjectFolder);
+
+            ITable table = database.getTable(pTableName, pSchemaName);
+
+            typeGen.Render(output, table);
+            dalGen.Render(output, table);
+            bsGen.Render(output, table);
         }
     }
 }

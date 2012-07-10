@@ -55,7 +55,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementations\ColumnOracle.cs" />
+    <Compile Include="Implementations\DatabaseOracle.cs" />
+    <Compile Include="Implementations\TableOracle.cs" />
     <Compile Include="OracleHelper.cs" />
+    <Compile Include="OracleOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
