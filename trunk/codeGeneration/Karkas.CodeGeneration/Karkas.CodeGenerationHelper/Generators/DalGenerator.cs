@@ -192,6 +192,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             output.autoTabLn("using System;");
             output.autoTabLn("using System.Collections.Generic;");
             output.autoTabLn("using System.Data;");
+            output.autoTabLn("using System.Data.Common;");
             output.autoTabLn("using System.Data.SqlClient;");
             output.autoTabLn("using System.Text;");
             output.autoTabLn("using Karkas.Core.DataUtil;");
@@ -485,7 +486,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         private void ProcessRowYaz(IOutput output, IContainer table, string classNameTypeLibrary)
         {
             string propertyVariableName = "";
-            output.autoTab("protected override void ProcessRow(System.Data.IDataReader dr, ");
+            output.autoTab("protected override void ProcessRow(IDataReader dr, ");
             output.write(classNameTypeLibrary);
             output.writeLine(" row)");
             BaslangicSusluParentezVeTabArtir(output);
@@ -514,7 +515,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         private void InsertCommandParametersAddYaz(IOutput output, IContainer table, string classNameTypeLibrary)
         {
-            output.autoTab("protected override void InsertCommandParametersAdd(SqlCommand cmd, ");
+            output.autoTab("protected override void InsertCommandParametersAdd(DbCommand cmd, ");
             output.write(classNameTypeLibrary);
             output.writeLine(" row)");
             BaslangicSusluParentezVeTabArtir(output);
@@ -595,7 +596,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         private void DeleteCommandParametersAddYaz(IOutput output, IContainer table, string classNameTypeLibrary)
         {
-            output.autoTab("protected override void DeleteCommandParametersAdd(SqlCommand cmd, ");
+            output.autoTab("protected override void DeleteCommandParametersAdd(DbCommand cmd, ");
             output.autoTab(classNameTypeLibrary);
             output.autoTabLn(" row)");
             BaslangicSusluParentezVeTabArtir(output);
@@ -614,7 +615,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         private void UpdateCommandParametersAddYaz(IOutput output, IContainer table, string classNameTypeLibrary)
         {
-            output.autoTab("protected override void UpdateCommandParametersAdd(SqlCommand cmd, ");
+            output.autoTab("protected override void UpdateCommandParametersAdd(DbCommand cmd, ");
             output.autoTab(classNameTypeLibrary);
             output.autoTabLn(" row)");
             BaslangicSusluParentezVeTabArtir(output);
