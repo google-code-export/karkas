@@ -5,7 +5,7 @@ using System.Text;
 using Karkas.Core.DataUtil;
 using System.Data;
 
-namespace Karkas.CodeGenerationHelper
+namespace Karkas.CodeGenerationHelper.Interfaces
 {
     public interface IDatabaseHelper
     {

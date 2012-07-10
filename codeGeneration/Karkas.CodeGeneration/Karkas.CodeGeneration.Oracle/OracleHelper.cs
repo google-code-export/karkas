@@ -5,6 +5,7 @@ using System.Text;
 using Karkas.CodeGenerationHelper;
 using Karkas.Core.DataUtil;
 using System.Data;
+using Karkas.CodeGenerationHelper.Interfaces;
 
 namespace Karkas.CodeGeneration.Oracle
 {

@@ -16,6 +16,7 @@ using System.Data.Common;
 using System.Runtime.Remoting;
 using Karkas.CodeGenerationHelper;
 using Karkas.CodeGeneration.Oracle;
+using Karkas.CodeGenerationHelper.Interfaces;
 
 namespace Karkas.CodeGeneration.WinApp
 {
