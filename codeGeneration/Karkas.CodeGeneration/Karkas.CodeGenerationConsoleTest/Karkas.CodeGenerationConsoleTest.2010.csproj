@@ -67,6 +67,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Karkas.CodeGeneration.Oracle\Karkas.CodeGeneration.Oracle.csproj">
+      <Project>{45EFD516-6B11-4392-B72A-09FDEEE12769}</Project>
+      <Name>Karkas.CodeGeneration.Oracle</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Karkas.CodeGeneration.SqlServer\Karkas.CodeGeneration.SqlServer.csproj">
       <Project>{09F0420B-5193-4808-83D6-9550E0C214A6}</Project>
       <Name>Karkas.CodeGeneration.SqlServer</Name>
