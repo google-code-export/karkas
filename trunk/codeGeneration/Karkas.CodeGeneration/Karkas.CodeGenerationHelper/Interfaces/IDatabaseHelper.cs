@@ -18,6 +18,7 @@ namespace Karkas.CodeGenerationHelper.Interfaces
     , string pProjectFolder
     , bool dboSemaTablolariniAtla
     , bool sysTablolariniAtla);
+
         void CodeGenerateOneTable(AdoTemplate template,string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder);
 
     }
