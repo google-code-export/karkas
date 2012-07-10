@@ -33,7 +33,7 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
             db = DatabaseFactory.CreateDatabase();
             db.Open("connectionDatabase.dbs");
             createDatabaseRoot();
-            db.Commit();
+            Commit();
 
         }
 
@@ -66,7 +66,7 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
 
             addToIndexes(de);
 
-            db.Commit();
+            Commit();
         }
 
         public static void addToIndexes(DatabaseEntry de)
@@ -79,7 +79,7 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
         public static void addToIndexesAndCommit(DatabaseEntry de)
         {
             addToIndexes(de);
-            DbRootInstance.Database.Commit();
+            Commit();
         }
 
         private static DatabaseEntry getExampleDatabaseEntry()
@@ -109,6 +109,7 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
 
         public static void Commit()
         {
+
             DbRootInstance.Database.Commit();
         }
 
@@ -122,7 +123,7 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
         public static void removeFromIndexesAndCommit(DatabaseEntry de)
         {
             removeFromIndexes(de);
-            DbRootInstance.Database.Commit();
+            Commit();
 
         }
         public static void removeFromIndexes(DatabaseEntry de)
