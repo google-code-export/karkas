@@ -12,7 +12,7 @@ namespace Karkas.MyGenerationConsoleTest.Tests.SmoHelper
 		private static string ConnectionString;
 		static SchemaTest()
 		{
-			ConnectionString = Program._ConnectionString;
+			ConnectionString = Program._SqlServerExampleConnectionString;
 		}
 
 
