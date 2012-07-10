@@ -15,23 +15,23 @@ namespace Karkas.MyGenerationConsoleTest
 {
     public class Program
     {
-        public const string _ConnectionString = "Data Source=localhost;Initial Catalog=KARKAS_ORNEK;Integrated Security=True";
+        public const string _SqlServerExampleConnectionString = "Data Source=localhost;Initial Catalog=KARKAS_ORNEK;Integrated Security=True";
 
         public static void Main(string[] args)
         {
-            ConnectionSingleton.Instance.ConnectionString = _ConnectionString;
+            ConnectionSingleton.Instance.ConnectionString = _SqlServerExampleConnectionString;
 
             IDatabaseHelper helper = new SqlServerHelper();
 
-            helper.CodeGenerateAllTables(null,_ConnectionString, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek", true, true);
-            helper.CodeGenerateOneTable(null,_ConnectionString, "ORNEK_TABLO", "ORNEKLER", "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
+            helper.CodeGenerateAllTables(null,_SqlServerExampleConnectionString, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek", true, true);
+            helper.CodeGenerateOneTable(null,_SqlServerExampleConnectionString, "ORNEK_TABLO", "ORNEKLER", "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
         }
 
 
         private static void schemaListesiEkranaYaz()
         {
             Utils uti = new Utils();
-            string[] schemalar = uti.GetSchemaList("KARKAS_ORNEK", _ConnectionString);
+            string[] schemalar = uti.GetSchemaList("KARKAS_ORNEK", _SqlServerExampleConnectionString);
             foreach (var item in schemalar)
             {
                 Console.WriteLine(item);
