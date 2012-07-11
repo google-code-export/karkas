@@ -59,11 +59,7 @@ OWNER = :schemaName
         {
             get 
             {
-                if (columns != null)
-                {
-                    return columns;
-                }
-                else
+                if (columns == null)
                 {
                     ParameterBuilder builder = new ParameterBuilder();
                     builder.parameterEkle("tableName",DbType.String,Name);
@@ -74,11 +70,11 @@ OWNER = :schemaName
                     foreach (DataRow row in dtColumnList.Rows)
                     {
                         string columnName = row["column_name"].ToString();
-                        IColumn column = new ColumnOracle(this,columnName);
+                        IColumn column = new ColumnOracle(template,this,columnName);
                         columns.Add(column);
                     }
-                    return columns;
                 }
+                return columns;
             }
         }
 
