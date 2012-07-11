@@ -338,6 +338,7 @@ AND
             if (
                     pSqlTypeName.Equals("varchar") ||
                     pSqlTypeName.Equals("nvarchar") ||
+                    pSqlTypeName.Equals("varchar2") ||
                     pSqlTypeName.Equals("char") ||
                     pSqlTypeName.Equals("nchar") ||
                     pSqlTypeName.Equals("ntext") ||
@@ -370,6 +371,7 @@ AND
                 return "long";
             }
             if (
+                pSqlTypeName.Equals("date") ||
                 pSqlTypeName.Equals("datetime") ||
                 pSqlTypeName.Equals("smalldatetime")
                 )

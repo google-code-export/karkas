@@ -46,7 +46,7 @@ namespace Karkas.MyGenerationConsoleTest
             IDatabaseHelper helper = new OracleHelper();
 
 
-            helper.CodeGenerateOneTable(template, _OracleExampleConnectionString, "REGIONS", "HR", "ORACLEDEVDAYS", "Karkas.OracleExample", "D:\\projects\\Examples\\karkas\\Karkas.OracleExample");
+            helper.CodeGenerateOneTable(template, _OracleExampleConnectionString, "JOB_HISTORY", "HR", "ORACLEDEVDAYS", "Karkas.OracleExample", "D:\\projects\\Examples\\karkas\\Karkas.OracleExample");
 
 
             helper.CodeGenerateAllTables(template, _OracleExampleConnectionString, "ORACLEDEVDAYS", "Karkas.OracleExample", "D:\\projects\\karkas\\Examples\\Karkas.OracleExample", true, true);
