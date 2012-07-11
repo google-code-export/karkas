@@ -29,15 +29,41 @@ namespace Karkas.CodeGeneration.Oracle.Implementations
         {
             throw new NotImplementedException();
         }
+        private const string SQL_PRIMARY_KEY = @" SELECT
+  COUNT(*)
+    FROM all_constraints cons
+    INNER JOIN 
+    all_cons_columns cols
+ON
+   cons.constraint_name = cols.constraint_name
+AND cons.owner = cols.owner
+   WHERE     cols.table_name = :tableName
+         AND COLS.OWNER = :schemaName
+         AND cons.constraint_type = 'P'
+         ";
 
+        private Decimal? primaryKeyColumnCount = null;
         public int PrimaryKeyColumnCount
         {
-            get { throw new NotImplementedException(); }
+            get 
+            {
+                if (!primaryKeyColumnCount.HasValue)
+                {
+                    ParameterBuilder builder = new ParameterBuilder();
+                    builder.parameterEkle("tableName", DbType.String, Name);
+                    builder.parameterEkle("schemaName", DbType.String, Schema);
+                    Object objSonuc = template.TekDegerGetir(SQL_PRIMARY_KEY, builder.GetParameterArray());
+                     primaryKeyColumnCount = (Decimal)objSonuc;
+
+                }
+                return (int) primaryKeyColumnCount.Value;
+
+            }
         }
 
         public bool HasPrimaryKey
         {
-            get { throw new NotImplementedException(); }
+            get { return PrimaryKeyColumnCount > 0; }
         }
 
         public string Alias
