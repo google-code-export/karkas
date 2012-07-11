@@ -48,9 +48,42 @@ ORDER BY FULL_TABLE_NAME
         }
 
 
+
+
         public void CodeGenerateAllTables(AdoTemplate template, string pConnectionString, string pDatabaseName, string pProjectNamespace, string pProjectFolder, bool dboSemaTablolariniAtla, bool sysTablolariniAtla)
         {
-            throw new NotImplementedException();
+           
+            
+            string userName = getUserNameFromConnection(pConnectionString);
+
+            ParameterBuilder builder = new ParameterBuilder();
+            builder.parameterEkle("schemaName",DbType.String, userName);
+
+            DataTable dtTables = template.DataTableOlustur(SQL_FOR_TABLE_LIST, builder.GetParameterArray());
+            foreach (DataRow row in dtTables.Rows)
+            {
+                string tableName = row["TABLE_NAME"].ToString();
+                string schemaName = row["TABLE_SCHEMA"].ToString();
+                CodeGenerateOneTable(template, pConnectionString, tableName, schemaName, pDatabaseName, pProjectNamespace, pProjectFolder);
+            }
+
+        }
+
+        private string getUserNameFromConnection(string pConnectionString)
+        {
+            string userName = null;
+            string[] list = pConnectionString.Split(';');
+            foreach (string item in list)
+            {
+                if (item.Contains("User ID"))
+                {
+                    userName = item.Replace("User ID", "");
+                    userName = userName.Replace("=", "");
+                    userName = userName.Trim();
+                    break;
+                }
+            }
+            return userName;
         }
 
         public void CodeGenerateOneTable(AdoTemplate template, string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder)
