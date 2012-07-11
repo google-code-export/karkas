@@ -152,7 +152,7 @@ ON
 
 
 
-        private const string SQL_COLUMN_VALUES = @"select * from all_tab_columns   C 
+        private const string SQL_COLUMN_VALUES = @"select * from ALL_TAB_COLS  C 
    WHERE
    1 = 1
 AND
@@ -160,6 +160,8 @@ AND
          AND C.OWNER = :schemaName
          AND C.COLUMN_NAME =  :columnName
 ";
+
+
 
 
         private DataRow columnValuesInDatabase = null;
@@ -205,10 +207,25 @@ AND
             get { return table; }
         }
 
+        private bool? isComputed = null;
         public bool IsComputed
         {
-            // TODO Burasını daha sonra yap
-            get { return false; }
+            get 
+            {
+                if (!isComputed.HasValue)
+                {
+                    String computeVal = ColumnValuesInDatabase["VIRTUAL_COLUMN"].ToString();
+                    if (computeVal == "YES")
+                    {
+                        isComputed = true;
+                    }
+                    else
+                    {
+                        isComputed = false;
+                    }
+                }
+                return isComputed.Value; 
+            }
         }
 
         public string DbTargetType
