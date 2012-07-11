@@ -132,7 +132,10 @@ ON
         private string languageType = null;
         private string dataTypeInDatabase = null;
 
-        private const string SQL_COLUMN_DATA_TYPE = @"select DATA_TYPE from all_tab_columns   C 
+
+
+
+        private const string SQL_COLUMN_VALUES = @"select * from all_tab_columns   C 
    WHERE
    1 = 1
 AND
@@ -141,18 +144,39 @@ AND
          AND C.COLUMN_NAME =  :columnName
 ";
 
+
+        private DataRow columnValuesInDatabase = null;
+
+
+        private DataRow ColumnValuesInDatabase
+        {
+            get
+            {
+                if (columnValuesInDatabase == null)
+                {
+                    ParameterBuilder builder = new ParameterBuilder();
+                    builder.parameterEkle("tableName", DbType.String, Table.Name);
+                    builder.parameterEkle("schemaName", DbType.String, Table.Schema);
+                    builder.parameterEkle("columnName", DbType.String, Name);
+                    DataTable dtColumnValues = template.DataTableOlustur(SQL_COLUMN_VALUES, builder.GetParameterArray());
+                    if (dtColumnValues.Rows.Count > 0)
+                    {
+                        columnValuesInDatabase = dtColumnValues.Rows[0];
+                    }
+                }
+                return columnValuesInDatabase;
+            }
+        }
+
+
         public string LanguageType
         {
             get 
             {
                 if (languageType == null)
                 {
-                    ParameterBuilder builder = new ParameterBuilder();
-                    builder.parameterEkle("tableName", DbType.String, Table.Name);
-                    builder.parameterEkle("schemaName", DbType.String, Table.Schema);
-                    builder.parameterEkle("columnName", DbType.String, Name);
-                    Object objSonuc = template.TekDegerGetir(SQL_COLUMN_DATA_TYPE, builder.GetParameterArray());
-                    dataTypeInDatabase = objSonuc.ToString();
+
+                    dataTypeInDatabase = ColumnValuesInDatabase["DATA_TYPE"].ToString();
                     languageType = sqlTypeToDotnetCSharpType(dataTypeInDatabase);
                 }
                 return languageType;
