@@ -27,7 +27,11 @@ namespace Karkas.CodeGeneration.Oracle.Implementations
 
         public bool IsAutoKey
         {
-            get { throw new NotImplementedException(); }
+            get 
+            {
+                // TODO Bunua daha sonra yap
+                return false;
+            }
         }
 
         public string Name
@@ -78,10 +82,46 @@ ON
 
             }
         }
+        private const string SQL_FOREGING_KEY = @" SELECT
+  COUNT(*)
+    FROM all_constraints cons
+    INNER JOIN 
+    all_cons_columns cols
+ON
+   cons.constraint_name = cols.constraint_name
 
+   WHERE     cols.table_name = :tableName
+         AND COLS.OWNER = :schemaName
+         AND COLS.COLUMN_NAME =  :columnName
+         AND cons.constraint_type = 'R'
+         AND cons.owner = cols.owner";
+
+        private bool? isInForeignKey;
         public bool IsInForeignKey
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                if (!isInForeignKey.HasValue)
+                {
+                    ParameterBuilder builder = new ParameterBuilder();
+                    builder.parameterEkle("tableName", DbType.String, Table.Name);
+                    builder.parameterEkle("schemaName", DbType.String, Table.Schema);
+                    builder.parameterEkle("columnName", DbType.String, Name);
+                    Object objSonuc = template.TekDegerGetir(SQL_FOREGING_KEY, builder.GetParameterArray());
+                    Decimal sonuc = (Decimal)objSonuc;
+                    if (sonuc > 0)
+                    {
+                        isInForeignKey = true;
+                    }
+                    else
+                    {
+                        isInForeignKey = false;
+                    }
+
+                }
+                return isInForeignKey.Value;
+
+            }
         }
 
         public bool IsNullable
@@ -91,7 +131,10 @@ ON
 
         public string LanguageType
         {
-            get { throw new NotImplementedException(); }
+            get 
+            { 
+                throw new NotImplementedException(); 
+            }
         }
 
         public ITable Table
