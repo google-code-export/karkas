@@ -11,9 +11,13 @@ namespace Karkas.CodeGenerationHelper.Generators
 {
     public class TypeLibraryGenerator : BaseGenerator
     {
+        public TypeLibraryGenerator(IDatabaseHelper databaseHelper)
+        {
+            utils = new Utils(databaseHelper);
 
-        static readonly Utils utils = new Utils();
-
+        }
+        Utils utils = null;
+        
         public void Render(IOutput output, IContainer table)
         {
             IDatabase database = table.Database;
@@ -94,7 +98,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             BaslangicSusluParentezVeTabArtir(output);
         }
 
-        private static void ClassIsmiYaz(IOutput output, string className, IContainer table)
+        private void ClassIsmiYaz(IOutput output, string className, IContainer table)
         {
             output.increaseTab();
             output.autoTabLn("[Serializable]");
@@ -106,7 +110,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         }
 
-        private static void DebuggerDisplayYaz(IOutput output, IContainer table)
+        private void DebuggerDisplayYaz(IOutput output, IContainer table)
         {
             string yazi = "";
             foreach (IColumn column in table.Columns)
@@ -119,7 +123,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             }
             output.autoTabLn(string.Format("[DebuggerDisplay(\"{0}\")]", yazi));
         }
-        private static void ClassIsmiYaz(IOutput output, string className)
+        private void ClassIsmiYaz(IOutput output, string className)
         {
             output.increaseTab();
             output.autoTabLn("[Serializable]");

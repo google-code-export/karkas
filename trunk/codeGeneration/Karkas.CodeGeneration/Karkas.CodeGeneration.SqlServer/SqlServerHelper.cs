@@ -8,6 +8,7 @@ using Karkas.CodeGeneration.SqlServer.Implementations;
 using Karkas.Core.DataUtil;
 using Karkas.CodeGenerationHelper;
 using System.Data;
+using Karkas.CodeGeneration.SqlServer.Generators;
 
 namespace Karkas.CodeGeneration.SqlServer
 {
@@ -61,9 +62,9 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
             ,bool dboSemaTablolariniAtla
             ,bool sysTablolariniAtla)
         {
-            TypeLibraryGenerator typeGen = new TypeLibraryGenerator();
-            DalGenerator dalGen = new DalGenerator();
-            BsGenerator bsGen = new BsGenerator();
+            TypeLibraryGenerator typeGen = new TypeLibraryGenerator(this);
+            DalGenerator dalGen = this.DalGenerator;
+            BsGenerator bsGen = new BsGenerator(this);
             IOutput output = new SqlServerOutput();
             DatabaseSqlServer database = new DatabaseSqlServer(pConnectionString, pDatabaseName, pProjectNamespace, pProjectFolder);
 
@@ -87,9 +88,9 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
 
         public void CodeGenerateOneTable(AdoTemplate template, string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder)
         {
-            TypeLibraryGenerator typeGen = new TypeLibraryGenerator();
-            DalGenerator dalGen = new DalGenerator();
-            BsGenerator bsGen = new BsGenerator();
+            TypeLibraryGenerator typeGen = new TypeLibraryGenerator(this);
+            DalGenerator dalGen = this.DalGenerator;
+            BsGenerator bsGen = new BsGenerator(this);
             IOutput output = new SqlServerOutput();
             DatabaseSqlServer database = new DatabaseSqlServer(pConnectionString, pDatabaseName, pProjectNamespace, pProjectFolder);
 
@@ -103,5 +104,11 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
 
 
 
+
+
+        public DalGenerator DalGenerator
+        {
+            get { return new SqlServerDalGenerator(this); }
+        }
     }
 }

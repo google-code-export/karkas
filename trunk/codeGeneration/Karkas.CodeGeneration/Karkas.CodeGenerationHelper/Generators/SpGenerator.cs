@@ -22,7 +22,6 @@ namespace Karkas.CodeGenerationHelper.Generators
                                         "dbo.sp_helpdiagrams"
                                 };
 
-        Utils utils = new Utils();
         string methodName = "";
         string schemaName = "";
 
@@ -39,8 +38,18 @@ namespace Karkas.CodeGenerationHelper.Generators
         bool sorguSonucSetiTekElemanli = false;
         string sorguSonucuTekElemanTipi = "";
 
+        public SpGenerator(IDatabaseHelper databaseHelper)
+        {
+
+            utils = new Utils(databaseHelper);
+        }
+        Utils utils = null;
+
+
         public void Render(IOutput output, IProcedure proc)
         {
+
+
             output.tabLevel = 0;
             if (proc.Schema == "sys")
             {

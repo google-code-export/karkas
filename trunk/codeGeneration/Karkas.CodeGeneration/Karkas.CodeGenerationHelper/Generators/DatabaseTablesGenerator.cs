@@ -12,9 +12,10 @@ namespace Karkas.CodeGenerationHelper.Generators
     {
         SmoHelper smoHelper = new SmoHelper();
         InsertScriptHelper insertHelper = new InsertScriptHelper();
+
         public void Render(IOutput output, ITable table, string connectionString)
         {
-            Utils utils = new Utils();
+            Utils utils = new Utils(null);
 
             output.writeLine(smoHelper.GetTableDescription(table.Database.Name, table.Schema, table.Name, connectionString));
             output.save(Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(table.Database, table.Schema) + "\\Database\\CreateScripts\\" + table.Schema, table.Schema + "_" + table.Name + ".CreateTable.sql"), false);

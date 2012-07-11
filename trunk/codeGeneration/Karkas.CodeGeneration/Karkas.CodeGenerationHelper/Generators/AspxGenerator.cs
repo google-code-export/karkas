@@ -8,12 +8,21 @@ namespace Karkas.CodeGenerationHelper.Generators
 {
     public class AspxGenerator
     {
-        Utils utils = new Utils();
 
         string masterName = "Main";
 
-        public void Render(IOutput output, ITable pTable,string pMasterName)
+        public AspxGenerator(IDatabaseHelper databaseHelper)
         {
+
+            utils = new Utils(databaseHelper);
+        }
+        Utils utils = null;
+
+
+        public void Render( IOutput output, ITable pTable, string pMasterName)
+        {
+
+
             IDatabase database = pTable.Database;
             string baseNameSpace = utils.NamespaceIniAlSchemaIle(database, pTable.Schema);
             string baseNamespaceWeb = baseNameSpace + ".WebApp";
@@ -25,7 +34,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
 
             output.writeLine(RenderAsString(pTable, classNameSpace, className, formName));
-            writeTableRows(output, pTable);
+            writeTableRows(utils,output, pTable);
             output.writeLine("</asp:Content>");
             string savePath = Path.Combine(utils.ProjeDizininiAl(database), "WebApp\\" + utils.GetPascalCase(pTable.Schema) + "\\" + formName + ".aspx");
             output.save(savePath, true);
@@ -61,7 +70,7 @@ namespace Karkas.CodeGenerationHelper.Generators
         }
 
 
-        public void writeTableRows(IOutput output, ITable table)
+        public void writeTableRows( Utils utils,IOutput output, ITable table)
         {
             output.writeLine("<table class=\"AnaTablo\">");
             output.increaseTab();

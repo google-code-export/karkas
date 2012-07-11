@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generators\OracleDalGenerator.cs" />
     <Compile Include="Implementations\ColumnOracle.cs" />
     <Compile Include="Implementations\DatabaseOracle.cs" />
     <Compile Include="Implementations\TableOracle.cs" />

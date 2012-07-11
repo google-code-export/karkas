@@ -3,15 +3,25 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
+using Karkas.CodeGenerationHelper.Interfaces;
 
 namespace Karkas.CodeGenerationHelper
 {
     public class EnumHelper
     {
         TurkishHelper tHelper = new TurkishHelper();
-        public string GetEnumDescription(string dbName, string schemaName, string tableName, string connectionString)
+        public EnumHelper(IDatabaseHelper databaseHelper)
         {
-            Utils u = new Utils();
+
+            utils = new Utils(databaseHelper);
+        }
+        Utils utils = null;
+
+
+        public string GetEnumDescription( string dbName, string schemaName, string tableName, string connectionString)
+        {
+
+
             connectionString = ConnectionHelper.RemoveProviderFromConnectionString(connectionString);
             SqlConnection conn = new SqlConnection();
             conn.ConnectionString = connectionString;
@@ -35,11 +45,11 @@ namespace Karkas.CodeGenerationHelper
 
             DataRow row = dtSchema.Rows[0];
             string dataTypeOfEnum = row["DataType"].ToString();
-            string charpDataTypeOfEnum = u.GetCSharpTypeFromDotNetType(dataTypeOfEnum);
+            string charpDataTypeOfEnum = utils.GetCSharpTypeFromDotNetType(dataTypeOfEnum);
 
             StringBuilder sb = new StringBuilder();
             sb.Append(string.Format("public partial class {0}Enum"
-                                    , u.GetPascalCase(tableName)));
+                                    , utils.GetPascalCase(tableName)));
             sb.Append(  @"
     {");
             while (reader.Read())
@@ -49,7 +59,7 @@ namespace Karkas.CodeGenerationHelper
                 {
                     sb.Append(String.Format("\t\tpublic const {0} {1} = {2};"
                 , charpDataTypeOfEnum
-                , u.GetPascalCase(tHelper.ReplaceTurkishChars((reader.GetString(enumAdiOrdinal))))
+                , utils.GetPascalCase(tHelper.ReplaceTurkishChars((reader.GetString(enumAdiOrdinal))))
                 , reader.GetValue(0).ToString()));
 
                 }

@@ -20,7 +20,7 @@ namespace Karkas.MyGenerationConsoleTest.Tests.SmoHelper
 		public void TestSchemaListesi1()
 		{
 
-			Utils uti = new Utils();
+			Utils uti = new Utils(null);
 			string[] schemalar = uti.GetSchemaList("KARKAS_ORNEK", ConnectionString);
 			foreach (string item in schemalar)
 			{

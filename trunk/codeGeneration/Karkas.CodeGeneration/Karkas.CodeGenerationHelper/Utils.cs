@@ -15,6 +15,15 @@ namespace Karkas.CodeGenerationHelper
 {
     public class Utils
     {
+
+        public Utils(IDatabaseHelper pHelper)
+        {
+            helper = pHelper;
+        }
+
+
+        private IDatabaseHelper helper;
+
         #region Generator Helper Fonksiyonlari
 
         public void RenderDatabaseTablesCode(IOutput output, ITable table, string connectionString)
@@ -26,61 +35,63 @@ namespace Karkas.CodeGenerationHelper
 
         public void RenderInsertScriptsCode(IOutput output, ITable table, string connectionString)
         {
-            InsertScriptsGenerator gen = new InsertScriptsGenerator();
+            InsertScriptsGenerator gen = new InsertScriptsGenerator(helper);
             gen.Render(output, table, connectionString);
         }
 
         public void RenderTypeLibraryCode(IOutput output, ITable table)
         {
-            TypeLibraryGenerator gen = new TypeLibraryGenerator();
-            gen.Render(output,  table);
+            TypeLibraryGenerator gen = new TypeLibraryGenerator(helper);
+            gen.Render(output, table);
         }
         public void RenderTypeLibraryCode(IOutput output, IView view)
         {
-            TypeLibraryGenerator gen = new TypeLibraryGenerator();
+            TypeLibraryGenerator gen = new TypeLibraryGenerator(helper);
             gen.Render(output, view);
         }
         public void RenderStoredProcedureCode(IOutput output, IProcedure proc)
         {
-            SpGenerator gen = new SpGenerator();
+            SpGenerator gen = new SpGenerator(helper);
             gen.Render(output, proc);
         }
 
         public string RenderDalCode(IOutput output, ITable table)
         {
-            DalGenerator gen = new DalGenerator();
+            DalGenerator gen = helper.DalGenerator;
             return gen.Render(output, table);
         }
         public void RenderDalCode(IOutput output, IView view)
         {
-            DalGenerator gen = new DalGenerator();
+            DalGenerator gen = helper.DalGenerator;
             gen.Render(output, view);
         }
+
+
         public void RenderBsCode(IOutput output, ITable table)
         {
-            BsGenerator gen = new BsGenerator();
+            BsGenerator gen = new BsGenerator(helper);
             gen.Render(output, table);
         }
         public void RenderBsCode(IOutput output, IView view)
         {
-            BsGenerator gen = new BsGenerator();
+            BsGenerator gen = new BsGenerator(helper);
             gen.Render(output, view);
         }
         public void RenderBsWrapperCode(IOutput output, ITable table)
         {
-            BsWrapperGenerator gen = new BsWrapperGenerator();
+            BsWrapperGenerator gen = new BsWrapperGenerator(helper);
             gen.Render(output, table);
         }
         public void RenderBsWrapperCode(IOutput output, IView view)
         {
-            BsWrapperGenerator gen = new BsWrapperGenerator();
+            BsWrapperGenerator gen = new BsWrapperGenerator(helper);
             gen.Render(output, view);
         }
         public void RenderAspxCode(IOutput output, ITable table, string pMasterName)
         {
-            AspxGenerator genA = new AspxGenerator();
+            AspxGenerator genA = new AspxGenerator(helper);
             genA.Render(output, table, pMasterName);
-            AspxCsGenerator genCs = new AspxCsGenerator();
+            AspxCsGenerator genCs = new AspxCsGenerator(helper);
             genCs.Render(output, table);
         }
 
@@ -558,7 +569,7 @@ namespace Karkas.CodeGenerationHelper
 
         public string GetEnumDescription(string dbName, string schemaName, string tableName, string connectionString)
         {
-            EnumHelper eHelper = new EnumHelper();
+            EnumHelper eHelper = new EnumHelper(helper);
             return eHelper.GetEnumDescription(dbName, schemaName, tableName, connectionString);
         }
 

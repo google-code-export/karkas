@@ -28,9 +28,16 @@ namespace Karkas.CodeGenerationHelper.Generators
         string pkAdi = "";
         string pkType = "";
 
-        private static Utils utils = new Utils();
+        public BsWrapperGenerator(IDatabaseHelper databaseHelper)
+        {
+
+            utils = new Utils(databaseHelper);
+        }
+        Utils utils = null;
+
         public void Render(IOutput output, IContainer container)
         {
+            
             output.tabLevel = 0;
 
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
