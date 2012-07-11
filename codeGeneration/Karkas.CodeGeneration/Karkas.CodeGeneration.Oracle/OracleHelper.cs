@@ -17,12 +17,12 @@ namespace Karkas.CodeGeneration.Oracle
         private const string SQL_FOR_SCHEMA_LIST = @"
 SELECT '__TUM_SCHEMALAR__' AS TABLE_SCHEMA FROM DUAL
 UNION
-select username from dba_users
+select username from ALL_users
 ORDER BY TABLE_SCHEMA";
         private const string SQL_FOR_TABLE_LIST = @"
 SELECT OWNER AS TABLE_SCHEMA, TABLE_NAME,OWNER || '.' || TABLE_NAME  AS FULL_TABLE_NAME  FROM  ALL_TABLES T
 WHERE  
-(:TABLE_SCHEMA IS NULL) OR (OWNER = :TABLE_SCHEMA)
+(:TABLE_SCHEMA IS NULL) OR ( lower(OWNER) = lower(:TABLE_SCHEMA))
 
 ORDER BY FULL_TABLE_NAME
 ";
@@ -57,7 +57,7 @@ ORDER BY FULL_TABLE_NAME
             string userName = getUserNameFromConnection(pConnectionString);
 
             ParameterBuilder builder = new ParameterBuilder();
-            builder.parameterEkle("schemaName",DbType.String, userName);
+            builder.parameterEkle("TABLE_SCHEMA", DbType.String, userName);
 
             DataTable dtTables = template.DataTableOlustur(SQL_FOR_TABLE_LIST, builder.GetParameterArray());
             foreach (DataRow row in dtTables.Rows)
