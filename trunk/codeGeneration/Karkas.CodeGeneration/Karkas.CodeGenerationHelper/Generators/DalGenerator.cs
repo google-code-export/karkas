@@ -281,7 +281,7 @@ namespace Karkas.CodeGenerationHelper.Generators
                 {
                     if (column.IsInPrimaryKey)
                     {
-                        whereClause += column.Name + " = @" + column.Name + " AND";
+                        whereClause += column.Name + " = " + parameterSymbol + column.Name + " AND";
                     }
                 }
                 whereClause = whereClause.Remove(whereClause.Length - 4) + "\"";
@@ -326,13 +326,13 @@ namespace Karkas.CodeGenerationHelper.Generators
                 {
                     if (updateWhereSatirindaOlmaliMi(column))
                     {
-                        pkcumlesi += " " + column.Name + " = @" + column.Name + " AND";
+                        pkcumlesi += " " + column.Name + " = " + parameterSymbol + column.Name + " AND";
                     }
                     if (!columnParametreOlmaliMi(column))
                     {
                         if (!updateWhereSatirindaOlmaliMi(column))
                         {
-                            cumle += column.Name + " = @" + column.Name + ",";
+                            cumle += column.Name + " = " + parameterSymbol + column.Name + ",";
                         }
                     }
                 }
@@ -404,7 +404,7 @@ namespace Karkas.CodeGenerationHelper.Generators
                     }
                     if (!column.IsAutoKey)
                     {
-                        cumle += "@" + column.Name + ",";
+                        cumle += parameterSymbol  + column.Name + ",";
                     }
                 }
                 cumle = cumle.Remove(cumle.Length - 1);
@@ -573,7 +573,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         private void builderParameterEkleString(IOutput output, IColumn column)
         {
-            string s = "builder.parameterEkle(\"@"
+            string s = "builder.parameterEkle(\"" + parameterSymbol
                         + column.Name
                         + "\","
                         + getDbTargetType(column)
@@ -599,7 +599,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         private void builderParameterEkleNormal(IOutput output, IColumn column)
         {
-            string s = "builder.parameterEkle(\"@"
+            string s = "builder.parameterEkle(\"" + parameterSymbol
                         + column.Name
                         + "\","
                         + getDbTargetType(column)
