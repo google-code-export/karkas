@@ -18,5 +18,19 @@ namespace Karkas.CodeGeneration.SqlServer.Generators
         {
             get { return "@"; }
         }
+
+        protected override string getDbTargetType(IColumn column)
+        {
+            if (column.DbTargetType == "Unknown")
+            {
+                return "SqlDbType.VarChar";
+            }
+            else
+            {
+                return column.DbTargetType;
+            }
+        }
+
+
     }
 }

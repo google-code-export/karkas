@@ -234,19 +234,22 @@ AND
             get
             {
                 string lowerDataTypeInDatabase = dataTypeInDatabase.ToLowerInvariant();
-                if (dataTypeInDatabase == "Numeric")
+                if (
+                    lowerDataTypeInDatabase == "number"
+                    
+                    )
                 {
 
                     return "DbType.Decimal";
                 }
                 if (
-                    dataTypeInDatabase == "nchar"
+                    lowerDataTypeInDatabase == "nchar"
                     ||
-                    dataTypeInDatabase == "nvarchar"
+                    lowerDataTypeInDatabase == "nvarchar"
                     ||
-                    dataTypeInDatabase == "char"
+                    lowerDataTypeInDatabase == "char"
                     ||
-                    dataTypeInDatabase == "varchar"
+                    lowerDataTypeInDatabase == "varchar"
                     )
                 {
                     return "DbType.String";

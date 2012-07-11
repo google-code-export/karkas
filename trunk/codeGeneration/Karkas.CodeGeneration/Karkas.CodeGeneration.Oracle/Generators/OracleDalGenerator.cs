@@ -19,5 +19,18 @@ namespace Karkas.CodeGeneration.Oracle.Generators
         {
             get { return ":"; }
         }
+
+        protected override string getDbTargetType(IColumn column)
+        {
+            if (column.DbTargetType == "Unknown")
+            {
+                return "DbType.String";
+            }
+            else
+            {
+                return column.DbTargetType;
+            }
+        }
+
     }
 }
