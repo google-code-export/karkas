@@ -333,6 +333,8 @@ AND
         public string sqlTypeToDotnetCSharpType(string pSqlTypeName)
         {
             pSqlTypeName = pSqlTypeName.ToLowerInvariant();
+
+            pSqlTypeName = pSqlTypeName.ToLowerInvariant();
             if (
                     pSqlTypeName.Equals("varchar") ||
                     pSqlTypeName.Equals("nvarchar") ||
@@ -386,6 +388,7 @@ AND
 
 
             if (
+                pSqlTypeName.Equals("number") ||
                 pSqlTypeName.Equals("numeric") ||
                 pSqlTypeName.Equals("decimal") ||
                 pSqlTypeName.Equals("money") ||
