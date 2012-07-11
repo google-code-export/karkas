@@ -584,18 +584,9 @@ namespace Karkas.CodeGenerationHelper.Generators
                         + ");";
             output.autoTabLn(s);
         }
+        protected abstract string getDbTargetType(IColumn column);
+        
 
-        private string getDbTargetType(IColumn column)
-        {
-            if (column.DbTargetType == "Unknown")
-            {
-                return "SqlDbType.VarChar";
-            }
-            else
-            {
-                return column.DbTargetType;
-            }
-        }
 
         private void builderParameterEkleNormal(IOutput output, IColumn column)
         {
