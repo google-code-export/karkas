@@ -82,7 +82,7 @@ ON
 
             }
         }
-        private const string SQL_FOREGING_KEY = @" SELECT
+        private const string SQL_FOREIGN_KEY = @" SELECT
   COUNT(*)
     FROM all_constraints cons
     INNER JOIN 
@@ -107,7 +107,7 @@ ON
                     builder.parameterEkle("tableName", DbType.String, Table.Name);
                     builder.parameterEkle("schemaName", DbType.String, Table.Schema);
                     builder.parameterEkle("columnName", DbType.String, Name);
-                    Object objSonuc = template.TekDegerGetir(SQL_FOREGING_KEY, builder.GetParameterArray());
+                    Object objSonuc = template.TekDegerGetir(SQL_FOREIGN_KEY, builder.GetParameterArray());
                     Decimal sonuc = (Decimal)objSonuc;
                     if (sonuc > 0)
                     {
@@ -124,9 +124,26 @@ ON
             }
         }
 
+        private bool? isNullable = null;
         public bool IsNullable
         {
-            get { throw new NotImplementedException(); }
+            get 
+            {
+                if (!isNullable.HasValue)
+                {
+                    String NullableValueInDatabase = ColumnValuesInDatabase["NULLABLE"].ToString();
+                    if (NullableValueInDatabase == "N")
+                    {
+                        isNullable = false;
+                    }
+                    if (NullableValueInDatabase == "Y")
+                    {
+                        isNullable = true;
+                    }
+
+                }
+                return isNullable.Value;
+            }
         }
 
         private string languageType = null;
@@ -200,8 +217,12 @@ AND
 
         public string DataTypeName
         {
-            get { throw new NotImplementedException(); }
+            get 
+            {
+                return sqlTypeToDotnetCommonDbType(dataTypeInDatabase);
+            }
         }
+
 
         public int CharacterMaxLength
         {
@@ -313,6 +334,93 @@ AND
             return "Unknown";
         }
 
+        private string sqlTypeToDotnetCommonDbType(string dataTypeInDatabase)
+        {
+            dataTypeInDatabase = dataTypeInDatabase.ToLowerInvariant();
+            if (
+                    dataTypeInDatabase.Equals("varchar") ||
+                    dataTypeInDatabase.Equals("varchar2") ||
+                    dataTypeInDatabase.Equals("nvarchar") ||
+                    dataTypeInDatabase.Equals("char") ||
+                    dataTypeInDatabase.Equals("nchar") ||
+                    dataTypeInDatabase.Equals("ntext") ||
+                    dataTypeInDatabase.Equals("text")
+
+                )
+            {
+
+                return "DbType.String";
+            }
+            if (dataTypeInDatabase.Equals("uniqueidentifier"))
+            {
+                return "Guid";
+            }
+            if (dataTypeInDatabase.Equals("int"))
+            {
+                return "int";
+            }
+            if (dataTypeInDatabase.Equals("tinyint"))
+            {
+                return "byte";
+            }
+            if (dataTypeInDatabase.Equals("smallint"))
+            {
+                return "short";
+            }
+            if (dataTypeInDatabase.Equals("bigint"))
+            {
+                return "long";
+            }
+            if (
+                dataTypeInDatabase.Equals("datetime") ||
+                dataTypeInDatabase.Equals("smalldatetime")
+                )
+            {
+                return "DateTime";
+            }
+            if (dataTypeInDatabase.Equals("bit"))
+            {
+                return "bool";
+            }
+            if (dataTypeInDatabase.Equals("bit"))
+            {
+                return "bool";
+            }
+
+
+
+            if (
+                dataTypeInDatabase.Equals("numeric") ||
+                dataTypeInDatabase.Equals("decimal") ||
+                dataTypeInDatabase.Equals("money") ||
+                dataTypeInDatabase.Equals("smallmoney")
+                )
+            {
+                return "decimal";
+            }
+            if (dataTypeInDatabase.Equals("float"))
+            {
+                return "double";
+            }
+            if (dataTypeInDatabase.Equals("real"))
+            {
+                return "float";
+            }
+            if (
+                dataTypeInDatabase.Equals("image") ||
+                dataTypeInDatabase.Equals("binary") ||
+                dataTypeInDatabase.Equals("varbinary") ||
+                dataTypeInDatabase.Equals("timestamp")
+                )
+            {
+                return "byte[]";
+            }
+            if (dataTypeInDatabase.Equals("sql_variant"))
+            {
+                return "object";
+            }
+            return "Unknown";
+        }
 
 
     }
