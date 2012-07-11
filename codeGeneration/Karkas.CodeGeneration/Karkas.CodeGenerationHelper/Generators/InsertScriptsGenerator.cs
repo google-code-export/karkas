@@ -12,9 +12,15 @@ namespace Karkas.CodeGenerationHelper.Generators
     {
         InsertScriptHelper insertHelper = new InsertScriptHelper();
 
+        public InsertScriptsGenerator(IDatabaseHelper databaseHelper)
+        {
+
+            utils = new Utils(databaseHelper);
+        }
+        Utils utils = null;
+
         public void Render(IOutput output, ITable table, string connectionString)
         {
-            Utils utils = new Utils();
             output.writeLine(insertHelper.GetRowsToBeInserted(table.Database.Name, table.Schema, table.Name, connectionString));
             output.save(Path.Combine(utils.DizininiAlDatabaseVeSchemaIle(table.Database, table.Schema) + "\\Database\\InsertScripts\\" + table.Schema, table.Schema + "_" + table.Name + ".Inserts.sql"), false);
             output.clear();

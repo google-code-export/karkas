@@ -9,9 +9,8 @@ using Karkas.CodeGenerationHelper.Interfaces;
 
 namespace Karkas.CodeGenerationHelper.Generators
 {
-    public class DalGenerator : BaseGenerator
+    public abstract class DalGenerator : BaseGenerator
     {
-        private Utils utils = new Utils();
 
         string classNameTypeLibrary = "";
         string schemaName = "";
@@ -26,6 +25,15 @@ namespace Karkas.CodeGenerationHelper.Generators
         bool identityVarmi = false;
         string listeType = "";
         string identityType = "";
+
+        public DalGenerator(IDatabaseHelper databaseHelper)
+        {
+            utils = new Utils(databaseHelper);
+
+        }
+        Utils utils = null;
+
+
 
         public string Render(IOutput output, IContainer container)
         {
@@ -294,6 +302,13 @@ namespace Karkas.CodeGenerationHelper.Generators
         {
             return ((column.IsInPrimaryKey) || columnVersiyonZamaniMi(column));
         }
+
+
+        protected abstract string parameterSymbol
+        {
+            get;
+        }
+
 
         private void UpdateStringYaz(IOutput output, IContainer container, ref string pkcumlesi)
         {

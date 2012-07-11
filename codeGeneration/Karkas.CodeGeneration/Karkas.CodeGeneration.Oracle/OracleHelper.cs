@@ -8,6 +8,7 @@ using System.Data;
 using Karkas.CodeGenerationHelper.Interfaces;
 using Karkas.CodeGenerationHelper.Generators;
 using Karkas.CodeGeneration.Oracle.Implementations;
+using Karkas.CodeGeneration.Oracle.Generators;
 
 namespace Karkas.CodeGeneration.Oracle
 {
@@ -88,9 +89,9 @@ ORDER BY FULL_TABLE_NAME
 
         public void CodeGenerateOneTable(AdoTemplate template, string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder)
         {
-            TypeLibraryGenerator typeGen = new TypeLibraryGenerator();
-            DalGenerator dalGen = new DalGenerator();
-            BsGenerator bsGen = new BsGenerator();
+            TypeLibraryGenerator typeGen = new TypeLibraryGenerator(this);
+            DalGenerator dalGen = this.DalGenerator;
+            BsGenerator bsGen = new BsGenerator(this);
             IOutput output = new OracleOutput();
             DatabaseOracle database = new DatabaseOracle(template,pConnectionString, pDatabaseName, pProjectNamespace, pProjectFolder);
 
@@ -99,6 +100,12 @@ ORDER BY FULL_TABLE_NAME
             typeGen.Render(output, table);
             dalGen.Render(output, table);
             bsGen.Render(output, table);
+        }
+
+
+        public DalGenerator DalGenerator
+        {
+            get { return new OracleDalGenerator(this); }
         }
     }
 }

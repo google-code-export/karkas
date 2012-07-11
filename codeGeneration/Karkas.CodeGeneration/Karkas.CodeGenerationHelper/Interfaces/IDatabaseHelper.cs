@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Karkas.Core.DataUtil;
 using System.Data;
+using Karkas.CodeGenerationHelper.Generators;
 
 namespace Karkas.CodeGenerationHelper.Interfaces
 {
@@ -20,6 +21,12 @@ namespace Karkas.CodeGenerationHelper.Interfaces
     , bool sysTablolariniAtla);
 
         void CodeGenerateOneTable(AdoTemplate template,string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder);
+
+
+        DalGenerator DalGenerator
+        {
+            get;
+        }
 
     }
 

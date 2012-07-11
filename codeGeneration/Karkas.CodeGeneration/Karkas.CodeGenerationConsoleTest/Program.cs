@@ -65,7 +65,9 @@ namespace Karkas.MyGenerationConsoleTest
 
         private static void schemaListesiEkranaYaz()
         {
-            Utils uti = new Utils();
+            IDatabaseHelper helper = new SqlServerHelper();
+
+            Utils uti = new Utils(helper);
             string[] schemalar = uti.GetSchemaList("KARKAS_ORNEK", _SqlServerExampleConnectionString);
             foreach (var item in schemalar)
             {

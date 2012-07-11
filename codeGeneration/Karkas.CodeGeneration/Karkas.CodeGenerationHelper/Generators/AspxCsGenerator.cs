@@ -6,12 +6,20 @@ using Karkas.CodeGenerationHelper.Interfaces;
 
 namespace Karkas.CodeGenerationHelper.Generators
 {
-    public class AspxCsGenerator
+    public class AspxCsGenerator : BaseGenerator
     {
-        Utils utils = new Utils();
 
-        public void Render(IOutput output, ITable table)
+        public AspxCsGenerator(IDatabaseHelper databaseHelper)
         {
+
+            utils = new Utils(databaseHelper);
+        }
+        Utils utils = null;
+        public void Render( IOutput output, ITable table)
+        {
+
+
+
             IDatabase database = table.Database;
 
             string baseNameSpace = database.projectNameSpace;

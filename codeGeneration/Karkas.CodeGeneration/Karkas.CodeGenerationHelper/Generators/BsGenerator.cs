@@ -28,10 +28,17 @@ namespace Karkas.CodeGenerationHelper.Generators
         string baseNameSpaceDal = "";
         string baseNameSpaceBs = "";
 
-
-        private static Utils utils = new Utils();
-        public void Render(IOutput output, IContainer container)
+        public BsGenerator(IDatabaseHelper databaseHelper)
         {
+            utils = new Utils(databaseHelper);
+
+        }
+        Utils utils = null;
+
+
+        public void Render( IOutput output, IContainer container)
+        {
+           
             output.tabLevel = 0;
             IDatabase database = container.Database;
             baseNameSpace = utils.NamespaceIniAlSchemaIle(database, container.Schema);
