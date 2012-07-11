@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2AD7FBB7-B410-4BA6-9DE6-F5A14529CF89}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Karkas.OracleExample.ConsoleApp</RootNamespace>
+    <AssemblyName>Karkas.OracleExample.ConsoleApp</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Karkas.Core.DataUtil">
+      <HintPath>..\..\ThirdParty\Karkas.Core.DataUtil.dll</HintPath>
+    </Reference>
+    <Reference Include="Karkas.Core.Onaylama">
+      <HintPath>..\..\ThirdParty\Karkas.Core.Onaylama.dll</HintPath>
+    </Reference>
+    <Reference Include="Karkas.Core.Utility">
+      <HintPath>..\..\ThirdParty\Karkas.Core.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bs\Karkas.OracleExample.Bs\Karkas.OracleExample.Bs.csproj">
+      <Project>{9D23AE03-E081-431D-BD4A-367346147356}</Project>
+      <Name>Karkas.OracleExample.Bs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dal\Karkas.OracleExample.Dal\Karkas.OracleExample.Dal.csproj">
+      <Project>{367DD8AD-40B4-41AE-AEEC-535B4D6D3CD0}</Project>
+      <Name>Karkas.OracleExample.Dal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TypeLibrary\Karkas.OracleExample.TypeLibrary\Karkas.OracleExample.TypeLibrary.csproj">
+      <Project>{1B993646-EE07-4420-921C-6EAD0A4BDDB3}</Project>
+      <Name>Karkas.OracleExample.TypeLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
