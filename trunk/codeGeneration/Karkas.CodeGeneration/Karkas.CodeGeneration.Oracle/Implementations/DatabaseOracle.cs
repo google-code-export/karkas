@@ -7,7 +7,7 @@ using Karkas.Core.DataUtil;
 
 namespace Karkas.CodeGeneration.Oracle.Implementations
 {
-    class DatabaseOracle : IDatabase
+    public class DatabaseOracle : IDatabase
     {
 
         public DatabaseOracle(AdoTemplate pTemplate,String pConnectionString, string pDatabaseName, string pProjectNameSpace, string pProjectFolder)
@@ -58,7 +58,7 @@ namespace Karkas.CodeGeneration.Oracle.Implementations
 
         public ITable getTable(string pTableName, string pSchemaName)
         {
-            return new TableOracle(template, pTableName, pSchemaName);
+            return new TableOracle(this,template, pTableName, pSchemaName);
         }
     }
 }
