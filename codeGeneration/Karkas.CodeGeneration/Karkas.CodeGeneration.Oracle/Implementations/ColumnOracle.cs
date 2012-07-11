@@ -48,12 +48,12 @@ namespace Karkas.CodeGeneration.Oracle.Implementations
     all_cons_columns cols
 ON
    cons.constraint_name = cols.constraint_name
-
+AND cons.owner = cols.owner
    WHERE     cols.table_name = :tableName
          AND COLS.OWNER = :schemaName
          AND COLS.COLUMN_NAME =  :columnName
          AND cons.constraint_type = 'P'
-         AND cons.owner = cols.owner";
+         ";
 
 
         public bool IsInPrimaryKey
@@ -89,12 +89,12 @@ ON
     all_cons_columns cols
 ON
    cons.constraint_name = cols.constraint_name
-
+ AND cons.owner = cols.owner
    WHERE     cols.table_name = :tableName
          AND COLS.OWNER = :schemaName
          AND COLS.COLUMN_NAME =  :columnName
          AND cons.constraint_type = 'R'
-         AND cons.owner = cols.owner";
+        ";
 
         private bool? isInForeignKey;
         public bool IsInForeignKey
@@ -207,12 +207,37 @@ AND
 
         public bool IsComputed
         {
-            get { throw new NotImplementedException(); }
+            // TODO Burasını daha sonra yap
+            get { return false; }
         }
 
         public string DbTargetType
         {
-            get { throw new NotImplementedException(); }
+
+            get
+            {
+                string lowerDataTypeInDatabase = dataTypeInDatabase.ToLowerInvariant();
+                if (dataTypeInDatabase == "Numeric")
+                {
+
+                    return "DbType.Decimal";
+                }
+                if (
+                    dataTypeInDatabase == "nchar"
+                    ||
+                    dataTypeInDatabase == "nvarchar"
+                    ||
+                    dataTypeInDatabase == "char"
+                    ||
+                    dataTypeInDatabase == "varchar"
+                    )
+                {
+                    return "DbType.String";
+                }
+                return "Unknown";
+
+            }
+        
         }
 
         public string DataTypeName
@@ -224,19 +249,61 @@ AND
         }
 
 
+        private int? characterMaxLenth = null;
         public int CharacterMaxLength
         {
-            get { throw new NotImplementedException(); }
+            get 
+            { 
+                if (!characterMaxLenth.HasValue)
+                {
+                    if (ColumnValuesInDatabase["DATA_LENGTH"] == DBNull.Value)
+                    {
+                        characterMaxLenth = 0;
+                    }
+                    else
+                    {
+                        characterMaxLenth = Convert.ToInt32(ColumnValuesInDatabase["DATA_LENGTH"]);
+                    }
+
+                    
+                }
+
+                return characterMaxLenth.Value; 
+            }
         }
 
         public bool isStringType
         {
-            get { throw new NotImplementedException(); }
+            get 
+            {
+                if (LanguageType == "string")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         public bool isStringTypeWithoutLength
         {
-            get { throw new NotImplementedException(); }
+            get 
+            {
+                if (
+                    dataTypeInDatabase == "CLOB"
+                    ||
+                    dataTypeInDatabase == "LONG"
+                    )
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         public bool isNumericType
