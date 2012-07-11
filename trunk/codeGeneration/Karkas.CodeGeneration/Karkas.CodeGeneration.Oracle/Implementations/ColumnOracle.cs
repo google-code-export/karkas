@@ -129,11 +129,33 @@ ON
             get { throw new NotImplementedException(); }
         }
 
+        private string languageType = null;
+        private string dataTypeInDatabase = null;
+
+        private const string SQL_COLUMN_DATA_TYPE = @"select DATA_TYPE from all_tab_columns   C 
+   WHERE
+   1 = 1
+AND
+        C.table_name = :tableName
+         AND C.OWNER = :schemaName
+         AND C.COLUMN_NAME =  :columnName
+";
+
         public string LanguageType
         {
             get 
-            { 
-                throw new NotImplementedException(); 
+            {
+                if (languageType == null)
+                {
+                    ParameterBuilder builder = new ParameterBuilder();
+                    builder.parameterEkle("tableName", DbType.String, Table.Name);
+                    builder.parameterEkle("schemaName", DbType.String, Table.Schema);
+                    builder.parameterEkle("columnName", DbType.String, Name);
+                    Object objSonuc = template.TekDegerGetir(SQL_COLUMN_DATA_TYPE, builder.GetParameterArray());
+                    dataTypeInDatabase = objSonuc.ToString();
+                    languageType = sqlTypeToDotnetCSharpType(dataTypeInDatabase);
+                }
+                return languageType;
             }
         }
 
@@ -176,5 +198,98 @@ ON
         {
             get { throw new NotImplementedException(); }
         }
+
+        // Helper functions
+
+        public string sqlTypeToDotnetCSharpType(string pSqlTypeName)
+        {
+            pSqlTypeName = pSqlTypeName.ToLowerInvariant();
+            if (
+                    pSqlTypeName.Equals("varchar") ||
+                    pSqlTypeName.Equals("nvarchar") ||
+                    pSqlTypeName.Equals("char") ||
+                    pSqlTypeName.Equals("nchar") ||
+                    pSqlTypeName.Equals("ntext") ||
+                    pSqlTypeName.Equals("Xml") ||
+                    pSqlTypeName.Equals("text")
+
+                )
+            {
+
+                return "string";
+            }
+            if (pSqlTypeName.Equals("uniqueidentifier"))
+            {
+                return "Guid";
+            }
+            if (pSqlTypeName.Equals("int"))
+            {
+                return "int";
+            }
+            if (pSqlTypeName.Equals("tinyint"))
+            {
+                return "byte";
+            }
+            if (pSqlTypeName.Equals("smallint"))
+            {
+                return "short";
+            }
+            if (pSqlTypeName.Equals("bigint"))
+            {
+                return "long";
+            }
+            if (
+                pSqlTypeName.Equals("datetime") ||
+                pSqlTypeName.Equals("smalldatetime")
+                )
+            {
+                return "DateTime";
+            }
+            if (pSqlTypeName.Equals("bit"))
+            {
+                return "bool";
+            }
+            if (pSqlTypeName.Equals("bit"))
+            {
+                return "bool";
+            }
+
+
+
+            if (
+                pSqlTypeName.Equals("numeric") ||
+                pSqlTypeName.Equals("decimal") ||
+                pSqlTypeName.Equals("money") ||
+                pSqlTypeName.Equals("smallmoney")
+                )
+            {
+                return "decimal";
+            }
+            if (pSqlTypeName.Equals("float"))
+            {
+                return "double";
+            }
+            if (pSqlTypeName.Equals("real"))
+            {
+                return "float";
+            }
+            if (
+                pSqlTypeName.Equals("image") ||
+                pSqlTypeName.Equals("binary") ||
+                pSqlTypeName.Equals("varbinary") ||
+                pSqlTypeName.Equals("timestamp")
+                )
+            {
+                return "byte[]";
+            }
+            if (pSqlTypeName.Equals("sql_variant"))
+            {
+                return "object";
+            }
+            return "Unknown";
+        }
+
+
+
     }
 }
