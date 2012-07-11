@@ -43,7 +43,7 @@ public partial class RegionsDal : BaseDal<Regions>
 	{
 		get 
 		{
-			return @"DELETE   FROM HR.REGIONS WHERE REGION_ID = @REGION_ID";
+			return @"DELETE   FROM HR.REGIONS WHERE REGION_ID = :REGION_ID";
 		}
 	}
 	protected override string UpdateString
@@ -52,9 +52,9 @@ public partial class RegionsDal : BaseDal<Regions>
 		{
 			return @"UPDATE HR.REGIONS
 			 SET 
-			REGION_NAME = @REGION_NAME			
+			REGION_NAME = :REGION_NAME			
 			WHERE 
-			 REGION_ID = @REGION_ID ";
+			 REGION_ID = :REGION_ID ";
 		}
 	}
 	protected override string InsertString
@@ -64,7 +64,7 @@ public partial class RegionsDal : BaseDal<Regions>
 			return @"INSERT INTO HR.REGIONS 
 			 (REGION_ID,REGION_NAME) 
 			 VALUES 
-						(@REGION_ID,@REGION_NAME)";
+						(:REGION_ID,:REGION_NAME)";
 		}
 	}
 	public Regions SorgulaREGION_IDIle(decimal p1)
@@ -123,19 +123,19 @@ public partial class RegionsDal : BaseDal<Regions>
 	protected override void InsertCommandParametersAdd(DbCommand cmd, Regions row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@REGION_ID",SqlDbType.VarChar, row.RegionId);
-		builder.parameterEkle("@REGION_NAME",SqlDbType.VarChar, row.RegionName,25);
+		builder.parameterEkle(":REGION_ID",DbType.Decimal, row.RegionId);
+		builder.parameterEkle(":REGION_NAME",DbType.String, row.RegionName,25);
 	}
 	protected override void UpdateCommandParametersAdd(DbCommand cmd, 	Regions	 row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@REGION_ID",SqlDbType.VarChar, row.RegionId);
-		builder.parameterEkle("@REGION_NAME",SqlDbType.VarChar, row.RegionName,25);
+		builder.parameterEkle(":REGION_ID",DbType.Decimal, row.RegionId);
+		builder.parameterEkle(":REGION_NAME",DbType.String, row.RegionName,25);
 	}
 	protected override void DeleteCommandParametersAdd(DbCommand cmd, 	Regions	 row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@REGION_ID",SqlDbType.VarChar, row.RegionId);
+		builder.parameterEkle(":REGION_ID",DbType.Decimal, row.RegionId);
 	}
 }
 }

@@ -1,0 +1,9 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Debug|x86" processModel="Default" domainUsage="Default" appbase="D:\projects\karkas\Examples\Karkas.OracleExample\Karkas.OracleExample.ConsoleApp" />
+  <Config name="Debug|x86" binpathtype="Auto" configfile="app.config">
+    <assembly path="bin\Debug\Karkas.OracleExample.ConsoleApp.exe" />
+  </Config>
+  <Config name="Release|x86" binpathtype="Auto">
+    <assembly path="bin\Release\Karkas.OracleExample.ConsoleApp.exe" />
+  </Config>
+</NUnitProject>

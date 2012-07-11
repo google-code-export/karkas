@@ -43,7 +43,7 @@ public partial class DepartmentsDal : BaseDal<Departments>
 	{
 		get 
 		{
-			return @"DELETE   FROM HR.DEPARTMENTS WHERE DEPARTMENT_ID = @DEPARTMENT_ID";
+			return @"DELETE   FROM HR.DEPARTMENTS WHERE DEPARTMENT_ID = :DEPARTMENT_ID";
 		}
 	}
 	protected override string UpdateString
@@ -52,9 +52,9 @@ public partial class DepartmentsDal : BaseDal<Departments>
 		{
 			return @"UPDATE HR.DEPARTMENTS
 			 SET 
-			DEPARTMENT_NAME = @DEPARTMENT_NAME,MANAGER_ID = @MANAGER_ID,LOCATION_ID = @LOCATION_ID			
+			DEPARTMENT_NAME = :DEPARTMENT_NAME,MANAGER_ID = :MANAGER_ID,LOCATION_ID = :LOCATION_ID			
 			WHERE 
-			 DEPARTMENT_ID = @DEPARTMENT_ID ";
+			 DEPARTMENT_ID = :DEPARTMENT_ID ";
 		}
 	}
 	protected override string InsertString
@@ -64,7 +64,7 @@ public partial class DepartmentsDal : BaseDal<Departments>
 			return @"INSERT INTO HR.DEPARTMENTS 
 			 (DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID) 
 			 VALUES 
-						(@DEPARTMENT_ID,@DEPARTMENT_NAME,@MANAGER_ID,@LOCATION_ID)";
+						(:DEPARTMENT_ID,:DEPARTMENT_NAME,:MANAGER_ID,:LOCATION_ID)";
 		}
 	}
 	public Departments SorgulaDEPARTMENT_IDIle(decimal p1)
@@ -128,23 +128,23 @@ public partial class DepartmentsDal : BaseDal<Departments>
 	protected override void InsertCommandParametersAdd(DbCommand cmd, Departments row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@DEPARTMENT_ID",SqlDbType.VarChar, row.DepartmentId);
-		builder.parameterEkle("@DEPARTMENT_NAME",SqlDbType.VarChar, row.DepartmentName,30);
-		builder.parameterEkle("@MANAGER_ID",SqlDbType.VarChar, row.ManagerId);
-		builder.parameterEkle("@LOCATION_ID",SqlDbType.VarChar, row.LocationId);
+		builder.parameterEkle(":DEPARTMENT_ID",DbType.Decimal, row.DepartmentId);
+		builder.parameterEkle(":DEPARTMENT_NAME",DbType.String, row.DepartmentName,30);
+		builder.parameterEkle(":MANAGER_ID",DbType.Decimal, row.ManagerId);
+		builder.parameterEkle(":LOCATION_ID",DbType.Decimal, row.LocationId);
 	}
 	protected override void UpdateCommandParametersAdd(DbCommand cmd, 	Departments	 row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@DEPARTMENT_ID",SqlDbType.VarChar, row.DepartmentId);
-		builder.parameterEkle("@DEPARTMENT_NAME",SqlDbType.VarChar, row.DepartmentName,30);
-		builder.parameterEkle("@MANAGER_ID",SqlDbType.VarChar, row.ManagerId);
-		builder.parameterEkle("@LOCATION_ID",SqlDbType.VarChar, row.LocationId);
+		builder.parameterEkle(":DEPARTMENT_ID",DbType.Decimal, row.DepartmentId);
+		builder.parameterEkle(":DEPARTMENT_NAME",DbType.String, row.DepartmentName,30);
+		builder.parameterEkle(":MANAGER_ID",DbType.Decimal, row.ManagerId);
+		builder.parameterEkle(":LOCATION_ID",DbType.Decimal, row.LocationId);
 	}
 	protected override void DeleteCommandParametersAdd(DbCommand cmd, 	Departments	 row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@DEPARTMENT_ID",SqlDbType.VarChar, row.DepartmentId);
+		builder.parameterEkle(":DEPARTMENT_ID",DbType.Decimal, row.DepartmentId);
 	}
 }
 }

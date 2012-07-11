@@ -43,7 +43,7 @@ public partial class LocationsDal : BaseDal<Locations>
 	{
 		get 
 		{
-			return @"DELETE   FROM HR.LOCATIONS WHERE LOCATION_ID = @LOCATION_ID";
+			return @"DELETE   FROM HR.LOCATIONS WHERE LOCATION_ID = :LOCATION_ID";
 		}
 	}
 	protected override string UpdateString
@@ -52,9 +52,9 @@ public partial class LocationsDal : BaseDal<Locations>
 		{
 			return @"UPDATE HR.LOCATIONS
 			 SET 
-			STREET_ADDRESS = @STREET_ADDRESS,POSTAL_CODE = @POSTAL_CODE,CITY = @CITY,STATE_PROVINCE = @STATE_PROVINCE,COUNTRY_ID = @COUNTRY_ID			
+			STREET_ADDRESS = :STREET_ADDRESS,POSTAL_CODE = :POSTAL_CODE,CITY = :CITY,STATE_PROVINCE = :STATE_PROVINCE,COUNTRY_ID = :COUNTRY_ID			
 			WHERE 
-			 LOCATION_ID = @LOCATION_ID ";
+			 LOCATION_ID = :LOCATION_ID ";
 		}
 	}
 	protected override string InsertString
@@ -64,7 +64,7 @@ public partial class LocationsDal : BaseDal<Locations>
 			return @"INSERT INTO HR.LOCATIONS 
 			 (LOCATION_ID,STREET_ADDRESS,POSTAL_CODE,CITY,STATE_PROVINCE,COUNTRY_ID) 
 			 VALUES 
-						(@LOCATION_ID,@STREET_ADDRESS,@POSTAL_CODE,@CITY,@STATE_PROVINCE,@COUNTRY_ID)";
+						(:LOCATION_ID,:STREET_ADDRESS,:POSTAL_CODE,:CITY,:STATE_PROVINCE,:COUNTRY_ID)";
 		}
 	}
 	public Locations SorgulaLOCATION_IDIle(decimal p1)
@@ -136,27 +136,27 @@ public partial class LocationsDal : BaseDal<Locations>
 	protected override void InsertCommandParametersAdd(DbCommand cmd, Locations row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@LOCATION_ID",SqlDbType.VarChar, row.LocationId);
-		builder.parameterEkle("@STREET_ADDRESS",SqlDbType.VarChar, row.StreetAddress,40);
-		builder.parameterEkle("@POSTAL_CODE",SqlDbType.VarChar, row.PostalCode,12);
-		builder.parameterEkle("@CITY",SqlDbType.VarChar, row.City,30);
-		builder.parameterEkle("@STATE_PROVINCE",SqlDbType.VarChar, row.StateProvince,25);
-		builder.parameterEkle("@COUNTRY_ID",SqlDbType.VarChar, row.CountryId,2);
+		builder.parameterEkle(":LOCATION_ID",DbType.Decimal, row.LocationId);
+		builder.parameterEkle(":STREET_ADDRESS",DbType.String, row.StreetAddress,40);
+		builder.parameterEkle(":POSTAL_CODE",DbType.String, row.PostalCode,12);
+		builder.parameterEkle(":CITY",DbType.String, row.City,30);
+		builder.parameterEkle(":STATE_PROVINCE",DbType.String, row.StateProvince,25);
+		builder.parameterEkle(":COUNTRY_ID",DbType.String, row.CountryId,2);
 	}
 	protected override void UpdateCommandParametersAdd(DbCommand cmd, 	Locations	 row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@LOCATION_ID",SqlDbType.VarChar, row.LocationId);
-		builder.parameterEkle("@STREET_ADDRESS",SqlDbType.VarChar, row.StreetAddress,40);
-		builder.parameterEkle("@POSTAL_CODE",SqlDbType.VarChar, row.PostalCode,12);
-		builder.parameterEkle("@CITY",SqlDbType.VarChar, row.City,30);
-		builder.parameterEkle("@STATE_PROVINCE",SqlDbType.VarChar, row.StateProvince,25);
-		builder.parameterEkle("@COUNTRY_ID",SqlDbType.VarChar, row.CountryId,2);
+		builder.parameterEkle(":LOCATION_ID",DbType.Decimal, row.LocationId);
+		builder.parameterEkle(":STREET_ADDRESS",DbType.String, row.StreetAddress,40);
+		builder.parameterEkle(":POSTAL_CODE",DbType.String, row.PostalCode,12);
+		builder.parameterEkle(":CITY",DbType.String, row.City,30);
+		builder.parameterEkle(":STATE_PROVINCE",DbType.String, row.StateProvince,25);
+		builder.parameterEkle(":COUNTRY_ID",DbType.String, row.CountryId,2);
 	}
 	protected override void DeleteCommandParametersAdd(DbCommand cmd, 	Locations	 row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@LOCATION_ID",SqlDbType.VarChar, row.LocationId);
+		builder.parameterEkle(":LOCATION_ID",DbType.Decimal, row.LocationId);
 	}
 }
 }

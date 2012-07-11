@@ -43,7 +43,7 @@ public partial class JobHistoryDal : BaseDal<JobHistory>
 	{
 		get 
 		{
-			return @"DELETE   FROM HR.JOB_HISTORY WHERE EMPLOYEE_ID = @EMPLOYEE_ID ANDSTART_DATE = @START_DATE";
+			return @"DELETE   FROM HR.JOB_HISTORY WHERE EMPLOYEE_ID = :EMPLOYEE_ID ANDSTART_DATE = :START_DATE";
 		}
 	}
 	protected override string UpdateString
@@ -52,9 +52,9 @@ public partial class JobHistoryDal : BaseDal<JobHistory>
 		{
 			return @"UPDATE HR.JOB_HISTORY
 			 SET 
-			END_DATE = @END_DATE,JOB_ID = @JOB_ID,DEPARTMENT_ID = @DEPARTMENT_ID			
+			END_DATE = :END_DATE,JOB_ID = :JOB_ID,DEPARTMENT_ID = :DEPARTMENT_ID			
 			WHERE 
-			 EMPLOYEE_ID = @EMPLOYEE_ID AND START_DATE = @START_DATE ";
+			 EMPLOYEE_ID = :EMPLOYEE_ID AND START_DATE = :START_DATE ";
 		}
 	}
 	protected override string InsertString
@@ -64,7 +64,7 @@ public partial class JobHistoryDal : BaseDal<JobHistory>
 			return @"INSERT INTO HR.JOB_HISTORY 
 			 (EMPLOYEE_ID,START_DATE,END_DATE,JOB_ID,DEPARTMENT_ID) 
 			 VALUES 
-						(@EMPLOYEE_ID,@START_DATE,@END_DATE,@JOB_ID,@DEPARTMENT_ID)";
+						(:EMPLOYEE_ID,:START_DATE,:END_DATE,:JOB_ID,:DEPARTMENT_ID)";
 		}
 	}
 	public JobHistory SorgulaSTART_DATEIle(DateTime p1)
@@ -120,26 +120,26 @@ public partial class JobHistoryDal : BaseDal<JobHistory>
 	protected override void InsertCommandParametersAdd(DbCommand cmd, JobHistory row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@EMPLOYEE_ID",SqlDbType.VarChar, row.EmployeeId);
-		builder.parameterEkle("@START_DATE",SqlDbType.VarChar, row.StartDate);
-		builder.parameterEkle("@END_DATE",SqlDbType.VarChar, row.EndDate);
-		builder.parameterEkle("@JOB_ID",SqlDbType.VarChar, row.JobId,10);
-		builder.parameterEkle("@DEPARTMENT_ID",SqlDbType.VarChar, row.DepartmentId);
+		builder.parameterEkle(":EMPLOYEE_ID",DbType.Decimal, row.EmployeeId);
+		builder.parameterEkle(":START_DATE",DbType.String, row.StartDate);
+		builder.parameterEkle(":END_DATE",DbType.String, row.EndDate);
+		builder.parameterEkle(":JOB_ID",DbType.String, row.JobId,10);
+		builder.parameterEkle(":DEPARTMENT_ID",DbType.Decimal, row.DepartmentId);
 	}
 	protected override void UpdateCommandParametersAdd(DbCommand cmd, 	JobHistory	 row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@EMPLOYEE_ID",SqlDbType.VarChar, row.EmployeeId);
-		builder.parameterEkle("@START_DATE",SqlDbType.VarChar, row.StartDate);
-		builder.parameterEkle("@END_DATE",SqlDbType.VarChar, row.EndDate);
-		builder.parameterEkle("@JOB_ID",SqlDbType.VarChar, row.JobId,10);
-		builder.parameterEkle("@DEPARTMENT_ID",SqlDbType.VarChar, row.DepartmentId);
+		builder.parameterEkle(":EMPLOYEE_ID",DbType.Decimal, row.EmployeeId);
+		builder.parameterEkle(":START_DATE",DbType.String, row.StartDate);
+		builder.parameterEkle(":END_DATE",DbType.String, row.EndDate);
+		builder.parameterEkle(":JOB_ID",DbType.String, row.JobId,10);
+		builder.parameterEkle(":DEPARTMENT_ID",DbType.Decimal, row.DepartmentId);
 	}
 	protected override void DeleteCommandParametersAdd(DbCommand cmd, 	JobHistory	 row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@EMPLOYEE_ID",SqlDbType.VarChar, row.EmployeeId);
-		builder.parameterEkle("@START_DATE",SqlDbType.VarChar, row.StartDate);
+		builder.parameterEkle(":EMPLOYEE_ID",DbType.Decimal, row.EmployeeId);
+		builder.parameterEkle(":START_DATE",DbType.String, row.StartDate);
 	}
 }
 }
