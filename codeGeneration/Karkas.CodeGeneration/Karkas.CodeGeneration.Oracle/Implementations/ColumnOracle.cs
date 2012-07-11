@@ -8,6 +8,17 @@ namespace Karkas.CodeGeneration.Oracle.Implementations
 {
     class ColumnOracle : IColumn
     {
+        public ColumnOracle(TableOracle pTable,string pName)
+        {
+            table = pTable;
+            name = pName;
+
+        }
+
+        TableOracle table;
+        string name;
+
+
         public bool IsAutoKey
         {
             get { throw new NotImplementedException(); }
@@ -15,7 +26,7 @@ namespace Karkas.CodeGeneration.Oracle.Implementations
 
         public string Name
         {
-            get { throw new NotImplementedException(); }
+            get { return name; }
         }
 
         public bool IsInPrimaryKey
@@ -40,7 +51,7 @@ namespace Karkas.CodeGeneration.Oracle.Implementations
 
         public ITable Table
         {
-            get { throw new NotImplementedException(); }
+            get { return table; }
         }
 
         public bool IsComputed
