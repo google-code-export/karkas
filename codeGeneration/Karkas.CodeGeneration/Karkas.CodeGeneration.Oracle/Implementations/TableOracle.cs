@@ -9,11 +9,20 @@ namespace Karkas.CodeGeneration.Oracle.Implementations
 {
     public class TableOracle : ITable
     {
-        public TableOracle(AdoTemplate template,String pTableName,String pSchemaName)
-        {
 
+        public TableOracle(DatabaseOracle pDatabase, AdoTemplate template, String pTableName, String pSchemaName)
+        {
+            this.database = pDatabase;
+            this.template = template;
+            this.tableName = pTableName;
+            this.schemaName = pSchemaName;
         }
 
+        DatabaseOracle database;
+
+        AdoTemplate template;
+        String tableName;
+        String schemaName;
 
         public int findIndexFromName(string name)
         {
@@ -35,14 +44,30 @@ namespace Karkas.CodeGeneration.Oracle.Implementations
             get { throw new NotImplementedException(); }
         }
 
+        public List<IColumn> columns = null;
+
         public List<IColumn> Columns
         {
-            get { throw new NotImplementedException(); }
+            get 
+            {
+                if (columns != null)
+                {
+                    return columns;
+                }
+                else
+                {
+                    throw new NotImplementedException(); 
+                }
+            }
         }
 
         public IDatabase Database
         {
-            get { throw new NotImplementedException(); }
+            get 
+            {
+                return database;
+            
+            }
         }
 
         public DateTime DateCreated
@@ -62,12 +87,12 @@ namespace Karkas.CodeGeneration.Oracle.Implementations
 
         public string Name
         {
-            get { throw new NotImplementedException(); }
+            get { return tableName; }
         }
 
         public string Schema
         {
-            get { throw new NotImplementedException(); }
+            get { return schemaName; }
         }
     }
 }
