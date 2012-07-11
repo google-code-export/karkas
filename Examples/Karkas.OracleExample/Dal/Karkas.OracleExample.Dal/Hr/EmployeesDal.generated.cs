@@ -43,7 +43,7 @@ public partial class EmployeesDal : BaseDal<Employees>
 	{
 		get 
 		{
-			return @"DELETE   FROM HR.EMPLOYEES WHERE EMPLOYEE_ID = @EMPLOYEE_ID";
+			return @"DELETE   FROM HR.EMPLOYEES WHERE EMPLOYEE_ID = :EMPLOYEE_ID";
 		}
 	}
 	protected override string UpdateString
@@ -52,9 +52,9 @@ public partial class EmployeesDal : BaseDal<Employees>
 		{
 			return @"UPDATE HR.EMPLOYEES
 			 SET 
-			FIRST_NAME = @FIRST_NAME,LAST_NAME = @LAST_NAME,EMAIL = @EMAIL,PHONE_NUMBER = @PHONE_NUMBER,HIRE_DATE = @HIRE_DATE,JOB_ID = @JOB_ID,SALARY = @SALARY,COMMISSION_PCT = @COMMISSION_PCT,MANAGER_ID = @MANAGER_ID,DEPARTMENT_ID = @DEPARTMENT_ID			
+			FIRST_NAME = :FIRST_NAME,LAST_NAME = :LAST_NAME,EMAIL = :EMAIL,PHONE_NUMBER = :PHONE_NUMBER,HIRE_DATE = :HIRE_DATE,JOB_ID = :JOB_ID,SALARY = :SALARY,COMMISSION_PCT = :COMMISSION_PCT,MANAGER_ID = :MANAGER_ID,DEPARTMENT_ID = :DEPARTMENT_ID			
 			WHERE 
-			 EMPLOYEE_ID = @EMPLOYEE_ID ";
+			 EMPLOYEE_ID = :EMPLOYEE_ID ";
 		}
 	}
 	protected override string InsertString
@@ -64,7 +64,7 @@ public partial class EmployeesDal : BaseDal<Employees>
 			return @"INSERT INTO HR.EMPLOYEES 
 			 (EMPLOYEE_ID,FIRST_NAME,LAST_NAME,EMAIL,PHONE_NUMBER,HIRE_DATE,JOB_ID,SALARY,COMMISSION_PCT,MANAGER_ID,DEPARTMENT_ID) 
 			 VALUES 
-						(@EMPLOYEE_ID,@FIRST_NAME,@LAST_NAME,@EMAIL,@PHONE_NUMBER,@HIRE_DATE,@JOB_ID,@SALARY,@COMMISSION_PCT,@MANAGER_ID,@DEPARTMENT_ID)";
+						(:EMPLOYEE_ID,:FIRST_NAME,:LAST_NAME,:EMAIL,:PHONE_NUMBER,:HIRE_DATE,:JOB_ID,:SALARY,:COMMISSION_PCT,:MANAGER_ID,:DEPARTMENT_ID)";
 		}
 	}
 	public Employees SorgulaEMPLOYEE_IDIle(decimal p1)
@@ -151,37 +151,37 @@ public partial class EmployeesDal : BaseDal<Employees>
 	protected override void InsertCommandParametersAdd(DbCommand cmd, Employees row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@EMPLOYEE_ID",SqlDbType.VarChar, row.EmployeeId);
-		builder.parameterEkle("@FIRST_NAME",SqlDbType.VarChar, row.FirstName,20);
-		builder.parameterEkle("@LAST_NAME",SqlDbType.VarChar, row.LastName,25);
-		builder.parameterEkle("@EMAIL",SqlDbType.VarChar, row.Email,25);
-		builder.parameterEkle("@PHONE_NUMBER",SqlDbType.VarChar, row.PhoneNumber,20);
-		builder.parameterEkle("@HIRE_DATE",SqlDbType.VarChar, row.HireDate);
-		builder.parameterEkle("@JOB_ID",SqlDbType.VarChar, row.JobId,10);
-		builder.parameterEkle("@SALARY",SqlDbType.VarChar, row.Salary);
-		builder.parameterEkle("@COMMISSION_PCT",SqlDbType.VarChar, row.CommissionPct);
-		builder.parameterEkle("@MANAGER_ID",SqlDbType.VarChar, row.ManagerId);
-		builder.parameterEkle("@DEPARTMENT_ID",SqlDbType.VarChar, row.DepartmentId);
+		builder.parameterEkle(":EMPLOYEE_ID",DbType.Decimal, row.EmployeeId);
+		builder.parameterEkle(":FIRST_NAME",DbType.String, row.FirstName,20);
+		builder.parameterEkle(":LAST_NAME",DbType.String, row.LastName,25);
+		builder.parameterEkle(":EMAIL",DbType.String, row.Email,25);
+		builder.parameterEkle(":PHONE_NUMBER",DbType.String, row.PhoneNumber,20);
+		builder.parameterEkle(":HIRE_DATE",DbType.String, row.HireDate);
+		builder.parameterEkle(":JOB_ID",DbType.String, row.JobId,10);
+		builder.parameterEkle(":SALARY",DbType.Decimal, row.Salary);
+		builder.parameterEkle(":COMMISSION_PCT",DbType.Decimal, row.CommissionPct);
+		builder.parameterEkle(":MANAGER_ID",DbType.Decimal, row.ManagerId);
+		builder.parameterEkle(":DEPARTMENT_ID",DbType.Decimal, row.DepartmentId);
 	}
 	protected override void UpdateCommandParametersAdd(DbCommand cmd, 	Employees	 row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@EMPLOYEE_ID",SqlDbType.VarChar, row.EmployeeId);
-		builder.parameterEkle("@FIRST_NAME",SqlDbType.VarChar, row.FirstName,20);
-		builder.parameterEkle("@LAST_NAME",SqlDbType.VarChar, row.LastName,25);
-		builder.parameterEkle("@EMAIL",SqlDbType.VarChar, row.Email,25);
-		builder.parameterEkle("@PHONE_NUMBER",SqlDbType.VarChar, row.PhoneNumber,20);
-		builder.parameterEkle("@HIRE_DATE",SqlDbType.VarChar, row.HireDate);
-		builder.parameterEkle("@JOB_ID",SqlDbType.VarChar, row.JobId,10);
-		builder.parameterEkle("@SALARY",SqlDbType.VarChar, row.Salary);
-		builder.parameterEkle("@COMMISSION_PCT",SqlDbType.VarChar, row.CommissionPct);
-		builder.parameterEkle("@MANAGER_ID",SqlDbType.VarChar, row.ManagerId);
-		builder.parameterEkle("@DEPARTMENT_ID",SqlDbType.VarChar, row.DepartmentId);
+		builder.parameterEkle(":EMPLOYEE_ID",DbType.Decimal, row.EmployeeId);
+		builder.parameterEkle(":FIRST_NAME",DbType.String, row.FirstName,20);
+		builder.parameterEkle(":LAST_NAME",DbType.String, row.LastName,25);
+		builder.parameterEkle(":EMAIL",DbType.String, row.Email,25);
+		builder.parameterEkle(":PHONE_NUMBER",DbType.String, row.PhoneNumber,20);
+		builder.parameterEkle(":HIRE_DATE",DbType.String, row.HireDate);
+		builder.parameterEkle(":JOB_ID",DbType.String, row.JobId,10);
+		builder.parameterEkle(":SALARY",DbType.Decimal, row.Salary);
+		builder.parameterEkle(":COMMISSION_PCT",DbType.Decimal, row.CommissionPct);
+		builder.parameterEkle(":MANAGER_ID",DbType.Decimal, row.ManagerId);
+		builder.parameterEkle(":DEPARTMENT_ID",DbType.Decimal, row.DepartmentId);
 	}
 	protected override void DeleteCommandParametersAdd(DbCommand cmd, 	Employees	 row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@EMPLOYEE_ID",SqlDbType.VarChar, row.EmployeeId);
+		builder.parameterEkle(":EMPLOYEE_ID",DbType.Decimal, row.EmployeeId);
 	}
 }
 }

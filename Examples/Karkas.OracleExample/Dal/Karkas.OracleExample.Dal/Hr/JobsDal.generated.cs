@@ -43,7 +43,7 @@ public partial class JobsDal : BaseDal<Jobs>
 	{
 		get 
 		{
-			return @"DELETE   FROM HR.JOBS WHERE JOB_ID = @JOB_ID";
+			return @"DELETE   FROM HR.JOBS WHERE JOB_ID = :JOB_ID";
 		}
 	}
 	protected override string UpdateString
@@ -52,9 +52,9 @@ public partial class JobsDal : BaseDal<Jobs>
 		{
 			return @"UPDATE HR.JOBS
 			 SET 
-			JOB_TITLE = @JOB_TITLE,MIN_SALARY = @MIN_SALARY,MAX_SALARY = @MAX_SALARY			
+			JOB_TITLE = :JOB_TITLE,MIN_SALARY = :MIN_SALARY,MAX_SALARY = :MAX_SALARY			
 			WHERE 
-			 JOB_ID = @JOB_ID ";
+			 JOB_ID = :JOB_ID ";
 		}
 	}
 	protected override string InsertString
@@ -64,7 +64,7 @@ public partial class JobsDal : BaseDal<Jobs>
 			return @"INSERT INTO HR.JOBS 
 			 (JOB_ID,JOB_TITLE,MIN_SALARY,MAX_SALARY) 
 			 VALUES 
-						(@JOB_ID,@JOB_TITLE,@MIN_SALARY,@MAX_SALARY)";
+						(:JOB_ID,:JOB_TITLE,:MIN_SALARY,:MAX_SALARY)";
 		}
 	}
 	public Jobs SorgulaJOB_IDIle(string p1)
@@ -128,23 +128,23 @@ public partial class JobsDal : BaseDal<Jobs>
 	protected override void InsertCommandParametersAdd(DbCommand cmd, Jobs row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@JOB_ID",SqlDbType.VarChar, row.JobId,10);
-		builder.parameterEkle("@JOB_TITLE",SqlDbType.VarChar, row.JobTitle,35);
-		builder.parameterEkle("@MIN_SALARY",SqlDbType.VarChar, row.MinSalary);
-		builder.parameterEkle("@MAX_SALARY",SqlDbType.VarChar, row.MaxSalary);
+		builder.parameterEkle(":JOB_ID",DbType.String, row.JobId,10);
+		builder.parameterEkle(":JOB_TITLE",DbType.String, row.JobTitle,35);
+		builder.parameterEkle(":MIN_SALARY",DbType.Decimal, row.MinSalary);
+		builder.parameterEkle(":MAX_SALARY",DbType.Decimal, row.MaxSalary);
 	}
 	protected override void UpdateCommandParametersAdd(DbCommand cmd, 	Jobs	 row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@JOB_ID",SqlDbType.VarChar, row.JobId,10);
-		builder.parameterEkle("@JOB_TITLE",SqlDbType.VarChar, row.JobTitle,35);
-		builder.parameterEkle("@MIN_SALARY",SqlDbType.VarChar, row.MinSalary);
-		builder.parameterEkle("@MAX_SALARY",SqlDbType.VarChar, row.MaxSalary);
+		builder.parameterEkle(":JOB_ID",DbType.String, row.JobId,10);
+		builder.parameterEkle(":JOB_TITLE",DbType.String, row.JobTitle,35);
+		builder.parameterEkle(":MIN_SALARY",DbType.Decimal, row.MinSalary);
+		builder.parameterEkle(":MAX_SALARY",DbType.Decimal, row.MaxSalary);
 	}
 	protected override void DeleteCommandParametersAdd(DbCommand cmd, 	Jobs	 row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@JOB_ID",SqlDbType.VarChar, row.JobId,10);
+		builder.parameterEkle(":JOB_ID",DbType.String, row.JobId,10);
 	}
 }
 }

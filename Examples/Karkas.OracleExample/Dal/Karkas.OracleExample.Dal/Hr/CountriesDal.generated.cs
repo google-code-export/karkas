@@ -43,7 +43,7 @@ public partial class CountriesDal : BaseDal<Countries>
 	{
 		get 
 		{
-			return @"DELETE   FROM HR.COUNTRIES WHERE COUNTRY_ID = @COUNTRY_ID";
+			return @"DELETE   FROM HR.COUNTRIES WHERE COUNTRY_ID = :COUNTRY_ID";
 		}
 	}
 	protected override string UpdateString
@@ -52,9 +52,9 @@ public partial class CountriesDal : BaseDal<Countries>
 		{
 			return @"UPDATE HR.COUNTRIES
 			 SET 
-			COUNTRY_NAME = @COUNTRY_NAME,REGION_ID = @REGION_ID			
+			COUNTRY_NAME = :COUNTRY_NAME,REGION_ID = :REGION_ID			
 			WHERE 
-			 COUNTRY_ID = @COUNTRY_ID ";
+			 COUNTRY_ID = :COUNTRY_ID ";
 		}
 	}
 	protected override string InsertString
@@ -64,7 +64,7 @@ public partial class CountriesDal : BaseDal<Countries>
 			return @"INSERT INTO HR.COUNTRIES 
 			 (COUNTRY_ID,COUNTRY_NAME,REGION_ID) 
 			 VALUES 
-						(@COUNTRY_ID,@COUNTRY_NAME,@REGION_ID)";
+						(:COUNTRY_ID,:COUNTRY_NAME,:REGION_ID)";
 		}
 	}
 	public Countries SorgulaCOUNTRY_IDIle(string p1)
@@ -127,21 +127,21 @@ public partial class CountriesDal : BaseDal<Countries>
 	protected override void InsertCommandParametersAdd(DbCommand cmd, Countries row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@COUNTRY_ID",SqlDbType.VarChar, row.CountryId,2);
-		builder.parameterEkle("@COUNTRY_NAME",SqlDbType.VarChar, row.CountryName,40);
-		builder.parameterEkle("@REGION_ID",SqlDbType.VarChar, row.RegionId);
+		builder.parameterEkle(":COUNTRY_ID",DbType.String, row.CountryId,2);
+		builder.parameterEkle(":COUNTRY_NAME",DbType.String, row.CountryName,40);
+		builder.parameterEkle(":REGION_ID",DbType.Decimal, row.RegionId);
 	}
 	protected override void UpdateCommandParametersAdd(DbCommand cmd, 	Countries	 row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@COUNTRY_ID",SqlDbType.VarChar, row.CountryId,2);
-		builder.parameterEkle("@COUNTRY_NAME",SqlDbType.VarChar, row.CountryName,40);
-		builder.parameterEkle("@REGION_ID",SqlDbType.VarChar, row.RegionId);
+		builder.parameterEkle(":COUNTRY_ID",DbType.String, row.CountryId,2);
+		builder.parameterEkle(":COUNTRY_NAME",DbType.String, row.CountryName,40);
+		builder.parameterEkle(":REGION_ID",DbType.Decimal, row.RegionId);
 	}
 	protected override void DeleteCommandParametersAdd(DbCommand cmd, 	Countries	 row)
 	{
 		ParameterBuilder builder = new ParameterBuilder(cmd);
-		builder.parameterEkle("@COUNTRY_ID",SqlDbType.VarChar, row.CountryId,2);
+		builder.parameterEkle(":COUNTRY_ID",DbType.String, row.CountryId,2);
 	}
 }
 }

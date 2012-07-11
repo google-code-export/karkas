@@ -19,6 +19,13 @@ namespace Karkas.OracleExample.ConsoleApp
                 Console.WriteLine(item);
             }
 
+
+            Countries c = new Countries();
+            c.CountryId = "TR";
+            c.CountryName = "TURKEY";
+            bs.Ekle(c);
+
+
         }
     }
 }
