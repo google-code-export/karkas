@@ -14,7 +14,7 @@ namespace Karkas.CodeGeneration.Oracle
 {
     public class OracleHelper : IDatabaseHelper
     {
-        private const string SQL_FOR_DATABASE_NAME = "Select name from v$database";
+        private const string SQL_FOR_DATABASE_NAME = "select sys_context('userenv','db_name') from dual";
         private const string SQL_FOR_SCHEMA_LIST = @"
 SELECT '__TUM_SCHEMALAR__' AS TABLE_SCHEMA FROM DUAL
 UNION
