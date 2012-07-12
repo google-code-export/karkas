@@ -342,6 +342,8 @@ AND
                     pSqlTypeName.Equals("varchar") ||
                     pSqlTypeName.Equals("nvarchar") ||
                     pSqlTypeName.Equals("varchar2") ||
+                    pSqlTypeName.Equals("clob") ||
+                    pSqlTypeName.Equals("nclob") ||
                     pSqlTypeName.Equals("char") ||
                     pSqlTypeName.Equals("nchar") ||
                     pSqlTypeName.Equals("ntext") ||
@@ -376,7 +378,8 @@ AND
             if (
                 pSqlTypeName.Equals("date") ||
                 pSqlTypeName.Equals("datetime") ||
-                pSqlTypeName.Equals("smalldatetime")
+                pSqlTypeName.Equals("smalldatetime") ||
+                pSqlTypeName.Contains("timestamp")
                 )
             {
                 return "DateTime";
@@ -412,6 +415,8 @@ AND
             }
             if (
                 pSqlTypeName.Equals("image") ||
+                pSqlTypeName.Equals("long") ||
+                pSqlTypeName.Equals("blob") ||
                 pSqlTypeName.Equals("binary") ||
                 pSqlTypeName.Equals("varbinary") ||
                 pSqlTypeName.Equals("timestamp")
