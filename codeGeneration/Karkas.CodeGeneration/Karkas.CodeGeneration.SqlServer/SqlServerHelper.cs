@@ -110,5 +110,11 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
         {
             get { return new SqlServerDalGenerator(this); }
         }
+
+
+        public string getDefaultSchema(AdoTemplate template)
+        {
+            return "dbo";
+        }
     }
 }

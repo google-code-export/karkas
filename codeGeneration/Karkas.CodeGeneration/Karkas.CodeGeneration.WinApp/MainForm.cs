@@ -185,7 +185,7 @@ namespace Karkas.CodeGeneration.WinApp
         {
             DataTable dtSchemaList = databaseHelper.getSchemaList(template);
             comboBoxSchemaList.DataSource = dtSchemaList;
-            comboBoxSchemaList.Text = "__TUM_SCHEMALAR__";
+            comboBoxSchemaList.Text = databaseHelper.getDefaultSchema(template);
         }
 
         private void comboBoxSchemaList_SelectedValueChanged(object sender, EventArgs e)
