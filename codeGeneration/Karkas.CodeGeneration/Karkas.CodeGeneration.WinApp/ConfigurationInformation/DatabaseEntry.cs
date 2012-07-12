@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Volante;
+using System.Collections;
 
 namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
 {
@@ -24,6 +25,35 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
         public DateTime CreationTimeUtc;
         public DateTime LastAccessTimeUtc;
         public DateTime LastWriteTimeUtc;
+
+
+        ILink<DatabaseAbbreviations> abbreviations= null;
+
+        public IList<DatabaseAbbreviations> AbbreviationsDataSource
+        {
+            get
+            {
+                return Abbreviations.ToList();
+            }
+        }
+
+        private ILink<DatabaseAbbreviations> Abbreviations
+        {
+            get
+            {
+                if (abbreviations == null)
+                {
+                    abbreviations = this.db.CreateLink<DatabaseAbbreviations>();
+                }
+                return abbreviations;
+            }
+        }
+
+        public void AddAbbreviations(DatabaseAbbreviations abbr)
+        {
+            Abbreviations.Add(abbr);
+        }
+
 
 
         public override string ToString()
