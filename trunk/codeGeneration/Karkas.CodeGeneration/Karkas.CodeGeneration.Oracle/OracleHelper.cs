@@ -107,5 +107,13 @@ ORDER BY FULL_TABLE_NAME
         {
             get { return new OracleDalGenerator(this); }
         }
+
+
+        public string getDefaultSchema(AdoTemplate template)
+        {
+            string connectionString = template.Connection.ConnectionString;
+            return getUserNameFromConnection(connectionString);
+
+        }
     }
 }

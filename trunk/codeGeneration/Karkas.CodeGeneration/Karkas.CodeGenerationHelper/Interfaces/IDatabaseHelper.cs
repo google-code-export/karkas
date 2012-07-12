@@ -12,6 +12,8 @@ namespace Karkas.CodeGenerationHelper.Interfaces
     {
         string getDatabaseName(AdoTemplate template);
 
+        string getDefaultSchema(AdoTemplate template);
+
         DataTable getTableListFromSchema(AdoTemplate template, string schemaName);
         DataTable getSchemaList(AdoTemplate template);
 
