@@ -269,5 +269,11 @@ namespace Karkas.CodeGeneration.WinApp
                 databaseEntryToForm(frm.SelectedDatabaseEntry);
             }
         }
+
+        private void buttonKisaltmalar_Click(object sender, EventArgs e)
+        {
+            Form frm = new FormAbbravetions();
+            frm.ShowDialog();
+        }
     }
 }

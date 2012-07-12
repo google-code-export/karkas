@@ -53,6 +53,7 @@
             this.buttonOtherConnections = new System.Windows.Forms.Button();
             this.comboBoxDatabaseType = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.buttonKisaltmalar = new System.Windows.Forms.Button();
             this.panelListe.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -268,10 +269,10 @@
             // 
             // buttonGecerliDegerleriKaydet
             // 
-            this.buttonGecerliDegerleriKaydet.Location = new System.Drawing.Point(556, 150);
+            this.buttonGecerliDegerleriKaydet.Location = new System.Drawing.Point(556, 209);
             this.buttonGecerliDegerleriKaydet.Margin = new System.Windows.Forms.Padding(2);
             this.buttonGecerliDegerleriKaydet.Name = "buttonGecerliDegerleriKaydet";
-            this.buttonGecerliDegerleriKaydet.Size = new System.Drawing.Size(146, 23);
+            this.buttonGecerliDegerleriKaydet.Size = new System.Drawing.Size(146, 55);
             this.buttonGecerliDegerleriKaydet.TabIndex = 13;
             this.buttonGecerliDegerleriKaydet.Text = "Geçerli Değerleri Kaydet";
             this.buttonGecerliDegerleriKaydet.UseVisualStyleBackColor = true;
@@ -311,11 +312,22 @@
             this.label2.TabIndex = 17;
             this.label2.Text = "Veritabanı Tipi";
             // 
+            // buttonKisaltmalar
+            // 
+            this.buttonKisaltmalar.Location = new System.Drawing.Point(556, 155);
+            this.buttonKisaltmalar.Name = "buttonKisaltmalar";
+            this.buttonKisaltmalar.Size = new System.Drawing.Size(146, 23);
+            this.buttonKisaltmalar.TabIndex = 18;
+            this.buttonKisaltmalar.Text = "Kısaltmalar";
+            this.buttonKisaltmalar.UseVisualStyleBackColor = true;
+            this.buttonKisaltmalar.Click += new System.EventHandler(this.buttonKisaltmalar_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(862, 679);
+            this.Controls.Add(this.buttonKisaltmalar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBoxDatabaseType);
             this.Controls.Add(this.buttonOtherConnections);
@@ -370,6 +382,7 @@
         private System.Windows.Forms.Button buttonOtherConnections;
         private System.Windows.Forms.ComboBox comboBoxDatabaseType;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button buttonKisaltmalar;
     }
 }
 
