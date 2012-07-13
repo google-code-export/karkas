@@ -86,7 +86,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationInformation\DatabaseAbbreviations.cs" />
     <Compile Include="ConfigurationInformation\DatabaseEntry.cs" />
     <Compile Include="ConfigurationInformation\DatabaseRoot.cs" />
     <Compile Include="ConfigurationInformation\DatabaseType.cs" />

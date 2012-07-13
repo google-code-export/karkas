@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Volante;
 using System.Collections;
+using Karkas.CodeGenerationHelper;
 
 namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
 {
