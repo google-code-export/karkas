@@ -82,7 +82,7 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
                     continue;
                 }
                 typeGen.Render(output, table, listDatabaseAbbreviations);
-                dalGen.Render(output, table);
+                dalGen.Render(output, table, listDatabaseAbbreviations);
                 bsGen.Render(output, table);
             }
         }
@@ -99,7 +99,7 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
             ITable table = database.getTable(pTableName, pSchemaName);
 
             typeGen.Render(output, table, listDatabaseAbbreviations);
-            dalGen.Render(output, table);
+            dalGen.Render(output, table, listDatabaseAbbreviations);
             bsGen.Render(output, table);
         }
 
