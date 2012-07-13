@@ -14,6 +14,8 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
         public IIndex<DateTime, DatabaseEntry> IndexLastAccessTime;
         public IIndex<DateTime, DatabaseEntry> IndexCreationTime;
 
+
+
         private static DatabaseRoot dbRootinstance;
 
         public static DatabaseRoot DbRootInstance
@@ -141,10 +143,17 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
         }
         public static void removeFromIndexes(DatabaseEntry de)
         {
-            DbRootInstance.IndexName.Remove(de.ConnectionName, de);
-            DbRootInstance.IndexLastAccessTime.Remove(de.LastAccessTimeUtc, de);
-            DbRootInstance.IndexLastWriteTime.Remove(de.LastWriteTimeUtc, de);
-            DbRootInstance.IndexCreationTime.Remove(de.CreationTimeUtc, de);
+            try
+            {
+                DbRootInstance.IndexName.Remove(de.ConnectionName, de);
+                DbRootInstance.IndexLastAccessTime.Remove(de.LastAccessTimeUtc, de);
+                DbRootInstance.IndexLastWriteTime.Remove(de.LastWriteTimeUtc, de);
+                DbRootInstance.IndexCreationTime.Remove(de.CreationTimeUtc, de);
+
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

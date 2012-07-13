@@ -222,16 +222,17 @@ namespace Karkas.CodeGeneration.WinApp
 
         private void buttonGecerliDegerleriKaydet_Click(object sender, EventArgs e)
         {
-            DatabaseEntry entry = currentDatabaseEntry;
-            entry.CodeGenerationDirectory = textBoxCodeGenerationDizini.Text;
-            entry.ConnectionName = textBoxDatabaseName.Text;
-            entry.CodeGenerationNamespace = textBoxProjectNamespace.Text;
-            entry.ConnectionString  = textBoxConnectionString.Text;
-            entry.ConnectionDatabaseType = (DatabaseType) comboBoxDatabaseType.SelectedValue;
-            entry.LastWriteTimeUtc = DateTime.UtcNow;
-            entry.LastAccessTimeUtc = DateTime.UtcNow;
+            DatabaseRoot.removeFromIndexes(currentDatabaseEntry);
 
-            DatabaseRoot.addToIndexesAndCommit(entry);
+            currentDatabaseEntry.CodeGenerationDirectory = textBoxCodeGenerationDizini.Text;
+            currentDatabaseEntry.ConnectionName = textBoxDatabaseName.Text;
+            currentDatabaseEntry.CodeGenerationNamespace = textBoxProjectNamespace.Text;
+            currentDatabaseEntry.ConnectionString  = textBoxConnectionString.Text;
+            currentDatabaseEntry.ConnectionDatabaseType = (DatabaseType) comboBoxDatabaseType.SelectedValue;
+            currentDatabaseEntry.LastWriteTimeUtc = DateTime.UtcNow;
+            currentDatabaseEntry.LastAccessTimeUtc = DateTime.UtcNow;
+
+            DatabaseRoot.addToIndexesAndCommit(currentDatabaseEntry);
 
         }
 

@@ -11,9 +11,23 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
         public string Abbravetion { get; set; }
         public string FullNameReplacement { get; set; }
 
+        public DatabaseAbbreviations()
+        {
+
+        }
+
+        public DatabaseAbbreviations(string pAbbravetion, string pFullNameReplacement)
+        {
+            Abbravetion = pAbbravetion;
+            FullNameReplacement = pFullNameReplacement;
+
+
+        }
         public override string ToString()
         {
-            return string.Format("Kısaltma : {0} Yerine Geçen Tam İsim : {1}", Abbravetion, FullNameReplacement);
+            return string.Format("{0}{1}{2}\n", 
+                Abbravetion, "-",
+                FullNameReplacement);
         }
     }
 }

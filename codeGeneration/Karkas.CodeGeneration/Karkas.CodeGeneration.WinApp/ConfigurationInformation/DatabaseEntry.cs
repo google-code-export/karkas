@@ -16,14 +16,6 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
             LastWriteTimeUtc = DateTime.UtcNow;
         }
 
-        public override void OnLoad()
-        {
-            if (abbreviations == null)
-            {
-                abbreviations = this.db.CreateLink<DatabaseAbbreviations>();
-            }
-            base.OnLoad();
-        }
 
         public String ConnectionName;
         public DatabaseType ConnectionDatabaseType;
@@ -34,34 +26,8 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
         public DateTime LastAccessTimeUtc;
         public DateTime LastWriteTimeUtc;
 
+        public String AbbrevationsAsString;
 
-        ILink<DatabaseAbbreviations> abbreviations= null;
-
-        public IList<DatabaseAbbreviations> AbbreviationsDataSource
-        {
-            get
-            {
-                return Abbreviations.ToList();
-            }
-        }
-
-        public ILink<DatabaseAbbreviations> Abbreviations
-        {
-            get
-            {
-
-                return abbreviations;
-            }
-            set
-            {
-                abbreviations = value;
-            }
-        }
-
-        public void AddAbbreviations(DatabaseAbbreviations abbr)
-        {
-            Abbreviations.Add(abbr);
-        }
 
 
 
@@ -72,5 +38,42 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
 
         }
 
+
+        public void AddAbbreviations(DatabaseAbbreviations abbr)
+        {
+            if (AbbrevationsAsString == null)
+            {
+                AbbrevationsAsString = string.Empty;
+            }
+            AbbrevationsAsString += abbr.ToString();
+        }
+
+        public List<DatabaseAbbreviations> AbbreviationsDataSource 
+        {
+            get
+            {
+                List<DatabaseAbbreviations> list = new List<DatabaseAbbreviations>();
+                if (string.IsNullOrEmpty(AbbrevationsAsString))
+                {
+                    return list;
+                }
+                String[] abbrStringList = AbbrevationsAsString.Split('\n');
+                foreach (string item in abbrStringList)
+                {
+                    if (string.IsNullOrEmpty(item))
+                    {
+                        continue;
+                    }
+                    String[] abbrArrr = item.Split('-');
+                    DatabaseAbbreviations abbr = new DatabaseAbbreviations();
+                    abbr.Abbravetion = abbrArrr[0];
+                    abbr.FullNameReplacement = abbrArrr[1];
+                    list.Add(abbr);
+
+                }
+                return list;
+            }
+        
+        }
     }
 }
