@@ -276,5 +276,15 @@ namespace Karkas.CodeGeneration.WinApp
             Form frm = new FormAbbravetions(currentDatabaseEntry);
             frm.ShowDialog();
         }
+
+        private void buttonNewConnection_Click(object sender, EventArgs e)
+        {
+            currentDatabaseEntry = new DatabaseEntry();
+            textBoxCodeGenerationDizini.Text = "";
+            textBoxDatabaseName.Text = "";
+            textBoxProjectNamespace.Text = "";
+            textBoxConnectionString.Text = "";
+
+        }
     }
 }
