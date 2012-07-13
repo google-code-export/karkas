@@ -60,7 +60,9 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
         public void CodeGenerateAllTables(AdoTemplate template,string pConnectionString, string pDatabaseName, string pProjectNamespace
             , string pProjectFolder
             ,bool dboSemaTablolariniAtla
-            ,bool sysTablolariniAtla)
+            ,bool sysTablolariniAtla
+            ,List<DatabaseAbbreviations> listDatabaseAbbreviations
+            )
         {
             TypeLibraryGenerator typeGen = new TypeLibraryGenerator(this);
             DalGenerator dalGen = this.DalGenerator;
@@ -69,7 +71,6 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
             DatabaseSqlServer database = new DatabaseSqlServer(pConnectionString, pDatabaseName, pProjectNamespace, pProjectFolder);
 
             List<ITable> tableListesi = database.Tables;
-            List<DatabaseAbbreviations> listDatabaseAbbreviations = new List<DatabaseAbbreviations>();
 
             foreach (ITable table in tableListesi)
             {
@@ -87,14 +88,21 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
             }
         }
 
-        public void CodeGenerateOneTable(AdoTemplate template, string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder)
+        public void CodeGenerateOneTable(AdoTemplate template
+            , string pConnectionString
+            , string pTableName
+            , string pSchemaName
+            , string pDatabaseName
+            , string pProjectNamespace
+            , string pProjectFolder
+            , List<DatabaseAbbreviations> listDatabaseAbbreviations
+            )
         {
             TypeLibraryGenerator typeGen = new TypeLibraryGenerator(this);
             DalGenerator dalGen = this.DalGenerator;
             BsGenerator bsGen = new BsGenerator(this);
             IOutput output = new SqlServerOutput();
             DatabaseSqlServer database = new DatabaseSqlServer(pConnectionString, pDatabaseName, pProjectNamespace, pProjectFolder);
-            List<DatabaseAbbreviations> listDatabaseAbbreviations = new List<DatabaseAbbreviations>();
 
             ITable table = database.getTable(pTableName, pSchemaName);
 

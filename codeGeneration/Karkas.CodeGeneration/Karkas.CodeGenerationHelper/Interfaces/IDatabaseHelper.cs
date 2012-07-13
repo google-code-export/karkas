@@ -20,9 +20,19 @@ namespace Karkas.CodeGenerationHelper.Interfaces
         void CodeGenerateAllTables(AdoTemplate template,string pConnectionString, string pDatabaseName, string pProjectNamespace
     , string pProjectFolder
     , bool dboSemaTablolariniAtla
-    , bool sysTablolariniAtla);
+    , bool sysTablolariniAtla
+    , List<DatabaseAbbreviations> listDatabaseAbbreviations            
+            );
 
-        void CodeGenerateOneTable(AdoTemplate template,string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder);
+        void CodeGenerateOneTable(AdoTemplate template
+            ,string pConnectionString
+            , string pTableName
+            , string pSchemaName
+            , string pDatabaseName
+            , string pProjectNamespace
+            , string pProjectFolder
+            ,List<DatabaseAbbreviations> listDatabaseAbbreviations  
+            );
 
 
         DalGenerator DalGenerator
