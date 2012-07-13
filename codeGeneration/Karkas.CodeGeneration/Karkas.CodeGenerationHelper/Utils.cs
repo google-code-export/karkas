@@ -470,22 +470,20 @@ namespace Karkas.CodeGenerationHelper
         }
 
 
-
-        public List<ITable> filterListAccordingToSchemaName(List<ITable> tableList, string schemaName)
+        public string getClassNameForTypeLibrary(IContainer table, List<DatabaseAbbreviations> listDatabaseAbbreviations)
         {
-            // TODO burada tablo listesi alan kodu yaz.
-            List<ITable> newList = null; //= new MyMeta.Sql.SqlTables();
-
-            foreach (ITable t in tableList)
+            string tableName = table.Name;
+            foreach (DatabaseAbbreviations abbr in listDatabaseAbbreviations)
             {
-                if (t.Schema.Equals(schemaName, StringComparison.InvariantCultureIgnoreCase))
+                if (tableName.Contains(abbr.Abbravetion)
+                    && abbr.useAsModuleName == "N"
+                    )
                 {
-                    newList.Add(t);
+                    tableName = tableName.Replace(abbr.Abbravetion, abbr.FullNameReplacement);
                 }
             }
 
-            return newList;
-
+            return GetPascalCase(tableName);
         }
 
         public string GetCamelCase(string name)
