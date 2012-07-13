@@ -54,6 +54,7 @@
             this.comboBoxDatabaseType = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.buttonKisaltmalar = new System.Windows.Forms.Button();
+            this.buttonNewConnection = new System.Windows.Forms.Button();
             this.panelListe.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -322,11 +323,22 @@
             this.buttonKisaltmalar.UseVisualStyleBackColor = true;
             this.buttonKisaltmalar.Click += new System.EventHandler(this.buttonKisaltmalar_Click);
             // 
+            // buttonNewConnection
+            // 
+            this.buttonNewConnection.Location = new System.Drawing.Point(732, 26);
+            this.buttonNewConnection.Name = "buttonNewConnection";
+            this.buttonNewConnection.Size = new System.Drawing.Size(97, 23);
+            this.buttonNewConnection.TabIndex = 19;
+            this.buttonNewConnection.Text = "Yeni Bağlantı";
+            this.buttonNewConnection.UseVisualStyleBackColor = true;
+            this.buttonNewConnection.Click += new System.EventHandler(this.buttonNewConnection_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(862, 679);
+            this.Controls.Add(this.buttonNewConnection);
             this.Controls.Add(this.buttonKisaltmalar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBoxDatabaseType);
@@ -383,6 +395,7 @@
         private System.Windows.Forms.ComboBox comboBoxDatabaseType;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonKisaltmalar;
+        private System.Windows.Forms.Button buttonNewConnection;
     }
 }
 
