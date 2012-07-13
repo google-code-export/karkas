@@ -27,7 +27,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             string baseNameSpace = database.projectNameSpace;
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
-            string className = getClassNameForTypeLibrary(table,listDatabaseAbbreviations);
+            string className = utils.getClassNameForTypeLibrary(table,listDatabaseAbbreviations);
             string schemaName = utils.GetPascalCase(table.Schema);
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
             string outputFullFileName = Path.Combine(database.projectFolder + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".cs");
@@ -79,21 +79,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         }
 
-        public string getClassNameForTypeLibrary(IContainer table, List<DatabaseAbbreviations> listDatabaseAbbreviations)
-        {
-            string tableName = table.Name;
-            foreach (DatabaseAbbreviations abbr in listDatabaseAbbreviations)
-            {
-                if (tableName.Contains(abbr.Abbravetion)
-                    && abbr.useAsModuleName == "N"
-                    )
-                {
-                    tableName = tableName.Replace(abbr.Abbravetion, abbr.FullNameReplacement);   
-                }
-            }
 
-            return utils.GetPascalCase(tableName);
-        }
 
 
         private void usingNamespaceleriYaz(IOutput output, string classNameSpace)
