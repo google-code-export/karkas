@@ -53,6 +53,7 @@
             this.buttonEkle.TabIndex = 1;
             this.buttonEkle.Text = "Ekle";
             this.buttonEkle.UseVisualStyleBackColor = true;
+            this.buttonEkle.Click += new System.EventHandler(this.buttonEkle_Click);
             // 
             // label1
             // 
