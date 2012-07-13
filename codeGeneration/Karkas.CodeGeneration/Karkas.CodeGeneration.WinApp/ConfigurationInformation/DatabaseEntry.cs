@@ -16,6 +16,14 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
             LastWriteTimeUtc = DateTime.UtcNow;
         }
 
+        public override void OnLoad()
+        {
+            if (abbreviations == null)
+            {
+                abbreviations = this.db.CreateLink<DatabaseAbbreviations>();
+            }
+            base.OnLoad();
+        }
 
         public String ConnectionName;
         public DatabaseType ConnectionDatabaseType;
@@ -41,10 +49,7 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
         {
             get
             {
-                if (abbreviations == null)
-                {
-                    abbreviations = this.db.CreateLink<DatabaseAbbreviations>();
-                }
+
                 return abbreviations;
             }
             set
