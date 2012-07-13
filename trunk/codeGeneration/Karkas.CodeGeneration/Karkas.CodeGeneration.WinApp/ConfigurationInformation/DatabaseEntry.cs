@@ -37,7 +37,7 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
             }
         }
 
-        private ILink<DatabaseAbbreviations> Abbreviations
+        public ILink<DatabaseAbbreviations> Abbreviations
         {
             get
             {
@@ -46,6 +46,10 @@ namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
                     abbreviations = this.db.CreateLink<DatabaseAbbreviations>();
                 }
                 return abbreviations;
+            }
+            set
+            {
+                abbreviations = value;
             }
         }
 

@@ -222,7 +222,7 @@ namespace Karkas.CodeGeneration.WinApp
 
         private void buttonGecerliDegerleriKaydet_Click(object sender, EventArgs e)
         {
-            DatabaseEntry entry = new DatabaseEntry();
+            DatabaseEntry entry = currentDatabaseEntry;
             entry.CodeGenerationDirectory = textBoxCodeGenerationDizini.Text;
             entry.ConnectionName = textBoxDatabaseName.Text;
             entry.CodeGenerationNamespace = textBoxProjectNamespace.Text;
@@ -272,7 +272,7 @@ namespace Karkas.CodeGeneration.WinApp
 
         private void buttonKisaltmalar_Click(object sender, EventArgs e)
         {
-            Form frm = new FormAbbravetions();
+            Form frm = new FormAbbravetions(currentDatabaseEntry);
             frm.ShowDialog();
         }
     }
