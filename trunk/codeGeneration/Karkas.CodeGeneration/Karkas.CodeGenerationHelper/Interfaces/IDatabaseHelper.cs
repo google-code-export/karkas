@@ -30,6 +30,7 @@ namespace Karkas.CodeGenerationHelper.Interfaces
             get;
         }
 
+
     }
 
 
