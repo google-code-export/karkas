@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Volante;
 
-namespace Karkas.CodeGeneration.WinApp.ConfigurationInformation
+namespace Karkas.CodeGenerationHelper
 {
     public class DatabaseAbbreviations
     {

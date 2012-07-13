@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Karkas.CodeGeneration.WinApp.ConfigurationInformation;
 using System.Collections;
+using Karkas.CodeGenerationHelper;
 
 namespace Karkas.CodeGeneration.WinApp
 {
