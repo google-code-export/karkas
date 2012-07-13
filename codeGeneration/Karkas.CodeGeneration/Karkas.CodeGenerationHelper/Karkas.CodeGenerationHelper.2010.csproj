@@ -72,7 +72,6 @@
     <Compile Include="Interfaces\ITable.cs" />
     <Compile Include="Interfaces\IView.cs" />
     <Compile Include="ConnectionHelper.cs" />
-    <Compile Include="EnumHelper.cs" />
     <Compile Include="Generators\AspxCsGenerator.cs" />
     <Compile Include="Generators\AspxGenerator.cs" />
     <Compile Include="Generators\BaseGenerator.cs" />
