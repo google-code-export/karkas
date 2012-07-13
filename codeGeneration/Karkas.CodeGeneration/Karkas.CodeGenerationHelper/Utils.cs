@@ -562,11 +562,7 @@ namespace Karkas.CodeGenerationHelper
             }
         }
 
-        public string GetEnumDescription(string dbName, string schemaName, string tableName, string connectionString)
-        {
-            EnumHelper eHelper = new EnumHelper(helper);
-            return eHelper.GetEnumDescription(dbName, schemaName, tableName, connectionString);
-        }
+
 
 
 
