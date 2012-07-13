@@ -215,6 +215,7 @@ namespace Karkas.CodeGeneration.WinApp
             , textBoxCodeGenerationDizini.Text
             ,checkBoxDboSemasiniAtla.Checked
             ,checkBoxSysTablolariniAtla.Checked
+            ,currentDatabaseEntry.getAbbreviationsDataSource()
             );
             MessageBox.Show("TÜM TABLOLAR İÇİN KOD ÜRETİLDİ");
 
@@ -249,6 +250,7 @@ namespace Karkas.CodeGeneration.WinApp
                     , labelDatabaseNameSonuc.Text
                     , textBoxProjectNamespace.Text
                     , textBoxCodeGenerationDizini.Text
+                    , currentDatabaseEntry.getAbbreviationsDataSource()
                     );
 
             }

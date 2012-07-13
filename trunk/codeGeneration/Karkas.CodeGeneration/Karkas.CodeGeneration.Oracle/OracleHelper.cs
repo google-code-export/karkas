@@ -56,7 +56,16 @@ ORDER BY FULL_TABLE_NAME
 
 
 
-        public void CodeGenerateAllTables(AdoTemplate template, string pConnectionString, string pDatabaseName, string pProjectNamespace, string pProjectFolder, bool dboSemaTablolariniAtla, bool sysTablolariniAtla)
+        public void CodeGenerateAllTables(
+            AdoTemplate template
+            , string pConnectionString
+            , string pDatabaseName
+            , string pProjectNamespace
+            , string pProjectFolder
+            , bool dboSemaTablolariniAtla
+            , bool sysTablolariniAtla
+            , List<DatabaseAbbreviations> listDatabaseAbbreviations
+            )
         {
            
             
@@ -70,7 +79,10 @@ ORDER BY FULL_TABLE_NAME
             {
                 string tableName = row["TABLE_NAME"].ToString();
                 string schemaName = row["TABLE_SCHEMA"].ToString();
-                CodeGenerateOneTable(template, pConnectionString, tableName, schemaName, pDatabaseName, pProjectNamespace, pProjectFolder);
+                CodeGenerateOneTable(template, pConnectionString, tableName, schemaName, pDatabaseName, pProjectNamespace
+                    , pProjectFolder
+                    , listDatabaseAbbreviations
+                    );
             }
 
         }
@@ -92,7 +104,15 @@ ORDER BY FULL_TABLE_NAME
             return userName;
         }
 
-        public void CodeGenerateOneTable(AdoTemplate template, string pConnectionString, string pTableName, string pSchemaName, string pDatabaseName, string pProjectNamespace, string pProjectFolder)
+        public void CodeGenerateOneTable(AdoTemplate template
+            , string pConnectionString
+            , string pTableName
+            , string pSchemaName
+            , string pDatabaseName
+            , string pProjectNamespace
+            , string pProjectFolder
+            , List<DatabaseAbbreviations> listDatabaseAbbreviations
+            )
         {
             TypeLibraryGenerator typeGen = new TypeLibraryGenerator(this);
             DalGenerator dalGen = this.DalGenerator;
@@ -102,7 +122,6 @@ ORDER BY FULL_TABLE_NAME
 
             ITable table = database.getTable(pTableName, pSchemaName);
 
-            List<DatabaseAbbreviations> listDatabaseAbbreviations = new List<DatabaseAbbreviations>();
 
             typeGen.Render(output, table, listDatabaseAbbreviations);
             dalGen.Render(output, table, listDatabaseAbbreviations);

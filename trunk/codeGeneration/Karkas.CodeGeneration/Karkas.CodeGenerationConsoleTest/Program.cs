@@ -46,10 +46,10 @@ namespace Karkas.MyGenerationConsoleTest
             IDatabaseHelper helper = new OracleHelper();
 
 
-            helper.CodeGenerateOneTable(template, _OracleExampleConnectionString, "JOB_HISTORY", "HR", "ORACLEDEVDAYS", "Karkas.OracleExample", "D:\\projects\\Examples\\karkas\\Karkas.OracleExample");
+            helper.CodeGenerateOneTable(template, _OracleExampleConnectionString, "JOB_HISTORY", "HR", "ORACLEDEVDAYS", "Karkas.OracleExample", "D:\\projects\\Examples\\karkas\\Karkas.OracleExample",null);
 
 
-            helper.CodeGenerateAllTables(template, _OracleExampleConnectionString, "ORACLEDEVDAYS", "Karkas.OracleExample", "D:\\projects\\karkas\\Examples\\Karkas.OracleExample", true, true);
+            helper.CodeGenerateAllTables(template, _OracleExampleConnectionString, "ORACLEDEVDAYS", "Karkas.OracleExample", "D:\\projects\\karkas\\Examples\\Karkas.OracleExample", true, true,null);
         }
 
         private static void SqlServerTest()
@@ -58,8 +58,8 @@ namespace Karkas.MyGenerationConsoleTest
 
             IDatabaseHelper helper = new SqlServerHelper();
 
-            helper.CodeGenerateAllTables(null, _SqlServerExampleConnectionString, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek", true, true);
-            helper.CodeGenerateOneTable(null, _SqlServerExampleConnectionString, "ORNEK_TABLO", "ORNEKLER", "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek");
+            helper.CodeGenerateAllTables(null, _SqlServerExampleConnectionString, "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek", true, true,null);
+            helper.CodeGenerateOneTable(null, _SqlServerExampleConnectionString, "ORNEK_TABLO", "ORNEKLER", "KARKAS_ORNEK", "Karkas.Ornek", "D:\\projects\\karkasTrunk\\Karkas.Ornek",null);
         }
 
 
