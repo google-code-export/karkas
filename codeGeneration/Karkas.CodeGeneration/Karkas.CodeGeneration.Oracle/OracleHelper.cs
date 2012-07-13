@@ -106,7 +106,7 @@ ORDER BY FULL_TABLE_NAME
 
             typeGen.Render(output, table, listDatabaseAbbreviations);
             dalGen.Render(output, table, listDatabaseAbbreviations);
-            bsGen.Render(output, table);
+            bsGen.Render(output, table, listDatabaseAbbreviations);
         }
 
 

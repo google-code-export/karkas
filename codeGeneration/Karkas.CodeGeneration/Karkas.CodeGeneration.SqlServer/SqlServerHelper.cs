@@ -83,7 +83,7 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
                 }
                 typeGen.Render(output, table, listDatabaseAbbreviations);
                 dalGen.Render(output, table, listDatabaseAbbreviations);
-                bsGen.Render(output, table);
+                bsGen.Render(output, table, listDatabaseAbbreviations);
             }
         }
 
@@ -100,7 +100,7 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
 
             typeGen.Render(output, table, listDatabaseAbbreviations);
             dalGen.Render(output, table, listDatabaseAbbreviations);
-            bsGen.Render(output, table);
+            bsGen.Render(output, table, listDatabaseAbbreviations);
         }
 
 
