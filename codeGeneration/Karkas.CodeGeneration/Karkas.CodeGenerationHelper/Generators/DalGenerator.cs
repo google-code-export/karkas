@@ -6,6 +6,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using Karkas.CodeGenerationHelper.Interfaces;
+using System.Collections.Generic;
 
 namespace Karkas.CodeGenerationHelper.Generators
 {
@@ -35,7 +36,7 @@ namespace Karkas.CodeGenerationHelper.Generators
 
 
 
-        public string Render(IOutput output, IContainer container)
+        public string Render(IOutput output, IContainer container, List<DatabaseAbbreviations> listDatabaseAbbreviations)
         {
             output.tabLevel = 0;
             IDatabase database = container.Database;
@@ -53,7 +54,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             }
 
 
-            classNameTypeLibrary = utils.GetPascalCase(container.Name);
+            classNameTypeLibrary = utils.getClassNameForTypeLibrary(container.Name, listDatabaseAbbreviations);
             schemaName = utils.GetPascalCase(container.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
             identityVarmi = utils.IdentityVarMi(container);

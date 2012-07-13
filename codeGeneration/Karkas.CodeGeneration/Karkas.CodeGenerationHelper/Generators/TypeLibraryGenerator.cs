@@ -27,7 +27,7 @@ namespace Karkas.CodeGenerationHelper.Generators
             string baseNameSpace = database.projectNameSpace;
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
-            string className = utils.getClassNameForTypeLibrary(table,listDatabaseAbbreviations);
+            string className = utils.getClassNameForTypeLibrary(table.Name,listDatabaseAbbreviations);
             string schemaName = utils.GetPascalCase(table.Schema);
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
             string outputFullFileName = Path.Combine(database.projectFolder + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".cs");

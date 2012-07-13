@@ -55,15 +55,15 @@ namespace Karkas.CodeGenerationHelper
             gen.Render(output, proc);
         }
 
-        public string RenderDalCode(IOutput output, ITable table)
+        public string RenderDalCode(IOutput output, ITable table,List<DatabaseAbbreviations> listDatabaseAbbreviations)
         {
             DalGenerator gen = helper.DalGenerator;
-            return gen.Render(output, table);
+            return gen.Render(output, table, listDatabaseAbbreviations);
         }
-        public void RenderDalCode(IOutput output, IView view)
+        public void RenderDalCode(IOutput output, IView view,List<DatabaseAbbreviations> listDatabaseAbbreviations)
         {
             DalGenerator gen = helper.DalGenerator;
-            gen.Render(output, view);
+            gen.Render(output, view, listDatabaseAbbreviations);
         }
 
 
@@ -470,9 +470,8 @@ namespace Karkas.CodeGenerationHelper
         }
 
 
-        public string getClassNameForTypeLibrary(IContainer table, List<DatabaseAbbreviations> listDatabaseAbbreviations)
+        public string getClassNameForTypeLibrary(string tableName, List<DatabaseAbbreviations> listDatabaseAbbreviations)
         {
-            string tableName = table.Name;
             foreach (DatabaseAbbreviations abbr in listDatabaseAbbreviations)
             {
                 if (tableName.Contains(abbr.Abbravetion)

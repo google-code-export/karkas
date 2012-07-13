@@ -105,7 +105,7 @@ ORDER BY FULL_TABLE_NAME
             List<DatabaseAbbreviations> listDatabaseAbbreviations = new List<DatabaseAbbreviations>();
 
             typeGen.Render(output, table, listDatabaseAbbreviations);
-            dalGen.Render(output, table);
+            dalGen.Render(output, table, listDatabaseAbbreviations);
             bsGen.Render(output, table);
         }
 
