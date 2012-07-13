@@ -7,8 +7,9 @@ namespace Karkas.CodeGenerationHelper
 {
     public class DatabaseAbbreviations
     {
-        public string Abbravetion { get; set; }
-        public string FullNameReplacement { get; set; }
+        public string Abbravetion;
+        public string FullNameReplacement;
+        public string useAsModuleName = "N";
 
         public DatabaseAbbreviations()
         {

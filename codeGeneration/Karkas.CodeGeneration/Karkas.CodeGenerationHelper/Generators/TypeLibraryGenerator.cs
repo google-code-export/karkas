@@ -17,16 +17,17 @@ namespace Karkas.CodeGenerationHelper.Generators
 
         }
         Utils utils = null;
-        
-        public void Render(IOutput output, IContainer table)
+
+        public void Render(IOutput output, IContainer table, List<DatabaseAbbreviations> listDatabaseAbbreviations)
         {
+
             IDatabase database = table.Database;
             output.tabLevel = 0;
 
             string baseNameSpace = database.projectNameSpace;
             string baseNameSpaceTypeLibrary = baseNameSpace + ".TypeLibrary";
 
-            string className = utils.GetPascalCase(table.Name);
+            string className = getClassNameForTypeLibrary(table,listDatabaseAbbreviations);
             string schemaName = utils.GetPascalCase(table.Schema);
             string classNameSpace = baseNameSpaceTypeLibrary + "." + schemaName;
             string outputFullFileName = Path.Combine(database.projectFolder + "\\TypeLibrary\\" + baseNameSpaceTypeLibrary + "\\" + schemaName, className + ".cs");
@@ -76,6 +77,22 @@ namespace Karkas.CodeGenerationHelper.Generators
             }
 
 
+        }
+
+        public string getClassNameForTypeLibrary(IContainer table, List<DatabaseAbbreviations> listDatabaseAbbreviations)
+        {
+            string tableName = table.Name;
+            foreach (DatabaseAbbreviations abbr in listDatabaseAbbreviations)
+            {
+                if (tableName.Contains(abbr.Abbravetion)
+                    && abbr.useAsModuleName == "N"
+                    )
+                {
+                    tableName = tableName.Replace(abbr.Abbravetion, abbr.FullNameReplacement);   
+                }
+            }
+
+            return utils.GetPascalCase(tableName);
         }
 
 
