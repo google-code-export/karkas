@@ -237,6 +237,19 @@ namespace Karkas.CodeGeneration.WinApp
 
         }
 
+
+        public List<DatabaseAbbreviations> getSampleAbbreviations()
+        {
+
+            List<DatabaseAbbreviations> list = new List<DatabaseAbbreviations>();
+            DatabaseAbbreviations abbr = new DatabaseAbbreviations();
+            abbr.Abbravetion = "BO_";
+            abbr.FullNameReplacement = "";
+            list.Add(abbr);
+            return list;
+        }
+
+
         private void buttonSeciliTablolariUret_Click(object sender, EventArgs e)
         {
             foreach (var item in listBoxTableListesi.SelectedItems)
@@ -250,7 +263,7 @@ namespace Karkas.CodeGeneration.WinApp
                     , labelDatabaseNameSonuc.Text
                     , textBoxProjectNamespace.Text
                     , textBoxCodeGenerationDizini.Text
-                    , currentDatabaseEntry.getAbbreviationsDataSource()
+                    , getSampleAbbreviations()
                     );
 
             }
