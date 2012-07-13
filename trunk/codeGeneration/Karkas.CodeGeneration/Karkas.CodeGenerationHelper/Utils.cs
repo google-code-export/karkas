@@ -39,15 +39,15 @@ namespace Karkas.CodeGenerationHelper
             gen.Render(output, table, connectionString);
         }
 
-        public void RenderTypeLibraryCode(IOutput output, ITable table)
+        public void RenderTypeLibraryCode(IOutput output, ITable table, List<DatabaseAbbreviations> listDatabaseAbbreviations)
         {
             TypeLibraryGenerator gen = new TypeLibraryGenerator(helper);
-            gen.Render(output, table);
+            gen.Render(output, table, listDatabaseAbbreviations);
         }
-        public void RenderTypeLibraryCode(IOutput output, IView view)
+        public void RenderTypeLibraryCode(IOutput output, IView view, List<DatabaseAbbreviations> listDatabaseAbbreviations)
         {
             TypeLibraryGenerator gen = new TypeLibraryGenerator(helper);
-            gen.Render(output, view);
+            gen.Render(output, view, listDatabaseAbbreviations);
         }
         public void RenderStoredProcedureCode(IOutput output, IProcedure proc)
         {

@@ -69,6 +69,7 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
             DatabaseSqlServer database = new DatabaseSqlServer(pConnectionString, pDatabaseName, pProjectNamespace, pProjectFolder);
 
             List<ITable> tableListesi = database.Tables;
+            List<DatabaseAbbreviations> listDatabaseAbbreviations = new List<DatabaseAbbreviations>();
 
             foreach (ITable table in tableListesi)
             {
@@ -80,7 +81,7 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
                 {
                     continue;
                 }
-                typeGen.Render(output, table);
+                typeGen.Render(output, table, listDatabaseAbbreviations);
                 dalGen.Render(output, table);
                 bsGen.Render(output, table);
             }
@@ -93,10 +94,11 @@ SELECT DISTINCT TABLE_CATALOG FROM INFORMATION_SCHEMA.TABLES
             BsGenerator bsGen = new BsGenerator(this);
             IOutput output = new SqlServerOutput();
             DatabaseSqlServer database = new DatabaseSqlServer(pConnectionString, pDatabaseName, pProjectNamespace, pProjectFolder);
+            List<DatabaseAbbreviations> listDatabaseAbbreviations = new List<DatabaseAbbreviations>();
 
             ITable table = database.getTable(pTableName, pSchemaName);
 
-            typeGen.Render(output, table);
+            typeGen.Render(output, table, listDatabaseAbbreviations);
             dalGen.Render(output, table);
             bsGen.Render(output, table);
         }

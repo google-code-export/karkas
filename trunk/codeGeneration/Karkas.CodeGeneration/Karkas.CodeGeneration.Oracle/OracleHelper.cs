@@ -102,7 +102,9 @@ ORDER BY FULL_TABLE_NAME
 
             ITable table = database.getTable(pTableName, pSchemaName);
 
-            typeGen.Render(output, table);
+            List<DatabaseAbbreviations> listDatabaseAbbreviations = new List<DatabaseAbbreviations>();
+
+            typeGen.Render(output, table, listDatabaseAbbreviations);
             dalGen.Render(output, table);
             bsGen.Render(output, table);
         }
