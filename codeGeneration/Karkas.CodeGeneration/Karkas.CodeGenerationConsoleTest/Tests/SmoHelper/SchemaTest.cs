@@ -16,16 +16,5 @@ namespace Karkas.MyGenerationConsoleTest.Tests.SmoHelper
 		}
 
 
-		[Test]
-		public void TestSchemaListesi1()
-		{
-
-			Utils uti = new Utils(null);
-			string[] schemalar = uti.GetSchemaList("KARKAS_ORNEK", ConnectionString);
-			foreach (string item in schemalar)
-			{
-				Console.WriteLine(item);
-			}
-		}
 	}
 }

@@ -125,11 +125,6 @@ namespace Karkas.CodeGenerationHelper
 
         #endregion
 
-        public string[] GetSchemaList(string pDatabaseName, string pConnectionString)
-        {
-            SmoHelper smoHelper = new SmoHelper();
-            return smoHelper.GetSchemaList(pDatabaseName, pConnectionString);
-        }
 
         public string IdentityColumnAdiniBul(IContainer table)
         {
