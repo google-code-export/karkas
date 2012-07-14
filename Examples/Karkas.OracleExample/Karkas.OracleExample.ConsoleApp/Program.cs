@@ -16,7 +16,7 @@ namespace Karkas.OracleExample.ConsoleApp
             List<Countries> liste = bs.SorgulaHepsiniGetir();
             foreach (var item in liste)
             {
-                Console.WriteLine(item);
+                Console.WriteLine(item.CountryId + " " + item.CountryName + " " + item.RegionId);
             }
 
 
