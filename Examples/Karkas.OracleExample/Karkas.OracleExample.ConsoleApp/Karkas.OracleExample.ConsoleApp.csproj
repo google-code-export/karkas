@@ -36,17 +36,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Karkas.Core.DataUtil">
-      <HintPath>..\..\ThirdParty\Karkas.Core.DataUtil.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\Karkas.Core.DataUtil.dll</HintPath>
     </Reference>
     <Reference Include="Karkas.Core.Onaylama">
-      <HintPath>..\..\ThirdParty\Karkas.Core.Onaylama.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\Karkas.Core.Onaylama.dll</HintPath>
     </Reference>
     <Reference Include="Karkas.Core.Utility">
-      <HintPath>..\..\ThirdParty\Karkas.Core.Utility.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\Karkas.Core.Utility.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ThirdParty\nunit.framework.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
