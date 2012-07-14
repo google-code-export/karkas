@@ -29,7 +29,7 @@ $hedefDizin = "./WebSite/bin/"
 function CopyDllsToThirdParty($dll_files)
 {
 
-$hedefDizin = "./ThirdParty/"
+$hedefDizin = "../ThirdParty/"
 
 	foreach($dll in $dll_files)
 	{
@@ -60,9 +60,9 @@ foreach($dizin in $dizinler)
 
 
 
-$dll_files = Get-ChildItem -Path "ThirdParty" -include *.dll -Recurse |  sort-object Name
+$dll_files = Get-ChildItem -Path "../../ThirdParty" -include *.dll -Recurse |  sort-object Name
 CopyDllsToWebBin($dll_files)
-$dll_files = Get-ChildItem -Path "ThirdParty" -include *.pdb -Recurse |  sort-object Name
+$dll_files = Get-ChildItem -Path "../../ThirdParty" -include *.pdb -Recurse |  sort-object Name
 CopyDllsToWebBin($dll_files)
 
 
