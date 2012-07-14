@@ -48,8 +48,8 @@ namespace Karkas.CodeGenerationHelper.Generators
             baseNameSpaceBs = baseNameSpace + ".Bs";
 
             classNameTypeLibrary = utils.getClassNameForTypeLibrary(container.Name, listDatabaseAbbreviations);
-            classNameDal = utils.GetPascalCase(container.Name) + "Dal";
-            classNameBs = utils.GetPascalCase(container.Name) + "Bs";
+            classNameDal = classNameTypeLibrary + "Dal";
+            classNameBs = classNameTypeLibrary + "Bs";
 
             schemaName = utils.GetPascalCase(container.Schema);
             classNameSpace = baseNameSpace + "." + schemaName;
