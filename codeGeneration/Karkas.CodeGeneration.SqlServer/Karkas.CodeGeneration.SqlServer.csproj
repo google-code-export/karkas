@@ -33,18 +33,18 @@
   <ItemGroup>
     <Reference Include="Karkas.Core.DataUtil, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ThirdParty\Karkas.Core.DataUtil.dll</HintPath>
+      <HintPath>...\..\ThirdParty\Karkas.Core.DataUtil.dll</HintPath>
     </Reference>
     <Reference Include="Karkas.Core.Onaylama, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ThirdParty\Karkas.Core.Onaylama.dll</HintPath>
+      <HintPath>...\..\ThirdParty\Karkas.Core.Onaylama.dll</HintPath>
     </Reference>
     <Reference Include="Karkas.Core.Utility, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ThirdParty\Karkas.Core.Utility.dll</HintPath>
+      <HintPath>...\..\ThirdParty\Karkas.Core.Utility.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>..\ThirdParty\log4net.dll</HintPath>
+      <HintPath>...\..\ThirdParty\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AnalysisServices.AdomdClient, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
