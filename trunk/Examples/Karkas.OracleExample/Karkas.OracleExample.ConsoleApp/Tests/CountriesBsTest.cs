@@ -15,6 +15,10 @@ namespace Karkas.OracleExample.ConsoleApp.Tests
         [TestFixtureSetUp]
         public void herseyiSil()
         {
+            string pk = "TR";
+            CountriesBs bs = new CountriesBs();
+            bs.Sil(pk);
+
         }
 
         [Test]
