@@ -32,19 +32,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Karkas.Core.DataUtil">
-      <HintPath>...\..\ThirdParty\Karkas.Core.DataUtil.dll</HintPath>
+      <HintPath>..\..\ThirdParty\Karkas.Core.DataUtil.dll</HintPath>
     </Reference>
     <Reference Include="Karkas.Core.Onaylama">
-      <HintPath>...\..\ThirdParty\Karkas.Core.Onaylama.dll</HintPath>
+      <HintPath>..\..\ThirdParty\Karkas.Core.Onaylama.dll</HintPath>
     </Reference>
     <Reference Include="Karkas.Core.Utility">
-      <HintPath>...\..\ThirdParty\Karkas.Core.Utility.dll</HintPath>
+      <HintPath>..\..\ThirdParty\Karkas.Core.Utility.dll</HintPath>
     </Reference>
     <Reference Include="Karkas.Web.Helpers">
-      <HintPath>...\..\ThirdParty\Karkas.Web.Helpers.dll</HintPath>
+      <HintPath>..\..\ThirdParty\Karkas.Web.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>...\..\ThirdParty\log4net.dll</HintPath>
+      <HintPath>..\..\ThirdParty\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
